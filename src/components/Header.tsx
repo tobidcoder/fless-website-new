@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { sizeSolutions, featuredIndustrySolutions, moreIndustrySolutions } from "@/lib/solutions"
 import { StickyRegister } from "@/components/StickyRegister"
 import { FlessLogo } from "@/components/FlessLogo"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
 interface HeaderProps {
   activePage?: string
@@ -81,7 +82,8 @@ export function Header({ activePage }: HeaderProps) {
           </nav>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <ThemeToggle className="hidden md:inline-flex" />
           <Link href="/login" className="hidden md:block text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Log in
           </Link>
@@ -205,6 +207,10 @@ export function Header({ activePage }: HeaderProps) {
               <Link href="/" className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>Home</Link>
               <Link href="/pricing" className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>Pricing</Link>
               <Link href="/solutions" className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>All solutions</Link>
+            </div>
+            <div>
+              <div className="text-[11px] uppercase tracking-wider text-primary mb-3">Appearance</div>
+              <ThemeToggle variant="row" />
             </div>
             <div>
               <div className="text-[11px] uppercase tracking-wider text-primary mb-2">Size</div>

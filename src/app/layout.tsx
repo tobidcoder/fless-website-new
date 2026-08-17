@@ -43,6 +43,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="system"
           enableSystem
+          storageKey="fless-theme"
           disableTransitionOnChange
         >
           {children}
