@@ -169,7 +169,7 @@ export function BuiltDifferent() {
     <section className="relative overflow-hidden border-t border-border/60">
       <div className="grid lg:grid-cols-2 min-h-[560px] lg:min-h-[720px]">
         <div
-          className="relative min-h-[460px] lg:min-h-full bg-[#0a0a0a]"
+          className="relative min-h-[460px] lg:min-h-full bg-night"
           onContextMenu={guard}
           onDragStart={guard}
         >
@@ -185,13 +185,13 @@ export function BuiltDifferent() {
             onCopy={guard}
             aria-hidden
           />
-          <div className="pointer-events-none absolute inset-0 z-[12] bg-gradient-to-r from-transparent via-transparent to-[#0a0a0a]/70" />
-          <div className="pointer-events-none absolute inset-0 z-[12] bg-gradient-to-t from-[#0a0a0a]/70 via-[#0a0a0a]/15 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 z-[12] bg-gradient-to-r from-transparent via-transparent to-night/70" />
+          <div className="pointer-events-none absolute inset-0 z-[12] bg-gradient-to-t from-night/70 via-night/15 to-transparent" />
 
           <ShippingLivePanel />
         </div>
 
-        <div className="bg-[#0a0a0a] text-white flex items-center">
+        <div className="bg-night text-white flex items-center">
           <div className="px-8 py-16 md:px-16 lg:px-20 max-w-xl">
             <motion.p
               initial={{ opacity: 0, y: 16 }}

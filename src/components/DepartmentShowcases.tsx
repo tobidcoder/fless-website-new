@@ -30,7 +30,7 @@ function Stage({
 
 function ProductCard({ children }: { children: ReactNode }) {
   return (
-    <div className="rounded-xl border border-white/20 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md shadow-[0_20px_40px_-20px_rgba(0,0,0,0.45)] overflow-hidden">
+    <div className="rounded-xl border border-white/20 bg-white/95 dark:bg-card/95 backdrop-blur-md shadow-[0_20px_40px_-20px_rgba(0,0,0,0.45)] overflow-hidden">
       {children}
     </div>
   )
@@ -343,7 +343,7 @@ const pairs = [
     eyebrow: "Customers",
     title: "Answer the phone. Close the ticket.",
     copy: "Voice and support cover the conversations your team can’t be in — calls, chat, email — with a paper trail you can audit.",
-    tint: "bg-[#fafafa] dark:bg-[#0c0c0c]",
+    tint: "bg-[#fafafa] dark:bg-secondary",
     departments: [
       {
         id: "voice",
@@ -399,7 +399,7 @@ const pairs = [
     eyebrow: "Operations",
     title: "Keep the company moving.",
     copy: "Operations and finance sit on the same work: approvals, vendors, invoices, and a clear picture of what you owe.",
-    tint: "bg-[#fafafa] dark:bg-[#0c0c0c]",
+    tint: "bg-[#fafafa] dark:bg-secondary",
     departments: [
       {
         id: "operations",

@@ -11,7 +11,7 @@ export function Footer() {
   const reduce = useReducedMotion()
 
   return (
-    <footer className="relative overflow-hidden bg-[#09090b] text-white">
+    <footer className="relative overflow-hidden bg-night text-white">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 py-14 md:py-16 border-b border-white/[0.08]">
           <div className="max-w-lg">

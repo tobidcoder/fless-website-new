@@ -8,7 +8,7 @@ export function NetworkDiagram() {
   return (
     <section className="py-24 md:py-32 bg-background relative overflow-hidden">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="bg-[#f8f9fa] dark:bg-[#111] rounded-[2.5rem] border border-border/50 p-10 md:p-16 lg:p-20 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-16">
+        <div className="bg-[#f8f9fa] dark:bg-secondary rounded-[2.5rem] border border-border/50 p-10 md:p-16 lg:p-20 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-16">
           
           {/* Left Content */}
           <div className="relative z-10 max-w-md w-full shrink-0">

@@ -70,7 +70,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="relative w-full max-w-2xl bg-background/95 dark:bg-[#0f1015]/95 border border-border/80 rounded-2xl shadow-2xl overflow-hidden z-10 backdrop-blur-xl"
+            className="relative w-full max-w-2xl bg-background/95 border border-border/80 rounded-2xl shadow-2xl overflow-hidden z-10 backdrop-blur-xl"
           >
             {/* Input Bar */}
             <div className="flex items-center px-4 border-b border-border/60 h-14 gap-3">

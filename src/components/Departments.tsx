@@ -18,7 +18,7 @@ const live: Record<string, string> = {
 
 export function Departments() {
   return (
-    <section id="departments" className="py-24 md:py-32 bg-[#fafafa] dark:bg-[#0c0c0c] border-t border-border/60">
+    <section id="departments" className="py-24 md:py-32 bg-[#fafafa] dark:bg-secondary border-t border-border/60">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
           <div className="max-w-xl">

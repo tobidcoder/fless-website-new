@@ -50,7 +50,7 @@ export function FeaturesBento() {
   ]
 
   return (
-    <section className="py-24 md:py-32 bg-[#fafafa] dark:bg-[#111] relative">
+    <section className="py-24 md:py-32 bg-[#fafafa] dark:bg-secondary relative">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
           <motion.h2

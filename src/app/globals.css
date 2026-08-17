@@ -37,36 +37,39 @@
   --ring: 239 84% 67%;
 
   --radius: 0.75rem; /* premium roundness */
+  /* Always-dark bands (footer, product stages) — indigo night, not pure black */
+  --night: 239 42% 6.5%;
 }
 
 .dark {
-  --background: 0 0% 3%; /* Ultra Dark */
-  --foreground: 0 0% 98%;
-  --card: 0 0% 5%;
-  --card-foreground: 0 0% 98%;
-  --popover: 0 0% 5%;
-  --popover-foreground: 0 0% 98%;
+  --background: 239 42% 6.5%;
+  --foreground: 240 20% 97%;
+  --card: 239 34% 9%;
+  --card-foreground: 240 20% 97%;
+  --popover: 239 34% 9%;
+  --popover-foreground: 240 20% 97%;
   
-  --primary: 239 84% 67%;
+  --primary: 239 84% 70%;
   --primary-foreground: 0 0% 100%;
-  --primary-hover: 243 75% 63%;
-  --brand-soft: 239 40% 14%;
+  --primary-hover: 239 80% 76%;
+  --brand-soft: 239 45% 14%;
   
-  --secondary: 0 0% 10%; /* Deep Gray */
-  --secondary-foreground: 0 0% 98%;
+  --secondary: 239 28% 11%;
+  --secondary-foreground: 240 20% 97%;
   
-  --muted: 0 0% 10%;
-  --muted-foreground: 0 0% 65%;
+  --muted: 239 24% 12%;
+  --muted-foreground: 239 16% 68%;
   
-  --accent: 239 40% 14%;
-  --accent-foreground: 239 84% 78%;
+  --accent: 239 45% 14%;
+  --accent-foreground: 239 84% 80%;
   
   --destructive: 346 87% 55%;
   --destructive-foreground: 0 0% 98%;
   
-  --border: 0 0% 14%;
-  --input: 0 0% 14%;
+  --border: 239 22% 18%;
+  --input: 239 22% 16%;
   --ring: 239 84% 67%;
+  --night: 239 42% 6.5%;
 }
 
 @theme inline {
@@ -95,6 +98,7 @@
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
+  --color-night: hsl(var(--night));
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -115,6 +119,13 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  .dark body {
+    background-image: radial-gradient(
+      ellipse 90% 55% at 50% -18%,
+      hsl(var(--primary) / 0.16),
+      transparent 62%
+    );
   }
   ::selection {
     background: hsl(var(--primary) / 0.18);

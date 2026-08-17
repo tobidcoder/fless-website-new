@@ -157,7 +157,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
           </div>
         </section>
 
-        <section className="py-20 md:py-28 bg-[#fafafa] dark:bg-[#0c0c0c] border-y border-border/60">
+        <section className="py-20 md:py-28 bg-[#fafafa] dark:bg-secondary border-y border-border/60">
           <div className="max-w-[1200px] mx-auto px-6">
             <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-10 md:mb-14 max-w-xl">
               How it shows up in {solution.name.toLowerCase()}.
@@ -234,7 +234,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
           </div>
         </section>
 
-        <section className="py-16 md:py-20 bg-[#fafafa] dark:bg-[#0c0c0c] border-y border-border/60">
+        <section className="py-16 md:py-20 bg-[#fafafa] dark:bg-secondary border-y border-border/60">
           <div className="max-w-[1200px] mx-auto px-6">
             <h2 className="text-2xl font-display font-semibold tracking-tight mb-8">Desks that usually turn on</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -254,7 +254,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
           </div>
         </section>
 
-        <section className="py-16 md:py-24 bg-[#0a0a0a] text-white">
+        <section className="py-16 md:py-24 bg-night text-white">
           <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-10 items-end">
             <div className="lg:col-span-8">
               <p className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-snug max-w-2xl">

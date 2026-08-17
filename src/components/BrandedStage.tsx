@@ -21,7 +21,7 @@ function LiveDot({ className = "" }: { className?: string }) {
 export function FlessChrome({ compact = false }: { compact?: boolean }) {
   return (
     <div
-      className={`absolute top-0 inset-x-0 z-10 flex items-center justify-between bg-white/93 dark:bg-neutral-950/92 backdrop-blur-md border-b border-black/[0.06] dark:border-white/10 ${
+      className={`absolute top-0 inset-x-0 z-10 flex items-center justify-between bg-white/93 dark:bg-card/92 backdrop-blur-md border-b border-black/[0.06] dark:border-white/10 ${
         compact ? "h-8 px-3" : "h-9 px-3.5"
       }`}
     >
@@ -57,7 +57,7 @@ export function DashboardSnippet({
 }) {
   const shown = rows.slice(0, compact ? 2 : 3)
   return (
-    <div className="rounded-[12px] bg-white/[0.97] dark:bg-neutral-950/96 backdrop-blur-md border border-white/30 dark:border-white/10 shadow-[0_20px_44px_-18px_rgba(0,0,0,0.5)] overflow-hidden">
+    <div className="rounded-[12px] bg-white/[0.97] dark:bg-card/96 backdrop-blur-md border border-white/30 dark:border-white/10 shadow-[0_20px_44px_-18px_rgba(0,0,0,0.5)] overflow-hidden">
       <div className="px-3.5 py-2 flex items-center justify-between border-b border-black/[0.05] dark:border-white/10">
         <span className="text-[11px] font-semibold tracking-tight text-neutral-900 dark:text-white">{label}</span>
         <span className="flex items-center gap-1.5 text-[10px] font-medium text-emerald-600">

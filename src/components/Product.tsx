@@ -12,7 +12,7 @@ const rows = [
 
 export function Product() {
   return (
-    <section id="product" className="py-24 md:py-32 bg-[#fafafa] dark:bg-[#0c0c0c] border-t border-border/60">
+    <section id="product" className="py-24 md:py-32 bg-[#fafafa] dark:bg-secondary border-t border-border/60">
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="max-w-2xl mb-12 md:mb-16">
           <motion.p
