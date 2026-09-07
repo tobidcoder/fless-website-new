@@ -11,11 +11,38 @@ export function StickyRegister() {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    if (pathname?.startsWith("/start")) return
-    const onScroll = () => setShow(window.scrollY > 520)
-    onScroll()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
+    if (pathname?.startsWith("/start") || pathname?.startsWith("/login")) return
+
+    let isFooterVisible = false
+
+    const checkVisibility = () => {
+      const isScrolled = window.scrollY > 480
+      setShow(isScrolled && !isFooterVisible)
+    }
+
+    const footerElement = document.querySelector("footer")
+    let observer: IntersectionObserver | null = null
+
+    if (footerElement && typeof IntersectionObserver !== "undefined") {
+      observer = new IntersectionObserver(
+        (entries) => {
+          isFooterVisible = entries[0]?.isIntersecting ?? false
+          checkVisibility()
+        },
+        { threshold: 0 }
+      )
+      observer.observe(footerElement)
+    }
+
+    checkVisibility()
+    window.addEventListener("scroll", checkVisibility, { passive: true })
+    window.addEventListener("resize", checkVisibility, { passive: true })
+
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener("scroll", checkVisibility)
+      window.removeEventListener("resize", checkVisibility)
+    }
   }, [pathname])
 
   if (pathname?.startsWith("/start") || pathname?.startsWith("/login")) return null

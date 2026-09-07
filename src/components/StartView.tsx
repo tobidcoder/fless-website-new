@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { motion } from "framer-motion"
 import Link from "next/link"
@@ -8,6 +8,7 @@ import { ArrowRight, Check } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { departments } from "@/lib/departments"
+import { industries } from "@/lib/industries"
 import { googleDeskOptions, submitBetaToGoogleForm } from "@/lib/betaForm"
 import {
   countries,
@@ -19,29 +20,17 @@ import {
 
 const roles = ["Founder / CEO", "Operator / COO", "Marketing", "Sales", "People / HR", "Finance", "Other"]
 const sizes = ["1–10", "11–50", "51–200", "201–1,000", "1,000+"]
-const industries = [
-  "Healthcare",
-  "Education",
-  "Retail",
-  "Finance",
-  "Hospitality",
-  "Professional services",
-  "Technology",
-  "Logistics",
-  "Manufacturing",
-  "Media",
-  "Other",
-]
 const heardOptions = ["A person I trust", "Search", "LinkedIn", "X / Twitter", "Event", "Other"]
 
 const field =
-  "w-full h-12 px-4 rounded-xl border border-border bg-background text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/30"
+  "w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground text-base sm:text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 placeholder:text-muted-foreground transition-all"
 const label = "block text-[13px] font-medium mb-2"
 
 export function StartView() {
   const params = useSearchParams()
   const presetEmail = params.get("email") ?? ""
   const presetDesk = params.get("desk") ?? params.get("dept") ?? ""
+  const presetIndustry = params.get("industry") ?? ""
   const source = params.get("source") ?? params.get("plan") ?? "start"
 
   const [name, setName] = useState("")
@@ -51,7 +40,9 @@ export function StartView() {
   const [companySize, setCompanySize] = useState(sizes[1])
   const [marketIso, setMarketIso] = useState("US")
   const [phoneNational, setPhoneNational] = useState("")
-  const [industry, setIndustry] = useState("")
+  const [industry, setIndustry] = useState(() =>
+    industries.some((i) => i.name === presetIndustry) ? presetIndustry : "",
+  )
   const [desks, setDesks] = useState<string[]>(() => {
     if (presetDesk && departments.some((d) => d.slug === presetDesk)) return [presetDesk]
     return []
@@ -62,6 +53,21 @@ export function StartView() {
   const [error, setError] = useState("")
   const [done, setDone] = useState(false)
 
+  useEffect(() => {
+    const urlEmail = params.get("email")
+    if (urlEmail && urlEmail.trim()) {
+      setEmail(urlEmail.trim())
+    }
+    const urlDesk = params.get("desk") ?? params.get("dept")
+    if (urlDesk && departments.some((d) => d.slug === urlDesk)) {
+      setDesks([urlDesk])
+    }
+    const urlIndustry = params.get("industry")
+    if (urlIndustry && industries.some((i) => i.name === urlIndustry)) {
+      setIndustry(urlIndustry)
+    }
+  }, [params])
+
   const toggle = (slug: string) => {
     setDesks((cur) => (cur.includes(slug) ? cur.filter((s) => s !== slug) : [...cur, slug]))
   }
@@ -70,7 +76,7 @@ export function StartView() {
   const valid = useMemo(() => {
     return (
       name.trim().length > 1 &&
-      /.+@.+\..+/.test(email) &&
+      /.+@.+\..+/.test(email.trim()) &&
       company.trim().length > 1 &&
       Boolean(countryByIso(marketIso)) &&
       phoneNational.length >= 6 &&
@@ -264,8 +270,8 @@ export function StartView() {
                     Select industry
                   </option>
                   {industries.map((item) => (
-                    <option key={item} value={item}>
-                      {item}
+                    <option key={item.id} value={item.name}>
+                      {item.name}
                     </option>
                   ))}
                 </select>

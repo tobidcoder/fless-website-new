@@ -24,7 +24,9 @@ export default function LoginPage() {
           <form
             onSubmit={(e) => {
               e.preventDefault()
-              router.push(`/start?email=${encodeURIComponent(email)}&source=login`)
+              const clean = email.trim()
+              if (!clean) return
+              router.push(`/start?email=${encodeURIComponent(clean)}&source=login`)
             }}
             className="space-y-4"
           >
@@ -34,11 +36,12 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Work email"
-                className="w-full h-12 px-4 rounded-xl border border-border text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/30"
+              autoComplete="email"
+              className="w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground text-base sm:text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 placeholder:text-muted-foreground transition-all"
             />
             <button
               type="submit"
-              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-medium text-primary-foreground shadow-sm shadow-primary/25 hover:bg-primary-hover"
+              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-medium text-primary-foreground shadow-sm shadow-primary/25 hover:bg-primary-hover transition-colors"
             >
               Join the beta
               <ArrowRight className="w-4 h-4" />

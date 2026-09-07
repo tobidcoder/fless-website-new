@@ -116,9 +116,16 @@
   html {
     scroll-behavior: smooth;
   }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    /* Prefer vertical page scroll; horizontal rows opt in via touch-pan-x */
+    touch-action: manipulation;
   }
   .dark body {
     background-image: radial-gradient(
@@ -204,47 +211,62 @@
   pointer-events: none;
 }
 
+/* Horizontal chip/carousel rows: allow vertical page scroll through the gesture */
+.touch-pan-x,
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes logo-marquee-x {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-33.333%, 0, 0);
+  }
+}
+
+.logo-marquee {
+  animation: logo-marquee-x 40s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee {
+    animation: none;
+  }
+}
+
 .fless-less-letter {
   background-image: linear-gradient(
-    100deg,
+    180deg,
     #ffffff 0%,
-    #ffffff 28%,
-    hsl(var(--primary)) 48%,
-    #a78bfa 56%,
-    #ffffff 72%,
-    #ffffff 100%
+    #ffffff 55%,
+    rgba(255, 255, 255, 0.72) 100%
   );
-  background-size: 220% 100%;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  animation: fless-less-shine 4.5s ease-in-out infinite;
-}
-
-.fless-less-letter:nth-child(2) {
-  animation-delay: 0.12s;
-}
-.fless-less-letter:nth-child(3) {
-  animation-delay: 0.24s;
-}
-.fless-less-letter:nth-child(4) {
-  animation-delay: 0.36s;
-}
-
-@keyframes fless-less-shine {
-  0% {
-    background-position: 120% 0;
-  }
-  100% {
-    background-position: -120% 0;
-  }
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .fless-less-letter {
-    animation: none;
     background: none;
-    color: hsl(var(--primary));
-    -webkit-text-fill-color: hsl(var(--primary));
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
   }
 }
+

@@ -115,14 +115,13 @@ export function BrandedStage({
   return (
     <div className={`relative overflow-hidden bg-neutral-200 ring-1 ring-inset ring-black/[0.08] dark:ring-white/[0.08] ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <motion.img
+      <img
         src={image}
         alt={alt}
+        loading="lazy"
+        decoding="async"
+        fetchPriority="low"
         className="absolute inset-0 w-full h-full object-cover"
-        initial={{ scale: 1.08 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1.35, ease: [0.22, 1, 0.36, 1] }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/[0.08] to-black/25" />
       {chrome ? <FlessChrome compact={compact} /> : null}
@@ -130,22 +129,17 @@ export function BrandedStage({
         <div
           className={
             compact || children
-              ? "absolute left-3 right-3 bottom-3 sm:left-4 sm:right-4 sm:bottom-4 z-10"
-              : "absolute left-4 right-4 bottom-4 md:left-auto md:right-5 md:bottom-5 md:w-[292px] z-10"
+              ? "absolute left-3 right-3 bottom-3 sm:left-4 sm:right-4 sm:bottom-4 z-10 pointer-events-none"
+              : "absolute left-4 right-4 bottom-4 md:left-auto md:right-5 md:bottom-5 md:w-[292px] z-10 pointer-events-none"
           }
         >
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.28, duration: 0.45 }}
+            transition={{ delay: 0.15, duration: 0.4 }}
           >
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              {snippet}
-            </motion.div>
+            {snippet}
           </motion.div>
         </div>
       ) : null}
@@ -171,7 +165,13 @@ export function PhotoTile({
   return (
     <div className={`relative overflow-hidden bg-neutral-200 ring-1 ring-inset ring-black/[0.08] dark:ring-white/[0.08] ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={image} alt={alt} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+      <img
+        src={image}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/25" />
       <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
         <span className="text-[10px] font-semibold tracking-tight text-white/90">Fless</span>

@@ -15,19 +15,21 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { departments } from "@/lib/departments"
+import { industries, industryHref } from "@/lib/industries"
+import { IndustryGrid } from "@/components/IndustryGrid"
 import {
   sizeSolutions,
-  featuredIndustrySolutions,
-  moreIndustrySolutions,
+  industrySolutions,
   type Solution,
 } from "@/lib/solutions"
 
 export function SolutionPage({ solution }: { solution: Solution }) {
   const desks = departments.filter((d) => solution.desks.includes(d.slug))
-  const sameKind = (solution.kind === "size" ? sizeSolutions : [...featuredIndustrySolutions, ...moreIndustrySolutions]).filter(
+  const sameKind = (solution.kind === "size" ? sizeSolutions : industrySolutions).filter(
     (s) => s.slug !== solution.slug,
   )
-  const otherKind = solution.kind === "size" ? featuredIndustrySolutions : sizeSolutions
+  const otherKind = solution.kind === "size" ? industrySolutions.slice(0, 4) : sizeSolutions
+  const otherIndustries = industries.filter((i) => i.id !== solution.slug)
 
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans">
@@ -345,14 +347,20 @@ export function SolutionPage({ solution }: { solution: Solution }) {
             {solution.kind === "size" && (
               <div className="mt-10">
                 <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-4">More industries</p>
-                <div className="flex flex-wrap gap-3">
-                  {moreIndustrySolutions.map((s) => (
+                <IndustryGrid />
+              </div>
+            )}
+            {solution.kind === "industry" && (
+              <div className="mt-10">
+                <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-4">All industries</p>
+                <div className="flex flex-wrap gap-2">
+                  {otherIndustries.map((i) => (
                     <Link
-                      key={s.slug}
-                      href={`/solutions/${s.slug}`}
+                      key={i.id}
+                      href={industryHref(i)}
                       className="inline-flex h-10 items-center rounded-full border border-border px-4 text-sm font-medium hover:bg-secondary/60"
                     >
-                      {s.name}
+                      {i.name}
                     </Link>
                   ))}
                 </div>

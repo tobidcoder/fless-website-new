@@ -74,11 +74,11 @@ export function TryCommand({
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="Tell Fless what to do…"
-            className="flex-1 h-11 px-4 rounded-full border border-border bg-background text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/30"
+            className="flex-1 min-w-0 h-11 px-4 rounded-full border border-border bg-background text-foreground text-base sm:text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 placeholder:text-muted-foreground transition-all"
           />
           <button
             type="submit"
-            className="h-11 px-5 rounded-full bg-primary text-primary-foreground text-sm font-medium shrink-0 hover:bg-primary-hover shadow-sm shadow-primary/25"
+            className="h-11 px-5 rounded-full bg-primary text-primary-foreground text-sm font-medium shrink-0 hover:bg-primary-hover shadow-sm shadow-primary/25 transition-colors"
           >
             Run
           </button>

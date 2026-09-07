@@ -4,6 +4,7 @@ import Link from "next/link"
 import { motion, useReducedMotion } from "framer-motion"
 import { StayInForm } from "@/components/StayInForm"
 import { FlessLogo, SparkleMark } from "@/components/FlessLogo"
+import { footerIndustries, industryHref } from "@/lib/industries"
 
 const lessLetters = ["L", "E", "S", "S"]
 
@@ -66,12 +67,18 @@ export function Footer() {
           <div>
             <h4 className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/35 mb-4">Industry</h4>
             <ul className="space-y-2.5 text-[13px] text-white/55">
-              <li><Link href="/solutions/healthcare" className="hover:text-white transition-colors">Healthcare</Link></li>
-              <li><Link href="/solutions/education" className="hover:text-white transition-colors">Education</Link></li>
-              <li><Link href="/solutions/retail" className="hover:text-white transition-colors">Retail</Link></li>
-              <li><Link href="/solutions/finance" className="hover:text-white transition-colors">Finance</Link></li>
-              <li><Link href="/solutions/hospitality" className="hover:text-white transition-colors">Hospitality</Link></li>
-              <li><Link href="/solutions/professional-services" className="hover:text-white transition-colors">Professional services</Link></li>
+              {footerIndustries.map((industry) => (
+                <li key={industry.id}>
+                  <Link href={industryHref(industry)} className="hover:text-white transition-colors">
+                    {industry.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/industries" className="hover:text-white transition-colors">
+                  All industries
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -92,26 +99,28 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="relative px-2 sm:px-3 overflow-hidden select-none" aria-hidden>
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[80%] w-[55%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 blur-[100px]" />
-        <p className="relative flex items-end justify-center gap-[0.04em] font-display font-semibold tracking-[-0.08em] leading-[0.78] text-center text-[24vw] sm:text-[18vw] lg:text-[15vw] whitespace-nowrap pb-2">
-          <SparkleMark className="mb-[0.12em] h-[0.55em] w-auto opacity-90" />
-          <span className="text-white">F</span>
+      <div className="relative px-2 sm:px-4 overflow-hidden select-none" aria-hidden>
+        <div className="pointer-events-none absolute left-1/2 bottom-0 h-[90%] w-[75%] max-w-[1200px] -translate-x-1/2 rounded-full bg-gradient-to-t from-primary/25 via-primary/10 to-transparent blur-[130px]" />
+        <motion.p
+          initial={reduce ? false : { opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative flex items-end justify-center gap-[0.03em] font-display font-semibold tracking-[-0.07em] leading-[0.74] text-center text-[28vw] sm:text-[23vw] md:text-[20vw] lg:text-[18vw] xl:text-[17vw] whitespace-nowrap pt-4 pb-28 sm:pb-24 md:pb-16"
+        >
+          <SparkleMark className="mb-[0.09em] h-[0.52em] w-auto shrink-0 select-none opacity-95 drop-shadow-[0_0_24px_rgba(99,102,241,0.3)]" />
+          <span className="fless-less-letter drop-shadow-[0_4px_32px_rgba(0,0,0,0.35)]">F</span>
           <span className="inline-flex">
             {lessLetters.map((letter, i) => (
-              <motion.span
+              <span
                 key={`${letter}-${i}`}
-                className={reduce ? "text-primary" : "fless-less-letter"}
-                initial={reduce ? false : { y: "0.35em", opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ delay: 0.08 + i * 0.07, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="fless-less-letter drop-shadow-[0_4px_32px_rgba(0,0,0,0.35)]"
               >
                 {letter}
-              </motion.span>
+              </span>
             ))}
           </span>
-        </p>
+        </motion.p>
       </div>
     </footer>
   )

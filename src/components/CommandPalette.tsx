@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Search, X, Command, Sparkles, Building2, BookOpen, Code2, ArrowRight } from "lucide-react"
 import Link from "next/link"
+import { industries } from "@/lib/industries"
 
 interface CommandPaletteProps {
   isOpen: boolean
@@ -41,7 +42,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
   const categories = [
     { title: "Departments", items: ["Marketing AI", "Voice AI", "Sales AI", "Support AI", "Recruiting AI", "Operations AI", "Finance AI", "HR AI"] },
     { title: "Products", items: ["AI Workforce Platform", "Company Command Center", "Knowledge Base", "Workflow Automation"] },
-    { title: "Solutions", items: ["Startup", "SMB", "Enterprise", "Agency", "Healthcare", "Retail"] },
+    { title: "Solutions", items: ["Startup", "SMB", "Enterprise", "Agency", ...industries.map((i) => i.name)] },
   ]
 
   const filteredCategories = query

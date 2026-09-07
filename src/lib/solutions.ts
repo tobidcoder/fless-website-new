@@ -324,9 +324,9 @@ export const solutions: Solution[] = [
   },
   {
     slug: "retail",
-    name: "Retail",
+    name: "Retail & E-commerce",
     kind: "industry",
-    line: "Stores, sites, and the questions in between.",
+    line: "Online stores, retail brands, D2C",
     headline: "The floor and the site, on one loop.",
     lede: "Campaigns, stock questions, and support that doesn’t bounce between a shop and a chatbot. One record from browse to refund.",
     story:
@@ -522,12 +522,6 @@ export const solutions: Solution[] = [
 
 export const sizeSolutions = solutions.filter((s) => s.kind === "size")
 export const industrySolutions = solutions.filter((s) => s.kind === "industry")
-export const featuredIndustrySolutions = industrySolutions.filter((s) =>
-  ["healthcare", "education", "retail"].includes(s.slug),
-)
-export const moreIndustrySolutions = industrySolutions.filter((s) =>
-  ["finance", "hospitality", "professional-services"].includes(s.slug),
-)
 
 export function getSolution(slug: string) {
   return solutions.find((s) => s.slug === slug)

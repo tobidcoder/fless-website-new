@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Crown } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { BrandedStage, PhotoTile } from "@/components/BrandedStage"
@@ -165,6 +165,90 @@ export function DepartmentPage({ dept }: { dept: Department }) {
             </div>
           </div>
         </section>
+
+        {/* Provisioned AI Employees Section */}
+        {dept.employees && dept.employees.length > 0 && (
+          <section className="py-20 md:py-28 border-b border-border/60">
+            <div className="max-w-[1200px] mx-auto px-6">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+                <div>
+                  <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">
+                    Autonomous Staff · {dept.employees.length} {dept.employees.length === 1 ? "Employee" : "Employees"}
+                  </p>
+                  <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight text-foreground">
+                    The {dept.name} Team.
+                  </h2>
+                </div>
+                <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
+                  Every employee is dedicated to autonomous execution with specialized domain skills and connected tools.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+                {dept.employees.map((emp, i) => (
+                  <motion.div
+                    key={emp.id}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                    className="rounded-2xl border border-border/80 bg-card p-5 sm:p-6 flex flex-col justify-between transition-all duration-200 hover:border-primary/40 hover:shadow-sm group"
+                  >
+                    <div>
+                      <div className="flex items-start justify-between gap-3 mb-4">
+                        <div className="relative">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={emp.avatar}
+                            alt={emp.name}
+                            className="w-12 h-12 rounded-full object-cover ring-2 ring-border/70 group-hover:ring-primary/30 transition-all"
+                          />
+                          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-background" />
+                        </div>
+                        {emp.isManager ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                            <Crown className="w-2.5 h-2.5" />
+                            Manager
+                          </span>
+                        ) : (
+                          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-primary border border-primary/20">
+                            {emp.badge}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="text-base font-semibold text-foreground tracking-tight">
+                        {emp.name}
+                      </div>
+                      <div className="text-[13px] font-medium text-primary mt-0.5">
+                        {emp.role}
+                      </div>
+                      <p className="text-[13px] text-muted-foreground leading-relaxed mt-2.5">
+                        {emp.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 mt-4 border-t border-border/60">
+                      <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+                        Core Capabilities
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {emp.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="inline-block text-[11px] px-2 py-0.5 rounded-md bg-secondary/80 text-foreground/80 font-medium"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {extra && (
           <section className="py-20 md:py-28">

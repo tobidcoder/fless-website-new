@@ -6,12 +6,8 @@ import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { PhotoTile } from "@/components/BrandedStage"
 import { EmailCapture } from "@/components/EmailCapture"
-import {
-  sizeSolutions,
-  featuredIndustrySolutions,
-  moreIndustrySolutions,
-  type Solution,
-} from "@/lib/solutions"
+import { sizeSolutions, type Solution } from "@/lib/solutions"
+import { IndustryGrid } from "@/components/IndustryGrid"
 
 function Grid({
   title,
@@ -87,8 +83,11 @@ export default function SolutionsIndexPage() {
           </div>
 
           <Grid title="Size" items={sizeSolutions} />
-          <Grid title="Industry" items={featuredIndustrySolutions} columns="lg:grid-cols-3" />
-          <Grid title="More" items={moreIndustrySolutions} columns="lg:grid-cols-3" />
+
+          <section id="industry" className="py-16 md:py-20">
+            <h2 className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-6">Industry</h2>
+            <IndustryGrid />
+          </section>
         </div>
       </main>
       <Footer />

@@ -102,7 +102,7 @@ function ShippingLivePanel() {
             </span>
           </div>
 
-          <div className="flex gap-1.5 overflow-x-auto px-3 py-2.5">
+          <div className="flex gap-1.5 overflow-x-auto overscroll-x-contain touch-pan-x px-3 py-2.5 [-webkit-overflow-scrolling:touch]">
             {desks.map((item) => {
               const on = selected === item
               return (
@@ -163,28 +163,17 @@ function ShippingLivePanel() {
 }
 
 export function BuiltDifferent() {
-  const guard = (e: { preventDefault: () => void }) => e.preventDefault()
-
   return (
     <section className="relative overflow-hidden border-t border-border/60">
       <div className="grid lg:grid-cols-2 min-h-[560px] lg:min-h-[720px]">
-        <div
-          className="relative min-h-[460px] lg:min-h-full bg-night"
-          onContextMenu={guard}
-          onDragStart={guard}
-        >
+        <div className="relative min-h-[460px] lg:min-h-full bg-night">
           <div
             role="img"
             aria-label="Fless command center shipping work across desks"
             className="fless-shot-fill absolute inset-0"
           />
-          <div
-            className="absolute inset-0 z-10 cursor-default"
-            onContextMenu={guard}
-            onMouseDown={guard}
-            onCopy={guard}
-            aria-hidden
-          />
+          {/* Do not capture touch — blocks vertical scroll on mobile */}
+          <div className="pointer-events-none absolute inset-0 z-10 select-none" aria-hidden />
           <div className="pointer-events-none absolute inset-0 z-[12] bg-gradient-to-r from-transparent via-transparent to-night/70" />
           <div className="pointer-events-none absolute inset-0 z-[12] bg-gradient-to-t from-night/70 via-night/15 to-transparent" />
 

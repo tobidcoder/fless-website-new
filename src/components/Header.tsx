@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { ChevronDown, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { sizeSolutions, featuredIndustrySolutions, moreIndustrySolutions } from "@/lib/solutions"
+import { sizeSolutions } from "@/lib/solutions"
+import { featuredIndustries, industryHref } from "@/lib/industries"
 import { StickyRegister } from "@/components/StickyRegister"
 import { FlessLogo } from "@/components/FlessLogo"
 import { ThemeToggle } from "@/components/ThemeToggle"
@@ -82,21 +83,21 @@ export function Header({ activePage }: HeaderProps) {
           </nav>
         </div>
 
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <ThemeToggle className="hidden md:inline-flex" />
           <Link href="/login" className="hidden md:block text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Log in
           </Link>
           <Link
             href="/start"
-            className="inline-flex h-9 items-center gap-1.5 rounded-full bg-primary px-4 text-[13px] font-medium text-primary-foreground shadow-sm shadow-primary/25 hover:bg-primary-hover transition-colors"
+            className="inline-flex h-8 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-full bg-primary px-3 sm:px-4 text-[12px] sm:text-[13px] font-medium text-primary-foreground shadow-sm shadow-primary/25 hover:bg-primary-hover transition-colors shrink-0"
           >
             Join beta
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
           <button
             type="button"
-            className="lg:hidden text-[13px] font-medium text-foreground px-2"
+            className="lg:hidden text-[13px] font-medium text-foreground px-1.5 py-1"
             onClick={() => setMobileOpen((o) => !o)}
             aria-expanded={mobileOpen}
             aria-label="Open menu"
@@ -155,28 +156,28 @@ export function Header({ activePage }: HeaderProps) {
                     ))}
                   </div>
                   <div>
-                    <Link href="/solutions" className="text-[11px] font-medium uppercase tracking-wider text-primary mb-3 block hover:opacity-80">
+                    <Link href="/solutions#industry" className="text-[11px] font-medium uppercase tracking-wider text-primary mb-3 block hover:opacity-80">
                       Industry
                     </Link>
-                    {featuredIndustrySolutions.map((s) => (
-                      <Link key={s.slug} href={`/solutions/${s.slug}`} className="block py-2 group">
+                    {featuredIndustries.slice(0, 4).map((s) => (
+                      <Link key={s.id} href={industryHref(s)} className="block py-2 group">
                         <div className="text-[13px] font-medium text-foreground group-hover:opacity-70">{s.name}</div>
                         <div className="text-[11px] text-muted-foreground leading-snug">{s.line}</div>
                       </Link>
                     ))}
                   </div>
                   <div>
-                    <Link href="/solutions" className="text-[11px] font-medium uppercase tracking-wider text-primary mb-3 block hover:opacity-80">
+                    <Link href="/solutions#industry" className="text-[11px] font-medium uppercase tracking-wider text-primary mb-3 block hover:opacity-80">
                       More
                     </Link>
-                    {moreIndustrySolutions.map((s) => (
-                      <Link key={s.slug} href={`/solutions/${s.slug}`} className="block py-2 group">
+                    {featuredIndustries.slice(4, 8).map((s) => (
+                      <Link key={s.id} href={industryHref(s)} className="block py-2 group">
                         <div className="text-[13px] font-medium text-foreground group-hover:opacity-70">{s.name}</div>
                         <div className="text-[11px] text-muted-foreground leading-snug">{s.line}</div>
                       </Link>
                     ))}
-                    <Link href="/solutions" className="block pt-3 text-[13px] font-medium text-primary hover:opacity-80">
-                      All solutions →
+                    <Link href="/industries" className="block pt-3 text-[13px] font-medium text-primary hover:opacity-80">
+                      All industries →
                     </Link>
                   </div>
                   <Link href="/solutions/enterprise" className="relative rounded-xl overflow-hidden min-h-[180px] group ring-1 ring-black/10">
@@ -207,6 +208,7 @@ export function Header({ activePage }: HeaderProps) {
               <Link href="/" className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>Home</Link>
               <Link href="/pricing" className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>Pricing</Link>
               <Link href="/solutions" className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>All solutions</Link>
+              <Link href="/login" className="block py-1.5 font-medium text-primary" onClick={() => setMobileOpen(false)}>Log in</Link>
             </div>
             <div>
               <div className="text-[11px] uppercase tracking-wider text-primary mb-3">Appearance</div>
@@ -222,19 +224,14 @@ export function Header({ activePage }: HeaderProps) {
             </div>
             <div>
               <div className="text-[11px] uppercase tracking-wider text-primary mb-2">Industry</div>
-              {featuredIndustrySolutions.map((s) => (
-                <Link key={s.slug} href={`/solutions/${s.slug}`} className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>
+              {featuredIndustries.map((s) => (
+                <Link key={s.id} href={industryHref(s)} className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>
                   {s.name}
                 </Link>
               ))}
-            </div>
-            <div>
-              <div className="text-[11px] uppercase tracking-wider text-primary mb-2">More</div>
-              {moreIndustrySolutions.map((s) => (
-                <Link key={s.slug} href={`/solutions/${s.slug}`} className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>
-                  {s.name}
-                </Link>
-              ))}
+              <Link href="/industries" className="block py-1.5 font-medium text-primary" onClick={() => setMobileOpen(false)}>
+                All industries
+              </Link>
             </div>
             <div>
               <div className="text-[11px] uppercase tracking-wider text-primary mb-2">Departments</div>

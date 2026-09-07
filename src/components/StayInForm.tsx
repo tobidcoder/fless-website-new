@@ -20,14 +20,25 @@ export function StayInForm({
 
   const go = (e: React.FormEvent) => {
     e.preventDefault()
+    const cleanEmail = email.trim()
+    if (!cleanEmail) return
     setSent(true)
-    router.push(`/start?email=${encodeURIComponent(email)}&source=${encodeURIComponent(source)}`)
+    router.push(`/start?email=${encodeURIComponent(cleanEmail)}&source=${encodeURIComponent(source)}`)
   }
 
   const dark = variant === "dark"
 
   return (
-    <form onSubmit={go} className={cn("flex w-full max-w-md gap-2", className)}>
+    <form
+      onSubmit={go}
+      className={cn(
+        "relative flex items-center w-full max-w-md rounded-full p-1.5 shadow-sm transition-all duration-200",
+        dark
+          ? "bg-white/[0.07] border border-white/15 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/40 hover:border-white/25"
+          : "bg-background border border-border/80 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/25 hover:border-border",
+        className,
+      )}
+    >
       <input
         type="email"
         required
@@ -36,15 +47,15 @@ export function StayInForm({
         placeholder="Work email"
         autoComplete="email"
         className={cn(
-          "flex-1 min-w-0 h-11 px-4 rounded-full text-sm outline-none",
+          "min-w-0 flex-1 bg-transparent px-3.5 sm:px-4 text-base sm:text-sm outline-none",
           dark
-            ? "bg-white/5 border border-white/10 text-white placeholder:text-white/35 focus:border-primary focus:ring-1 focus:ring-primary/40"
-            : "bg-white border border-black/10 text-slate-900 placeholder:text-slate-400 focus:border-primary focus:ring-1 focus:ring-primary/30",
+            ? "text-white placeholder:text-white/40"
+            : "text-foreground placeholder:text-muted-foreground",
         )}
       />
       <button
         type="submit"
-        className="h-11 px-5 rounded-full bg-primary text-primary-foreground text-sm font-medium shrink-0 hover:bg-primary-hover shadow-sm shadow-primary/25"
+        className="inline-flex h-9 sm:h-10 px-4 sm:px-5 rounded-full bg-primary text-white text-xs sm:text-sm font-medium shrink-0 items-center justify-center gap-1.5 hover:bg-primary-hover shadow-sm shadow-primary/20 transition-colors"
       >
         {sent ? <Check className="w-4 h-4" /> : "Join"}
       </button>

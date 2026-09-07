@@ -26,7 +26,6 @@ const overlays = [
 
 export function IntroFilm() {
   const reduce = useReducedMotion()
-  const guard = (e: { preventDefault: () => void }) => e.preventDefault()
 
   return (
     <div className="relative sm:px-4 lg:px-6">
@@ -41,13 +40,7 @@ export function IntroFilm() {
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        <motion.figure
-          animate={reduce ? undefined : { y: [0, -8, 0] }}
-          transition={reduce ? undefined : { duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="intro-film relative overflow-visible"
-          onContextMenu={guard}
-          onDragStart={guard}
-        >
+        <figure className="intro-film relative overflow-visible">
           <div className="overflow-hidden rounded-2xl border border-black/[0.08] bg-white shadow-[0_24px_80px_-28px_rgba(15,23,42,0.35)] ring-1 ring-black/[0.04]">
             <div className="flex h-11 items-center justify-between border-b border-black/[0.06] bg-[#f8fafc] px-4">
               <div className="flex items-center gap-3 min-w-0">
@@ -79,15 +72,7 @@ export function IntroFilm() {
                 aria-label="Fless command center with sidebar, departments, and live activity"
                 className="intro-film-shot w-full bg-[#f8fafc] bg-cover bg-top bg-no-repeat"
               />
-              <div
-                className="absolute inset-0 z-10 cursor-default"
-                onContextMenu={guard}
-                onDragStart={guard}
-                onMouseDown={guard}
-                onCopy={guard}
-                onCut={guard}
-                aria-hidden
-              />
+              <div className="absolute inset-0 z-10 pointer-events-none select-none" aria-hidden />
               <div className="pointer-events-none absolute inset-0 z-[15] hidden select-none sm:block" aria-hidden>
                 {overlays.map((card, i) => (
                   <motion.div
@@ -113,7 +98,7 @@ export function IntroFilm() {
               </div>
             </div>
           </div>
-        </motion.figure>
+        </figure>
       </motion.div>
     </div>
   )
