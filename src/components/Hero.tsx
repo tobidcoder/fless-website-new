@@ -24,7 +24,7 @@ export function Hero() {
             transition={{ delay: 0.05, duration: 0.55 }}
             className="text-[44px] sm:text-[56px] md:text-[68px] lg:text-[80px] font-display font-semibold leading-[1.02] tracking-[-0.05em] text-foreground"
           >
-            Employees for every
+            AI Employees for every
             <br />
             part of your{" "}
             <span className="bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">

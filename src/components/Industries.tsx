@@ -13,12 +13,19 @@ export function Industries() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [isMouseDown, setIsMouseDown] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [startScrollLeft, setStartScrollLeft] = useState(0)
+  const [hasMoved, setHasMoved] = useState(false)
 
   const checkScroll = () => {
     if (!scrollRef.current) return
     const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
     setCanScrollLeft(scrollLeft > 8)
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 8)
+    const maxScroll = scrollWidth - clientWidth
+    setScrollProgress(maxScroll > 0 ? scrollLeft / maxScroll : 0)
   }
 
   useEffect(() => {
@@ -27,16 +34,65 @@ export function Industries() {
     if (!el) return
     el.addEventListener("scroll", checkScroll, { passive: true })
     window.addEventListener("resize", checkScroll, { passive: true })
+
+    // Allow horizontal wheel scrolling over the carousel
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && Math.abs(e.deltaY) > 5) {
+        const isAtLeft = el.scrollLeft <= 2
+        const isAtRight = el.scrollLeft >= el.scrollWidth - el.clientWidth - 4
+        if ((e.deltaY > 0 && !isAtRight) || (e.deltaY < 0 && !isAtLeft)) {
+          e.preventDefault()
+          el.scrollLeft += e.deltaY * 1.15
+        }
+      }
+    }
+
+    el.addEventListener("wheel", onWheel, { passive: false })
+
     return () => {
       el.removeEventListener("scroll", checkScroll)
       window.removeEventListener("resize", checkScroll)
+      el.removeEventListener("wheel", onWheel)
     }
   }, [])
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return
-    const offset = direction === "left" ? -380 : 380
+    const offset = direction === "left" ? -420 : 420
     scrollRef.current.scrollBy({ left: offset, behavior: "smooth" })
+  }
+
+  // Mouse drag-to-scroll handlers
+  const onMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return
+    setIsMouseDown(true)
+    setHasMoved(false)
+    setStartX(e.pageX - scrollRef.current.offsetLeft)
+    setStartScrollLeft(scrollRef.current.scrollLeft)
+  }
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDown || !scrollRef.current) return
+    const x = e.pageX - scrollRef.current.offsetLeft
+    const walk = (x - startX) * 1.25
+    if (Math.abs(walk) > 4) {
+      setHasMoved(true)
+    }
+    scrollRef.current.scrollLeft = startScrollLeft - walk
+  }
+
+  const onMouseUpOrLeave = () => {
+    setIsMouseDown(false)
+    setTimeout(() => setHasMoved(false), 50)
+  }
+
+  const handleTrackClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!scrollRef.current) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    const clickX = e.clientX - rect.left
+    const percent = Math.max(0, Math.min(1, clickX / rect.width))
+    const maxScroll = scrollRef.current.scrollWidth - scrollRef.current.clientWidth
+    scrollRef.current.scrollTo({ left: percent * maxScroll, behavior: "smooth" })
   }
 
   return (
@@ -88,7 +144,12 @@ export function Industries() {
         <div id="industry" className="relative">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
             <div>
-              <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-primary mb-1.5">Industry</p>
+              <div className="flex items-center gap-2 mb-1.5">
+                <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-primary">Industry</p>
+                <span className="text-[10.5px] font-medium text-muted-foreground bg-secondary px-2 py-0.5 rounded-full border border-border/60">
+                  35 sectors · scrollable
+                </span>
+              </div>
               <h3 className="text-2xl sm:text-3xl font-display font-semibold tracking-tight text-foreground">
                 Configured for your exact sector.
               </h3>
@@ -115,28 +176,66 @@ export function Industries() {
             </div>
           </div>
 
-          {/* Horizontal scroll track */}
-          <div
-            ref={scrollRef}
-            className="flex gap-4 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scroll-smooth no-scrollbar -mx-6 px-6"
-            style={{ scrollbarWidth: "none" }}
-          >
-            {industries.map((ind) => (
-              <div
-                key={ind.id}
-                className="w-[280px] sm:w-[320px] md:w-[340px] shrink-0 snap-start"
-              >
-                <IndustryCard industry={ind} className="h-full" />
-              </div>
-            ))}
+          {/* Horizontal scroll track with mouse drag & wheel scrolling */}
+          <div className="relative group">
+            <div
+              ref={scrollRef}
+              id="industries-scroll-track"
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUpOrLeave}
+              onMouseLeave={onMouseUpOrLeave}
+              className={`flex gap-4 overflow-x-auto pb-4 pt-1 snap-x snap-proximity scroll-smooth no-scrollbar -mx-6 px-6 cursor-grab active:cursor-grabbing select-none`}
+              style={{ scrollbarWidth: "none" }}
+              onClickCapture={(e) => {
+                if (hasMoved) {
+                  e.stopPropagation()
+                  e.preventDefault()
+                }
+              }}
+            >
+              {industries.map((ind) => (
+                <div
+                  key={ind.id}
+                  className="w-[280px] sm:w-[320px] md:w-[340px] shrink-0 snap-start"
+                >
+                  <IndustryCard industry={ind} className="h-full pointer-events-auto" />
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="mt-8 flex items-center justify-between flex-wrap gap-4">
+          {/* Interactive Scrubber & Progress Bar */}
+          <div className="mt-4 flex items-center gap-4">
+            <div
+              onClick={handleTrackClick}
+              role="scrollbar"
+              aria-controls="industries-scroll-track"
+              aria-label="Industries carousel progress"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={Math.round(scrollProgress * 100)}
+              className="relative flex-1 h-1.5 bg-secondary/80 dark:bg-slate-800 rounded-full overflow-hidden cursor-pointer group"
+            >
+              <div
+                className="absolute top-0 bottom-0 bg-primary/70 group-hover:bg-primary rounded-full transition-all duration-100"
+                style={{
+                  left: `${scrollProgress * 84}%`,
+                  width: "16%",
+                }}
+              />
+            </div>
+            <span className="text-[11px] font-medium text-muted-foreground whitespace-nowrap tabular-nums">
+              {Math.min(35, Math.max(1, Math.round(scrollProgress * 34) + 1))} of 35 sectors
+            </span>
+          </div>
+
+          <div className="mt-7 flex items-center justify-between flex-wrap gap-4">
             <Link
               href="/industries"
               className="inline-flex h-10 items-center gap-2 rounded-full border border-border/80 bg-card px-5 text-[13px] font-medium text-foreground shadow-sm hover:border-primary/40 hover:bg-secondary/60 transition-all group"
             >
-              <span>View all 35 industries</span>
+              <span>Explore all 35 industry directories</span>
               <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-transform" />
             </Link>
             <Link

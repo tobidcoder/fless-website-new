@@ -19,7 +19,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Fless — A team for every department",
+  title: "Fless — AI team for every department",
   description: "Marketing, sales, support, hiring, and finance — running from one place.",
   icons: {
     icon: [{ url: "/fless-mark.png", type: "image/png" }],
