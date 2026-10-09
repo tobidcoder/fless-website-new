@@ -177,11 +177,20 @@
 
 .intro-film,
 .intro-film-shot,
-.intro-film-overlay {
+.intro-film-overlay,
+.no-save-image {
   -webkit-user-select: none;
   user-select: none;
   -webkit-user-drag: none;
   -webkit-touch-callout: none;
+}
+
+.intro-film img,
+.no-save-image {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 
 .intro-film-shot,
@@ -195,7 +204,7 @@
 }
 
 .intro-film-shot {
-  aspect-ratio: 1536 / 1024;
+  aspect-ratio: 2879 / 1551;
   background-size: cover;
   background-position: top;
   background-repeat: no-repeat;

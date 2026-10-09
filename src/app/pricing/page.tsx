@@ -23,9 +23,6 @@ import {
   Briefcase,
   Globe,
   Zap,
-  CheckCircle2,
-  ChevronDown,
-  Layers,
   Activity,
 } from "lucide-react"
 import { Header } from "@/components/Header"

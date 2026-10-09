@@ -5,7 +5,7 @@ import { motion, useReducedMotion } from "framer-motion"
 import { StayInForm } from "@/components/StayInForm"
 import { FlessLogo, SparkleMark } from "@/components/FlessLogo"
 import { NvidiaInceptionBadge } from "@/components/NvidiaInceptionBadge"
-import { Globe, ShieldCheck, Activity, Terminal, ArrowUpRight } from "lucide-react"
+import { Globe, ShieldCheck, ArrowUpRight } from "lucide-react"
 
 const lessLetters = ["L", "E", "S", "S"]
 
