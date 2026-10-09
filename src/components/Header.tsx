@@ -80,6 +80,18 @@ export function Header({ activePage }: HeaderProps) {
             >
               Pricing
             </Link>
+            <Link
+              href="/builders"
+              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "builders" && "text-primary")}
+            >
+              Builders
+            </Link>
+            <Link
+              href="/docs"
+              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "docs" && "text-primary")}
+            >
+              Docs
+            </Link>
           </nav>
         </div>
 

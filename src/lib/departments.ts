@@ -3,6 +3,8 @@ export type DepartmentEmployee = {
   name: string
   role: string
   isManager?: boolean
+  ownerType?: "FLESS" | "BUILDER" | "PARTNER"
+  ownerName?: string
   avatar: string
   badge: string
   description: string

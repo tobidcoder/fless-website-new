@@ -4,19 +4,24 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { EmailCapture } from "@/components/EmailCapture"
 import { IntroFilm } from "@/components/IntroFilm"
+import { NvidiaInceptionBadge } from "@/components/NvidiaInceptionBadge"
 
 export function Hero() {
   return (
     <>
       <section className="relative pt-28 pb-16 md:pt-36 md:pb-20 overflow-hidden bg-background">
         <div className="max-w-[960px] mx-auto px-6 text-center">
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-xs sm:text-[13px] font-medium tracking-[0.24em] uppercase text-muted-foreground mb-6"
+            className="flex items-center justify-center gap-3 mb-6 flex-wrap"
           >
-            One product · every market
-          </motion.p>
+            <span className="text-xs sm:text-[13px] font-medium tracking-[0.24em] uppercase text-muted-foreground">
+              One product · every market
+            </span>
+            <span className="text-muted-foreground/30 hidden sm:inline">•</span>
+            <NvidiaInceptionBadge variant="pill" />
+          </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 18 }}

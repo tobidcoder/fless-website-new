@@ -276,6 +276,34 @@ export function StartView() {
                   ))}
                 </select>
               </div>
+
+              <div className="sm:col-span-2">
+                <label className={label}>How will you use Fless?</label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                  {[
+                    { id: "BUSINESS", title: "Run my business", sub: "Hire AI employees for my team" },
+                    { id: "BUILDER", title: "Build AI employees", sub: "Author and publish AI workers" },
+                    { id: "BOTH", title: "Both", sub: "Hire workers & build for the platform" },
+                  ].map((option) => (
+                    <label
+                      key={option.id}
+                      className="p-3 rounded-xl border border-border bg-card cursor-pointer flex flex-col justify-between hover:border-primary/50 transition-colors"
+                    >
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="usageIntent"
+                          value={option.id}
+                          defaultChecked={option.id === "BOTH"}
+                          className="text-primary focus:ring-primary"
+                        />
+                        <span className="font-semibold text-xs text-foreground">{option.title}</span>
+                      </div>
+                      <span className="text-[11px] text-muted-foreground pt-1">{option.sub}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div>

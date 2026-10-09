@@ -1,6 +1,6 @@
 "use client"
 
-const names = ["Surgic+", "RevWit", "AllMoments", "10MG", "Voke", "Sourzer", "PayFlow", "Helix"]
+const names = ["NVIDIA Inception", "Surgic+", "RevWit", "AllMoments", "10MG", "Voke", "Sourzer", "PayFlow", "Helix"]
 
 export function LogoMarquee() {
   const row = [...names, ...names, ...names]
