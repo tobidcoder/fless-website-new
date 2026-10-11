@@ -11,10 +11,10 @@ import {
 import { BrandedStage } from "@/components/BrandedStage"
 
 const credentials = [
-  { title: "SOC 2 Type II", copy: "Independently audited. Controls you can send to procurement." },
-  { title: "Encryption", copy: "AES-256 at rest. TLS in transit. Keys you can rotate." },
-  { title: "SSO & SAML", copy: "Fit the identity stack you already have." },
-  { title: "Audit log", copy: "Every action, every department, exportable." },
+  { title: "SOC 2", copy: "Audit in progress with an independent CPA firm. Security questionnaires on request." },
+  { title: "Encryption", copy: "TLS in transit, AES-256 at rest." },
+  { title: "SSO & SAML", copy: "Available on enterprise agreements." },
+  { title: "Audit log", copy: "Exportable audit log for all employee actions." },
 ]
 
 const faqs = [
@@ -50,7 +50,7 @@ export function SecurityFaq() {
               rows={[
                 { title: "SSO", line: "Okta group mapped", time: "14m" },
                 { title: "Export", line: "Q2 log ready", time: "3h" },
-                { title: "SOC 2", line: "Pack for procurement", time: "Ready" },
+                { title: "Questionnaire", line: "Completed on request", time: "Ready" },
               ]}
               className="aspect-[16/10] rounded-2xl"
             />

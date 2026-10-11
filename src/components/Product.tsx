@@ -4,10 +4,10 @@ import { motion } from "framer-motion"
 import { BrandedStage } from "@/components/BrandedStage"
 
 const rows = [
-  { who: "You", text: "Draft next week’s campaign for the London launch." },
-  { who: "Fless", text: "Brief locked. 4 posts, 2 ads, report scheduled Friday." },
-  { who: "You", text: "Route after-hours calls to Voice. Book anything after 10." },
-  { who: "Fless", text: "Voice is live in Lagos and Dubai. Calendar synced." },
+  { who: "You", text: "Draft next week’s product campaign for the launch." },
+  { who: "Fless", text: "Brief locked. 4 posts drafted, review pending in approvals queue." },
+  { who: "You", text: "Approve LinkedIn and X posts. Keep Bluesky for Thursday." },
+  { who: "Fless", text: "Approved posts queued for Buffer. Bluesky scheduled for Thursday 10:00 AM." },
 ]
 
 export function Product() {
@@ -37,7 +37,7 @@ export function Product() {
             viewport={{ once: true }}
             className="mt-4 text-[15px] text-muted-foreground leading-relaxed max-w-xl"
           >
-            Assign work in plain language. See every department from a single screen — not eight logins.
+            Assign work in plain language. Marketing is live today, with voice, sales, support, and finance on the roadmap.
           </motion.p>
         </div>
 
@@ -50,12 +50,12 @@ export function Product() {
           >
             <BrandedStage
               image="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&auto=format&fit=crop&q=80"
-              alt="Teams running the company from one command center"
-              label="Command · live"
+              alt="Teams running marketing from command center"
+              label="Command · Sample workspace"
               rows={[
-                { title: "Marketing", line: "London launch · 4 posts live", time: "2m" },
-                { title: "Voice", line: "Lagos + Dubai calendars synced", time: "8m" },
-                { title: "Finance", line: "First invoice marked paid", time: "1h" },
+                { title: "Marketing", line: "Launch brief · 4 posts queued", time: "Live" },
+                { title: "Approvals", line: "Human review confirmed", time: "Audit log" },
+                { title: "Channels", line: "LinkedIn & X connected via Buffer", time: "Active" },
               ]}
               className="rounded-2xl min-h-[340px] md:min-h-[480px] h-full"
             />
@@ -68,7 +68,7 @@ export function Product() {
             transition={{ delay: 0.08 }}
             className="lg:col-span-5 rounded-2xl border border-border/70 bg-background p-5 md:p-7 flex flex-col"
           >
-            <div className="text-[12px] font-medium text-muted-foreground mb-5">Today · Command</div>
+            <div className="text-[12px] font-medium text-muted-foreground mb-5">Sample workspace · Command</div>
             <div className="space-y-4 flex-1">
               {rows.map((row, i) => (
                 <motion.div

@@ -25,16 +25,11 @@ export function Footer() {
               Every market.
             </h2>
             <p className="text-white/50 text-[14px] sm:text-[15px] leading-relaxed max-w-md">
-              Deploy autonomous AI employees across voice, marketing, support, sales, and operations in under 2 minutes.
+              Set up in minutes. The infrastructure for senior-level AI employees.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
               <NvidiaInceptionBadge variant="footer" />
-              {/* LIVE STATUS PILL */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 bg-white/[0.03] text-[11px] text-white/70 font-mono">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>All Systems Operational · Sub-300ms</span>
-              </div>
             </div>
           </div>
 
@@ -51,14 +46,14 @@ export function Footer() {
               <span>Departments</span>
             </h4>
             <ul className="space-y-2.5 text-[13px] text-white/60">
-              <li><Link href="/departments/voice" className="hover:text-white transition-colors">Voice Telephony</Link></li>
-              <li><Link href="/departments/marketing" className="hover:text-white transition-colors">Marketing & Ads</Link></li>
-              <li><Link href="/departments/sales" className="hover:text-white transition-colors">Sales & CRM</Link></li>
-              <li><Link href="/departments/support" className="hover:text-white transition-colors">Customer Support</Link></li>
-              <li><Link href="/departments/operations" className="hover:text-white transition-colors">Operations & Ops</Link></li>
-              <li><Link href="/departments/finance" className="hover:text-white transition-colors">Accounts Payable</Link></li>
-              <li><Link href="/departments/recruitment" className="hover:text-white transition-colors">Recruitment</Link></li>
-              <li><Link href="/departments/hr" className="hover:text-white transition-colors">People & HR</Link></li>
+              <li><Link href="/departments/marketing" className="hover:text-white transition-colors flex items-center justify-between">Marketing & Ads <span className="text-[10px] text-emerald-400 font-mono">Live</span></Link></li>
+              <li><Link href="/departments/voice" className="hover:text-white transition-colors flex items-center justify-between">Voice Telephony <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
+              <li><Link href="/departments/sales" className="hover:text-white transition-colors flex items-center justify-between">Sales & CRM <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
+              <li><Link href="/departments/support" className="hover:text-white transition-colors flex items-center justify-between">Customer Support <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
+              <li><Link href="/departments/operations" className="hover:text-white transition-colors flex items-center justify-between">Operations & Ops <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
+              <li><Link href="/departments/finance" className="hover:text-white transition-colors flex items-center justify-between">Accounts Payable <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
+              <li><Link href="/departments/recruitment" className="hover:text-white transition-colors flex items-center justify-between">Recruitment <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
+              <li><Link href="/departments/hr" className="hover:text-white transition-colors flex items-center justify-between">People & HR <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
             </ul>
           </div>
 
@@ -87,11 +82,11 @@ export function Footer() {
             <ul className="space-y-2.5 text-[13px] text-white/60">
               <li><Link href="/builders" className="hover:text-white transition-colors">Builder Platform</Link></li>
               <li><Link href="/docs" className="hover:text-white transition-colors">Builder Documentation</Link></li>
-              <li><Link href="/docs#quickstart" className="hover:text-white transition-colors">5-Min Quickstart</Link></li>
-              <li><Link href="/docs#sdk-overview" className="hover:text-white transition-colors">@fless/employee-sdk</Link></li>
-              <li><Link href="/docs#ref-pricing" className="hover:text-white transition-colors">35/65 Payout Models</Link></li>
+              <li><Link href="/docs#quickstart" className="hover:text-white transition-colors">Quickstart Guide</Link></li>
+              <li><Link href="/docs#sdk-overview" className="hover:text-white transition-colors">SDK Overview</Link></li>
+              <li><Link href="/docs#ref-pricing" className="hover:text-white transition-colors">35/65 Revenue Split</Link></li>
               <li><Link href="/docs#plugin-whatsapp" className="hover:text-white transition-colors">Managed Plugins</Link></li>
-              <li><Link href="/start" className="hover:text-white transition-colors">Apply for Builder Seat</Link></li>
+              <li><Link href="/builders#apply" className="hover:text-white transition-colors">Request SDK Access</Link></li>
             </ul>
           </div>
 
@@ -102,10 +97,10 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-[13px] text-white/60">
               <li><Link href="/pricing" className="hover:text-white transition-colors">Workforce Pricing</Link></li>
-              <li><Link href="/solutions#calculator" className="hover:text-white transition-colors">ROI Calculator</Link></li>
+              <li><Link href="/pricing" className="hover:text-white transition-colors">Capacity Calculator</Link></li>
               <li><Link href="/security" className="hover:text-white transition-colors">Zero-Secret Vault</Link></li>
-              <li><Link href="/security#compliance" className="hover:text-white transition-colors">Global Compliance</Link></li>
-              <li><Link href="/pricing#guarantee" className="hover:text-white transition-colors">Money-Back Guarantee</Link></li>
+              <li><Link href="/security#compliance" className="hover:text-white transition-colors">Compliance Alignment</Link></li>
+              <li><Link href="/pricing#faqs" className="hover:text-white transition-colors">Cancellation Terms</Link></li>
               <li><Link href="/docs#security-boundaries" className="hover:text-white transition-colors">Security Architecture</Link></li>
             </ul>
           </div>
@@ -120,7 +115,7 @@ export function Footer() {
               <li><Link href="/start" className="hover:text-white transition-colors">Join Early Beta</Link></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">Customer Support</Link></li>
               <li><Link href="/contact#enterprise" className="hover:text-white transition-colors">Sales Inquiries</Link></li>
-              <li><a href="https://www.npmjs.com/package/@fless/employee-sdk" target="_blank" rel="noreferrer" className="hover:text-white transition-colors flex items-center gap-1">npm Registry <ArrowUpRight className="w-3 h-3" /></a></li>
+              <li><Link href="/builders#apply" className="hover:text-white transition-colors">Request SDK Access</Link></li>
             </ul>
           </div>
 
@@ -151,7 +146,7 @@ export function Footer() {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>NDPR · GDPR · HIPAA Compliant</span>
+              <span>NDPR & GDPR aligned · DPA on request</span>
             </span>
             <span className="hidden sm:inline">•</span>
             <span>© 2026 Fless Inc.</span>

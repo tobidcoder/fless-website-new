@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Link from "next/link";
 import {
   Search,
   Copy,
@@ -918,24 +919,22 @@ export default function DocsPage() {
               </div>
             ))}
 
-            {/* Quick npm Link Box */}
-            <div className="p-4 rounded-2xl border border-border/80 bg-brand-soft/25 dark:bg-night space-y-2 text-xs">
+            {/* Private Beta SDK Notice Box */}
+            <div className="p-4 rounded-2xl border border-primary/20 bg-primary/[0.04] dark:bg-night space-y-2 text-xs">
               <div className="font-semibold text-foreground flex items-center gap-1.5">
                 <Boxes className="w-3.5 h-3.5 text-primary" />
-                npm Package Registry
+                SDK Private Beta
               </div>
               <p className="text-muted-foreground leading-normal">
-                Install the official developer SDK to author and test AI employees:
+                The employee SDK is currently in private beta with accepted builders:
               </p>
               <div className="pt-1">
-                <a
-                  href="https://www.npmjs.com/package/@fless/employee-sdk"
-                  target="_blank"
-                  rel="noreferrer"
+                <Link
+                  href="/builders#apply"
                   className="inline-flex items-center gap-1 text-primary font-semibold hover:underline"
                 >
-                  @fless/employee-sdk <ExternalLink className="w-3 h-3" />
-                </a>
+                  Request SDK Access <ExternalLink className="w-3 h-3" />
+                </Link>
               </div>
             </div>
           </div>
@@ -1007,7 +1006,7 @@ export default function DocsPage() {
                       <h4 className="font-semibold text-foreground">Accelerated Compute Infrastructure</h4>
                     </div>
                     <p className="text-muted-foreground leading-relaxed">
-                      GPU-accelerated inference cluster optimized with TensorRT-LLM and vLLM pipelines. Provides sub-50ms TTFT streaming endpoints for voice synthesis and real-time tool calls.
+                      GPU-accelerated inference cluster optimized with TensorRT-LLM and vLLM pipelines. Provides low-latency streaming endpoints for real-time model interaction and tool calls.
                     </p>
                     <div className="text-[11px] text-muted-foreground font-mono bg-muted/50 p-2.5 rounded-xl border border-border/50">
                       NVIDIA Tensor Core GPUs • vLLM Engine • WebRTC / gRPC Low Latency
@@ -1095,12 +1094,19 @@ export default function DocsPage() {
                 <div className="p-5 rounded-2xl border border-border bg-background space-y-3">
                   <div className="flex items-center gap-2 font-semibold text-foreground">
                     <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center font-mono text-xs">1</span>
-                    Install the SDK
+                    Request SDK Access
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    Install the official authoring package in your TypeScript workspace:
+                    The SDK is currently distributed to accepted builders during private beta:
                   </p>
-                  <CodeBlock code="npm install @fless/employee-sdk @fless/contracts" language="bash" />
+                  <div className="pt-1">
+                    <Link
+                      href="/builders#apply"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground font-semibold text-xs hover:bg-primary-hover"
+                    >
+                      Request SDK Access in Private Beta →
+                    </Link>
+                  </div>
                 </div>
 
                 <div className="p-5 rounded-2xl border border-border bg-background space-y-3">
@@ -1365,7 +1371,7 @@ testLocally();`}
                       { name: "Ghana", code: "GH", curr: "GHS", prefix: "+233", notes: "BoG Fintech guidelines, Data Protection Act" },
                       { name: "Kenya", code: "KE", curr: "KES", prefix: "+254", notes: "CBK mobile payment & data protection frameworks" },
                       { name: "South Africa", code: "ZA", curr: "ZAR", prefix: "+27", notes: "POPIA compliance, SARB financial regulations" },
-                      { name: "United States", code: "US", curr: "USD", prefix: "+1", notes: "HIPAA (Healthcare), SEC/FINRA (Fintech), FCC TCPA" },
+                      { name: "United States", code: "US", curr: "USD", prefix: "+1", notes: "FTC Act, SEC/FINRA (Fintech), FCC TCPA" },
                       { name: "United Kingdom", code: "GB", curr: "GBP", prefix: "+44", notes: "UK GDPR, FCA compliance, NHS scheduling formats" },
                       { name: "Canada", code: "CA", curr: "CAD", prefix: "+1", notes: "PIPEDA privacy compliance, FINTRAC regulations" },
                       { name: "Germany", code: "DE", curr: "EUR", prefix: "+49", notes: "EU GDPR, BaFin financial directives" },
@@ -1691,9 +1697,17 @@ testLocally();`}
                 </p>
               </div>
 
-              <div className="p-5 rounded-2xl border border-border bg-brand-soft/20 dark:bg-night space-y-2">
-                <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Installation</div>
-                <CodeBlock code="npm install @fless/employee-sdk @fless/contracts" language="bash" />
+              <div className="p-5 rounded-2xl border border-border bg-brand-soft/20 dark:bg-night space-y-3">
+                <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Access & Installation</div>
+                <p className="text-xs text-muted-foreground">
+                  The Employee SDK is currently in private beta with accepted builders. Request access to receive the private registry package and CLI:
+                </p>
+                <Link
+                  href="/builders#apply"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-primary-foreground font-semibold text-xs hover:bg-primary-hover"
+                >
+                  Request SDK Access →
+                </Link>
               </div>
 
               <div className="space-y-4">

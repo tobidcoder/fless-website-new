@@ -3,7 +3,15 @@
 import { motion } from "framer-motion"
 import { BrandedStage } from "@/components/BrandedStage"
 
-const tools = [
+const liveTools = [
+  "LinkedIn",
+  "X",
+  "Facebook",
+  "Bluesky",
+  "Buffer",
+]
+
+const roadmapTools = [
   "Google Workspace",
   "Microsoft 365",
   "Slack",
@@ -12,7 +20,6 @@ const tools = [
   "Stripe",
   "Zoom",
   "Calendly",
-  "LinkedIn",
   "Meta",
   "AWS",
   "GitHub",
@@ -32,9 +39,9 @@ export function Integrations() {
             alt="Office with the tools teams already use"
             label="Connected"
             rows={[
-              { title: "HubSpot", line: "CRM syncing", time: "Live" },
-              { title: "Calendar", line: "Google · Dubai diary", time: "Live" },
-              { title: "Stripe", line: "Invoices matching bank", time: "Ready" },
+              { title: "LinkedIn & X", line: "Buffer · OAuth connected", time: "Live" },
+              { title: "Facebook & Bluesky", line: "Official APIs connected", time: "Live" },
+              { title: "HubSpot & Slack", line: "CRM & chat integration", time: "Roadmap" },
             ]}
             className="aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] rounded-2xl"
           />
@@ -61,23 +68,34 @@ export function Integrations() {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[15px] text-muted-foreground leading-relaxed mb-10 max-w-md"
+            className="text-[15px] text-muted-foreground leading-relaxed mb-8 max-w-md"
           >
-            Calendar, CRM, inbox, payments. Fless works where the work already lives.
+            Marketing publishes via LinkedIn, X, Facebook, and Bluesky today. Additional workplace tools are on our roadmap.
           </motion.p>
-          <div className="grid grid-cols-2 gap-x-8 gap-y-3">
-            {tools.map((t, i) => (
-              <motion.div
-                key={t}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.03 }}
-                className="text-sm font-medium text-foreground py-1 border-b border-border/50"
-              >
-                {t}
-              </motion.div>
-            ))}
+          <div className="space-y-6">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">Live today</div>
+              <div className="grid grid-cols-2 gap-x-8 gap-y-2.5">
+                {liveTools.map((t) => (
+                  <div key={t} className="text-sm font-medium text-foreground py-1 border-b border-border/50 flex items-center justify-between">
+                    <span>{t}</span>
+                    <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 uppercase">Live</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">On the roadmap</div>
+              <div className="grid grid-cols-2 gap-x-8 gap-y-2.5">
+                {roadmapTools.map((t) => (
+                  <div key={t} className="text-sm text-muted-foreground py-1 border-b border-border/30 flex items-center justify-between">
+                    <span>{t}</span>
+                    <span className="text-[10px] uppercase text-muted-foreground/70">Roadmap</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

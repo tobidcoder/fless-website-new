@@ -16,14 +16,14 @@ interface HeaderProps {
 }
 
 const departments = [
-  { title: "Marketing", sub: "Content, SEO, ads, social", href: "/departments/marketing", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=200&auto=format&fit=crop&q=80" },
-  { title: "Voice", sub: "Inbound, outbound, booking", href: "/departments/voice", image: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=200&auto=format&fit=crop&q=80" },
-  { title: "Sales", sub: "Leads, CRM, follow-up", href: "/departments/sales", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=200&auto=format&fit=crop&q=80" },
-  { title: "Recruitment", sub: "Sourcing, screening, hiring", href: "/departments/recruitment", image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&auto=format&fit=crop&q=80" },
-  { title: "Support", sub: "Tickets, success, escalation", href: "/departments/support", image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=200&auto=format&fit=crop&q=80" },
-  { title: "Operations", sub: "Projects, docs, workflows", href: "/departments/operations", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=200&auto=format&fit=crop&q=80" },
-  { title: "Finance", sub: "Invoices, expenses, payroll", href: "/departments/finance", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=200&auto=format&fit=crop&q=80" },
-  { title: "HR", sub: "Onboarding, policy, reviews", href: "/departments/hr", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200&auto=format&fit=crop&q=80" },
+  { title: "Marketing", sub: "Content, SEO, ads, social", href: "/departments/marketing", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=200&auto=format&fit=crop&q=80", status: "live" },
+  { title: "Voice", sub: "Inbound, outbound, booking", href: "/departments/voice", image: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=200&auto=format&fit=crop&q=80", status: "early-access" },
+  { title: "Sales", sub: "Leads, CRM, follow-up", href: "/departments/sales", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=200&auto=format&fit=crop&q=80", status: "early-access" },
+  { title: "Recruitment", sub: "Sourcing, screening, hiring", href: "/departments/recruitment", image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&auto=format&fit=crop&q=80", status: "early-access" },
+  { title: "Support", sub: "Tickets, success, escalation", href: "/departments/support", image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=200&auto=format&fit=crop&q=80", status: "early-access" },
+  { title: "Operations", sub: "Projects, docs, workflows", href: "/departments/operations", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=200&auto=format&fit=crop&q=80", status: "early-access" },
+  { title: "Finance", sub: "Invoices, expenses, payroll", href: "/departments/finance", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=200&auto=format&fit=crop&q=80", status: "early-access" },
+  { title: "HR", sub: "Onboarding, policy, reviews", href: "/departments/hr", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200&auto=format&fit=crop&q=80", status: "early-access" },
 ]
 
 export function Header({ activePage }: HeaderProps) {
@@ -139,7 +139,17 @@ export function Header({ activePage }: HeaderProps) {
                           <img src={dept.image} alt="" className="w-full h-full object-cover" />
                         </div>
                         <div>
-                          <div className="text-[13px] font-medium text-foreground">{dept.title}</div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[13px] font-medium text-foreground">{dept.title}</span>
+                            <span className={cn(
+                              "text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded",
+                              dept.status === "live"
+                                ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                                : "bg-muted text-muted-foreground"
+                            )}>
+                              {dept.status === "live" ? "Live" : "Early access"}
+                            </span>
+                          </div>
                           <div className="text-[11px] text-muted-foreground">{dept.sub}</div>
                         </div>
                       </Link>
@@ -248,8 +258,16 @@ export function Header({ activePage }: HeaderProps) {
             <div>
               <div className="text-[11px] uppercase tracking-wider text-primary mb-2">Departments</div>
               {departments.map((d) => (
-                <Link key={d.href} href={d.href} className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>
-                  {d.title}
+                <Link key={d.href} href={d.href} className="flex items-center justify-between py-1.5 font-medium" onClick={() => setMobileOpen(false)}>
+                  <span>{d.title}</span>
+                  <span className={cn(
+                    "text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded",
+                    d.status === "live"
+                      ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                      : "bg-muted text-muted-foreground"
+                  )}>
+                    {d.status === "live" ? "Live" : "Early access"}
+                  </span>
                 </Link>
               ))}
             </div>

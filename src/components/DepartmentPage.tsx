@@ -57,10 +57,21 @@ export function DepartmentPage({ dept }: { dept: Department }) {
                 transition={{ delay: 0.16 }}
                 className="mt-8"
               >
-                <EmailCapture source="department" extra={{ desk: dept.slug }} cta={`Get ${dept.name}`} />
-                <Link href="/pricing" className="inline-block mt-4 text-sm font-medium text-muted-foreground hover:text-primary">
-                  See pricing →
-                </Link>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link
+                    href={`/start?department=${dept.slug}`}
+                    className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
+                  >
+                    {dept.status === "live" ? `Join the ${dept.name} pilot` : `Join the ${dept.name} waitlist`}
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link
+                    href="/pricing"
+                    className="inline-flex h-11 items-center justify-center rounded-full border border-border px-5 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                  >
+                    See pricing
+                  </Link>
+                </div>
               </motion.div>
             </div>
 
@@ -73,12 +84,25 @@ export function DepartmentPage({ dept }: { dept: Department }) {
               <BrandedStage
                 image={dept.hero}
                 alt={dept.heroAlt}
-                label={`${dept.name} · live`}
+                label={`${dept.name} · ${dept.status === "live" ? "Live" : "Sample workspace"}`}
                 rows={dept.activity}
                 className="rounded-2xl aspect-[16/11]"
               />
             </motion.div>
           </div>
+
+          {dept.status !== "live" && (
+            <div className="max-w-[1200px] mx-auto px-6 mt-8">
+              <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-[13px] text-foreground flex items-center justify-between flex-wrap gap-3">
+                <p>
+                  <span className="font-semibold text-primary">{dept.name} is in early access.</span> Marketing is live today — join the waitlist and we&apos;ll onboard you as seats open.
+                </p>
+                <Link href={`/start?department=${dept.slug}`} className="text-xs font-semibold text-primary underline underline-offset-4">
+                  Join waitlist →
+                </Link>
+              </div>
+            </div>
+          )}
         </section>
 
         <section className="border-y border-border/60">
@@ -270,16 +294,24 @@ export function DepartmentPage({ dept }: { dept: Department }) {
         <section className="py-16 md:py-24 bg-night text-white">
           <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-10 items-end">
             <div className="lg:col-span-8">
-              <p className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-snug max-w-2xl">
-                “{dept.quote.text}”
+              <p className="text-xs uppercase font-semibold tracking-widest text-primary mb-3">
+                {dept.status === "live" ? "Pilot program" : "Early access waitlist"}
               </p>
-              <p className="mt-6 text-sm text-white/70">
-                {dept.quote.author} · {dept.quote.role}
+              <p className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-snug max-w-2xl">
+                {dept.status === "live"
+                  ? "Marketing is live today with 18 businesses in pilot. Join to run your multi-channel marketing autonomously."
+                  : `${dept.name} is on our roadmap. Join the early access waitlist to get priority onboarding.`}
+              </p>
+              <p className="mt-4 text-sm text-white/70">
+                {dept.status === "live" ? "18 businesses in pilot · NVIDIA Inception member" : "Rolling onboarding · DPA on request"}
               </p>
             </div>
             <div className="lg:col-span-4 lg:text-right">
-              <Link href={`/start?desk=${dept.slug}`} className="inline-flex h-11 items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 text-sm font-medium hover:bg-primary-hover">
-                Start with {dept.name}
+              <Link
+                href={`/start?department=${dept.slug}`}
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-primary text-primary-foreground px-6 text-sm font-medium hover:bg-primary-hover"
+              >
+                {dept.status === "live" ? `Start with ${dept.name}` : `Join the ${dept.name} waitlist`}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -291,8 +323,8 @@ export function DepartmentPage({ dept }: { dept: Department }) {
             <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-12">
               <div className="lg:col-span-4">
                 <h2 className="text-2xl font-display font-semibold tracking-tight mb-3">Questions</h2>
-                <p className="text-sm text-muted-foreground mb-6">Then register — two minutes, no card.</p>
-                <EmailCapture source="dept-faq" extra={{ desk: dept.slug }} cta="Register" />
+                <p className="text-sm text-muted-foreground mb-6">Join our rolling cohorts — no credit card required.</p>
+                <EmailCapture source="dept-faq" extra={{ desk: dept.slug }} cta="Join beta" />
               </div>
               <div className="lg:col-span-8">
                 <Accordion type="single" collapsible className="w-full">
@@ -323,7 +355,8 @@ export function DepartmentPage({ dept }: { dept: Department }) {
                     image={d.hero}
                     alt={d.name}
                     title={d.name}
-                    live={d.activity[0]?.title}
+                    status={d.status}
+                    live={d.status === "live" ? "Live today" : "Early access"}
                     className="aspect-[3/4] rounded-xl mb-2"
                   />
                   <p className="text-[11px] text-muted-foreground leading-snug">{d.line}</p>

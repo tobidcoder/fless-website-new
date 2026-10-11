@@ -2,9 +2,34 @@ import type { Metadata } from "next"
 import { LegalDoc, Section } from "@/components/LegalDoc"
 
 export const metadata: Metadata = {
-  title: "Privacy — Fless",
+  title: "Privacy Policy — Fless",
   description:
-    "How Fless collects, uses, and protects personal data wherever you operate.",
+    "How Fless Inc. collects, processes, and safeguards business and customer data. Aligned with NDPR, GDPR, and international data protection standards.",
+  alternates: {
+    canonical: "https://getfless.com/privacy",
+  },
+  openGraph: {
+    title: "Privacy Policy — Fless",
+    description:
+      "How Fless Inc. collects, processes, and safeguards business and customer data. Aligned with NDPR, GDPR, and international data protection standards.",
+    url: "https://getfless.com/privacy",
+    siteName: "Fless",
+    images: [
+      {
+        url: "/fless-og.png",
+        width: 1200,
+        height: 630,
+        alt: "Fless Privacy Policy",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy — Fless",
+    description:
+      "Data handling, retention, and international compliance policies of Fless Inc.",
+    images: ["/fless-og.png"],
+  },
 }
 
 const nav = [
@@ -35,11 +60,11 @@ export default function PrivacyPage() {
     >
       <Section id="who" title="Who we are">
         <p>
-          Fless Inc. (“Fless”, “we”, “us”) provides an AI workforce platform: marketing, sales, voice, support, hiring, finance, operations, and HR desks that run from one workspace, in every market you operate.
+          Fless Inc. (“Fless”, “we”, “us”) operates from 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria, with planned entity headquarters in Delaware, USA. We provide an AI workforce platform: marketing, sales, voice, support, hiring, finance, operations, and HR desks that run from one workspace, in every market you operate.
         </p>
         <p>
           For questions about this policy, write to{" "}
-          <a href="mailto:privacy@fless.com">privacy@fless.com</a> or use{" "}
+          <a href="mailto:privacy@getfless.com">privacy@getfless.com</a> or use{" "}
           <a href="/contact">Contact</a>.
         </p>
       </Section>
@@ -115,7 +140,7 @@ export default function PrivacyPage() {
         </ul>
         <p>
           A current subprocessors list is available on request at{" "}
-          <a href="mailto:privacy@fless.com">privacy@fless.com</a>.
+          <a href="mailto:privacy@getfless.com">privacy@getfless.com</a>.
         </p>
       </Section>
 
@@ -129,6 +154,7 @@ export default function PrivacyPage() {
       </Section>
 
       <Section id="retention" title="Retention">
+        <div id="data-retention" />
         <p>
           Account data lasts for the life of the workspace plus a limited period for invoices and legal holds. Workspace content is kept while the workspace is active. After you delete a workspace or a desk’s data, we remove it from production systems within 30 days, and from backups on their rotation cycle (typically within 90 days), unless the law requires longer.
         </p>
@@ -139,8 +165,8 @@ export default function PrivacyPage() {
 
       <Section id="rights" title="Your rights">
         <p>
-          Depending on where you live (including the UK, EEA, California, and similar regimes), you may have the right to access, correct, delete, or export personal data, to object or restrict certain processing, and to withdraw consent. Workspace owners can often do this in-product; otherwise email{" "}
-          <a href="mailto:privacy@fless.com">privacy@fless.com</a>.
+          Depending on where you live (including Nigeria under the NDPR, the UK, the EEA under GDPR, California under the CCPA/CPRA, and similar data protection regimes), you may have the right to access, correct, delete, or export personal data, to object or restrict certain processing, and to withdraw consent. Workspace owners can often do this in-product; otherwise email{" "}
+          <a href="mailto:privacy@getfless.com">privacy@getfless.com</a>.
         </p>
         <p>
           We will not discriminate against you for exercising these rights. You may lodge a complaint with your local supervisory authority. We would rather fix the issue first — write to us.
@@ -167,9 +193,11 @@ export default function PrivacyPage() {
 
       <Section id="contact" title="Contact">
         <p>
-          Privacy: <a href="mailto:privacy@fless.com">privacy@fless.com</a>
+          Privacy: <a href="mailto:privacy@getfless.com">privacy@getfless.com</a>
           <br />
-          Security: <a href="mailto:security@fless.com">security@fless.com</a>
+          Security: <a href="mailto:security@getfless.com">security@getfless.com</a>
+          <br />
+          Physical address: 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria
           <br />
           Postal and enterprise: use <a href="/contact">Contact</a> and we will route it.
         </p>

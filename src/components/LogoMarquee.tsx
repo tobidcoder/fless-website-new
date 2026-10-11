@@ -1,14 +1,23 @@
 "use client"
 
-const names = ["NVIDIA Inception", "Surgic+", "RevWit", "AllMoments", "10MG", "Voke", "Sourzer", "PayFlow", "Helix"]
+const sectors = [
+  "Healthcare Clinics",
+  "Retail & E-commerce",
+  "Advisory Practices",
+  "Creative Studios",
+  "Technology & SaaS",
+  "Professional Services",
+  "Financial Consultancies",
+  "Real Estate Teams",
+]
 
 export function LogoMarquee() {
-  const row = [...names, ...names, ...names]
+  const row = [...sectors, ...sectors, ...sectors]
 
   return (
     <section className="py-12 md:py-16 overflow-hidden border-y border-border/60 bg-background">
       <p className="text-center text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-8">
-        Teams already running on Fless
+        18 businesses in pilot across Nigeria, the UK, and North America
       </p>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
@@ -18,7 +27,7 @@ export function LogoMarquee() {
           {row.map((name, i) => (
             <span
               key={`${name}-${i}`}
-              className="text-xl md:text-2xl font-display font-semibold tracking-tight text-foreground/35 whitespace-nowrap"
+              className="text-lg md:text-xl font-display font-medium tracking-tight text-foreground/40 whitespace-nowrap"
             >
               {name}
             </span>

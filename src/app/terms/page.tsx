@@ -3,7 +3,33 @@ import { LegalDoc, Section } from "@/components/LegalDoc"
 
 export const metadata: Metadata = {
   title: "Terms of Service — Fless",
-  description: "The agreement for using Fless: accounts, desks, content, billing, and acceptable use.",
+  description:
+    "The agreement for using Fless: accounts, department desks, acceptable use, pro-rata cancellation refunds, and Delaware governing law.",
+  alternates: {
+    canonical: "https://getfless.com/terms",
+  },
+  openGraph: {
+    title: "Terms of Service — Fless",
+    description:
+      "The agreement for using Fless: accounts, department desks, acceptable use, pro-rata cancellation refunds, and Delaware governing law.",
+    url: "https://getfless.com/terms",
+    siteName: "Fless",
+    images: [
+      {
+        url: "/fless-og.png",
+        width: 1200,
+        height: 630,
+        alt: "Fless Terms of Service",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Terms of Service — Fless",
+    description:
+      "Customer contract, acceptable use, pro-rata cancellation refunds, and Delaware governing law.",
+    images: ["/fless-og.png"],
+  },
 }
 
 const nav = [
@@ -14,6 +40,7 @@ const nav = [
   { id: "acceptable", title: "Acceptable use" },
   { id: "ai-output", title: "AI output" },
   { id: "payment", title: "Plans and payment" },
+  { id: "cancellation", title: "Cancellation and refunds" },
   { id: "availability", title: "Availability" },
   { id: "confidential", title: "Confidentiality" },
   { id: "ip", title: "Our intellectual property" },
@@ -39,7 +66,7 @@ export default function TermsPage() {
           <a href="/privacy">Privacy Policy</a>, and any order form or plan page you accept. If you have a signed master agreement, that agreement controls if it conflicts.
         </p>
         <p>
-          Fless Inc. provides the product. “You” means the individual or the organization that owns the workspace.
+          Fless Inc. (operating from 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria, with planned entity headquarters in Delaware, USA) provides the product. “You” means the individual or the organization that owns the workspace.
         </p>
       </Section>
 
@@ -96,16 +123,22 @@ export default function TermsPage() {
 
       <Section id="payment" title="Plans and payment">
         <p>
-          Fees are as shown at checkout or on an order form, exclusive of taxes. Subscriptions renew until you cancel. You can cancel anytime; you keep access through the paid period. Credits and unused seats do not roll unless the plan says they do.
+          Fees are as shown at checkout or on an order form, exclusive of taxes. Subscriptions renew until you cancel. You can cancel anytime; you keep access through the paid period. Credits and unused capacity do not roll unless the plan says they do.
         </p>
         <p>
-          Overdue invoices may pause the workspace after notice. Chargebacks without cause may result in closure. Refunds are not owed for partial months unless required by law or your order form.
+          Overdue invoices may pause the workspace after notice. Chargebacks without cause may result in closure.
+        </p>
+      </Section>
+
+      <Section id="cancellation" title="Cancellation and refunds">
+        <p>
+          You can decommission an employee deployment whenever capacity is no longer required. Unused tenure is refunded pro-rata according to the worker&apos;s contract terms. Ledger-consumed metered usage is non-refundable.
         </p>
       </Section>
 
       <Section id="availability" title="Availability">
         <p>
-          We aim for a continuously available product. We do not warrant uninterrupted uptime except where an enterprise order form includes an SLA. Maintenance and force majeure (including upstream model or cloud outages) may affect the service.
+          We aim for a continuously available product. Enterprise order forms provide guaranteed response times and 99.9% uptime credits. Maintenance and force majeure (including upstream model or cloud outages) may affect the service.
         </p>
       </Section>
 
@@ -141,7 +174,7 @@ export default function TermsPage() {
 
       <Section id="law" title="Law and disputes">
         <p>
-          These terms are governed by the laws of the State of New York, excluding conflict-of-law rules, unless a signed enterprise agreement names another venue. Courts in New York County, New York, have exclusive jurisdiction, except that either party may seek injunctive relief in any court of competent jurisdiction.
+          These terms are governed by the laws of the State of Delaware, excluding conflict-of-law rules, unless a signed enterprise agreement names another venue. Courts in New Castle County, Delaware, have exclusive jurisdiction, except that either party may seek injunctive relief in any court of competent jurisdiction.
         </p>
         <p>
           If a provision is unenforceable, the rest remains in effect. We may assign these terms in a merger or sale of the business. You may not assign without our consent, except to an affiliate that accepts these terms.
@@ -150,7 +183,9 @@ export default function TermsPage() {
 
       <Section id="contact" title="Contact">
         <p>
-          Legal: <a href="mailto:legal@fless.com">legal@fless.com</a>
+          Legal: <a href="mailto:hello@getfless.com">hello@getfless.com</a>
+          <br />
+          Physical address: 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria
           <br />
           Billing and plans: see <a href="/pricing">Pricing</a>
           <br />

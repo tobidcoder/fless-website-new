@@ -15,10 +15,8 @@ import {
   Stethoscope,
   MessageSquare,
   Calendar,
-  Check,
   BookOpen,
   DollarSign,
-  Copy,
   PhoneCall,
   FileText,
   Users,
@@ -27,15 +25,8 @@ import {
 } from "lucide-react";
 
 export default function BuildersPage() {
-  const [copiedInstall, setCopiedInstall] = useState(false);
   const [activeTab, setActiveTab] = useState<"manifest" | "terminal" | "runtime">("manifest");
   const [activeStage, setActiveStage] = useState<number>(0);
-
-  const handleCopyInstall = () => {
-    navigator.clipboard.writeText("npm install @fless/employee-sdk");
-    setCopiedInstall(true);
-    setTimeout(() => setCopiedInstall(false), 2000);
-  };
 
   const workflowStages = [
     {
@@ -43,7 +34,7 @@ export default function BuildersPage() {
       title: "Author Manifest in TypeScript",
       desc: "Import defineEmployee() to specify prompt, tools, allowed countries, and pricing models with strict types.",
       badge: "TypeScript SDK",
-      command: "npm i @fless/employee-sdk",
+      command: "Private Beta Access",
       detail: "Define system instructions, configure model tiers, and declare required packages like @fless/voice or @fless/whatsapp.",
     },
     {
@@ -76,7 +67,7 @@ export default function BuildersPage() {
     {
       name: "@fless/voice",
       title: "Real-Time Telephony",
-      desc: "Inbound phone reception, outbound dialing, dynamic turn-taking, and warm call transfers under 300ms.",
+      desc: "Inbound phone reception, outbound dialing, dynamic turn-taking, and warm call transfers.",
       icon: PhoneCall,
       color: "text-purple-500",
       bg: "bg-purple-500/10",
@@ -151,13 +142,14 @@ export default function BuildersPage() {
               Write typed manifests in TypeScript. Test them offline in a hermetic sandbox. Publish to the marketplace and earn 35% of all recurring subscriptions and metered usage.
             </p>
 
-            {/* Action Buttons & Install Pill */}
+            {/* Action Buttons & Private Beta Notice */}
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <Link
-                href="/start"
+                href="/start?role=builder"
+                id="apply"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-md shadow-primary/25 hover:bg-primary-hover transition-all"
               >
-                Join Builder Beta
+                Request SDK Access
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
@@ -167,22 +159,10 @@ export default function BuildersPage() {
                 <BookOpen className="w-4 h-4 text-primary" />
                 Read Builder Docs
               </Link>
-
-              {/* Quick Install Pill */}
-              <button
-                onClick={handleCopyInstall}
-                className="inline-flex items-center gap-2.5 px-4 py-3 rounded-xl border border-border bg-card hover:bg-muted/70 text-xs font-mono text-muted-foreground hover:text-foreground transition-all"
-                title="Copy install command"
-              >
-                <span className="text-primary">$</span>
-                <span>npm i @fless/employee-sdk</span>
-                {copiedInstall ? (
-                  <Check className="w-3.5 h-3.5 text-emerald-500" />
-                ) : (
-                  <Copy className="w-3.5 h-3.5 text-muted-foreground" />
-                )}
-              </button>
             </div>
+            <p className="text-xs text-muted-foreground">
+              SDK is currently in private beta with accepted builders.
+            </p>
           </div>
 
           {/* HERO VISUAL: SLEEK DUAL-PANE CODE & RUNTIME CONSOLE */}
@@ -267,7 +247,7 @@ export default function BuildersPage() {
                     <span className="text-purple-400">CALLER :</span> &quot;Sarah Jenkins, 08012345678.&quot;{"\n"}
                     <span className="text-amber-400">INVOKE :</span> calendar.bookAppointment() <span className="text-emerald-400">→ [CONFIRMED #cal_8831]</span>{"\n"}
                     <span className="text-amber-400">INVOKE :</span> whatsapp.sendMessage(&quot;+2348012345678&quot;, &quot;Your dental appointment is locked for Fri 2 PM.&quot;){"\n"}
-                    <span className="text-emerald-400">LATENCY:</span> 248ms TTFT • Zero live tokens touched
+                    <span className="text-emerald-400">LATENCY:</span> Fast turn-taking • Zero live tokens touched
                   </pre>
                 )}
               </div>
@@ -343,7 +323,7 @@ export default function BuildersPage() {
                 <ul className="space-y-3 text-muted-foreground">
                   <li className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                    <span><strong>NVIDIA Tensor Core GPU Clusters:</strong> Sub-300ms time-to-first-token inference for live telephony.</span>
+                    <span><strong>NVIDIA Tensor Core GPU Clusters:</strong> Low-latency streaming audio inference for live telephony.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
@@ -452,7 +432,7 @@ export default function BuildersPage() {
                   Monthly Subscriptions
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
-                  Charge $49 to $499 per business per month. 35% pays out recurring revenue each billing cycle as your customer base expands.
+                  Set your employee&apos;s subscription rate per business per month. 35% pays out recurring revenue each billing cycle as your customer base expands.
                 </p>
               </div>
 
@@ -520,12 +500,12 @@ export default function BuildersPage() {
 
               <div className="p-3.5 rounded-xl border border-border bg-background space-y-1">
                 <span className="text-muted-foreground font-mono text-[10px] uppercase">Pricing Model</span>
-                <div className="font-semibold text-foreground">$49/mo + $0.15/min Voice</div>
+                <div className="font-semibold text-foreground">Monthly subscription + $0.15/min Voice</div>
               </div>
 
               <div className="p-3.5 rounded-xl border border-border bg-background space-y-1">
                 <span className="text-muted-foreground font-mono text-[10px] uppercase">Response Time</span>
-                <div className="font-semibold text-emerald-600 dark:text-emerald-400 font-mono">240ms Average TTFT</div>
+                <div className="font-semibold text-emerald-600 dark:text-emerald-400 font-mono">Low-latency streaming TTFT</div>
               </div>
             </div>
           </div>
@@ -543,7 +523,7 @@ export default function BuildersPage() {
                 Get Started with the Builder SDK
               </h2>
               <p className="text-sm text-white/70 leading-relaxed">
-                Read the comprehensive technical reference, install `@fless/employee-sdk`, and run your first offline sandbox simulation in 5 minutes.
+                Read the technical reference, apply for SDK access in the private beta, and join our builder cohort.
               </p>
             </div>
 

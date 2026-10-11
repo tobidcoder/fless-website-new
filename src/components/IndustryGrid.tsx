@@ -125,7 +125,7 @@ export function IndustryCard({
 
       <div className="mt-5 pt-3.5 border-t border-border/50 flex items-center justify-between text-[11px] text-muted-foreground">
         <span className="font-medium text-foreground/80 group-hover:text-primary transition-colors">
-          {hasSolution ? "View solution →" : "Deploy team →"}
+          {hasSolution ? "View solution →" : "Request this industry →"}
         </span>
         <span className="text-[10px] uppercase tracking-wider text-muted-foreground/60 font-mono">
           Ready

@@ -57,6 +57,7 @@ export function DashboardShowcase() {
                 <div className="w-3 h-3 rounded-full bg-success/50" />
               </div>
               <div className="flex items-center gap-4">
+                <span className="text-[10px] uppercase font-semibold text-muted-foreground border border-border px-2 py-0.5 rounded">Sample workspace</span>
                 <Bell className="w-4 h-4 text-muted-foreground" />
                 <div className="w-6 h-6 rounded-full bg-primary/20" />
               </div>
@@ -70,8 +71,9 @@ export function DashboardShowcase() {
                   <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wider mb-3">Departments</div>
                   <div className="space-y-2">
                     {["Marketing", "Sales", "Support", "Finance"].map((d, i) => (
-                      <div key={d} className={`h-8 rounded-md flex items-center px-3 text-sm font-medium ${i === 0 ? "bg-primary/10 text-primary" : "text-muted-foreground"}`}>
-                        {d}
+                      <div key={d} className={`h-8 rounded-md flex items-center justify-between px-3 text-sm font-medium ${i === 0 ? "bg-primary/10 text-primary" : "text-muted-foreground"}`}>
+                        <span>{d}</span>
+                        <span className="text-[9px] uppercase font-semibold text-muted-foreground">{i === 0 ? "Live" : "Beta"}</span>
                       </div>
                     ))}
                   </div>
@@ -83,7 +85,7 @@ export function DashboardShowcase() {
                 {/* Search Bar */}
                 <div className="bg-background rounded-xl p-3 border border-border shadow-sm flex items-center gap-3">
                   <Search className="w-5 h-5 text-muted-foreground" />
-                  <span className="text-sm text-muted-foreground flex-1">&quot;Create next week&apos;s marketing campaign...&quot;</span>
+                  <span className="text-sm text-muted-foreground flex-1">&quot;Draft product update for LinkedIn and X...&quot;</span>
                   <div className="hidden sm:flex items-center gap-1 text-xs font-mono text-muted-foreground bg-secondary px-2 py-1 rounded">
                     <Command className="w-3 h-3" /> K
                   </div>
@@ -92,7 +94,7 @@ export function DashboardShowcase() {
                 {/* Grid */}
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="bg-background rounded-xl p-5 border border-border shadow-sm h-64 flex flex-col">
-                    <h4 className="font-semibold text-sm mb-4">Department Output</h4>
+                    <h4 className="font-semibold text-sm mb-4">Sample Output</h4>
                     <div className="flex-1 w-full">
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={chartData}>
@@ -116,15 +118,15 @@ export function DashboardShowcase() {
                         <div className="absolute left-2.5 top-6 bottom-[-20px] w-[1px] bg-border" />
                         <CheckCircle2 className="w-5 h-5 text-success mt-0.5 relative z-10 bg-background" />
                         <div>
-                          <p className="text-sm font-medium">Email campaign drafted</p>
-                          <p className="text-xs text-muted-foreground">Marketing Bot • 2m ago</p>
+                          <p className="text-sm font-medium">Marketing campaign drafted</p>
+                          <p className="text-xs text-muted-foreground">Marketing Employee • 2m ago</p>
                         </div>
                       </div>
                       <div className="flex gap-3 items-start">
                         <Circle className="w-5 h-5 text-muted-foreground mt-0.5 relative z-10 bg-background" />
                         <div>
-                          <p className="text-sm font-medium text-muted-foreground">Qualifying new leads</p>
-                          <p className="text-xs text-muted-foreground">Sales Bot • In progress</p>
+                          <p className="text-sm font-medium text-muted-foreground">Pending human review</p>
+                          <p className="text-xs text-muted-foreground">Approvals queue • Ready</p>
                         </div>
                       </div>
                     </div>
@@ -140,10 +142,10 @@ export function DashboardShowcase() {
               >
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                  <span className="text-xs font-semibold text-muted-foreground uppercase">Agent Status</span>
+                  <span className="text-xs font-semibold text-muted-foreground uppercase">Sample workspace</span>
                 </div>
-                <p className="text-sm font-medium">12 active agents running</p>
-                <p className="text-xs text-muted-foreground mt-1">45 tasks completed today</p>
+                <p className="text-sm font-medium">Marketing Employee active</p>
+                <p className="text-xs text-muted-foreground mt-1">LinkedIn & X queue ready</p>
               </motion.div>
             </div>
           </div>

@@ -3,10 +3,10 @@
 import { motion } from "framer-motion"
 
 const stats = [
-  { value: "40+", label: "Countries live" },
-  { value: "8", label: "Departments" },
-  { value: "24/7", label: "Coverage" },
-  { value: "2 min", label: "To first task" },
+  { value: "18", label: "Businesses in pilot" },
+  { value: "4", label: "Channels live (LinkedIn, X, Facebook, Bluesky)" },
+  { value: "8", label: "Departments on roadmap" },
+  { value: "NVIDIA", label: "Inception member" },
 ]
 
 export function GlobalStats() {

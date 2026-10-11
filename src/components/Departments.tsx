@@ -5,17 +5,6 @@ import Link from "next/link"
 import { PhotoTile } from "@/components/BrandedStage"
 import { departments as deskData } from "@/lib/departments"
 
-const live: Record<string, string> = {
-  marketing: "12 running",
-  sales: "8 open",
-  voice: "5 live calls",
-  support: "9 in queue",
-  recruitment: "4 screens",
-  hr: "Day 1 ready",
-  operations: "18 workflows",
-  finance: "$18.4k in",
-}
-
 export function Departments() {
   return (
     <section id="departments" className="py-24 md:py-32 bg-[#fafafa] dark:bg-secondary border-t border-border/60">
@@ -58,7 +47,8 @@ export function Departments() {
                   image={dept.hero}
                   alt={dept.name}
                   title={dept.name}
-                  live={live[dept.slug]}
+                  status={dept.status}
+                  live={dept.status === "live" ? "Live today" : "Early access"}
                   className="aspect-[4/5] rounded-2xl mb-3"
                 />
                 <p className="text-[13px] text-muted-foreground leading-relaxed px-0.5 hidden sm:block">

@@ -1,36 +1,12 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 import { FlessChrome } from "@/components/BrandedStage"
-
-const stories = [
-  {
-    quote: "We stopped writing the same posts every week. Engagement is up 3× and the calendar is actually full.",
-    author: "Chioma Okafor",
-    role: "CMO",
-    company: "Surgic+",
-    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=80",
-  },
-  {
-    quote: "The front desk used to miss half the after-hours calls. Appointments book themselves now.",
-    author: "David Adeyemi",
-    role: "CEO",
-    company: "HealthPlus",
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80",
-  },
-  {
-    quote: "Screening used to eat two days. We meet people who already fit — and hire in half the time.",
-    author: "Aisha Bello",
-    role: "HR Director",
-    company: "PayFlow",
-    photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop&q=80",
-  },
-]
+import { NvidiaInceptionBadge } from "@/components/NvidiaInceptionBadge"
 
 export function Testimonials() {
-  const featured = stories[0]
-  const rest = stories.slice(1)
-
   return (
     <section className="py-24 md:py-32 bg-background border-t border-border/60">
       <div className="max-w-[1200px] mx-auto px-6">
@@ -40,7 +16,7 @@ export function Testimonials() {
           viewport={{ once: true }}
           className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-4"
         >
-          Customers
+          Early validation
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
@@ -48,53 +24,77 @@ export function Testimonials() {
           viewport={{ once: true }}
           className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.12] text-foreground mb-12 md:mb-16 max-w-2xl"
         >
-          What it looks like when the work is covered.
+          In pilot with 18 businesses.
         </motion.h2>
 
-        <div className="grid lg:grid-cols-12 gap-4 md:gap-5">
+        <div className="grid lg:grid-cols-12 gap-6 items-stretch">
           <motion.article
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-7 relative rounded-2xl overflow-hidden min-h-[420px] md:min-h-[520px] ring-1 ring-inset ring-black/[0.08]"
+            className="lg:col-span-7 relative rounded-2xl overflow-hidden min-h-[380px] md:min-h-[440px] ring-1 ring-inset ring-black/[0.08]"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={featured.photo} alt={featured.author} className="absolute inset-0 w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/20" />
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80"
+              alt="Teams piloting Fless"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
             <FlessChrome />
             <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
-              <p className="text-white text-xl md:text-2xl font-display font-medium tracking-tight leading-snug max-w-lg mb-6">
-                “{featured.quote}”
+              <p className="text-white text-xl md:text-2xl font-display font-medium tracking-tight leading-snug max-w-lg mb-4">
+                Private pilots running with founders, operators, and growth teams.
               </p>
-              <p className="text-white/90 text-sm font-medium">{featured.author}</p>
-              <p className="text-white/60 text-sm">{featured.role}, {featured.company}</p>
+              <p className="text-white/80 text-sm max-w-md">
+                Customer case studies will publish as cohorts conclude.
+              </p>
             </div>
           </motion.article>
 
-          <div className="lg:col-span-5 flex flex-col gap-4 md:gap-5">
-            {rest.map((story, i) => (
-              <motion.article
-                key={story.author}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.08 + i * 0.06 }}
-                className="flex-1 rounded-2xl overflow-hidden border border-border/70 bg-background flex flex-col sm:flex-row"
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="lg:col-span-5 rounded-2xl border border-border/70 bg-card p-6 md:p-8 flex flex-col justify-between"
+          >
+            <div>
+              <div className="inline-block mb-6">
+                <NvidiaInceptionBadge variant="pill" />
+              </div>
+              <h3 className="text-xl font-display font-semibold text-foreground mb-3">
+                Piloting the Marketing Employee
+              </h3>
+              <p className="text-[15px] leading-relaxed text-muted-foreground mb-6">
+                We are running private pilots with founders, operators, and growth teams who want marketing that runs every week without hand-holding. Customer case studies will publish as pilots complete.
+              </p>
+              <ul className="space-y-3 text-sm text-foreground/90 mb-8">
+                <li className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span>18 active pilot teams</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span>Live publishing on LinkedIn, X, Facebook, and Bluesky</span>
+                </li>
+                <li className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span>Human-in-the-loop approvals & full audit trail</span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <Link
+                href="/start"
+                className="inline-flex items-center justify-center gap-2 w-full rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
               >
-                <div className="relative sm:w-40 md:w-44 h-44 sm:h-auto shrink-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={story.photo} alt={story.author} className="absolute inset-0 w-full h-full object-cover" />
-                </div>
-                <div className="p-5 md:p-6 flex flex-col justify-between">
-                  <p className="text-[15px] leading-relaxed text-foreground mb-4">“{story.quote}”</p>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">{story.author}</p>
-                    <p className="text-sm text-muted-foreground">{story.role}, {story.company}</p>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </div>
+                Join the pilot
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

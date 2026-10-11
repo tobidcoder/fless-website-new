@@ -120,7 +120,7 @@ const SIMULATED_PROMPTS = [
   },
   {
     text: "Write an engaging X thread breaking down our customer case study",
-    reply: "Drafted 7-tweet sequence highlighting 3.8x ROI, hook variations, and CTA card in Posts tab.",
+    reply: "Drafted 7-tweet sequence highlighting key lessons, hook variations, and CTA card in Posts tab.",
   },
   {
     text: "Show top-performing posts from last month",
@@ -437,7 +437,7 @@ export function IntroFilm() {
                       </button>
                     </div>
                     <p className="mb-3 text-[12px] text-slate-600">
-                      Deploy autonomous marketing employees in under 2 minutes.
+                      Deploy autonomous marketing employees. Set up in minutes.
                     </p>
                     <StayInForm source="intro" />
                   </motion.div>

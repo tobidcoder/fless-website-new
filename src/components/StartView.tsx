@@ -26,10 +26,12 @@ const field =
   "w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground text-base sm:text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 placeholder:text-muted-foreground transition-all"
 const label = "block text-[13px] font-medium mb-2"
 
+import { cn } from "@/lib/utils"
+
 export function StartView() {
   const params = useSearchParams()
   const presetEmail = params.get("email") ?? ""
-  const presetDesk = params.get("desk") ?? params.get("dept") ?? ""
+  const presetDesk = params.get("department") ?? params.get("desk") ?? params.get("dept") ?? ""
   const presetIndustry = params.get("industry") ?? ""
   const source = params.get("source") ?? params.get("plan") ?? "start"
 
@@ -41,7 +43,9 @@ export function StartView() {
   const [marketIso, setMarketIso] = useState("US")
   const [phoneNational, setPhoneNational] = useState("")
   const [industry, setIndustry] = useState(() =>
-    industries.some((i) => i.name === presetIndustry) ? presetIndustry : "",
+    industries.some((i) => i.name === presetIndustry || i.id === presetIndustry)
+      ? (industries.find((i) => i.name === presetIndustry || i.id === presetIndustry)?.name ?? "")
+      : "",
   )
   const [desks, setDesks] = useState<string[]>(() => {
     if (presetDesk && departments.some((d) => d.slug === presetDesk)) return [presetDesk]
@@ -58,13 +62,25 @@ export function StartView() {
     if (urlEmail && urlEmail.trim()) {
       setEmail(urlEmail.trim())
     }
-    const urlDesk = params.get("desk") ?? params.get("dept")
+    const urlDesk = params.get("department") ?? params.get("desk") ?? params.get("dept")
     if (urlDesk && departments.some((d) => d.slug === urlDesk)) {
       setDesks([urlDesk])
     }
     const urlIndustry = params.get("industry")
-    if (urlIndustry && industries.some((i) => i.name === urlIndustry)) {
-      setIndustry(urlIndustry)
+    if (urlIndustry) {
+      const match = industries.find((i) => i.name === urlIndustry || i.id === urlIndustry)
+      if (match) setIndustry(match.name)
+    }
+    const urlEmployee = params.get("employee")
+    if (urlEmployee) {
+      for (const d of departments) {
+        const found = d.employees.find((e) => e.id.toLowerCase() === urlEmployee.toLowerCase() || e.name.toLowerCase() === urlEmployee.toLowerCase())
+        if (found) {
+          setDesks([d.slug])
+          setFirstJob(`Deploy ${found.name} (${found.role})`)
+          break
+        }
+      }
     }
   }, [params])
 
@@ -164,9 +180,18 @@ export function StartView() {
           <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight mb-3">
             Join the Fless beta.
           </h1>
-          <p className="text-[15px] text-muted-foreground leading-relaxed mb-10 max-w-xl">
+          <p className="text-[15px] text-muted-foreground leading-relaxed mb-8 max-w-xl">
             One product. Every department. Every market. Demand is high — this form is how we decide who gets a seat next.
           </p>
+
+          {desks.length > 0 && departments.some((d) => desks.includes(d.slug) && d.status === "early-access") && (
+            <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-[13px] text-foreground mb-8">
+              <span className="font-semibold text-primary">
+                You&apos;re joining the {departments.find((d) => desks.includes(d.slug) && d.status === "early-access")?.name} waitlist.
+              </span>{" "}
+              Marketing is live today if you&apos;d like to start now.
+            </div>
+          )}
 
           <form onSubmit={submit} className="space-y-8">
             <div className="grid sm:grid-cols-2 gap-5">
@@ -322,7 +347,17 @@ export function StartView() {
                       }`}
                     >
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-sm font-semibold">{d.name}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-semibold">{d.name}</span>
+                          <span className={cn(
+                            "text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded",
+                            d.status === "live"
+                              ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                              : "bg-muted text-muted-foreground"
+                          )}>
+                            {d.status === "live" ? "Live" : "Early access"}
+                          </span>
+                        </div>
                         <span className={`w-4 h-4 rounded-full border ${on ? "bg-primary border-primary" : "border-border"}`} />
                       </div>
                       <p className="text-[12px] text-muted-foreground mt-0.5">{d.line}</p>

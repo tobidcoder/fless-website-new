@@ -1,4 +1,6 @@
 import { MetadataRoute } from 'next'
+import { departments } from '@/lib/departments'
+import { solutions } from '@/lib/solutions'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://getfless.com'
@@ -8,13 +10,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}`, lastModified: new Date(), changeFrequency: 'daily', priority: 1.0 },
     { url: `${baseUrl}/pricing`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
     { url: `${baseUrl}/departments`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/industries`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/builders`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/docs`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/solutions`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${baseUrl}/start`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${baseUrl}/security`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${baseUrl}/privacy`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/terms`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.3 },
   ]
+
+  const departmentRoutes: MetadataRoute.Sitemap = departments.map((d) => ({
+    url: `${baseUrl}/departments/${d.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }))
+
+  const solutionRoutes: MetadataRoute.Sitemap = solutions.map((s) => ({
+    url: `${baseUrl}/solutions/${s.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
 
   let employeeRoutes: MetadataRoute.Sitemap = []
   try {
@@ -30,7 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
       }))
     }
-  } catch (_err) {
+  } catch {
     // Fallback static slugs
     const fallbackSlugs = ['mkt-manager', 'voice-receptionist', 'sales-rep', 'sup-customer', 'fin-manager']
     employeeRoutes = fallbackSlugs.map((slug) => ({
@@ -41,5 +60,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   }
 
-  return [...staticRoutes, ...employeeRoutes]
+  return [...staticRoutes, ...departmentRoutes, ...solutionRoutes, ...employeeRoutes]
 }

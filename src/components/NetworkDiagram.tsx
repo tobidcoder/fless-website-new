@@ -39,8 +39,8 @@ export function NetworkDiagram() {
             >
               {[
                 "No credit card required",
-                "Setup in under 2 minutes",
-                "Cancel anytime, no questions asked",
+                "Set up in minutes",
+                "Cancel anytime",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-3 text-muted-foreground text-sm">
                   <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
@@ -61,7 +61,7 @@ export function NetworkDiagram() {
                 href="/start"
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-8 py-2 text-sm font-medium text-primary-foreground shadow-sm shadow-primary/25 transition-transform hover:bg-primary-hover hover:scale-105 active:scale-95"
               >
-                Get started free
+                Join the beta
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>

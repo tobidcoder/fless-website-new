@@ -3,19 +3,15 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import {
   ArrowRight,
-  Check,
   Star,
   ShieldCheck,
   Building2,
-  Globe,
   Clock,
   Briefcase,
   Users,
   Sparkles,
   ChevronRight,
   CheckCircle2,
-  Calendar,
-  AlertCircle,
   HelpCircle,
 } from "lucide-react"
 import { Header } from "@/components/Header"
@@ -93,7 +89,7 @@ async function getProfileData(slug: string): Promise<PublicProfileData | null> {
     if (res.ok) {
       return await res.json()
     }
-  } catch (_err) {
+  } catch {
     // Fallback static profile resolution if backend API is offline during build/dev
   }
 
@@ -123,8 +119,8 @@ async function getProfileData(slug: string): Promise<PublicProfileData | null> {
           description: `Executes ${s} with automated Fless platform policy gates.`,
         })),
         requiredPackages: [
-          { packageName: "@fless/google-calendar", displayName: "Google Calendar", isRequired: true },
-          { packageName: "@fless/whatsapp", displayName: "WhatsApp Business", isRequired: false },
+          { packageName: "@fless/buffer", displayName: "Buffer", isRequired: true },
+          { packageName: "@fless/google-calendar", displayName: "Google Calendar", isRequired: false },
         ],
         pricingModel: "MONTHLY",
         pricingType: "RANGE",
@@ -132,40 +128,22 @@ async function getProfileData(slug: string): Promise<PublicProfileData | null> {
           formattedRate: "$1,600 – $2,500 / month",
           rateMinCents: 160000,
           rateMaxCents: 250000,
-          hourlyDisplay: "$40 – $50 / hour",
+          hourlyDisplay: "$35 – $55 / hour",
           monthlyDisplay: "$1,600 – $2,500 / month",
           supportedTenures: ["hour", "day", "week", "month", "year"],
-          hasUsage: true,
-          usageExplanation: "Voice call usage billed separately at $0.05 per minute.",
+          hasUsage: false,
         },
         verificationLevel: "FLESS_VERIFIED",
         authorType: "FLESS",
         authorName: "Built by Fless",
         authorBio: "Official verified Fless core employee distribution.",
-        currentVersion: "1.2.0",
-        rating: 4.8,
-        reviewCount: 27,
-        hireCount: 142,
+        currentVersion: "1.0.0",
+        rating: 0,
+        reviewCount: 0,
+        hireCount: 0,
         status: "PUBLISHED",
         updatedAt: new Date().toISOString(),
-        reviews: [
-          {
-            id: "rev-1",
-            rating: 5,
-            comment: "Rachel handles our clinic inbound line flawlessly after-hours. Appointment no-shows dropped 40%.",
-            workspaceName: "SurgeCare Clinic",
-            workspaceIndustry: "Healthcare",
-            createdAt: "2026-09-14T10:00:00Z",
-          },
-          {
-            id: "rev-2",
-            rating: 5,
-            comment: "Seamless integration with Google Calendar. Zero missed patient inquiries since deployment.",
-            workspaceName: "HealthPlus Medical",
-            workspaceIndustry: "Healthcare",
-            createdAt: "2026-08-28T14:30:00Z",
-          },
-        ],
+        reviews: [],
         relatedEmployees: [
           {
             id: "rel-1",
@@ -173,19 +151,9 @@ async function getProfileData(slug: string): Promise<PublicProfileData | null> {
             name: "Nora",
             title: "SEO Manager",
             department: "Marketing",
-            rating: 4.9,
+            rating: 0,
             formattedRate: "$1,800 / month",
             avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=256&h=256&fit=crop&crop=faces&q=80",
-          },
-          {
-            id: "rel-2",
-            slug: "sales-rep",
-            name: "Stan",
-            title: "Sales Representative",
-            department: "Sales",
-            rating: 4.7,
-            formattedRate: "$2,000 / month",
-            avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=256&h=256&fit=crop&crop=faces&q=80",
           },
         ],
       }
@@ -236,6 +204,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     twitter: {
       card: "summary_large_image",
+      site: "@getfless",
+      creator: "@getfless",
       title,
       description,
       images: [profile.avatarUrl || "https://getfless.com/og-employee-fallback.png"],
@@ -334,17 +304,27 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
 
                 {/* TRUST & RATING ROW */}
                 <div className="mt-6 pt-6 border-t border-border/60 flex flex-wrap items-center gap-6 text-xs text-muted-foreground">
-                  <div className="flex items-center gap-1.5 font-semibold text-foreground">
-                    <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                    <span className="text-sm">{profile.rating}</span>
-                    <span className="text-muted-foreground font-normal">
-                      ({profile.reviewCount} verified business reviews)
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Users className="w-4 h-4 text-primary" />
-                    <span>{profile.hireCount} active deployments</span>
-                  </div>
+                  {profile.reviewCount > 0 ? (
+                    <div className="flex items-center gap-1.5 font-semibold text-foreground">
+                      <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                      <span className="text-sm">{profile.rating}</span>
+                      <span className="text-muted-foreground font-normal">
+                        ({profile.reviewCount} verified business reviews)
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5 font-medium text-muted-foreground">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] bg-secondary text-foreground border border-border/60">
+                        Pilot private beta
+                      </span>
+                    </div>
+                  )}
+                  {profile.hireCount > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <Users className="w-4 h-4 text-primary" />
+                      <span>{profile.hireCount} active deployments</span>
+                    </div>
+                  )}
                   <div className="flex items-center gap-1.5">
                     <Briefcase className="w-4 h-4 text-muted-foreground" />
                     <span>{profile.authorName}</span>
@@ -444,13 +424,17 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
                     Verified Business Reviews
                   </h2>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    Reviews submitted by active business deployments of {profile.name}.
+                    {profile.reviewCount > 0
+                      ? `Reviews submitted by active business deployments of ${profile.name}.`
+                      : "Fless is currently in private pilot with 18 businesses."}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 font-semibold text-foreground text-sm">
-                  <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                  <span>{profile.rating}</span>
-                </div>
+                {profile.reviewCount > 0 && (
+                  <div className="flex items-center gap-1 font-semibold text-foreground text-sm">
+                    <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                    <span>{profile.rating}</span>
+                  </div>
+                )}
               </div>
 
               {profile.reviews.length > 0 ? (
@@ -479,7 +463,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
                 </div>
               ) : (
                 <div className="p-6 text-center rounded-xl bg-secondary/20 border border-border/60 text-xs text-muted-foreground">
-                  No public reviews submitted yet for this Fless employee version.
+                  No public reviews submitted yet during private beta.
                 </div>
               )}
             </div>

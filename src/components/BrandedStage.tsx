@@ -153,6 +153,7 @@ export function PhotoTile({
   title,
   subtitle,
   live,
+  status,
   className = "",
 }: {
   image: string
@@ -160,8 +161,10 @@ export function PhotoTile({
   title?: string
   subtitle?: string
   live?: string
+  status?: "live" | "early-access"
   className?: string
 }) {
+  const isEarly = status === "early-access" || (live && live.toLowerCase().includes("early"))
   return (
     <div className={`relative overflow-hidden bg-neutral-200 ring-1 ring-inset ring-black/[0.08] dark:ring-white/[0.08] ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -175,15 +178,14 @@ export function PhotoTile({
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/25" />
       <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
         <span className="text-[10px] font-semibold tracking-tight text-white/90">Fless</span>
-        {live ? (
-          <span className="flex items-center gap-1.5 text-[10px] font-medium text-white/85">
-            <LiveDot />
-            {live}
+        {isEarly ? (
+          <span className="px-1.5 py-0.5 rounded bg-white/20 text-[9px] uppercase font-semibold text-white/90 tracking-wider">
+            Early access
           </span>
         ) : (
-          <span className="flex items-center gap-1.5 text-[10px] font-medium text-white/70">
+          <span className="flex items-center gap-1.5 text-[10px] font-medium text-white/85">
             <LiveDot />
-            Live
+            {live || "Live"}
           </span>
         )}
       </div>

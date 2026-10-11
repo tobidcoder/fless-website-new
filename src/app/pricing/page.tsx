@@ -96,7 +96,7 @@ const departmentSpecs: Record<string, DepartmentPricingSpec> = {
     name: "Voice",
     icon: Phone,
     humanBenchmarkMonthlyUSD: 4100,
-    capacityOutput: "~1,200 inbound calls handled, sub-300ms TTFT, zero hold times",
+    capacityOutput: "~1,200 inbound calls handled, low-latency streaming audio, zero hold times",
     baseRateCents: {
       hour: { min: 2500, max: 4500 },
       day: { min: 10000, max: 18000 },
@@ -229,7 +229,7 @@ function formatLocalizedPrice(centsUSD: number, currency: CurrencyConfig): strin
 const faqs = [
   {
     q: "How does hiring an AI employee compare to traditional SaaS seat subscriptions?",
-    a: "Fless does not sell static seats or forced monthly user limits. Instead, you hire specialized autonomous AI employees for the exact tenure your business requires — whether that is 10 hours, 2 weeks, 6 months, or 10 years. You pay for dedicated workforce capacity, not per-seat software licenses.",
+    a: "Fless does not sell static seats or forced monthly user limits. Instead, you hire specialized autonomous AI employees for the exact tenure your business requires — whether that is 10 hours, 2 weeks, 6 months, or 5 years. You pay for dedicated workforce capacity, not per-seat software licenses.",
   },
   {
     q: "How does global multi-currency billing work?",
@@ -250,6 +250,10 @@ const faqs = [
   {
     q: "Are there hidden LLM token or GPU infrastructure surcharges?",
     a: "No. Businesses never see raw token meters, GPU cloud bills, or technical infrastructure jargon. All model execution, low-latency streaming audio, and storage costs are included in the transparent workforce price.",
+  },
+  {
+    q: "Do enterprise contracts offer custom SLAs?",
+    a: "Yes. Enterprise order forms include guaranteed response times, 99.9% uptime service credits, dedicated private regions or VPC deployment, and a named customer success manager.",
   },
 ]
 
@@ -655,7 +659,7 @@ export default function PricingPage() {
                       <div className="flex items-center justify-between text-xs font-semibold text-emerald-300">
                         <span className="flex items-center gap-1.5">
                           <TrendingDown className="w-4 h-4" />
-                          <span>Human Benchmark Savings</span>
+                          <span>Human Benchmark Savings (Estimate)</span>
                         </span>
                         <span className="font-mono text-white text-xs bg-emerald-500/30 px-2 py-0.5 rounded-full border border-emerald-400/40">
                           Save ~{estimate.savingsPercentage}%
@@ -892,7 +896,7 @@ export default function PricingPage() {
                 href="/start"
                 className="inline-flex h-11 items-center justify-center px-8 rounded-full bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary-hover transition-colors shadow-md"
               >
-                Get Started with Fless
+                Join the beta
               </Link>
               <Link
                 href="/builders"

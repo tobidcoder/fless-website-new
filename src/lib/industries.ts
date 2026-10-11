@@ -51,5 +51,6 @@ export const footerIndustries = industries.slice(0, 6)
 
 export function industryHref(industry: Industry) {
   if (SOLUTION_PAGES.has(industry.id)) return `/solutions/${industry.id}`
-  return `/start?industry=${encodeURIComponent(industry.name)}`
+  return `/start?industry=${encodeURIComponent(industry.id)}`
 }
+

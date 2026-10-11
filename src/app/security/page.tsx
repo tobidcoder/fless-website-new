@@ -3,9 +3,34 @@ import Link from "next/link"
 import { LegalDoc, Section } from "@/components/LegalDoc"
 
 export const metadata: Metadata = {
-  title: "Security — Fless",
+  title: "Security, Governance & Compliance — Fless",
   description:
-    "How Fless protects workspaces: encryption, access, regions, audit, and procurement-ready controls.",
+    "How Fless protects enterprise workspaces: independent CPA SOC 2 audit in progress, TLS 1.3, AES-256 at rest, exportable audit logs, human approval gates, and NDPR/GDPR alignment.",
+  alternates: {
+    canonical: "https://getfless.com/security",
+  },
+  openGraph: {
+    title: "Security, Governance & Compliance — Fless",
+    description:
+      "Enterprise security architecture: SOC 2 audit in progress, TLS 1.3, AES-256 at rest, exportable audit logs, and NDPR/GDPR compliance.",
+    url: "https://getfless.com/security",
+    siteName: "Fless",
+    images: [
+      {
+        url: "/fless-og.png",
+        width: 1200,
+        height: 630,
+        alt: "Fless Security & Compliance",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Security, Governance & Compliance — Fless",
+    description:
+      "Enterprise security controls: SOC 2 audit in progress, encryption at rest/transit, and audit logs.",
+    images: ["/fless-og.png"],
+  },
 }
 
 const nav = [
@@ -23,7 +48,7 @@ const nav = [
 ]
 
 const controls = [
-  { title: "SOC 2 Type II", copy: "Independently audited. Report available to customers under NDA." },
+  { title: "SOC 2", copy: "Audit in progress with an independent CPA firm. We complete security questionnaires on request." },
   { title: "Encryption", copy: "TLS in transit. AES-256 at rest. Keys we can rotate." },
   { title: "SSO & SAML", copy: "Enterprise maps your identity provider and groups." },
   { title: "Audit log", copy: "Desk actions, admin changes, exports — available to owners." },
@@ -122,7 +147,7 @@ export default function SecurityPage() {
 
       <Section id="compliance" title="Compliance">
         <p>
-          We maintain SOC 2 Type II. The report is available to customers under NDA. We will complete reasonable security questionnaires for Enterprise and Scale plans. We support DPAs and, where needed, SCCs for international transfers.
+          Fless has initiated a SOC 2 audit with an independent CPA firm. While the audit is in progress, we complete security questionnaires on request. We support DPAs and, where needed, SCCs for international transfers.
         </p>
         <p>
           Fless is not a HIPAA BA, PCI merchant-of-record, or ISO 27001 certified environment unless an order form says so. Do not put card PAN or protected health information into desks unless you have a signed addendum that covers it.
@@ -132,14 +157,14 @@ export default function SecurityPage() {
       <Section id="report" title="Report a vulnerability">
         <p>
           If you find a security issue in Fless, email{" "}
-          <a href="mailto:security@fless.com">security@fless.com</a> with steps to reproduce. Do not access other customers’ data. We will acknowledge and work the report. We do not run a public bug bounty unless announced here.
+          <a href="mailto:security@getfless.com">security@getfless.com</a> with steps to reproduce. Do not access other customers’ data. We will acknowledge and work the report. We do not run a public bug bounty unless announced here.
         </p>
       </Section>
 
       <Section id="contact" title="Procurement and contact">
         <p>
-          Security pack, SOC 2, DPA, and subprocessors:{" "}
-          <a href="mailto:security@fless.com">security@fless.com</a>
+          Security questionnaires, DPA, and subprocessors:{" "}
+          <a href="mailto:security@getfless.com">security@getfless.com</a>
           <br />
           Named rollout and private region: <Link href="/contact">Contact</Link>
           <br />

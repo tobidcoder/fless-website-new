@@ -93,12 +93,12 @@ function ShippingLivePanel() {
         <div className="overflow-hidden rounded-2xl border border-white/15 bg-white/95 shadow-[0_24px_60px_-20px_rgba(0,0,0,0.55)] backdrop-blur-md">
           <div className="flex items-center justify-between gap-3 border-b border-black/[0.06] px-4 py-2.5">
             <div>
-              <p className="text-[12px] font-semibold tracking-tight text-slate-900">Shipping · every market</p>
+              <p className="text-[12px] font-semibold tracking-tight text-slate-900">Simulated preview · multi-desk</p>
               <p className="text-[11px] text-slate-500">Local hours. Same product.</p>
             </div>
             <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-600">
               <LiveDot />
-              {paused ? "Paused" : "Live"}
+              {paused ? "Paused" : "Sample feed"}
             </span>
           </div>
 
@@ -146,7 +146,7 @@ function ShippingLivePanel() {
 
           <div className="grid grid-cols-3 border-t border-black/[0.06] bg-slate-50/80">
             {[
-              { value: "40+", label: "Countries" },
+              { value: "18", label: "Pilot teams" },
               { value: "8", label: "Desks" },
               { value: "24/7", label: "Coverage" },
             ].map((stat) => (

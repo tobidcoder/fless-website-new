@@ -18,34 +18,34 @@ const steps = [
   {
     n: "02",
     title: "Staff the departments",
-    description: "Turn on marketing, sales, support, hiring — whatever you need this quarter.",
+    description: "Deploy Marketing today, and request early access for sales, support, and people desks.",
     image: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=1200&auto=format&fit=crop&q=80",
     alt: "Team collaborating around a table",
     snippet: [
-      { title: "Desks", line: "Marketing + Voice live", time: "4m" },
-      { title: "Markets", line: "Local hours worldwide", time: "4m" },
+      { title: "Desks", line: "Marketing live · Others early access", time: "4m" },
+      { title: "Review", line: "Approval gates required", time: "4m" },
     ],
   },
   {
     n: "03",
     title: "Work starts shipping",
-    description: "Campaigns, calls, tickets, invoices. You review; it doesn’t wait for you to type.",
+    description: "Campaigns, copy, and creative. You review and approve before anything goes live.",
     image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&auto=format&fit=crop&q=80",
     alt: "People working together in an open office",
     snippet: [
-      { title: "Marketing", line: "4 posts published", time: "18m" },
-      { title: "Voice", line: "7 bookings held", time: "22m" },
+      { title: "Marketing", line: "Posts drafted for review", time: "18m" },
+      { title: "Approval", line: "Approved & published", time: "22m" },
     ],
   },
   {
     n: "04",
     title: "See what moved",
-    description: "One view of what ran, what closed, and what to scale next week.",
+    description: "One clear view of published campaigns, audit logs, and performance metrics.",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80",
     alt: "Laptop showing business performance charts",
     snippet: [
-      { title: "Week", line: "Revenue +23%", time: "Fri" },
-      { title: "Next", line: "Scale the London ads", time: "Fri" },
+      { title: "Audit log", line: "Every change tracked", time: "Fri" },
+      { title: "Buffer", line: "Channels connected", time: "Fri" },
     ],
   },
 ]

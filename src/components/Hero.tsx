@@ -43,7 +43,7 @@ export function Hero() {
             transition={{ delay: 0.12 }}
             className="mt-7 sm:mt-8 text-lg sm:text-xl text-muted-foreground leading-[1.55] max-w-[640px] mx-auto"
           >
-            One product that staffs marketing, sales, voice, support, hiring, and finance — so the work ships in every market you operate.
+            Marketing is live today. Voice, Sales, Support, Recruitment, HR, Operations and Finance are in early access.
           </motion.p>
 
           <motion.div
@@ -64,7 +64,7 @@ export function Hero() {
             transition={{ delay: 0.32 }}
             className="mt-7 text-sm text-muted-foreground"
           >
-            No credit card · Setup in under 2 minutes · Cancel anytime
+            No credit card · Set up in minutes · Cancel anytime
           </motion.p>
         </div>
       </section>

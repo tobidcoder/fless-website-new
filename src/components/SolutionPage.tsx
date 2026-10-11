@@ -93,7 +93,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
               <BrandedStage
                 image={solution.hero}
                 alt={solution.heroAlt}
-                label={`${solution.name} · live`}
+                label={`${solution.name} · Playbook`}
                 rows={solution.activity}
                 className="rounded-2xl aspect-[16/11]"
               />
@@ -246,7 +246,8 @@ export function SolutionPage({ solution }: { solution: Solution }) {
                     image={d.hero}
                     alt={d.name}
                     title={d.name}
-                    live={d.activity[0]?.title}
+                    status={d.status}
+                    live={d.status === "live" ? "Live today" : "Early access"}
                     className="aspect-[5/4] rounded-xl mb-2"
                   />
                   <p className="text-[12px] text-muted-foreground">{d.line}</p>

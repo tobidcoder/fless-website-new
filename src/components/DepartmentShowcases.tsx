@@ -4,6 +4,7 @@ import type { ReactNode } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { cn } from "@/lib/utils"
 import { BrandedStage } from "@/components/BrandedStage"
 
 const fadeUp = {
@@ -159,8 +160,8 @@ function SupportVisual() {
   return (
     <ProductCard>
       <div className="px-3.5 py-2.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
-        <span className="text-[11px] font-semibold text-neutral-900 dark:text-white">Inbox</span>
-        <span className="text-[10px] text-neutral-500">First reply 48s</span>
+        <span className="text-[11px] font-semibold text-neutral-900 dark:text-white">Inbox · Sample workspace</span>
+        <span className="text-[10px] text-neutral-500">Queue active</span>
       </div>
       <div className="divide-y divide-black/5 dark:divide-white/10">
         {tickets.map((t, i) => (
@@ -186,14 +187,15 @@ function SupportVisual() {
 
 function RecruitingVisual() {
   const people = [
-    { name: "Amara K.", role: "Product designer", match: "94%" },
-    { name: "James O.", role: "Backend engineer", match: "91%" },
-    { name: "Lina M.", role: "Account exec", match: "88%" },
+    { name: "Amara K.", role: "Product designer", match: "Strong fit" },
+    { name: "James O.", role: "Backend engineer", match: "Strong fit" },
+    { name: "Lina M.", role: "Account exec", match: "Reviewing" },
   ]
   return (
     <ProductCard>
-      <div className="px-3.5 py-2.5 border-b border-black/5 dark:border-white/10">
+      <div className="px-3.5 py-2.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
         <span className="text-[11px] font-semibold text-neutral-900 dark:text-white">Shortlist · 12 screened</span>
+        <span className="text-[10px] text-neutral-500">Sample workspace</span>
       </div>
       <div className="p-2.5 space-y-1.5">
         {people.map((p, i) => (
@@ -209,7 +211,7 @@ function RecruitingVisual() {
               <div className="text-[11px] font-medium text-neutral-900 dark:text-white">{p.name}</div>
               <div className="text-[10px] text-neutral-500">{p.role}</div>
             </div>
-            <span className="text-[11px] font-semibold tabular-nums text-neutral-900 dark:text-white">{p.match}</span>
+            <span className="text-[10px] font-semibold text-neutral-900 dark:text-white">{p.match}</span>
           </motion.div>
         ))}
       </div>
@@ -225,8 +227,9 @@ function HrVisual() {
   ]
   return (
     <ProductCard>
-      <div className="px-3.5 py-2.5 border-b border-black/5 dark:border-white/10">
-        <span className="text-[11px] font-semibold text-neutral-900 dark:text-white">Onboarding · Maya Chen</span>
+      <div className="px-3.5 py-2.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+        <span className="text-[11px] font-semibold text-neutral-900 dark:text-white">Onboarding · Tara K.</span>
+        <span className="text-[10px] text-neutral-500">Sample workspace</span>
       </div>
       <div className="p-3 space-y-2.5">
         {steps.map((s, i) => (
@@ -473,8 +476,18 @@ export function DepartmentShowcases() {
                     {dept.visual}
                   </Stage>
                   <div className="p-6 md:p-8 flex flex-col flex-1">
-                    <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground mb-2">
-                      {dept.name}
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                        {dept.name}
+                      </span>
+                      <span className={cn(
+                        "text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded",
+                        dept.id === "marketing"
+                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                          : "bg-muted text-muted-foreground"
+                      )}>
+                        {dept.id === "marketing" ? "Live" : "Early access"}
+                      </span>
                     </div>
                     <h3 className="text-xl md:text-[22px] font-display font-semibold tracking-tight text-foreground mb-2">
                       {dept.headline}

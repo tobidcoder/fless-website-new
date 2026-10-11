@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer"
 import { IndustryGrid } from "@/components/IndustryGrid"
 import { EmailCapture } from "@/components/EmailCapture"
 import { industries } from "@/lib/industries"
-import { Search, Sparkles, ShieldCheck, Clock, Layers, X } from "lucide-react"
+import { Search, Sparkles, ShieldCheck, Layers, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const CATEGORIES = [
@@ -59,7 +59,7 @@ export default function IndustriesPage() {
               className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1 text-[11px] font-medium tracking-wide text-primary uppercase mb-4"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>35 Configured Sectors</span>
+              <span>35 Sectors</span>
             </motion.div>
 
             <motion.h1
@@ -78,7 +78,7 @@ export default function IndustriesPage() {
               transition={{ delay: 0.08 }}
               className="mt-5 text-[16px] md:text-[18px] text-muted-foreground leading-relaxed max-w-2xl"
             >
-              Fless equips your team with autonomous marketing, voice receptionists, pipeline managers, and back-office staff configured to your sector’s compliance, vocabulary, and operational rhythm.
+              Fless works across industries. Five have dedicated playbooks today: Healthcare, Retail & E-commerce, Education, Finance and Hospitality.
             </motion.p>
 
             {/* Micro badges */}
@@ -90,20 +90,16 @@ export default function IndustriesPage() {
             >
               <span className="inline-flex items-center gap-1.5 rounded-lg border border-border/80 bg-card px-3 py-1 font-medium text-foreground/80 shadow-xs">
                 <ShieldCheck className="w-3.5 h-3.5 text-primary" />
-                Compliance-governed
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-border/80 bg-card px-3 py-1 font-medium text-foreground/80 shadow-xs">
-                <Clock className="w-3.5 h-3.5 text-primary" />
-                24/7 autonomous shifts
+                5 dedicated playbooks
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-lg border border-border/80 bg-card px-3 py-1 font-medium text-foreground/80 shadow-xs">
                 <Layers className="w-3.5 h-3.5 text-primary" />
-                All 8 departments
+                Built for global teams
               </span>
             </motion.div>
 
             <div className="mt-8 max-w-md">
-              <EmailCapture source="industries-hero" />
+              <EmailCapture source="industries-hero" cta="Join the beta" />
             </div>
           </div>
 

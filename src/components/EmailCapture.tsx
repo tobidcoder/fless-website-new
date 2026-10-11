@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 export function EmailCapture({
   source = "site",
   extra = {},
-  cta = "Get started free",
+  cta = "Join the beta",
   placeholder = "Work email",
   className,
 }: {
