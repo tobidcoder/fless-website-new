@@ -36,7 +36,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
       <Header activePage="solutions" />
       <main className="flex-1">
         <section className="pt-24 md:pt-28 pb-12 md:pb-16">
-          <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             <div className="lg:col-span-5">
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
@@ -131,7 +131,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
         </section>
 
         <section className="py-20 md:py-28">
-          <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-12 lg:gap-16">
+          <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-7">
               <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-4">How it actually runs</p>
               <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight leading-[1.12] mb-6 max-w-xl">
@@ -164,7 +164,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
             <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-10 md:mb-14 max-w-xl">
               How it shows up in {solution.name.toLowerCase()}.
             </h2>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {solution.capabilities.map((cap, i) => (
                 <motion.article
                   key={cap.title}
@@ -195,7 +195,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
             <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-10 md:mb-14 max-w-xl">
               What teams actually run.
             </h2>
-            <div className="grid sm:grid-cols-2 gap-px bg-border/70 rounded-2xl overflow-hidden border border-border/70">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border/70 rounded-2xl overflow-hidden border border-border/70">
               {solution.plays.map((play, i) => (
                 <motion.article
                   key={play.title}
@@ -218,7 +218,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
             <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-12 max-w-xl">
               Live in a week. Compounding after that.
             </h2>
-            <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
               {solution.steps.map((step, i) => (
                 <motion.div
                   key={step.n}
@@ -258,7 +258,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
         </section>
 
         <section className="py-16 md:py-24 bg-night text-white">
-          <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-10 items-end">
+          <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
             <div className="lg:col-span-8">
               <p className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-snug max-w-2xl">
                 “{solution.quote.text}”
@@ -280,7 +280,7 @@ export function SolutionPage({ solution }: { solution: Solution }) {
         </section>
 
         <section className="py-20 md:py-28">
-          <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-12">
+          <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-4">
               <h2 className="text-2xl md:text-3xl font-display font-semibold tracking-tight mb-3">Questions</h2>
               <p className="text-sm text-muted-foreground leading-relaxed">

@@ -28,7 +28,7 @@ const roadmapTools = [
 export function Integrations() {
   return (
     <section className="py-24 md:py-32 bg-background border-t border-border/60">
-      <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}

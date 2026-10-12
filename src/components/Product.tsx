@@ -41,7 +41,7 @@ export function Product() {
           </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-4 md:gap-5 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-5 items-stretch">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

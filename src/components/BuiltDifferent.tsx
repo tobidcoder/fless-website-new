@@ -165,7 +165,7 @@ function ShippingLivePanel() {
 export function BuiltDifferent() {
   return (
     <section className="relative overflow-hidden border-t border-border/60">
-      <div className="grid lg:grid-cols-2 min-h-[560px] lg:min-h-[720px]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[560px] lg:min-h-[720px]">
         <div className="relative min-h-[460px] lg:min-h-full bg-night">
           <div
             role="img"

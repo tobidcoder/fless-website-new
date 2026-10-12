@@ -40,7 +40,7 @@ export function LegalDoc({
           <p className="mt-5 text-[16px] text-muted-foreground leading-relaxed max-w-2xl">{lede}</p>
           <p className="mt-4 text-[13px] text-muted-foreground">Last updated {updated}</p>
 
-          <div className="mt-12 md:mt-16 grid lg:grid-cols-12 gap-10 lg:gap-16">
+          <div className="mt-12 md:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
             <aside className="lg:col-span-4">
               <nav className="lg:sticky lg:top-24 space-y-1">
                 <p className="text-[11px] font-medium uppercase tracking-wider text-primary mb-3">On this page</p>

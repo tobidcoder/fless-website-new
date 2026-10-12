@@ -353,10 +353,10 @@ export default function PricingPage() {
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl sm:text-5xl lg:text-[60px] font-display font-semibold tracking-tight leading-[1.05] text-foreground max-w-4xl mx-auto uppercase"
+            className="text-4xl sm:text-5xl lg:text-[60px] font-display font-semibold tracking-tight leading-[1.05] text-foreground max-w-4xl mx-auto text-balance"
           >
-            Hire AI employees for the work <br />
-            <span className="text-primary">your business needs.</span>
+            Pay for the work,{" "}
+            <span className="text-primary">not for seats.</span>
           </motion.h1>
 
           <motion.p
@@ -365,7 +365,7 @@ export default function PricingPage() {
             transition={{ delay: 0.08 }}
             className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
           >
-            Predictable, transparent workforce rates across 8 business departments. No seat licensing, no server fees, and full multi-currency global support.
+            Each AI employee has a clear monthly rate that covers everything: the AI models, computing and storage. No per-user seats, no hidden token or GPU charges, and you can pay in 8 currencies.
           </motion.p>
         </section>
 
@@ -406,7 +406,7 @@ export default function PricingPage() {
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-12 gap-8 lg:gap-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
               {/* LEFT: CONTROLS */}
               <div className="lg:col-span-7 space-y-7">
                 {/* 1. DEPARTMENT SELECTOR */}
@@ -710,7 +710,7 @@ export default function PricingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 text-xs sm:text-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs sm:text-sm">
             <div className="p-6 rounded-2xl bg-card border border-border/80 flex flex-col justify-between space-y-4">
               <div className="space-y-3">
                 <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
@@ -833,7 +833,7 @@ export default function PricingPage() {
 
         {/* SECTION 5: FAQ ACCORDION */}
         <section className="max-w-[1240px] mx-auto px-6 py-12 md:py-16">
-          <div className="grid lg:grid-cols-12 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             <div className="lg:col-span-4 space-y-3">
               <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
                 <HelpCircle className="w-5 h-5" />

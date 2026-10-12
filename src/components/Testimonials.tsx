@@ -27,7 +27,7 @@ export function Testimonials() {
           In pilot with 18 businesses.
         </motion.h2>
 
-        <div className="grid lg:grid-cols-12 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           <motion.article
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}

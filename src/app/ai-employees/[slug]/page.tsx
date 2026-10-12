@@ -276,7 +276,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
         {/* HERO / IDENTITY SECTION */}
         <section className="max-w-[1200px] mx-auto px-6 pb-12">
           <div className="bg-card border border-border/80 rounded-3xl p-6 md:p-10 shadow-lg">
-            <div className="grid lg:grid-cols-12 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-8">
                 <div className="flex flex-wrap items-center gap-2.5 mb-4">
                   <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[11px] font-semibold uppercase tracking-wider">
@@ -376,7 +376,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
         </section>
 
         {/* DETAILS GRID */}
-        <section className="max-w-[1200px] mx-auto px-6 pb-16 grid lg:grid-cols-12 gap-10">
+        <section className="max-w-[1200px] mx-auto px-6 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* MAIN CONTENT */}
           <div className="lg:col-span-8 space-y-12">
             {/* CAPABILITIES */}
@@ -384,7 +384,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
               <h2 className="text-xl font-display font-semibold text-foreground mb-4 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-primary" /> Key Capabilities
               </h2>
-              <div className="grid sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {profile.capabilities.map((cap) => (
                   <div key={cap.id} className="p-4 rounded-xl bg-card border border-border/70 flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
@@ -402,7 +402,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
               <h2 className="text-xl font-display font-semibold text-foreground mb-4 flex items-center gap-2">
                 <Building2 className="w-5 h-5 text-primary" /> Connected Apps & Requirements
               </h2>
-              <div className="grid sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {profile.requiredPackages.map((pkg) => (
                   <div key={pkg.packageName} className="p-4 rounded-xl bg-card border border-border/70 flex items-center justify-between">
                     <span className="text-sm font-medium text-foreground">{pkg.displayName}</span>

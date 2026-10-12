@@ -26,7 +26,7 @@ export function ProblemSolution() {
           &quot;AI makes us faster.&quot; But speed doesn&apos;t matter if you&apos;re still doing the work. You don&apos;t need an assistant. You need an employee.
         </motion.h2>
 
-        <div className="grid md:grid-cols-3 gap-12 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -26,7 +26,7 @@ export function DepartmentPage({ dept }: { dept: Department }) {
       <Header activePage="departments" />
       <main className="flex-1">
         <section className="pt-24 md:pt-28 pb-12 md:pb-16">
-          <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             <div className="lg:col-span-5">
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
@@ -138,7 +138,7 @@ export function DepartmentPage({ dept }: { dept: Department }) {
 
         {extra && (
           <section className="py-20 md:py-28">
-            <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-12">
+            <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
               <div className="lg:col-span-6">
                 <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-4">How it actually runs</p>
                 <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-5 max-w-lg">{dept.line}</h2>
@@ -147,7 +147,7 @@ export function DepartmentPage({ dept }: { dept: Department }) {
               </div>
               <div className="lg:col-span-6">
                 <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-primary mb-4">In practice</p>
-                <div className="grid sm:grid-cols-2 gap-px bg-border/70 rounded-2xl overflow-hidden border border-border/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border/70 rounded-2xl overflow-hidden border border-border/70">
                   {extra.plays.map((play) => (
                     <article key={play.title} className="bg-background p-5 md:p-6">
                       <h3 className="text-[15px] font-semibold tracking-tight mb-1.5">{play.title}</h3>
@@ -165,7 +165,7 @@ export function DepartmentPage({ dept }: { dept: Department }) {
             <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-10 md:mb-14 max-w-xl">
               What {dept.name} actually does.
             </h2>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {dept.capabilities.map((cap, i) => (
                 <motion.article
                   key={cap.title}
@@ -278,7 +278,7 @@ export function DepartmentPage({ dept }: { dept: Department }) {
           <section className="py-20 md:py-28">
             <div className="max-w-[1200px] mx-auto px-6">
               <h2 className="text-3xl font-display font-semibold tracking-tight mb-12">How teams turn it on</h2>
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {extra.steps.map((step) => (
                   <div key={step.n}>
                     <div className="text-[13px] font-medium tabular-nums text-muted-foreground mb-3">{step.n}</div>
@@ -292,7 +292,7 @@ export function DepartmentPage({ dept }: { dept: Department }) {
         )}
 
         <section className="py-16 md:py-24 bg-night text-white">
-          <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-10 items-end">
+          <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
             <div className="lg:col-span-8">
               <p className="text-xs uppercase font-semibold tracking-widest text-primary mb-3">
                 {dept.status === "live" ? "Pilot program" : "Early access waitlist"}
@@ -320,7 +320,7 @@ export function DepartmentPage({ dept }: { dept: Department }) {
 
         {extra && (
           <section className="py-20 md:py-28">
-            <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-12 gap-12">
+            <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
               <div className="lg:col-span-4">
                 <h2 className="text-2xl font-display font-semibold tracking-tight mb-3">Questions</h2>
                 <p className="text-sm text-muted-foreground mb-6">Join our rolling cohorts — no credit card required.</p>

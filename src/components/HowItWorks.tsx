@@ -52,8 +52,8 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="py-24 md:py-32 bg-background border-t border-border/60">
-      <div className="max-w-[1200px] mx-auto px-6">
+    <section id="how-it-works" className="scroll-mt-20 py-20 md:py-28 bg-background border-t border-border/60">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
         <div className="max-w-2xl mb-14 md:mb-20">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
@@ -69,11 +69,11 @@ export function HowItWorks() {
             viewport={{ once: true }}
             className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.12] text-foreground"
           >
-            Live in a day. Compounding after that.
+            From sign-up to shipped work in four steps.
           </motion.h2>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-8 md:gap-5">
           {steps.map((step, i) => (
             <motion.article
               key={step.n}
@@ -81,7 +81,7 @@ export function HowItWorks() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="group"
+              className="group flex gap-4 sm:block"
             >
               <BrandedStage
                 image={step.image}
@@ -89,10 +89,15 @@ export function HowItWorks() {
                 label={step.title}
                 rows={step.snippet}
                 compact
-                className="aspect-[4/5] rounded-2xl mb-5"
+                className="hidden sm:block aspect-[4/5] rounded-2xl mb-5"
               />
-              <h3 className="text-[16px] font-semibold tracking-tight text-foreground mb-1.5">{step.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+              <span className="sm:hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-soft text-[13px] font-semibold text-primary tabular-nums">
+                {step.n}
+              </span>
+              <div>
+                <h3 className="text-[16px] font-semibold tracking-tight text-foreground mb-1.5">{step.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+              </div>
             </motion.article>
           ))}
         </div>

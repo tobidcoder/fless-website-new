@@ -92,7 +92,7 @@ export function DashboardShowcase() {
                 </div>
 
                 {/* Grid */}
-                <div className="grid sm:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="bg-background rounded-xl p-5 border border-border shadow-sm h-64 flex flex-col">
                     <h4 className="font-semibold text-sm mb-4">Sample Output</h4>
                     <div className="flex-1 w-full">

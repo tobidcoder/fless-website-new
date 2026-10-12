@@ -463,7 +463,7 @@ export function DepartmentShowcases() {
               {pair.copy}
             </motion.p>
 
-            <div className="mt-12 md:mt-16 grid md:grid-cols-2 gap-4 md:gap-5">
+            <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
               {pair.departments.map((dept, i) => (
                 <motion.article
                   key={dept.id}

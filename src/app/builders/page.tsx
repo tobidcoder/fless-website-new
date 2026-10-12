@@ -126,20 +126,22 @@ export default function BuildersPage() {
 
       <main className="flex-1 pt-24 pb-20">
         {/* SECTION 1: HERO */}
-        <section className="relative max-w-[1240px] mx-auto px-6 pt-10 pb-16 space-y-8">
+        <section className="relative max-w-[1200px] mx-auto px-5 sm:px-6 pt-10 md:pt-16 pb-16 space-y-8">
           <div className="text-center space-y-5 max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold tracking-wide">
               <Terminal className="w-3.5 h-3.5" />
               <span>@fless/employee-sdk • Builder Beta</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-display font-semibold tracking-tight leading-[1.08] uppercase">
-              BUILD AI EMPLOYEES. <br />
-              <span className="text-primary">DEPLOY INTO REAL COMPANIES.</span>
+            <h1 className="text-[38px] sm:text-6xl font-display font-semibold tracking-[-0.04em] leading-[1.05] text-balance">
+              Build an AI employee once.{" "}
+              <span className="text-primary">Earn every month it works.</span>
             </h1>
 
-            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Write typed manifests in TypeScript. Test them offline in a hermetic sandbox. Publish to the marketplace and earn 35% of all recurring subscriptions and metered usage.
+            <p className="text-muted-foreground text-[17px] sm:text-lg leading-relaxed max-w-2xl mx-auto text-pretty">
+              Package your expertise, such as how a clinic front desk or a sales team works, as an AI employee using our
+              TypeScript SDK. Businesses hire it from the Fless marketplace, and you keep 35% of every subscription,
+              paid monthly. We handle hosting, billing and security.
             </p>
 
             {/* Action Buttons & Private Beta Notice */}
