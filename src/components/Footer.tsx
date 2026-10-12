@@ -128,13 +128,14 @@ export function Footer() {
               <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
               <li><Link href="/security" className="hover:text-white transition-colors">Security Overview</Link></li>
+              <li><Link href="/data-deletion" className="hover:text-white transition-colors">Data Deletion</Link></li>
               <li><Link href="/terms#cancellation" className="hover:text-white transition-colors">Cancellation Terms</Link></li>
               <li><Link href="/privacy#data-retention" className="hover:text-white transition-colors">Data Retention</Link></li>
             </ul>
           </div>
         </div>
 
-        {/* GLOBAL READINESS BAR */}
+        {/* GLOBAL READINESS & ENTITY BAR */}
         <div className="py-6 border-t border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-4 text-[12px] text-white/45">
           <div className="flex items-center gap-3">
             <Globe className="w-4 h-4 text-primary shrink-0" />
@@ -143,13 +144,17 @@ export function Footer() {
             </span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               <span>NDPR & GDPR aligned · DPA on request</span>
             </span>
             <span className="hidden sm:inline">•</span>
-            <span>© 2026 Fless Inc.</span>
+            <span>Fless is a product of <strong>Brainstack Tech LTD</strong>, 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria</span>
+            <span className="hidden sm:inline">•</span>
+            <a href="mailto:hello@getfless.com" className="hover:text-white transition-colors underline underline-offset-2">hello@getfless.com</a>
+            <span className="hidden sm:inline">•</span>
+            <span>© 2026 Fless</span>
           </div>
         </div>
       </div>

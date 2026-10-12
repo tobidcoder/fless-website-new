@@ -66,7 +66,7 @@ export default function TermsPage() {
           <a href="/privacy">Privacy Policy</a>, and any order form or plan page you accept. If you have a signed master agreement, that agreement controls if it conflicts.
         </p>
         <p>
-          Fless Inc. (operating from 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria, with planned entity headquarters in Delaware, USA) provides the product. “You” means the individual or the organization that owns the workspace.
+          Brainstack Tech LTD (trading as Fless, registered in Nigeria, operating from 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria, with planned international entity headquarters in Delaware, USA) provides the product. “You” means the individual or the organization that owns the workspace.
         </p>
       </Section>
 
@@ -183,9 +183,13 @@ export default function TermsPage() {
 
       <Section id="contact" title="Contact">
         <p>
-          Legal: <a href="mailto:hello@getfless.com">hello@getfless.com</a>
+          Legal entity: Brainstack Tech LTD (trading as Fless)
+          <br />
+          Email: <a href="mailto:hello@getfless.com">hello@getfless.com</a>
           <br />
           Physical address: 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria
+          <br />
+          Data deletion instructions: <a href="/data-deletion">Data Deletion</a>
           <br />
           Billing and plans: see <a href="/pricing">Pricing</a>
           <br />
