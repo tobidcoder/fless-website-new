@@ -7,6 +7,8 @@ const liveTools = [
   "LinkedIn",
   "X",
   "Facebook",
+  "Instagram",
+  "Threads",
   "Bluesky",
   "Buffer",
 ]
@@ -70,7 +72,7 @@ export function Integrations() {
             viewport={{ once: true }}
             className="text-[15px] text-muted-foreground leading-relaxed mb-8 max-w-md"
           >
-            Marketing publishes via LinkedIn, X, Facebook, and Bluesky today. Additional workplace tools are on our roadmap.
+            Marketing publishes via LinkedIn, X, Facebook, Instagram, Threads, and Bluesky today. Additional workplace tools are on our roadmap.
           </motion.p>
           <div className="space-y-6">
             <div>

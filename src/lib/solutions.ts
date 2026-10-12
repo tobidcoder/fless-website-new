@@ -70,7 +70,7 @@ export const solutions: Solution[] = [
       { title: "Calendar", line: "Q3 calendar filled", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -136,7 +136,7 @@ export const solutions: Solution[] = [
       { title: "Review", line: "Draft approved by manager", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -202,7 +202,7 @@ export const solutions: Solution[] = [
       { title: "Policy", line: "Workspace settings updated", time: "3h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -268,7 +268,7 @@ export const solutions: Solution[] = [
       { title: "Client C", line: "Brand voice memory updated", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -334,7 +334,7 @@ export const solutions: Solution[] = [
       { title: "Calendar", line: "Site diary updated", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -400,7 +400,7 @@ export const solutions: Solution[] = [
       { title: "Calendar", line: "Term schedule updated", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -466,7 +466,7 @@ export const solutions: Solution[] = [
       { title: "Calendar", line: "Weekly drops scheduled", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -532,7 +532,7 @@ export const solutions: Solution[] = [
       { title: "Audit", line: "Activity export generated", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -598,7 +598,7 @@ export const solutions: Solution[] = [
       { title: "Calendar", line: "Location schedule updated", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -664,7 +664,7 @@ export const solutions: Solution[] = [
       { title: "Calendar", line: "Content schedule updated", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },

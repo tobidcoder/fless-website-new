@@ -150,7 +150,7 @@ export const departments: Department[] = [
       { title: "Ads", line: "Creative set queued for Meta", time: "41m" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -203,7 +203,7 @@ export const departments: Department[] = [
       { title: "Calendar", line: "Team diary synced", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -273,7 +273,7 @@ export const departments: Department[] = [
       { title: "Won", line: "Contract agreement closed", time: "2h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -334,7 +334,7 @@ export const departments: Department[] = [
       { title: "CS", line: "Account check-in sent", time: "44m" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -404,7 +404,7 @@ export const departments: Department[] = [
       { title: "Schedule", line: "Onsite set for Thursday", time: "1h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -474,7 +474,7 @@ export const departments: Department[] = [
       { title: "Reviews", line: "Cycle opened", time: "2h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -544,7 +544,7 @@ export const departments: Department[] = [
       { title: "Project", line: "Rollout marked Done", time: "2h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -614,7 +614,7 @@ export const departments: Department[] = [
       { title: "Payroll", line: "Payroll file ready for review", time: "3h" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },

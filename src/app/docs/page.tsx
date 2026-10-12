@@ -17,6 +17,7 @@ import {
   MessageSquare,
   Calendar,
   Share2,
+  AtSign,
   MessageCircle,
   Users,
   Mail,
@@ -299,6 +300,91 @@ export default defineEmployee({
   capabilities: ['marketing.ads_management', 'marketing.social_publishing'],
   systemPrompt: 'Plan, draft, and track performance of social campaigns with high ROAS.',
   tools: ['meta.publishPost', 'meta.getAdMetrics'],
+});`,
+  },
+  {
+    id: "threads",
+    packageName: "@fless/threads",
+    displayName: "Threads Microblogging",
+    version: "1.0.0",
+    category: "SOCIAL",
+    badge: "Community Growth",
+    accentColor: "#101010",
+    tagline: "Autonomous posting, community replies, and conversation analytics on Threads.",
+    description: "Allows marketing AI employees to publish text, carousels, and link attachments to Threads, monitor post replies, and pull engagement insights with built-in rate limit protection.",
+    icon: AtSign,
+    permissions: ["threads_basic", "threads_content_publish", "threads_manage_replies", "threads_manage_insights"],
+    capabilities: ["social.publish", "social.engage", "social.analytics"],
+    supportsSandbox: true,
+    sandboxMockDescription: "Simulates Threads Graph API post containers, publishing state transitions, and mocked community replies.",
+    tools: [
+      {
+        toolId: "threads.publishPost",
+        name: "Publish Threads Post",
+        description: "Creates and publishes text, single images, videos, or multi-item carousels to Threads with link attachments.",
+        requiredPermissions: ["threads_basic", "threads_content_publish"],
+        parameters: [
+          { name: "text", type: "string", required: true, description: "Thread post copy (up to 500 characters)." },
+          { name: "media", type: "array", required: false, description: "Array of image or video URLs to attach." },
+          { name: "linkAttachment", type: "string", required: false, description: "Optional web link attachment." },
+        ],
+        examplePayload: {
+          text: "Deploying autonomous marketing employees has completely transformed how our team tests creative angles across emerging channels.",
+          linkAttachment: "https://getfless.com",
+        },
+        exampleResponse: {
+          id: "threads_post_99201481",
+          url: "https://threads.net/@fless/post/99201481",
+        },
+      },
+      {
+        toolId: "threads.reply",
+        name: "Reply to Post or Comment",
+        description: "Replies to an existing post or conversation thread.",
+        requiredPermissions: ["threads_basic", "threads_content_publish", "threads_manage_replies"],
+        parameters: [
+          { name: "replyToId", type: "string", required: true, description: "ID of the post or reply to respond to." },
+          { name: "text", type: "string", required: true, description: "Reply copy (up to 500 characters)." },
+        ],
+        examplePayload: {
+          replyToId: "threads_post_99201481",
+          text: "Thanks for reading! All actions go through human approval gates before publishing.",
+        },
+        exampleResponse: {
+          id: "threads_reply_100234",
+        },
+      },
+      {
+        toolId: "threads.getInsights",
+        name: "Read Threads Insights",
+        description: "Fetches views, likes, replies, and reposts for the account or a specific post.",
+        requiredPermissions: ["threads_basic", "threads_manage_insights"],
+        parameters: [
+          { name: "postId", type: "string", required: false, description: "Optional post ID to filter metrics." },
+          { name: "metrics", type: "array", required: true, description: "Metrics to query: ['views', 'likes', 'replies', 'reposts']." },
+        ],
+        examplePayload: {
+          metrics: ["views", "likes", "replies", "reposts"],
+        },
+        exampleResponse: {
+          views: 18450,
+          likes: 620,
+          replies: 84,
+          reposts: 42,
+        },
+      },
+    ],
+    sampleEmployeeCode: `import { defineEmployee } from '@fless/employee-sdk';
+
+export default defineEmployee({
+  id: 'threads-community-manager',
+  name: 'Threads Community Marketer',
+  version: '1.0.0',
+  department: 'MARKETING',
+  requiredPackages: ['@fless/threads'],
+  capabilities: ['social.publish', 'social.engage', 'social.analytics'],
+  systemPrompt: 'Draft punchy thought-leadership threads, reply thoughtfully to audience questions, and track engagement growth.',
+  tools: ['threads.publishPost', 'threads.reply', 'threads.getInsights'],
 });`,
   },
   {
