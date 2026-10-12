@@ -85,7 +85,7 @@ export function Footer() {
               <li><Link href="/docs#quickstart" className="hover:text-white transition-colors">Quickstart Guide</Link></li>
               <li><Link href="/docs#sdk-overview" className="hover:text-white transition-colors">SDK Overview</Link></li>
               <li><Link href="/docs#ref-pricing" className="hover:text-white transition-colors">Builder Earnings (35%)</Link></li>
-              <li><Link href="/docs#plugin-whatsapp" className="hover:text-white transition-colors">Managed Plugins</Link></li>
+              <li><Link href="/docs#plugins" className="hover:text-white transition-colors">Plugins</Link></li>
               <li><Link href="/builders#apply" className="hover:text-white transition-colors">Request SDK Access</Link></li>
             </ul>
           </div>

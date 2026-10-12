@@ -87,3 +87,16 @@ Every page was tested at 320px (small phone), 375px (iPhone), 768px (tablet) and
 13. Security
 14. **FAQ by audience**
 15. Footer
+
+## 8. Builder page and docs (second pass)
+
+| Finding | Status |
+|---|---|
+| Docs read like a legal document: dense paragraphs, coloured icon tiles on every line, small grey text | **Fixed.** Rebuilt /docs as a text-first reference: plain sidebar, 720px reading width, 16–18px body text, generous spacing, no decorative icons. Tables become stacked cards on phones. |
+| Builder page used AI-style icon chips and badges everywhere | **Fixed.** Removed all decorative icons; layout now relies on type, spacing and thin rules. |
+| Package and plugin lists were short and differed between pages | **Fixed.** One catalog (`src/lib/sdk.ts`) feeds both pages: 3 core packages and 14 plugins, each marked Live, Beta or Planned. |
+| The example employee was thin (no skills, knowledge, approvals or agents) | **Fixed.** The example now covers target market, packages, capabilities, tools, skills with triggers and steps, knowledge, agents, orchestration, approval gates, pricing and limits, with a plain-English guide to each block. |
+| CLI and field names contradicted each other (`publish` vs `submit`, `systemPrompt` vs `systemInstructions`, `countries` vs `targetMarket`) | **Fixed.** One spelling everywhere. |
+| Footer links such as /docs#quickstart always opened the intro | **Fixed.** Docs pages follow the URL, and old links are redirected to their new sections. |
+
+**To confirm with the team:** plugin statuses (only Social Publishing is marked Live), the Planned list (Google Workspace, Microsoft 365, Zoom, Calendly, Stripe, taken from the integrations roadmap) and the new `approvals` manifest field, which describes the approval gates the product already promises.
