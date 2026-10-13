@@ -2,35 +2,17 @@
 
 import { motion } from "framer-motion"
 import { BrandedStage } from "@/components/BrandedStage"
+import Link from "next/link"
+import { CONNECTIONS, categoryLabel } from "@/lib/sdk"
 
-const liveTools = [
-  "LinkedIn",
-  "X",
-  "Facebook",
-  "Instagram",
-  "Threads",
-  "Bluesky",
-  "Buffer",
-]
-
-const roadmapTools = [
-  "Google Workspace",
-  "Microsoft 365",
-  "Slack",
-  "HubSpot",
-  "Salesforce",
-  "Stripe",
-  "Zoom",
-  "Calendly",
-  "Meta",
-  "AWS",
-  "GitHub",
-]
+const liveTools = CONNECTIONS.filter((c) => c.status === "Available").map((c) => c.name)
+const beta = CONNECTIONS.filter((c) => c.status !== "Available")
+const betaCategories = Array.from(new Set(beta.map((c) => categoryLabel(c.category).toLowerCase()))).slice(0, 6)
 
 export function Integrations() {
   return (
     <section className="py-24 md:py-32 bg-background border-t border-border/60">
-      <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -39,12 +21,6 @@ export function Integrations() {
           <BrandedStage
             image="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&auto=format&fit=crop&q=80"
             alt="Office with the tools teams already use"
-            label="Connected"
-            rows={[
-              { title: "LinkedIn & X", line: "Buffer · OAuth connected", time: "Live" },
-              { title: "Facebook & Bluesky", line: "Official APIs connected", time: "Live" },
-              { title: "HubSpot & Slack", line: "CRM & chat integration", time: "Roadmap" },
-            ]}
             className="aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] rounded-2xl"
           />
         </motion.div>
@@ -72,7 +48,8 @@ export function Integrations() {
             viewport={{ once: true }}
             className="text-[15px] text-muted-foreground leading-relaxed mb-8 max-w-md"
           >
-            Marketing publishes via LinkedIn, X, Facebook, Instagram, Threads, and Bluesky today. Additional workplace tools are on our roadmap.
+            Fless connects straight to each platform&apos;s official API, with no third-party schedulers in between.
+            Businesses sign in with their own accounts.
           </motion.p>
           <div className="space-y-6">
             <div>
@@ -87,17 +64,12 @@ export function Integrations() {
               </div>
             </div>
 
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">On the roadmap</div>
-              <div className="grid grid-cols-2 gap-x-8 gap-y-2.5">
-                {roadmapTools.map((t) => (
-                  <div key={t} className="text-sm text-muted-foreground py-1 border-b border-border/30 flex items-center justify-between">
-                    <span>{t}</span>
-                    <span className="text-[10px] uppercase text-muted-foreground/70">Roadmap</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Plus {beta.length} more in beta or awaiting provider approval, across {betaCategories.join(", ")} and more.{" "}
+              <Link href="/docs#connections" className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+                See all {CONNECTIONS.length}
+              </Link>
+            </p>
           </div>
         </div>
       </div>

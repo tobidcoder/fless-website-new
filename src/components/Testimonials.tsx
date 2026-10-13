@@ -3,7 +3,6 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-import { FlessChrome } from "@/components/BrandedStage"
 import { NvidiaInceptionBadge } from "@/components/NvidiaInceptionBadge"
 
 export function Testimonials() {
@@ -27,7 +26,7 @@ export function Testimonials() {
           In pilot with 18 businesses.
         </motion.h2>
 
-        <div className="grid lg:grid-cols-12 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           <motion.article
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -41,7 +40,6 @@ export function Testimonials() {
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
-            <FlessChrome />
             <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
               <p className="text-white text-xl md:text-2xl font-display font-medium tracking-tight leading-snug max-w-lg mb-4">
                 Private pilots running with founders, operators, and growth teams.
@@ -76,7 +74,7 @@ export function Testimonials() {
                 </li>
                 <li className="flex items-center gap-2.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span>Live publishing on LinkedIn, X, Facebook, and Bluesky</span>
+                  <span>Live publishing on LinkedIn, X, Facebook, Instagram, Threads and Bluesky</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />

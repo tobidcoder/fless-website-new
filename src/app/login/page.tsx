@@ -1,15 +1,21 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { ArrowRight } from "lucide-react"
+import { APP_URL } from "@/lib/env"
 
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState("")
+
+  // Customers with an account sign in on the dashboard itself.
+  useEffect(() => {
+    if (APP_URL) window.location.replace(`${APP_URL}/login`)
+  }, [])
 
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans">

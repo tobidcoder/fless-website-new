@@ -143,7 +143,7 @@ export function IndustryGrid({
   className?: string
 }) {
   return (
-    <div className={cn("grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5 md:gap-4", className)}>
+    <div className={cn("grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 md:gap-4", className)}>
       {items.map((industry) => (
         <IndustryCard key={industry.id} industry={industry} />
       ))}

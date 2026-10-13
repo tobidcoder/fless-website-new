@@ -3,13 +3,17 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { ChevronDown, ArrowRight } from "lucide-react"
+import { ChevronDown, ArrowRight, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { sizeSolutions } from "@/lib/solutions"
 import { featuredIndustries, industryHref } from "@/lib/industries"
 import { StickyRegister } from "@/components/StickyRegister"
 import { FlessLogo } from "@/components/FlessLogo"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { APP_URL } from "@/lib/env"
+
+// Existing customers sign in on the dashboard; without it configured, /login explains access.
+const LOGIN_HREF = APP_URL ? `${APP_URL}/login` : "/login"
 
 interface HeaderProps {
   activePage?: string
@@ -37,6 +41,13 @@ export function Header({ activePage }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : ""
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [mobileOpen])
+
   return (
     <>
     <header
@@ -48,8 +59,8 @@ export function Header({ activePage }: HeaderProps) {
           : "bg-transparent border-transparent"
       )}
     >
-      <div className="max-w-[1200px] mx-auto px-6 w-full flex items-center justify-between">
-        <div className="flex items-center gap-10">
+      <div className="max-w-[1200px] mx-auto px-5 sm:px-6 w-full flex items-center justify-between">
+        <div className="flex items-center gap-8 xl:gap-10">
           <FlessLogo />
 
           <nav className="hidden lg:flex items-center gap-1 text-[13px] font-medium text-muted-foreground">
@@ -92,12 +103,18 @@ export function Header({ activePage }: HeaderProps) {
             >
               Docs
             </Link>
+            <Link
+              href="/investors"
+              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "investors" && "text-primary")}
+            >
+              Investors
+            </Link>
           </nav>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
           <ThemeToggle className="hidden md:inline-flex" />
-          <Link href="/login" className="hidden md:block text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <Link href={LOGIN_HREF} className="hidden md:block text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Log in
           </Link>
           <Link
@@ -109,12 +126,12 @@ export function Header({ activePage }: HeaderProps) {
           </Link>
           <button
             type="button"
-            className="lg:hidden text-[13px] font-medium text-foreground px-1.5 py-1"
+            className="lg:hidden -mr-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground hover:bg-secondary transition-colors"
             onClick={() => setMobileOpen((o) => !o)}
             aria-expanded={mobileOpen}
-            aria-label="Open menu"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
-            {mobileOpen ? "Close" : "Menu"}
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
@@ -224,52 +241,81 @@ export function Header({ activePage }: HeaderProps) {
       </AnimatePresence>
 
       {mobileOpen && (
-        <div className="lg:hidden absolute top-full inset-x-0 bg-background border-b border-border/70 shadow-xl max-h-[80vh] overflow-y-auto">
-          <div className="px-6 py-6 space-y-8 text-[13px]">
-            <div>
-              <Link href="/" className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>Home</Link>
-              <Link href="/pricing" className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>Pricing</Link>
-              <Link href="/solutions" className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>All solutions</Link>
-              <Link href="/login" className="block py-1.5 font-medium text-primary" onClick={() => setMobileOpen(false)}>Log in</Link>
-            </div>
-            <div>
-              <div className="text-[11px] uppercase tracking-wider text-primary mb-3">Appearance</div>
-              <ThemeToggle variant="row" />
-            </div>
-            <div>
-              <div className="text-[11px] uppercase tracking-wider text-primary mb-2">Size</div>
-              {sizeSolutions.map((s) => (
-                <Link key={s.slug} href={`/solutions/${s.slug}`} className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>
-                  {s.name}
+        <div className="lg:hidden absolute top-full inset-x-0 h-[calc(100dvh-4rem)] bg-background border-t border-border/70 overflow-y-auto overscroll-contain">
+          <div className="px-5 sm:px-6 pt-4 pb-10 space-y-8">
+            <nav className="grid grid-cols-1 divide-y divide-border/60 border-b border-border/60">
+              {[
+                { label: "Home", href: "/" },
+                { label: "How it works", href: "/#how-it-works" },
+                { label: "Pricing", href: "/pricing" },
+                { label: "Solutions", href: "/solutions" },
+                { label: "Builders", href: "/builders" },
+                { label: "Docs", href: "/docs" },
+                { label: "Investors", href: "/investors" },
+                { label: "Contact", href: "/contact" },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="flex items-center justify-between py-3.5 text-[17px] font-medium text-foreground"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {item.label}
+                  <ArrowRight className="w-4 h-4 text-muted-foreground" />
                 </Link>
               ))}
-            </div>
+            </nav>
+
             <div>
-              <div className="text-[11px] uppercase tracking-wider text-primary mb-2">Industry</div>
-              {featuredIndustries.map((s) => (
-                <Link key={s.id} href={industryHref(s)} className="block py-1.5 font-medium" onClick={() => setMobileOpen(false)}>
-                  {s.name}
-                </Link>
-              ))}
-              <Link href="/industries" className="block py-1.5 font-medium text-primary" onClick={() => setMobileOpen(false)}>
-                All industries
+              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary mb-2">Departments</div>
+              <div className="grid grid-cols-2 gap-x-4">
+                {departments.map((d) => (
+                  <Link key={d.href} href={d.href} className="flex items-center gap-2 py-2.5 text-[15px] font-medium" onClick={() => setMobileOpen(false)}>
+                    <span>{d.title}</span>
+                    {d.status === "live" && (
+                      <span className="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                        Live
+                      </span>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary mb-2">By company size</div>
+              <div className="grid grid-cols-2 gap-x-4">
+                {sizeSolutions.map((s) => (
+                  <Link key={s.slug} href={`/solutions/${s.slug}`} className="block py-2.5 text-[15px] font-medium" onClick={() => setMobileOpen(false)}>
+                    {s.name}
+                  </Link>
+                ))}
+              </div>
+              <Link href="/industries" className="inline-block py-2.5 text-[15px] font-medium text-primary" onClick={() => setMobileOpen(false)}>
+                Browse 35 industries →
               </Link>
             </div>
+
             <div>
-              <div className="text-[11px] uppercase tracking-wider text-primary mb-2">Departments</div>
-              {departments.map((d) => (
-                <Link key={d.href} href={d.href} className="flex items-center justify-between py-1.5 font-medium" onClick={() => setMobileOpen(false)}>
-                  <span>{d.title}</span>
-                  <span className={cn(
-                    "text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded",
-                    d.status === "live"
-                      ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                      : "bg-muted text-muted-foreground"
-                  )}>
-                    {d.status === "live" ? "Live" : "Early access"}
-                  </span>
-                </Link>
-              ))}
+              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-primary mb-3">Appearance</div>
+              <ThemeToggle variant="row" />
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <Link
+                href={LOGIN_HREF}
+                className="inline-flex h-12 items-center justify-center rounded-full border border-border text-[15px] font-medium"
+                onClick={() => setMobileOpen(false)}
+              >
+                Log in
+              </Link>
+              <Link
+                href="/start"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-primary text-[15px] font-medium text-primary-foreground"
+                onClick={() => setMobileOpen(false)}
+              >
+                Join the beta
+              </Link>
             </div>
           </div>
         </div>

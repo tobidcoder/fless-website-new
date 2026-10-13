@@ -154,7 +154,7 @@ export function StartView() {
                 Thanks for joining the beta.
               </h1>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                A lot of teams want in right now. We’ll reach out soon at{" "}
+                You’re on the list. We’ll be in touch at{" "}
                 <span className="text-foreground font-medium">{email}</span>.
               </p>
               <p className="text-[14px] text-muted-foreground leading-relaxed mb-8">
@@ -194,7 +194,7 @@ export function StartView() {
           )}
 
           <form onSubmit={submit} className="space-y-8">
-            <div className="grid sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className={label} htmlFor="beta-name">
                   Full name
@@ -334,7 +334,7 @@ export function StartView() {
             <div>
               <p className={label}>Which desks do you want first?</p>
               <p className="text-[12px] text-muted-foreground -mt-1 mb-3">Pick at least one. Same product in every market.</p>
-              <div className="grid sm:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {departments.map((d) => {
                   const on = desks.includes(d.slug)
                   return (

@@ -6,13 +6,11 @@ export const departmentDetail: Record<
     plays: { title: string; copy: string }[]
     steps: { n: string; title: string; copy: string }[]
     faqs: { q: string; a: string }[]
-    prompts: string[]
-    reply: (prompt: string) => string
   }
 > = {
   marketing: {
     story:
-      "Briefs sit in a doc. Posts never leave. Fless turns the brief into a calendar — LinkedIn, X, Facebook, and Bluesky — with brand memory and approval before publishing. You review. It ships.",
+      "Briefs sit in a doc. Posts never leave. Fless turns the brief into a calendar — LinkedIn, X, Facebook, Instagram, Threads and Bluesky — with brand memory and approval before publishing. You review. It ships.",
     cities: ["Lagos", "London", "New York"],
     plays: [
       { title: "Launch week", copy: "Waitlist, social, and landing copy from one brief." },
@@ -35,8 +33,6 @@ export const departmentDetail: Record<
         a: "Yes. Each brand or market can have its own voice, calendar and channels in one workspace.",
       },
     ],
-    prompts: ["Draft next week’s campaign for the launch.", "Fill the LinkedIn calendar for Q3.", "Write SEO titles for the site."],
-    reply: () => "Brief locked. 4 posts, 2 ads, and a report are queued. You’ll approve before anything publishes.",
   },
   voice: {
     story:
@@ -63,8 +59,6 @@ export const departmentDetail: Record<
         a: "English at launch. More languages will be added during early access based on demand.",
       },
     ],
-    prompts: ["Cover after-hours calls.", "Book anything after 10am tomorrow.", "Run the outbound follow-up list."],
-    reply: () => "Voice setup saved. After-hours covered. Calendar synced. You’ll see every booking in the diary.",
   },
   sales: {
     story:
@@ -91,8 +85,6 @@ export const departmentDetail: Record<
         a: "Yes. Fless researches and follows up; your reps own the relationship and the meeting.",
       },
     ],
-    prompts: ["Score this week’s inbound and send intros.", "Follow up with stalled leads.", "Move qualified lead to demo."],
-    reply: () => "Follow-ups queued. Lead scored — intro drafted. CRM stages will stay current after you approve.",
   },
   recruitment: {
     story:
@@ -119,8 +111,6 @@ export const departmentDetail: Record<
         a: "Fless is designed to work alongside your ATS. Integrations are being added during early access.",
       },
     ],
-    prompts: ["Source 8 product designers against this brief.", "Screen candidates and prepare scorecards.", "Hold interview slots for Thursday."],
-    reply: () => "Shortlist ranked. Scorecard prepared. Thursday interview held — confirm and it lands on the calendar.",
   },
   support: {
     story:
@@ -147,8 +137,6 @@ export const departmentDetail: Record<
         a: "One inbox. Same ranking. Same audit trail.",
       },
     ],
-    prompts: ["Triage the queue and close billing questions.", "Draft a reply to ticket #4821 from the help center.", "Send a check-in to accounts at risk."],
-    reply: () => "#4821 resolved from the help center. Accounts flagged for review. You’ll only see what needs a person.",
   },
   operations: {
     story:
@@ -175,8 +163,6 @@ export const departmentDetail: Record<
         a: "Every high-impact action waits for a named approver.",
       },
     ],
-    prompts: ["Move vendor onboarding to Review.", "Get the Q3 ops pack approved.", "Mark the rollout done."],
-    reply: () => "Vendor pack in Review. Q3 ops sent for approval. Rollout marked Done on the board.",
   },
   finance: {
     story:
@@ -203,8 +189,6 @@ export const departmentDetail: Record<
         a: "Billing is displayed in USD, NGN, GBP, EUR, KES, GHS, ZAR and AED and invoiced in USD.",
       },
     ],
-    prompts: ["Chase invoices over 14 days.", "Code this week’s expenses to policy.", "Prepare the March payroll file."],
-    reply: () => "Invoices chased. Receipts coded to policy. March payroll file ready for review.",
   },
   hr: {
     story:
@@ -231,7 +215,5 @@ export const departmentDetail: Record<
         a: "Yes. Policies and onboarding can be set per office.",
       },
     ],
-    prompts: ["Start onboarding for Tara.", "Send handbook v4 for acknowledgement.", "Open the Q2 review cycle."],
-    reply: () => "Tara: offer signed, kit ordered, day-one plan ready. Handbook v4 queued. Q2 cycle can open when you confirm.",
   },
 }

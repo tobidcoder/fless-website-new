@@ -35,7 +35,7 @@ const faqs = [
 export function SecurityFaq() {
   return (
     <section className="py-24 md:py-32 bg-background border-t border-border/60">
-      <div className="max-w-[1200px] mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-20">
+      <div className="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
         <div>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -46,12 +46,6 @@ export function SecurityFaq() {
             <BrandedStage
               image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&auto=format&fit=crop&q=80"
               alt="Global headquarters built for procurement"
-              label="Audit log"
-              rows={[
-                { title: "SSO", line: "Okta group mapped", time: "14m" },
-                { title: "Export", line: "Q2 log ready", time: "3h" },
-                { title: "Questionnaire", line: "Completed on request", time: "Ready" },
-              ]}
               className="aspect-[16/10] rounded-2xl"
             />
           </motion.div>
@@ -66,7 +60,7 @@ export function SecurityFaq() {
               Full security page →
             </Link>
           </p>
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {credentials.map((c) => (
               <div key={c.title}>
                 <div className="text-sm font-semibold text-foreground mb-1">{c.title}</div>

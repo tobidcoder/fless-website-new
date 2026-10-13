@@ -26,9 +26,7 @@ export type Department = {
     title: string
     copy: string
     image: string
-    snippet: { title: string; line: string; time: string }[]
   }[]
-  activity: { title: string; line: string; time: string }[]
   quote: { text: string; author: string; role: string }
   status: "live" | "early-access"
 }
@@ -46,7 +44,7 @@ export const departments: Department[] = [
     markets: "Built for teams across Africa, Europe, the Middle East and North America",
     metrics: [
       { value: "18", label: "Businesses in pilot" },
-      { value: "4", label: "Channels live (LinkedIn, X, Facebook, Bluesky)" },
+      { value: "6", label: "Networks live (LinkedIn, X, Facebook, Instagram, Threads, Bluesky)" },
       { value: "100%", label: "Approval before publishing" },
     ],
     employees: [
@@ -84,7 +82,7 @@ export const departments: Department[] = [
         role: "Social Media Manager",
         avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Social Media",
-        description: "Builds daily multi-network publishing calendars across LinkedIn, X, Facebook, and Bluesky to grow organic community engagement.",
+        description: "Builds daily multi-network publishing calendars across LinkedIn, X, Facebook, Instagram, Threads and Bluesky to grow organic community engagement.",
         skills: ["Multi-network Scheduling", "Audience Engagement", "Copy Variations", "Trend Piggybacking"],
       },
       {
@@ -111,8 +109,8 @@ export const departments: Department[] = [
         role: "Ads Manager",
         avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Paid Acquisition",
-        description: "Executes paid acquisition campaigns across Meta, Google Search, and LinkedIn Ads, targeting high ROAS.",
-        skills: ["Meta Ads", "Google Search Campaigns", "Creative Iteration", "ROAS Optimization"],
+        description: "Plans paid campaigns and writes ad copy, hooks and creative briefs for Meta, Google and LinkedIn, ready for you to launch.",
+        skills: ["Ad Copy", "Creative Briefs", "Audience Planning", "Campaign Plans"],
       },
     ],
     capabilities: [
@@ -120,34 +118,17 @@ export const departments: Department[] = [
         title: "Content",
         copy: "Articles, emails, and landing copy from the brief you already wrote.",
         image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&auto=format&fit=crop&q=80",
-        snippet: [
-          { title: "Draft", line: "London launch · 4 posts ready", time: "2m" },
-          { title: "Email", line: "Waitlist sequence queued", time: "14m" },
-        ],
       },
       {
         title: "SEO",
         copy: "Pages structured for search — titles, internals, and a report you can review.",
         image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80",
-        snippet: [
-          { title: "Pages", line: "4 UK URLs drafted", time: "18m" },
-          { title: "Report", line: "Rank pack sent for review", time: "41m" },
-        ],
       },
       {
         title: "Ads & social",
         copy: "Creative, captions, and a calendar that stays full across official APIs.",
         image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&auto=format&fit=crop&q=80",
-        snippet: [
-          { title: "Meta", line: "Creative set queued", time: "6m" },
-          { title: "LinkedIn", line: "Q3 post is live", time: "22m" },
-        ],
       },
-    ],
-    activity: [
-      { title: "LinkedIn", line: "Q3 launch post is live", time: "2m" },
-      { title: "SEO", line: "4 pages drafted for the London site", time: "18m" },
-      { title: "Ads", line: "Creative set queued for Meta", time: "41m" },
     ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
@@ -193,14 +174,9 @@ export const departments: Department[] = [
       },
     ],
     capabilities: [
-      { title: "Inbound", copy: "Answer, qualify, and route. Notes land in the CRM before the call ends.", image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Clinic", line: "Thursday 3pm confirmed", time: "Just now" }, { title: "Notes", line: "Pushed to the record", time: "12s" }] },
-      { title: "Outbound", copy: "Follow-up lists that actually get dialed — with a script you can audit.", image: "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "List", line: "14 follow-ups completed", time: "22m" }, { title: "Script", line: "Audit-ready call script", time: "1h" }] },
-      { title: "Booking", copy: "Calendar holds, confirmations, and no-show reminders with human escalation rules.", image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Hold", line: "Diary synced", time: "8m" }, { title: "Remind", line: "No-show SMS queued", time: "31m" }] },
-    ],
-    activity: [
-      { title: "Inbound", line: "Clinic booking confirmed for 3pm", time: "Just now" },
-      { title: "Outbound", line: "14 follow-ups completed", time: "22m" },
-      { title: "Calendar", line: "Team diary synced", time: "1h" },
+      { title: "Inbound", copy: "Answer, qualify, and route. Notes land in the CRM before the call ends.", image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Outbound", copy: "Follow-up lists that actually get dialed — with a script you can audit.", image: "https://images.unsplash.com/photo-1525182008055-f88b95ff7980?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Booking", copy: "Calendar holds, confirmations, and no-show reminders with human escalation rules.", image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
@@ -263,14 +239,9 @@ export const departments: Department[] = [
       },
     ],
     capabilities: [
-      { title: "Leads", copy: "Research accounts and score who is actually worth a call this week.", image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Sample", line: "Lead scored — intro drafted", time: "4m" }, { title: "List", line: "Worth a call this week", time: "19m" }] },
-      { title: "CRM", copy: "Stages stay current. No more “I’ll update Salesforce later.”", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Deal", line: "Moved to Demo stage", time: "9m" }, { title: "Won", line: "Contract closed", time: "2h" }] },
-      { title: "Follow-up", copy: "Sequences that run until someone replies — then a human takes the meeting.", image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Cadence", line: "Follow-ups nudged", time: "12m" }, { title: "Reply", line: "Human takes the meeting", time: "44m" }] },
-    ],
-    activity: [
-      { title: "New", line: "Inbound scored — intro sent", time: "4m" },
-      { title: "Demo", line: "Demo moved to next Tuesday", time: "19m" },
-      { title: "Won", line: "Contract agreement closed", time: "2h" },
+      { title: "Leads", copy: "Research accounts and score who is actually worth a call this week.", image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1200&auto=format&fit=crop&q=80" },
+      { title: "CRM", copy: "Stages stay current. No more “I’ll update Salesforce later.”", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Follow-up", copy: "Sequences that run until someone replies — then a human takes the meeting.", image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
@@ -324,14 +295,9 @@ export const departments: Department[] = [
       },
     ],
     capabilities: [
-      { title: "Tickets", copy: "One inbox for email, chat, and WhatsApp — ranked by account health.", image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "#4821", line: "Billing question resolved", time: "1m" }, { title: "#4820", line: "Ticket in progress", time: "9m" }] },
-      { title: "Success", copy: "Health scores and check-ins so accounts don’t go quiet.", image: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Account", line: "Check-in sent", time: "44m" }, { title: "Score", line: "Accounts flagged for follow-up", time: "2h" }] },
-      { title: "Escalation", copy: "A clean handoff with context — not an unorganized message at 6pm.", image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "#4818", line: "Handoff with full thread", time: "16m" }, { title: "Owner", line: "Escalated with notes", time: "31m" }] },
-    ],
-    activity: [
-      { title: "#4821", line: "Billing question resolved", time: "1m" },
-      { title: "#4820", line: "Technical inquiry in progress", time: "9m" },
-      { title: "CS", line: "Account check-in sent", time: "44m" },
+      { title: "Tickets", copy: "One inbox for email, chat, and WhatsApp — ranked by account health.", image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Success", copy: "Health scores and check-ins so accounts don’t go quiet.", image: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Escalation", copy: "A clean handoff with context — not an unorganized message at 6pm.", image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
@@ -394,14 +360,9 @@ export const departments: Department[] = [
       },
     ],
     capabilities: [
-      { title: "Sourcing", copy: "Roles go out. Profiles come back ranked against the brief.", image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Design", line: "8 profiles ranked", time: "11m" }, { title: "Brief", line: "Matched against role", time: "28m" }] },
-      { title: "Screening", copy: "Structured questions, scorecards, and a paper trail for every decision.", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Screening", line: "Scorecard prepared", time: "6m" }, { title: "Trail", line: "Trail saved for audit", time: "33m" }] },
-      { title: "Hiring", copy: "Interviews booked, offers drafted, and the hiring manager stays in the loop.", image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Onsite", line: "Thursday hold confirmed", time: "14m" }, { title: "Offer", line: "Drafted with People team", time: "1h" }] },
-    ],
-    activity: [
-      { title: "Sourcing", line: "Profiles added to shortlist", time: "11m" },
-      { title: "Screen", line: "Scorecard prepared for review", time: "28m" },
-      { title: "Schedule", line: "Onsite set for Thursday", time: "1h" },
+      { title: "Sourcing", copy: "Roles go out. Profiles come back ranked against the brief.", image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Screening", copy: "Structured questions, scorecards, and a paper trail for every decision.", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Hiring", copy: "Interviews booked, offers drafted, and the hiring manager stays in the loop.", image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
@@ -464,14 +425,9 @@ export const departments: Department[] = [
       },
     ],
     capabilities: [
-      { title: "Onboarding", copy: "Equipment, access, and a first-week plan that doesn’t live in five inboxes.", image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Tara", line: "Offer signed · kit ordered", time: "12m" }, { title: "Access", line: "Day-1 plan ready", time: "40m" }] },
-      { title: "Policy", copy: "The current version, acknowledged, with a date. Not a PDF in Drive.", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Handbook", line: "v4 acknowledged", time: "40m" }, { title: "Date", line: "Current version logged", time: "1h" }] },
-      { title: "Reviews", copy: "Cycles that start on time, with notes that hiring already has.", image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Review", line: "Cycle opened on time", time: "2h" }, { title: "Notes", line: "Hiring record attached", time: "2h" }] },
-    ],
-    activity: [
-      { title: "Tara", line: "Offer signed · kit ordered", time: "12m" },
-      { title: "Policy", line: "Handbook acknowledged", time: "40m" },
-      { title: "Reviews", line: "Cycle opened", time: "2h" },
+      { title: "Onboarding", copy: "Equipment, access, and a first-week plan that doesn’t live in five inboxes.", image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Policy", copy: "The current version, acknowledged, with a date. Not a PDF in Drive.", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Reviews", copy: "Cycles that start on time, with notes that hiring already has.", image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
@@ -534,14 +490,9 @@ export const departments: Department[] = [
       },
     ],
     capabilities: [
-      { title: "Projects", copy: "Milestones, owners, and a status that isn’t “checking.”", image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Milestone", line: "Rollout marked Done", time: "2h" }, { title: "Owner", line: "Friday close", time: "6m" }] },
-      { title: "Docs", copy: "The latest version lives here. Approvals leave a name and a time.", image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Q3 pack", line: "Approved by lead", time: "33m" }, { title: "v4", line: "Latest lives here", time: "1h" }] },
-      { title: "Workflows", copy: "Intake → review → done. Visible on one board across teams.", image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Vendor", line: "Onboarding in Review", time: "6m" }, { title: "Board", line: "Live across teams", time: "40m" }] },
-    ],
-    activity: [
-      { title: "Vendor", line: "Onboarding in Review", time: "6m" },
-      { title: "Docs", line: "Ops pack approved", time: "33m" },
-      { title: "Project", line: "Rollout marked Done", time: "2h" },
+      { title: "Projects", copy: "Milestones, owners, and a status that isn’t “checking.”", image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Docs", copy: "The latest version lives here. Approvals leave a name and a time.", image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Workflows", copy: "Intake → review → done. Visible on one board across teams.", image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
@@ -604,14 +555,9 @@ export const departments: Department[] = [
       },
     ],
     capabilities: [
-      { title: "Invoices", copy: "Send, chase, and mark paid. The ledger matches the bank.", image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Sample", line: "Invoice marked paid", time: "8m" }, { title: "Remind", line: "Payment due · chased", time: "27m" }] },
-      { title: "Expenses", copy: "Receipts coded as they land. Policy applied before the card statement.", image: "https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Receipts", line: "Coded to policy", time: "27m" }, { title: "Card", line: "Statement matches ledger", time: "1h" }] },
-      { title: "Payroll", copy: "Runs, exceptions, and a file finance and HR both trust.", image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Payroll", line: "File ready for review", time: "3h" }, { title: "Exception", line: "Holds flagged", time: "3h" }] },
-    ],
-    activity: [
-      { title: "Invoice", line: "Sample invoice marked paid", time: "8m" },
-      { title: "Expenses", line: "Receipts coded to policy", time: "27m" },
-      { title: "Payroll", line: "Payroll file ready for review", time: "3h" },
+      { title: "Invoices", copy: "Send, chase, and mark paid. The ledger matches the bank.", image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Expenses", copy: "Receipts coded as they land. Policy applied before the card statement.", image: "https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Payroll", copy: "Runs, exceptions, and a file finance and HR both trust.", image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",

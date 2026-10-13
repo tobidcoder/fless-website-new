@@ -1,13 +1,13 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { BrandedStage } from "@/components/BrandedStage"
 
+// What actually happens when a business assigns work to the Marketing employee.
 const rows = [
-  { who: "You", text: "Draft next week’s product campaign for the launch." },
-  { who: "Fless", text: "Brief locked. 4 posts drafted, review pending in approvals queue." },
-  { who: "You", text: "Approve LinkedIn and X posts. Keep Bluesky for Thursday." },
-  { who: "Fless", text: "Approved posts queued for Buffer. Bluesky scheduled for Thursday 10:00 AM." },
+  { n: "1", title: "You write a brief", text: "In plain language, e.g. “Plan next week’s posts for the product launch.”" },
+  { n: "2", title: "Fless drafts the work", text: "Posts, captions and visuals for each connected network, in your brand voice." },
+  { n: "3", title: "You approve", text: "Everything waits in the approval queue. Edit, approve or reject each item." },
+  { n: "4", title: "It publishes and logs", text: "Approved posts go out through each network’s official API, and every step is recorded." },
 ]
 
 export function Product() {
@@ -41,24 +41,20 @@ export function Product() {
           </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-4 md:gap-5 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-5 items-stretch">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-7"
           >
-            <BrandedStage
-              image="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&auto=format&fit=crop&q=80"
-              alt="Teams running marketing from command center"
-              label="Command · Sample workspace"
-              rows={[
-                { title: "Marketing", line: "Launch brief · 4 posts queued", time: "Live" },
-                { title: "Approvals", line: "Human review confirmed", time: "Audit log" },
-                { title: "Channels", line: "LinkedIn & X connected via Buffer", time: "Active" },
-              ]}
-              className="rounded-2xl min-h-[340px] md:min-h-[480px] h-full"
-            />
+            <div className="h-full rounded-2xl overflow-hidden border border-border/70 bg-white">
+              <div
+                role="img"
+                aria-label="Screenshot of the Fless Marketing department"
+                className="fless-shot-fill w-full h-full min-h-[300px] md:min-h-[480px]"
+              />
+            </div>
           </motion.div>
 
           <motion.div
@@ -68,19 +64,24 @@ export function Product() {
             transition={{ delay: 0.08 }}
             className="lg:col-span-5 rounded-2xl border border-border/70 bg-background p-5 md:p-7 flex flex-col"
           >
-            <div className="text-[12px] font-medium text-muted-foreground mb-5">Sample workspace · Command</div>
+            <div className="text-[12px] font-medium text-muted-foreground mb-5">How a request flows</div>
             <div className="space-y-4 flex-1">
               {rows.map((row, i) => (
                 <motion.div
-                  key={row.text}
+                  key={row.n}
                   initial={{ opacity: 0, y: 8 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.15 + i * 0.08 }}
-                  className={row.who === "You" ? "pl-0" : "pl-2"}
+                  className="flex gap-3.5"
                 >
-                  <div className="text-[11px] font-semibold text-foreground mb-1">{row.who}</div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{row.text}</p>
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-soft text-[12px] font-semibold text-primary">
+                    {row.n}
+                  </span>
+                  <div>
+                    <div className="text-[14px] font-semibold text-foreground mb-0.5">{row.title}</div>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{row.text}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
