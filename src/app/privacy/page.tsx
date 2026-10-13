@@ -1,17 +1,18 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 import { LegalDoc, Section } from "@/components/LegalDoc"
 
 export const metadata: Metadata = {
   title: "Privacy Policy — Fless",
   description:
-    "How Fless Inc. collects, processes, and safeguards business and customer data. Aligned with NDPR, GDPR, and international data protection standards.",
+    "How Brainstack Tech LTD (trading as Fless) collects, processes, and safeguards business and customer data. Aligned with NDPR, GDPR, and international data protection standards.",
   alternates: {
     canonical: "https://getfless.com/privacy",
   },
   openGraph: {
     title: "Privacy Policy — Fless",
     description:
-      "How Fless Inc. collects, processes, and safeguards business and customer data. Aligned with NDPR, GDPR, and international data protection standards.",
+      "How Brainstack Tech LTD (trading as Fless) collects, processes, and safeguards business and customer data. Aligned with NDPR, GDPR, and international data protection standards.",
     url: "https://getfless.com/privacy",
     siteName: "Fless",
     images: [
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Privacy Policy — Fless",
     description:
-      "Data handling, retention, and international compliance policies of Fless Inc.",
+      "Data handling, retention, and international compliance policies of Brainstack Tech LTD (trading as Fless).",
     images: ["/fless-og.png"],
   },
 }
@@ -36,11 +37,13 @@ const nav = [
   { id: "who", title: "Who we are" },
   { id: "scope", title: "What this covers" },
   { id: "collect", title: "Data we collect" },
+  { id: "integrations", title: "Connected platforms & OAuth" },
   { id: "use", title: "How we use it" },
   { id: "ai", title: "AI, models, and your work" },
   { id: "share", title: "When we share data" },
   { id: "transfers", title: "International transfers" },
   { id: "retention", title: "Retention" },
+  { id: "deletion", title: "Data deletion & revocation" },
   { id: "rights", title: "Your rights" },
   { id: "cookies", title: "Cookies" },
   { id: "children", title: "Children" },
@@ -54,13 +57,13 @@ export default function PrivacyPage() {
       eyebrow="Legal"
       title="Privacy Policy"
       lede="We collect what we need to run your workspace — not to sell a profile of your company. This policy explains what that means in practice."
-      updated="17 August 2026"
+      updated="12 October 2026"
       nav={nav}
       current="/privacy"
     >
       <Section id="who" title="Who we are">
         <p>
-          Fless Inc. (“Fless”, “we”, “us”) operates from 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria, with planned entity headquarters in Delaware, USA. We provide an AI workforce platform: marketing, sales, voice, support, hiring, finance, operations, and HR desks that run from one workspace, in every market you operate.
+          Brainstack Tech LTD (“Brainstack Tech LTD”, trading as “Fless”, “we”, “us”) operates from 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria, with registered entity Brainstack Tech LTD (Nigeria, CAC) and planned international headquarters in Delaware, USA. We provide an AI workforce platform: marketing, sales, voice, support, hiring, finance, operations, and HR desks that run from one workspace, in every market you operate.
         </p>
         <p>
           For questions about this policy, write to{" "}
@@ -71,7 +74,7 @@ export default function PrivacyPage() {
 
       <Section id="scope" title="What this covers">
         <p>
-          This policy applies to fless.com, the Fless product, signup and billing, and related support. It covers personal data we process as a controller (accounts, billing, site visitors) and describes how we handle customer content as a processor when you use the product.
+          This policy applies to getfless.com, the Fless product at app.getfless.com, signup, billing, and related support. It covers personal data we process as a controller (accounts, billing, site visitors) and describes how we handle customer content as a processor when you use the product.
         </p>
         <p>
           If you have a written data processing addendum (DPA) with us, that DPA controls where it conflicts with this page.
@@ -91,9 +94,76 @@ export default function PrivacyPage() {
         <p>
           <strong>Support.</strong> Emails, call notes, and attachments you send when you ask for help.
         </p>
+      </Section>
+
+      <Section id="integrations" title="Connected platforms & OAuth integrations">
         <p>
-          <strong>Integrations.</strong> If you connect calendar, CRM, email, or similar tools, we receive the data those connections authorize — only to run the desks you turned on.
+          Fless allows workspaces to connect external marketing, communications, and productivity services via OAuth 2.0. When you connect a third-party platform, you explicitly grant Fless permission to access specific data scopes. We only request permissions necessary to execute authorized actions:
         </p>
+
+        <div className="space-y-6 pt-2">
+          <div className="border-l-2 border-primary/60 pl-4 space-y-1.5">
+            <h3 className="font-semibold text-foreground">1. Meta Platforms (Facebook, Instagram, Threads, WhatsApp & Meta Ads)</h3>
+            <p className="text-sm">
+              <strong>Data accessed:</strong> Facebook Page details, post feed, comments, direct messages, engagement insights, Instagram media, comments, follower insights, direct messages, Threads replies and insights, Meta Ads campaigns and lead generation form responses, WhatsApp template delivery and inbound chats.
+            </p>
+            <p className="text-sm">
+              <strong>Purpose:</strong> Publishing scheduled social posts, replying to customer comments and direct inquiries, synchronizing ad leads to your CRM, and providing marketing performance analytics. High-risk actions (ad budget changes and permanent deletes) require human approval.
+            </p>
+            <p className="text-sm">
+              <strong>Retention & Deletion:</strong> Access tokens are encrypted using AES-256-GCM. Cached metrics are refreshed periodically and discarded within 30 days. You can disconnect via Settings → Integrations or through Facebook App Settings. Meta deauthorization and data deletion callbacks are handled automatically via our compliant webhook.
+            </p>
+          </div>
+
+          <div className="border-l-2 border-primary/60 pl-4 space-y-1.5">
+            <h3 className="font-semibold text-foreground">2. Google Services (Gmail, Google Calendar, YouTube, Google Analytics, Search Console, Drive, Business Profile)</h3>
+            <p className="text-sm">
+              <strong>Data accessed:</strong> Gmail message sending (<code className="text-xs bg-muted px-1 py-0.5 rounded">gmail.send</code>), Google Calendar events and availability, YouTube channel metadata and video upload, Google Analytics website traffic data, Search Console performance queries, Google Drive files explicitly selected via Google Picker, and Business Profile locations.
+            </p>
+            <p className="text-sm">
+              <strong>Purpose:</strong> Sending approved email campaigns and correspondence, booking calendar appointments, publishing YouTube video assets, generating unified marketing performance reports, and reading user-selected media assets.
+            </p>
+            <p className="text-sm">
+              <strong>Google Limited Use Disclosure:</strong> Fless&apos;s use and transfer to any other app of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Google API Services User Data Policy</a>, including the Limited Use requirements. We do not use Google Workspace data to train generalized AI/ML foundation models, nor do we transfer it to third parties for advertising.
+            </p>
+            <p className="text-sm">
+              <strong>Retention & Deletion:</strong> Refresh tokens are stored encrypted and invalidated upon disconnection or when access is revoked at <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">myaccount.google.com/permissions</a>.
+            </p>
+          </div>
+
+          <div className="border-l-2 border-primary/60 pl-4 space-y-1.5">
+            <h3 className="font-semibold text-foreground">3. LinkedIn (Member Profiles, Company Pages & Advertising)</h3>
+            <p className="text-sm">
+              <strong>Data accessed:</strong> Basic profile, member social posting, organization company pages, post commentary, ad accounts, and lead generation forms.
+            </p>
+            <p className="text-sm">
+              <strong>Purpose:</strong> Publishing company announcements, scheduling professional thought leadership posts, syncing business leads, and tracking engagement metrics.
+            </p>
+            <p className="text-sm">
+              <strong>Retention:</strong> Member access tokens expire every 60 days unless re-authenticated. Organization data is removed when disconnected.
+            </p>
+          </div>
+
+          <div className="border-l-2 border-primary/60 pl-4 space-y-1.5">
+            <h3 className="font-semibold text-foreground">4. TikTok (Content Posting & Direct Post)</h3>
+            <p className="text-sm">
+              <strong>Data accessed:</strong> Basic creator info, video list, and creator posting settings.
+            </p>
+            <p className="text-sm">
+              <strong>Purpose:</strong> Direct posting of verified marketing videos with human approval workflows and composer preview.
+            </p>
+          </div>
+
+          <div className="border-l-2 border-primary/60 pl-4 space-y-1.5">
+            <h3 className="font-semibold text-foreground">5. Other Connected Services (Pinterest, X, Calendly, Slack, HubSpot, Mailchimp, Bluesky, Mastodon, Telegram)</h3>
+            <p className="text-sm">
+              <strong>Data accessed:</strong> Visual pins and boards (Pinterest), tweets and media uploads (X), scheduling links and scheduled events (Calendly), workspace notification channels (Slack), CRM contacts and deals (HubSpot), email subscriber lists and campaign drafts (Mailchimp), social feeds and channel broadcast webhooks (Bluesky, Mastodon, Telegram).
+            </p>
+            <p className="text-sm">
+              <strong>Purpose:</strong> Coordinating multi-channel campaigns, posting updates, syncing customer records, and notifying your team about pending approvals.
+            </p>
+          </div>
+        </div>
       </Section>
 
       <Section id="use" title="How we use it">
@@ -163,6 +233,23 @@ export default function PrivacyPage() {
         </p>
       </Section>
 
+      <Section id="deletion" title="Data deletion & revocation">
+        <p>
+          You can disconnect third-party platforms or request complete deletion of your data at any time:
+        </p>
+        <ul>
+          <li><strong>Self-serve integration disconnect:</strong> Navigate to Settings → Integrations in the dashboard and click Disconnect next to any service. Tokens are invalidated instantly.</li>
+          <li><strong>Workspace deletion:</strong> Account owners can delete their entire workspace in Settings → Workspace. All customer content, credentials, and logs are wiped.</li>
+          <li><strong>Third-party portal revocation:</strong> You can revoke permissions directly inside your Facebook, Google, LinkedIn, or TikTok account settings.</li>
+        </ul>
+        <p>
+          For detailed instructions and tracking Meta automated deletion callbacks, read our dedicated{" "}
+          <Link href="/data-deletion" className="text-primary hover:underline font-medium">
+            User Data Deletion Instructions
+          </Link>.
+        </p>
+      </Section>
+
       <Section id="rights" title="Your rights">
         <p>
           Depending on where you live (including Nigeria under the NDPR, the UK, the EEA under GDPR, California under the CCPA/CPRA, and similar data protection regimes), you may have the right to access, correct, delete, or export personal data, to object or restrict certain processing, and to withdraw consent. Workspace owners can often do this in-product; otherwise email{" "}
@@ -193,11 +280,15 @@ export default function PrivacyPage() {
 
       <Section id="contact" title="Contact">
         <p>
+          Data Controller: Brainstack Tech LTD (trading as Fless)
+          <br />
           Privacy: <a href="mailto:privacy@getfless.com">privacy@getfless.com</a>
           <br />
           Security: <a href="mailto:security@getfless.com">security@getfless.com</a>
           <br />
           Physical address: 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria
+          <br />
+          Data deletion instructions: <Link href="/data-deletion" className="text-primary hover:underline">Data Deletion Instructions</Link>
           <br />
           Postal and enterprise: use <a href="/contact">Contact</a> and we will route it.
         </p>

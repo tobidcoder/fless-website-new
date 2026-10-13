@@ -10,6 +10,8 @@ import {
   AGENTS_EXAMPLE,
   BUILDER_API,
   CONNECTIONS,
+  CONNECTION_STATUS_NOTE,
+  categoryLabel,
   CORE_PACKAGES,
   EVALUATION_EXAMPLE,
   MANIFEST_EXAMPLE,
@@ -52,7 +54,7 @@ const split = {
   fless: [
     "Hosting, models and GPU computing",
     "Customer logins and API keys, kept out of your code",
-    "Sign-in and token handling for Meta, LinkedIn, X, Bluesky, Google, Microsoft and Zoom through their official APIs",
+    "Sign-in and token handling for every connection, through each provider's official API",
     "Approvals, audit log and data isolation per customer",
     "Billing in 8 currencies, invoices and monthly payouts",
   ],
@@ -67,16 +69,17 @@ const split = {
 
 const statusTone: Record<ConnectionStatus, string> = {
   Available: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
-  "Rolling out": "text-primary bg-brand-soft",
+  Beta: "text-primary bg-brand-soft",
+  "Awaiting approval": "text-amber-700 dark:text-amber-400 bg-amber-500/10",
 };
 
-const statuses: Array<ConnectionStatus | "All"> = ["All", "Available", "Rolling out"];
+const statuses: ConnectionStatus[] = ["Available", "Beta", "Awaiting approval"];
 
 export default function BuildersPage() {
   const [tab, setTab] = useState(tabs[0].id);
-  const [status, setStatus] = useState<ConnectionStatus | "All">("All");
+  const [status, setStatus] = useState<ConnectionStatus>("Available");
   const active = tabs.find((t) => t.id === tab) ?? tabs[0];
-  const visibleConnections = status === "All" ? CONNECTIONS : CONNECTIONS.filter((c) => c.status === status);
+  const visibleConnections = CONNECTIONS.filter((c) => c.status === status);
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
@@ -309,12 +312,11 @@ export default function BuildersPage() {
                   )}
                 >
                   {s}
-                  {s !== "All" && (
-                    <span className="ml-1.5 opacity-60 tabular-nums">{CONNECTIONS.filter((c) => c.status === s).length}</span>
-                  )}
+                  <span className="ml-1.5 opacity-60 tabular-nums">{CONNECTIONS.filter((c) => c.status === s).length}</span>
                 </button>
               ))}
             </div>
+            <p className="mb-6 text-[13px] text-muted-foreground">{CONNECTION_STATUS_NOTE[status]}</p>
 
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 border-t border-border/70">
               {visibleConnections.map((c) => (
@@ -323,12 +325,12 @@ export default function BuildersPage() {
                     <span className="text-[15px] font-semibold tracking-tight text-foreground">{c.name}</span>
                     <span className={cn("text-[11px] font-medium rounded-full px-2 py-0.5", statusTone[c.status])}>{c.status}</span>
                   </div>
-                  <div className="mt-1 text-[13px] text-muted-foreground">{c.api}</div>
+                  <div className="mt-1 text-[13px] text-muted-foreground">{categoryLabel(c.category)}</div>
                 </li>
               ))}
             </ul>
             <Link href="/docs#connections" className="inline-block mt-8 text-[14px] font-medium text-primary hover:opacity-80">
-              All connections →
+              All {CONNECTIONS.length} connections →
             </Link>
           </div>
         </section>

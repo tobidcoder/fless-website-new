@@ -129,3 +129,7 @@ Now real:
 Required environment variables in production:
 - `NEXT_PUBLIC_API_URL`: backend origin, e.g. https://api.getfless.com
 - `NEXT_PUBLIC_APP_URL`: dashboard origin, e.g. https://app.getfless.com
+
+## 10. Connections generated from the backend catalog
+
+The connection list is no longer written by hand. `scripts/sync-connections.mts` reads `PACKAGE_CATALOG` from `getfless/backend-employees` and writes `src/lib/connections.generated.ts`. The first run listed 176 connections: 19 Available (GA), 150 Beta and 7 Awaiting provider approval. Unofficial partner integrations are excluded. Re-run the script whenever the backend catalog changes.

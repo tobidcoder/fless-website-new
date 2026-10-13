@@ -4,50 +4,66 @@
 // packages/package-adapters/src/gateway.ts and manifest types in packages/contracts.
 
 // ---------- Connections (official APIs a business connects) ----------
+// The list itself is generated from the backend's package catalog; see
+// scripts/sync-connections.mts and src/lib/connections.generated.ts.
 
-export type ConnectionStatus = "Available" | "Rolling out"
+export type ConnectionStatus = "Available" | "Beta" | "Awaiting approval"
 
 export interface Connection {
   id: string
   name: string
-  api: string
-  group: string
   status: ConnectionStatus
+  category: string
   summary: string
+  actions: number
 }
 
-export const CONNECTIONS: Connection[] = [
-  // Social publishing
-  { id: "facebook", name: "Facebook Pages", api: "Meta Graph API", group: "Social", status: "Available", summary: "Publish posts and read page engagement." },
-  { id: "instagram", name: "Instagram", api: "Instagram Graph API", group: "Social", status: "Available", summary: "Publish to Instagram business accounts and read insights." },
-  { id: "threads", name: "Threads", api: "Threads API", group: "Social", status: "Rolling out", summary: "Publish posts and replies to Threads." },
-  { id: "linkedin", name: "LinkedIn", api: "LinkedIn API", group: "Social", status: "Available", summary: "Publish to profiles and company pages." },
-  { id: "x", name: "X", api: "X API v2", group: "Social", status: "Available", summary: "Publish posts and threads." },
-  { id: "bluesky", name: "Bluesky", api: "AT Protocol", group: "Social", status: "Available", summary: "Publish posts to Bluesky. Connect with an app password." },
-  { id: "youtube", name: "YouTube", api: "YouTube Data API", group: "Social", status: "Rolling out", summary: "Upload videos and read channel stats." },
-  { id: "google-business", name: "Google Business Profile", api: "Business Profile API", group: "Social", status: "Rolling out", summary: "Post updates to your Google listing." },
+import { CONNECTIONS } from "@/lib/connections.generated"
+export { CONNECTIONS, CATALOG_COMMIT } from "@/lib/connections.generated"
 
+export const CONNECTION_STATUS_NOTE: Record<ConnectionStatus, string> = {
+  Available: "Generally available. Built on the provider's official API and in production.",
+  Beta: "Built and working, still being hardened with pilot customers.",
+  "Awaiting approval": "Built, waiting on the provider's app review before businesses can connect.",
+}
 
-  // Messaging and email
-  { id: "whatsapp", name: "WhatsApp Business", api: "WhatsApp Cloud API", group: "Messaging", status: "Rolling out", summary: "Two-way chats, templates and confirmations." },
-  { id: "gmail", name: "Gmail", api: "Gmail API", group: "Messaging", status: "Rolling out", summary: "Send and draft email from a connected inbox." },
+const CATEGORY_LABELS: Record<string, string> = {
+  social: "Social and publishing",
+  messaging: "Messaging",
+  email: "Email",
+  email_marketing: "Email marketing",
+  scheduling: "Scheduling",
+  video: "Meetings and video",
+  ads: "Ads",
+  analytics: "Analytics",
+  storage: "Files and storage",
+  docs: "Docs and workspace",
+  team_chat: "Team chat",
+  project: "Projects",
+  crm: "CRM",
+  sales_engagement: "Sales engagement",
+  helpdesk: "Help desk",
+  accounting: "Accounting",
+  payments: "Payments",
+  banking: "Banking",
+  payroll: "HR and payroll",
+  ats: "Recruiting",
+  esign: "E-signature",
+  legal: "Legal",
+  ecommerce: "E-commerce",
+  telephony: "Phone and SMS",
+  forms: "Forms",
+  developer: "Developer",
+}
 
-  // Calendars and meetings
-  { id: "google-calendar", name: "Google Calendar", api: "Google Calendar API", group: "Calendars and meetings", status: "Available", summary: "Check availability and book events." },
-  { id: "microsoft-calendar", name: "Outlook Calendar", api: "Microsoft Graph", group: "Calendars and meetings", status: "Available", summary: "Check availability and book events." },
-  { id: "microsoft-teams", name: "Microsoft Teams meetings", api: "Microsoft Graph", group: "Calendars and meetings", status: "Rolling out", summary: "Create online meetings." },
-  { id: "zoom", name: "Zoom", api: "Zoom API", group: "Calendars and meetings", status: "Available", summary: "Create, update and cancel meetings." },
-  { id: "calendly", name: "Calendly", api: "Calendly API", group: "Calendars and meetings", status: "Rolling out", summary: "Share booking links and react to new bookings." },
+export const categoryLabel = (c: string) => CATEGORY_LABELS[c] ?? c.replace(/_/g, " ")
 
-  // Workspace suites
-  { id: "google-workspace", name: "Google Workspace", api: "Google Workspace APIs", group: "Workspace", status: "Rolling out", summary: "Gmail, Drive, Docs and Sheets. Google Calendar is already available." },
-  { id: "microsoft-365", name: "Microsoft 365", api: "Microsoft Graph", group: "Workspace", status: "Rolling out", summary: "Outlook mail, Teams, OneDrive and Excel. Outlook Calendar is already available." },
-
-  // Payments
-  { id: "stripe", name: "Stripe", api: "Stripe API", group: "Payments", status: "Rolling out", summary: "Invoices, payment links and payment status." },
-]
-
-export const CONNECTION_GROUPS = Array.from(new Set(CONNECTIONS.map((c) => c.group)))
+// Categories ordered by how many connections are generally available, then size.
+export const CONNECTION_CATEGORIES = Array.from(new Set(CONNECTIONS.map((c) => c.category))).sort((a, b) => {
+  const live = (k: string) => CONNECTIONS.filter((c) => c.category === k && c.status === "Available").length
+  const all = (k: string) => CONNECTIONS.filter((c) => c.category === k).length
+  return live(b) - live(a) || all(b) - all(a)
+})
 
 // ---------- SDK packages (what a builder declares in requiredPackages) ----------
 

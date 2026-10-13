@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 
 const stats = [
   { value: "18", label: "Businesses in pilot" },
-  { value: "5", label: "Social networks posted to directly" },
+  { value: "6", label: "Social networks posted to directly" },
   { value: "8", label: "AI departments (1 live, 7 early access)" },
   { value: "3", label: "Regions: Nigeria, UK, North America" },
 ]

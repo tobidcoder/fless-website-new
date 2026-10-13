@@ -9,6 +9,7 @@ const related = [
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
   { href: "/security", label: "Security" },
+  { href: "/data-deletion", label: "Data Deletion" },
 ]
 
 export function LegalDoc({

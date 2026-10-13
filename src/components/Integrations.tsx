@@ -2,10 +2,12 @@
 
 import { motion } from "framer-motion"
 import { BrandedStage } from "@/components/BrandedStage"
-import { CONNECTIONS } from "@/lib/sdk"
+import Link from "next/link"
+import { CONNECTIONS, categoryLabel } from "@/lib/sdk"
 
 const liveTools = CONNECTIONS.filter((c) => c.status === "Available").map((c) => c.name)
-const roadmapTools = CONNECTIONS.filter((c) => c.status === "Rolling out").map((c) => c.name)
+const beta = CONNECTIONS.filter((c) => c.status !== "Available")
+const betaCategories = Array.from(new Set(beta.map((c) => categoryLabel(c.category).toLowerCase()))).slice(0, 6)
 
 export function Integrations() {
   return (
@@ -62,17 +64,12 @@ export function Integrations() {
               </div>
             </div>
 
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Rolling out</div>
-              <div className="grid grid-cols-2 gap-x-8 gap-y-2.5">
-                {roadmapTools.map((t) => (
-                  <div key={t} className="text-sm text-muted-foreground py-1 border-b border-border/30 flex items-center justify-between">
-                    <span>{t}</span>
-                    <span className="text-[10px] uppercase text-primary/80">Rolling out</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Plus {beta.length} more in beta or awaiting provider approval, across {betaCategories.join(", ")} and more.{" "}
+              <Link href="/docs#connections" className="font-medium text-foreground underline underline-offset-4 hover:text-primary">
+                See all {CONNECTIONS.length}
+              </Link>
+            </p>
           </div>
         </div>
       </div>

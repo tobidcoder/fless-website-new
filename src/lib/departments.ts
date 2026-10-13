@@ -44,7 +44,7 @@ export const departments: Department[] = [
     markets: "Built for teams across Africa, Europe, the Middle East and North America",
     metrics: [
       { value: "18", label: "Businesses in pilot" },
-      { value: "5", label: "Networks live (LinkedIn, X, Facebook, Instagram, Bluesky)" },
+      { value: "6", label: "Networks live (LinkedIn, X, Facebook, Instagram, Threads, Bluesky)" },
       { value: "100%", label: "Approval before publishing" },
     ],
     employees: [
@@ -82,7 +82,7 @@ export const departments: Department[] = [
         role: "Social Media Manager",
         avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Social Media",
-        description: "Builds daily multi-network publishing calendars across LinkedIn, X, Facebook, Instagram and Bluesky to grow organic community engagement.",
+        description: "Builds daily multi-network publishing calendars across LinkedIn, X, Facebook, Instagram, Threads and Bluesky to grow organic community engagement.",
         skills: ["Multi-network Scheduling", "Audience Engagement", "Copy Variations", "Trend Piggybacking"],
       },
       {
@@ -131,7 +131,7 @@ export const departments: Department[] = [
       },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -179,7 +179,7 @@ export const departments: Department[] = [
       { title: "Booking", copy: "Calendar holds, confirmations, and no-show reminders with human escalation rules.", image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -244,7 +244,7 @@ export const departments: Department[] = [
       { title: "Follow-up", copy: "Sequences that run until someone replies — then a human takes the meeting.", image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -300,7 +300,7 @@ export const departments: Department[] = [
       { title: "Escalation", copy: "A clean handoff with context — not an unorganized message at 6pm.", image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -365,7 +365,7 @@ export const departments: Department[] = [
       { title: "Hiring", copy: "Interviews booked, offers drafted, and the hiring manager stays in the loop.", image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -430,7 +430,7 @@ export const departments: Department[] = [
       { title: "Reviews", copy: "Cycles that start on time, with notes that hiring already has.", image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -495,7 +495,7 @@ export const departments: Department[] = [
       { title: "Workflows", copy: "Intake → review → done. Visible on one board across teams.", image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -560,7 +560,7 @@ export const departments: Department[] = [
       { title: "Payroll", copy: "Runs, exceptions, and a file finance and HR both trust.", image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },

@@ -52,7 +52,7 @@ export const solutions: Solution[] = [
     ],
     plays: [
       { title: "Launch week", copy: "Waitlist, social, and landing copy from one brief with approval before anything publishes." },
-      { title: "First customers", copy: "Consistent brand messaging across LinkedIn, X, Facebook, Instagram and Bluesky." },
+      { title: "First customers", copy: "Consistent brand messaging across LinkedIn, X, Facebook, Instagram, Threads and Bluesky." },
       { title: "Support readiness", copy: "Documented knowledge base preparation for upcoming support desks." },
       { title: "Global operations", copy: "Invoiced in USD with local currency display for clarity." },
     ],
@@ -63,7 +63,7 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "sales", "support", "finance"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -107,7 +107,7 @@ export const solutions: Solution[] = [
       { value: "1", label: "Workspace" },
     ],
     capabilities: [
-      { title: "Marketing execution", copy: "Multi-channel publishing across LinkedIn, X, Facebook, Instagram and Bluesky with brand memory.", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Marketing execution", copy: "Multi-channel publishing across LinkedIn, X, Facebook, Instagram, Threads and Bluesky with brand memory.", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80" },
       { title: "Team alignment", copy: "Keep stakeholders updated on content schedules and performance metrics.", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80" },
       { title: "Multi-market presence", copy: "One workspace coordinates local copy and regional calendars without separate tools.", image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&auto=format&fit=crop&q=80" },
     ],
@@ -118,13 +118,13 @@ export const solutions: Solution[] = [
       { title: "Regional rollouts", copy: "Coordinate multiple brands or regions in one workspace." },
     ],
     steps: [
-      { n: "01", title: "Connect brand profiles", copy: "Connect LinkedIn, X, Facebook, Instagram or Bluesky via official APIs." },
+      { n: "01", title: "Connect brand profiles", copy: "Connect LinkedIn, X, Facebook, Instagram, Threads or Bluesky via official APIs." },
       { n: "02", title: "Set review rules", copy: "Define who approves posts before they go live." },
       { n: "03", title: "Run the calendar", copy: "Briefs become scheduled campaigns. First drafts in your first week." },
     ],
     desks: ["marketing", "sales", "operations", "recruitment"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -185,7 +185,7 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "operations", "finance", "hr"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -231,7 +231,7 @@ export const solutions: Solution[] = [
     capabilities: [
       { title: "Isolated workspaces", copy: "Each client retainer gets its own workspace, voice profile, and connected social accounts.", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80" },
       { title: "Client approval flow", copy: "Drafts wait for your team or the client to sign off before anything publishes.", image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&auto=format&fit=crop&q=80" },
-      { title: "Multi-channel delivery", copy: "Schedule across LinkedIn, X, Facebook, Instagram and Bluesky from unified campaign briefs.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Multi-channel delivery", copy: "Schedule across LinkedIn, X, Facebook, Instagram, Threads and Bluesky from unified campaign briefs.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "New client intake", copy: "Create a dedicated workspace with its own brand voice and guidelines." },
@@ -246,7 +246,7 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "support", "operations"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -307,7 +307,7 @@ export const solutions: Solution[] = [
     ],
     desks: ["voice", "support", "marketing"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -356,7 +356,7 @@ export const solutions: Solution[] = [
       { title: "Campus coordination", copy: "Manage announcements across multiple campuses and program tracks.", image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
-      { title: "Enrollment campaigns", copy: "Multi-channel recruitment drives across LinkedIn, X, Facebook, Instagram and Bluesky." },
+      { title: "Enrollment campaigns", copy: "Multi-channel recruitment drives across LinkedIn, X, Facebook, Instagram, Threads and Bluesky." },
       { title: "Admissions information", copy: "Answering prospective student questions from published course handbooks." },
       { title: "Term dates and events", copy: "Reminders and calendar notices for open days and application deadlines." },
       { title: "Multi-campus updates", copy: "Campus-specific announcements managed in separate channels." },
@@ -368,7 +368,7 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "support", "voice"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -413,7 +413,7 @@ export const solutions: Solution[] = [
     ],
     capabilities: [
       { title: "Product promotions", copy: "Launch new collections, drop announcements, and seasonal discount campaigns.", image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&auto=format&fit=crop&q=80" },
-      { title: "Brand consistency", copy: "Maintains voice and aesthetic across LinkedIn, X, Facebook, Instagram and Bluesky.", image: "https://images.unsplash.com/photo-1555421689-491a97ff2040?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Brand consistency", copy: "Maintains voice and aesthetic across LinkedIn, X, Facebook, Instagram, Threads and Bluesky.", image: "https://images.unsplash.com/photo-1555421689-491a97ff2040?w=1200&auto=format&fit=crop&q=80" },
       { title: "Customer support readiness", copy: "Knowledge base preparation for order status and store policy inquiries.", image: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
@@ -429,7 +429,7 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "support", "voice"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -490,7 +490,7 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "operations", "finance"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -551,7 +551,7 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "voice", "support"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },
@@ -612,7 +612,7 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "sales", "operations", "finance"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
       author: "Fless Pilot Program",
       role: "18 businesses active",
     },

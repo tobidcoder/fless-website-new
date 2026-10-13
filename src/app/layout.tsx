@@ -33,14 +33,14 @@ export const metadata: Metadata = {
     "AI marketing employee",
     "enterprise AI workforce",
     "Fless",
-    "Fless Inc",
+    "Brainstack Tech LTD",
     "NVIDIA Inception member",
     "official API integrations",
     "autonomous marketing",
   ],
-  authors: [{ name: "Fless Inc.", url: "https://getfless.com" }],
-  creator: "Fless Inc.",
-  publisher: "Fless Inc.",
+  authors: [{ name: "Brainstack Tech LTD (trading as Fless)", url: "https://getfless.com" }],
+  creator: "Brainstack Tech LTD",
+  publisher: "Brainstack Tech LTD",
   alternates: {
     canonical: "https://getfless.com",
   },
@@ -82,9 +82,15 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: "/fless-mark.png", type: "image/png" }],
-    apple: [{ url: "/fless-mark.png", type: "image/png" }],
-    shortcut: "/fless-mark.png",
+    icon: [
+      { url: "/favicon.png", sizes: "32x32", type: "image/png" },
+      { url: "/fless-mark.png", type: "image/png" },
+      { url: "/app-icon.png", sizes: "1024x1024", type: "image/png" },
+    ],
+    apple: [
+      { url: "/app-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/app-icon.png",
   },
 };
 
@@ -95,9 +101,11 @@ const organizationSchema = {
       "@type": "Organization",
       "@id": "https://getfless.com/#organization",
       name: "Fless",
-      legalName: "Fless Inc.",
+      legalName: "Brainstack Tech LTD",
+      alternateName: ["Fless", "Brainstack Tech LTD trading as Fless"],
       url: "https://getfless.com",
-      logo: "https://getfless.com/fless-mark.png",
+      logo: "https://getfless.com/app-icon.png",
+      image: "https://getfless.com/app-icon.png",
       description:
         "Infrastructure for AI employees. Fless enables businesses to deploy autonomous AI employees with strict governance, human approvals, and transparent billing.",
       address: {

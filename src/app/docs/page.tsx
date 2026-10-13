@@ -10,7 +10,9 @@ import {
   AGENTS_EXAMPLE,
   BUILDER_API,
   CONNECTIONS,
-  CONNECTION_GROUPS,
+  CONNECTION_CATEGORIES,
+  CONNECTION_STATUS_NOTE,
+  categoryLabel,
   CORE_PACKAGES,
   COUNTRIES,
   DEPARTMENTS,
@@ -261,7 +263,8 @@ function Chips({ items }: { items: string[] }) {
 
 const statusTone: Record<ConnectionStatus, string> = {
   Available: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
-  "Rolling out": "text-primary bg-brand-soft",
+  Beta: "text-primary bg-brand-soft",
+  "Awaiting approval": "text-amber-700 dark:text-amber-400 bg-amber-500/10",
 };
 
 function Status({ status }: { status: ConnectionStatus }) {
@@ -834,24 +837,24 @@ function PageContent({ id }: { id: string }) {
           <PageHead
             eyebrow="Connections"
             title="Official API connections"
-            lede="Fless connects straight to each provider's official API, with no third-party schedulers in between. Businesses sign in with their own accounts; Fless stores and refreshes the tokens."
+            lede={`${CONNECTIONS.length} connections, each built on the provider's official API with no third-party schedulers in between. Businesses sign in with their own accounts; Fless stores and refreshes the tokens.`}
           />
           <Defs
-            items={(["Available", "Rolling out"] as ConnectionStatus[]).map((s) => ({
+            items={(["Available", "Beta", "Awaiting approval"] as ConnectionStatus[]).map((s) => ({
               term: <Status status={s} />,
-              text: s === "Available" ? "Built and connectable today." : "Being released now.",
+              text: `${CONNECTION_STATUS_NOTE[s]} (${CONNECTIONS.filter((c) => c.status === s).length})`,
             }))}
           />
-          {CONNECTION_GROUPS.map((g) => (
+          {CONNECTION_CATEGORIES.map((g) => (
             <section key={g}>
-              <H2>{g}</H2>
+              <H2>{categoryLabel(g)}</H2>
               <div className="border-t border-border/60">
-                {CONNECTIONS.filter((c) => c.group === g).map((c) => (
+                {CONNECTIONS.filter((c) => c.category === g).map((c) => (
                   <div key={c.id} className="py-5 border-b border-border/60">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                       <span className="text-[16px] font-medium text-foreground">{c.name}</span>
                       <Status status={c.status} />
-                      <span className="text-[13px] text-muted-foreground">{c.api}</span>
+                      <span className="text-[13px] text-muted-foreground tabular-nums">{c.actions} actions</span>
                     </div>
                     <p className="mt-1.5 text-[14px] text-muted-foreground leading-relaxed">{c.summary}</p>
                   </div>
