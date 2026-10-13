@@ -54,7 +54,7 @@ export const solutions: Solution[] = [
     ],
     plays: [
       { title: "Launch week", copy: "Waitlist, social, and landing copy from one brief with approval before anything publishes." },
-      { title: "First customers", copy: "Consistent brand messaging across LinkedIn, X, Facebook, and Bluesky." },
+      { title: "First customers", copy: "Consistent brand messaging across LinkedIn, X, Facebook, Instagram and Bluesky." },
       { title: "Support readiness", copy: "Documented knowledge base preparation for upcoming support desks." },
       { title: "Global operations", copy: "Invoiced in USD with local currency display for clarity." },
     ],
@@ -114,7 +114,7 @@ export const solutions: Solution[] = [
       { value: "1", label: "Workspace" },
     ],
     capabilities: [
-      { title: "Marketing execution", copy: "Multi-channel publishing across LinkedIn, X, Facebook, and Bluesky with brand memory.", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Campaign", line: "Multi-channel calendar live", time: "9m" }, { title: "Approval", line: "Review queue clear", time: "31m" }] },
+      { title: "Marketing execution", copy: "Multi-channel publishing across LinkedIn, X, Facebook, Instagram and Bluesky with brand memory.", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Campaign", line: "Multi-channel calendar live", time: "9m" }, { title: "Approval", line: "Review queue clear", time: "31m" }] },
       { title: "Team alignment", copy: "Keep stakeholders updated on content schedules and performance metrics.", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Report", line: "Weekly review ready", time: "16m" }, { title: "Memory", line: "Brand voice updated", time: "42m" }] },
       { title: "Multi-market presence", copy: "One workspace coordinates local copy and regional calendars without separate tools.", image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Markets", line: "Local copy approved", time: "1h" }, { title: "Audit", line: "Exportable log current", time: "2h" }] },
     ],
@@ -125,7 +125,7 @@ export const solutions: Solution[] = [
       { title: "Regional rollouts", copy: "Coordinate multiple brands or regions in one workspace." },
     ],
     steps: [
-      { n: "01", title: "Connect brand profiles", copy: "Connect LinkedIn, X, Facebook, or Bluesky via official APIs." },
+      { n: "01", title: "Connect brand profiles", copy: "Connect LinkedIn, X, Facebook, Instagram or Bluesky via official APIs." },
       { n: "02", title: "Set review rules", copy: "Define who approves posts before they go live." },
       { n: "03", title: "Run the calendar", copy: "Briefs become scheduled campaigns. First drafts in your first week." },
     ],
@@ -248,7 +248,7 @@ export const solutions: Solution[] = [
     capabilities: [
       { title: "Isolated workspaces", copy: "Each client retainer gets its own workspace, voice profile, and connected social accounts.", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Client A", line: "Calendar queued", time: "8m" }, { title: "Client B", line: "Brand memory isolated", time: "19m" }] },
       { title: "Client approval flow", copy: "Drafts wait for your team or the client to sign off before anything publishes.", image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Review", line: "Campaign sent for sign-off", time: "11m" }, { title: "Status", line: "Approved by client lead", time: "2h" }] },
-      { title: "Multi-channel delivery", copy: "Schedule across LinkedIn, X, Facebook, and Bluesky from unified campaign briefs.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Publish", line: "Posts queued via official APIs", time: "4m" }, { title: "Report", line: "Campaign report ready", time: "1h" }] },
+      { title: "Multi-channel delivery", copy: "Schedule across LinkedIn, X, Facebook, Instagram and Bluesky from unified campaign briefs.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Publish", line: "Posts queued via official APIs", time: "4m" }, { title: "Report", line: "Campaign report ready", time: "1h" }] },
     ],
     plays: [
       { title: "New client intake", copy: "Create a dedicated workspace with its own brand voice and guidelines." },
@@ -383,7 +383,7 @@ export const solutions: Solution[] = [
       { title: "Campus coordination", copy: "Manage announcements across multiple campuses and program tracks.", image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Campuses", line: "3 campus schedules synced", time: "18m" }, { title: "Update", line: "Term dates published", time: "2h" }] },
     ],
     plays: [
-      { title: "Enrollment campaigns", copy: "Multi-channel recruitment drives across LinkedIn, X, Facebook, and Bluesky." },
+      { title: "Enrollment campaigns", copy: "Multi-channel recruitment drives across LinkedIn, X, Facebook, Instagram and Bluesky." },
       { title: "Admissions information", copy: "Answering prospective student questions from published course handbooks." },
       { title: "Term dates and events", copy: "Reminders and calendar notices for open days and application deadlines." },
       { title: "Multi-campus updates", copy: "Campus-specific announcements managed in separate channels." },
@@ -445,7 +445,7 @@ export const solutions: Solution[] = [
     ],
     capabilities: [
       { title: "Product promotions", copy: "Launch new collections, drop announcements, and seasonal discount campaigns.", image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Drop", line: "New collection teaser live", time: "4m" }, { title: "Campaign", line: "Weekend promotion scheduled", time: "18m" }] },
-      { title: "Brand consistency", copy: "Maintains voice and aesthetic across LinkedIn, X, Facebook, and Bluesky.", image: "https://images.unsplash.com/photo-1555421689-491a97ff2040?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Social", line: "Visual cards approved", time: "12m" }, { title: "Calendar", line: "Filled through Sunday", time: "44m" }] },
+      { title: "Brand consistency", copy: "Maintains voice and aesthetic across LinkedIn, X, Facebook, Instagram and Bluesky.", image: "https://images.unsplash.com/photo-1555421689-491a97ff2040?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Social", line: "Visual cards approved", time: "12m" }, { title: "Calendar", line: "Filled through Sunday", time: "44m" }] },
       { title: "Customer support readiness", copy: "Knowledge base preparation for order status and store policy inquiries.", image: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Policy", line: "Return policy docs indexed", time: "1h" }, { title: "Support", line: "Early access roadmap", time: "2h" }] },
     ],
     plays: [
@@ -455,7 +455,7 @@ export const solutions: Solution[] = [
       { title: "Peak capacity", copy: "Increase employee tenure hours during holiday surges." },
     ],
     steps: [
-      { n: "01", title: "Connect brand channels", copy: "Connect official social accounts via Buffer or platform OAuth." },
+      { n: "01", title: "Connect brand channels", copy: "Connect official social accounts by signing in to each platform." },
       { n: "02", title: "Review drafts", copy: "Approve product copy and campaign schedules in your workspace." },
       { n: "03", title: "Scale during peak", copy: "Increase tenure capacity by the day or week as volume grows." },
     ],

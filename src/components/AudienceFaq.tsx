@@ -22,7 +22,7 @@ const faqs: Record<Group, { q: string; a: string }[]> = {
     },
     {
       q: "What can it do today?",
-      a: "The Marketing employee is live. It turns a brief into a content plan, drafts posts and creative, and publishes approved work to LinkedIn, X, Facebook and Bluesky. Voice, Sales, Support, Recruitment, HR, Operations and Finance are in early access, and you can request them now.",
+      a: "The Marketing employee is live. It turns a brief into a content plan, drafts posts and creative, and publishes approved work to LinkedIn, X, Facebook, Instagram and Bluesky. Voice, Sales, Support, Recruitment, HR, Operations and Finance are in early access, and you can request them now.",
     },
     {
       q: "Will it post or send anything without my say-so?",
@@ -70,7 +70,7 @@ const faqs: Record<Group, { q: string; a: string }[]> = {
     },
     {
       q: "What traction do you have?",
-      a: "18 businesses are in pilot across Nigeria, the UK and North America. Marketing publishes live to four channels. Fless is a member of the NVIDIA Inception program.",
+      a: "18 businesses are in pilot across Nigeria, the UK and North America. Marketing publishes directly to five social networks through their official APIs. Fless is a member of the NVIDIA Inception program.",
     },
     {
       q: "How does Fless make money?",

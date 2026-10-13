@@ -45,7 +45,7 @@ const steps = [
     alt: "Laptop showing business performance charts",
     snippet: [
       { title: "Audit log", line: "Every change tracked", time: "Fri" },
-      { title: "Buffer", line: "Channels connected", time: "Fri" },
+      { title: "Channels", line: "Official APIs connected", time: "Fri" },
     ],
   },
 ]

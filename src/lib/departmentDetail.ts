@@ -12,7 +12,7 @@ export const departmentDetail: Record<
 > = {
   marketing: {
     story:
-      "Briefs sit in a doc. Posts never leave. Fless turns the brief into a calendar — LinkedIn, X, Facebook, and Bluesky — with brand memory and approval before publishing. You review. It ships.",
+      "Briefs sit in a doc. Posts never leave. Fless turns the brief into a calendar — LinkedIn, X, Facebook, Instagram and Bluesky — with brand memory and approval before publishing. You review. It ships.",
     cities: ["Lagos", "London", "New York"],
     plays: [
       { title: "Launch week", copy: "Waitlist, social, and landing copy from one brief." },

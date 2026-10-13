@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "Fless",
     "Fless Inc",
     "NVIDIA Inception member",
-    "Buffer integration",
+    "official API integrations",
     "autonomous marketing",
   ],
   authors: [{ name: "Fless Inc.", url: "https://getfless.com" }],

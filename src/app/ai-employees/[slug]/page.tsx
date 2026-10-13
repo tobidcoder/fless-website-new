@@ -119,7 +119,7 @@ async function getProfileData(slug: string): Promise<PublicProfileData | null> {
           description: `Executes ${s} with automated Fless platform policy gates.`,
         })),
         requiredPackages: [
-          { packageName: "@fless/buffer", displayName: "Buffer", isRequired: true },
+          { packageName: "@fless/meta", displayName: "Meta (Facebook & Instagram)", isRequired: true },
           { packageName: "@fless/google-calendar", displayName: "Google Calendar", isRequired: false },
         ],
         pricingModel: "MONTHLY",

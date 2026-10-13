@@ -76,7 +76,7 @@ export function Testimonials() {
                 </li>
                 <li className="flex items-center gap-2.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span>Live publishing on LinkedIn, X, Facebook, and Bluesky</span>
+                  <span>Live publishing on LinkedIn, X, Facebook, Instagram and Bluesky</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />

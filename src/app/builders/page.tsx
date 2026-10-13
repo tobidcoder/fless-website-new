@@ -8,47 +8,50 @@ import { CodeView } from "@/components/CodeView";
 import { cn } from "@/lib/utils";
 import {
   AGENTS_EXAMPLE,
-  CLI_COMMANDS,
+  BUILDER_API,
+  CONNECTIONS,
+  CORE_PACKAGES,
+  EVALUATION_EXAMPLE,
   MANIFEST_EXAMPLE,
-  PLUGINS,
-  PLUGIN_STATUS_NOTE,
-  SANDBOX_OUTPUT,
-  SDK_PACKAGES,
-  VERIFY_OUTPUT,
-  type PluginStatus,
+  PACKAGES,
+  SANDBOX_EXAMPLE,
+  type ConnectionStatus,
 } from "@/lib/sdk";
 
 const tabs = [
-  { id: "manifest", label: "employee.ts", code: MANIFEST_EXAMPLE, language: "typescript" as const },
-  { id: "agents", label: "agents.ts", code: AGENTS_EXAMPLE, language: "typescript" as const },
-  { id: "test", label: "fless test", code: SANDBOX_OUTPUT, language: "bash" as const },
-  { id: "verify", label: "fless verify", code: VERIFY_OUTPUT, language: "bash" as const },
+  { id: "manifest", label: "employee.ts", file: "src/employee.ts", code: MANIFEST_EXAMPLE },
+  { id: "agents", label: "agents.ts", file: "src/agents.ts", code: AGENTS_EXAMPLE },
+  { id: "sandbox", label: "sandbox.ts", file: "src/sandbox.ts", code: SANDBOX_EXAMPLE },
+  { id: "evaluate", label: "evaluate", file: "Builder API", code: EVALUATION_EXAMPLE },
 ];
 
 // What each block of the manifest does, in plain words.
 const anatomy = [
-  { key: "targetMarket", text: "Who can hire it: countries, industries, business types and languages." },
-  { key: "requiredPackages", text: "The plugins it needs, such as voice, WhatsApp, calendar and CRM." },
-  { key: "capabilities · tools", text: "What it is allowed to do. Anything not listed is blocked." },
+  { key: "countries · industries · languages", text: "Who can hire it, and which languages it speaks." },
+  { key: "requiredPackages", text: "The packages it needs, such as voice, WhatsApp, calendar and CRM." },
+  { key: "capabilities · tools", text: "What it is allowed to do. Any tool not listed is blocked." },
   { key: "skills", text: "Repeatable procedures with triggers, steps and the tools each step uses." },
+  { key: "workflows", text: "Multi-step jobs that start on an event, such as a missed call." },
   { key: "knowledge", text: "The business facts it answers from: text, URLs, PDFs and docs." },
-  { key: "agents", text: "Specialist sub-agents, each with its own model tier, skills and tools." },
-  { key: "approvals", text: "Actions that always pause for a person, and where to escalate." },
-  { key: "pricing", text: "Your monthly price and metered usage. You keep 35%." },
+  { key: "agents · orchestration", text: "Specialist sub-agents, each with its own model, skills and tools." },
+  { key: "policies", text: "What needs approval, when to hand over to a person, and working hours." },
+  { key: "settingsSchema", text: "The settings each business fills in when they hire it." },
+  { key: "evaluationScenarios", text: "Tests it must pass before it can be published." },
+  { key: "pricing", text: "Your price and metered usage. You keep 35%." },
 ];
 
 const steps = [
   { n: "01", title: "Write it", copy: "Describe the job in one TypeScript file: skills, knowledge, tools and price." },
-  { n: "02", title: "Test it", copy: "Run real conversations in a sandbox with mock plugins. No live accounts." },
-  { n: "03", title: "Verify it", copy: "An automated review checks permissions, safety, quality and speed, then signs the build." },
-  { n: "04", title: "Publish it", copy: "Businesses hire it from the marketplace. You're paid every month it works." },
+  { n: "02", title: "Test it", copy: "Run real conversations in the sandbox. Packages are mocked, so no live accounts are touched." },
+  { n: "03", title: "Evaluate it", copy: "Your scenarios plus Fless\u2019s policy, security and cost checks run against every version." },
+  { n: "04", title: "Submit it", copy: "Passing versions go to review, then the marketplace. You're paid every month it works." },
 ];
 
 const split = {
   fless: [
     "Hosting, models and GPU computing",
     "Customer logins and API keys, kept out of your code",
-    "Voice, WhatsApp, email and calendar plumbing",
+    "Connections to Meta, LinkedIn, X, Bluesky, Google, Microsoft and Zoom through their official APIs",
     "Approvals, audit log and data isolation per customer",
     "Billing in 8 currencies, invoices and monthly payouts",
   ],
@@ -61,19 +64,18 @@ const split = {
   ],
 };
 
-const statusTone: Record<PluginStatus, string> = {
-  Live: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
-  Beta: "text-primary bg-brand-soft",
-  Planned: "text-muted-foreground bg-muted",
+const statusTone: Record<ConnectionStatus, string> = {
+  Available: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
+  "Rolling out": "text-primary bg-brand-soft",
 };
 
-const statuses: Array<PluginStatus | "All"> = ["All", "Live", "Beta", "Planned"];
+const statuses: Array<ConnectionStatus | "All"> = ["All", "Available", "Rolling out"];
 
 export default function BuildersPage() {
   const [tab, setTab] = useState(tabs[0].id);
-  const [status, setStatus] = useState<PluginStatus | "All">("All");
+  const [status, setStatus] = useState<ConnectionStatus | "All">("All");
   const active = tabs.find((t) => t.id === tab) ?? tabs[0];
-  const visiblePlugins = status === "All" ? PLUGINS : PLUGINS.filter((p) => p.status === status);
+  const visibleConnections = status === "All" ? CONNECTIONS : CONNECTIONS.filter((c) => c.status === status);
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
@@ -138,8 +140,7 @@ export default function BuildersPage() {
               <CodeView
                 key={active.id}
                 code={active.code}
-                language={active.language}
-                filename={active.language === "bash" ? "terminal" : `src/${active.label}`}
+                filename={active.file}
                 maxHeight={560}
               />
             </div>
@@ -177,15 +178,19 @@ export default function BuildersPage() {
                 </li>
               ))}
             </ol>
-            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
-              {CLI_COMMANDS.map((c) => (
-                <div key={c.command}>
-                  <code className="block font-mono text-[12.5px] text-foreground bg-secondary rounded-lg px-3.5 py-2.5 overflow-x-auto whitespace-nowrap">
-                    {c.command}
-                  </code>
-                  <p className="mt-3 text-[14px] text-muted-foreground leading-relaxed">{c.summary}</p>
-                </div>
-              ))}
+            <div className="mt-16">
+              <h3 className="text-[13px] font-medium text-muted-foreground mb-4">Builder API</h3>
+              <ul className="border-t border-border/70">
+                {BUILDER_API.slice(0, 5).map((e) => (
+                  <li key={e.path} className="grid grid-cols-1 md:grid-cols-12 gap-x-6 gap-y-1 py-4 border-b border-border/70">
+                    <code className="md:col-span-7 font-mono text-[13px] text-foreground break-all">
+                      <span className="text-primary mr-2">{e.method}</span>
+                      {e.path}
+                    </code>
+                    <p className="md:col-span-5 text-[14px] text-muted-foreground">{e.summary}</p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
@@ -216,26 +221,26 @@ export default function BuildersPage() {
           </div>
         </section>
 
-        {/* PACKAGES & PLUGINS */}
+        {/* PACKAGES */}
         <section id="plugins" className="scroll-mt-20 py-20 md:py-32 border-t border-border/60">
           <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 md:mb-16">
               <div className="max-w-xl">
                 <h2 className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.1] mb-4">
-                  Packages and plugins.
+                  Packages.
                 </h2>
                 <p className="text-[16px] text-muted-foreground leading-relaxed">
-                  Three core packages to build with, and {PLUGINS.length} plugins that connect your employee to the
-                  tools businesses already use. Customers connect their own accounts; your code never sees their keys.
+                  Two core packages to build with, and {PACKAGES.length} packages that give your employee tools. List the
+                  ones you need; the business connects its own accounts and your code never sees their keys.
                 </p>
               </div>
-              <Link href="/docs#plugins" className="text-[14px] font-medium text-primary hover:opacity-80 shrink-0">
-                Full plugin reference →
+              <Link href="/docs#packages" className="text-[14px] font-medium text-primary hover:opacity-80 shrink-0">
+                Package reference →
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16 md:mb-20">
-              {SDK_PACKAGES.map((p) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16 md:mb-20">
+              {CORE_PACKAGES.map((p) => (
                 <div key={p.name} className="rounded-2xl border border-border/70 p-6 sm:p-7">
                   <div className="text-[12px] font-medium text-muted-foreground mb-3">{p.role}</div>
                   <div className="font-mono text-[15px] text-foreground mb-3">{p.name}</div>
@@ -251,6 +256,41 @@ export default function BuildersPage() {
               ))}
             </div>
 
+            <ul className="border-t border-border/70">
+              {PACKAGES.map((p) => (
+                <li key={p.id} className="border-b border-border/70">
+                  <Link
+                    href={`/docs#package-${p.id}`}
+                    className="group grid grid-cols-1 md:grid-cols-12 gap-x-6 gap-y-2 py-6 md:items-center"
+                  >
+                    <div className="md:col-span-3 text-[16px] font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                      {p.name}
+                    </div>
+                    <div className="md:col-span-3 font-mono text-[13px] text-muted-foreground">{p.packageName}</div>
+                    <p className="md:col-span-4 text-[14px] text-muted-foreground leading-relaxed">{p.summary}</p>
+                    <div className="md:col-span-2 md:text-right text-[13px] text-muted-foreground tabular-nums">
+                      {p.tools.length} {p.tools.length === 1 ? "tool" : "tools"}
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* CONNECTIONS */}
+        <section id="connections" className="scroll-mt-20 py-20 md:py-32 bg-[#fafafa] dark:bg-secondary border-t border-border/60">
+          <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+            <div className="max-w-2xl mb-12 md:mb-14">
+              <h2 className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.1] mb-4">
+                Connected through official APIs.
+              </h2>
+              <p className="text-[16px] text-muted-foreground leading-relaxed">
+                Fless connects straight to each provider&apos;s official API, with no third-party schedulers in between.
+                Businesses sign in with their own accounts, and tokens are stored and refreshed by Fless.
+              </p>
+            </div>
+
             <div className="flex flex-wrap items-center gap-2 mb-6">
               {statuses.map((s) => (
                 <button
@@ -261,46 +301,36 @@ export default function BuildersPage() {
                     "h-9 rounded-full px-4 text-[13px] font-medium border transition-colors",
                     status === s
                       ? "bg-foreground text-background border-foreground"
-                      : "border-border text-muted-foreground hover:text-foreground"
+                      : "border-border text-muted-foreground hover:text-foreground bg-background"
                   )}
                 >
                   {s}
                   {s !== "All" && (
-                    <span className="ml-1.5 opacity-60 tabular-nums">{PLUGINS.filter((p) => p.status === s).length}</span>
+                    <span className="ml-1.5 opacity-60 tabular-nums">{CONNECTIONS.filter((c) => c.status === s).length}</span>
                   )}
                 </button>
               ))}
-              {status !== "All" && (
-                <span className="text-[13px] text-muted-foreground ml-2">{PLUGIN_STATUS_NOTE[status]}</span>
-              )}
             </div>
 
-            <ul className="border-t border-border/70">
-              {visiblePlugins.map((p) => (
-                <li key={p.id} className="border-b border-border/70">
-                  <Link
-                    href={`/docs#plugin-${p.id}`}
-                    className="group grid grid-cols-1 md:grid-cols-12 gap-x-6 gap-y-2 py-6 md:items-center"
-                  >
-                    <div className="md:col-span-4 flex items-center gap-3 min-w-0">
-                      <span className="text-[16px] font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                        {p.name}
-                      </span>
-                      <span className={cn("text-[11px] font-medium rounded-full px-2 py-0.5", statusTone[p.status])}>
-                        {p.status}
-                      </span>
-                    </div>
-                    <div className="md:col-span-3 font-mono text-[13px] text-muted-foreground">{p.packageName}</div>
-                    <p className="md:col-span-5 text-[14px] text-muted-foreground leading-relaxed">{p.summary}</p>
-                  </Link>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 border-t border-border/70">
+              {visibleConnections.map((c) => (
+                <li key={c.id} className="py-5 border-b border-border/70">
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-[15px] font-semibold tracking-tight text-foreground">{c.name}</span>
+                    <span className={cn("text-[11px] font-medium rounded-full px-2 py-0.5", statusTone[c.status])}>{c.status}</span>
+                  </div>
+                  <div className="mt-1 text-[13px] text-muted-foreground">{c.api}</div>
                 </li>
               ))}
             </ul>
+            <Link href="/docs#connections" className="inline-block mt-8 text-[14px] font-medium text-primary hover:opacity-80">
+              All connections →
+            </Link>
           </div>
         </section>
 
         {/* EARNINGS */}
-        <section className="py-20 md:py-32 bg-[#fafafa] dark:bg-secondary border-t border-border/60">
+        <section className="py-20 md:py-32 border-t border-border/60">
           <div className="max-w-[1200px] mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             <div className="lg:col-span-6">
               <h2 className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.1] mb-5">
@@ -351,8 +381,8 @@ export default function BuildersPage() {
                 Ship your first employee.
               </h2>
               <p className="mt-5 text-[16px] text-white/60 leading-relaxed max-w-lg mx-auto">
-                The SDK is in private beta. Apply to join the next builder cohort and get the packages, CLI and a
-                sandbox account.
+                The SDK is in private beta. Apply to join the next builder cohort and get the packages, builder API
+                keys and a sandbox account.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Link

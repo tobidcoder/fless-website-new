@@ -46,7 +46,7 @@ export const departments: Department[] = [
     markets: "Built for teams across Africa, Europe, the Middle East and North America",
     metrics: [
       { value: "18", label: "Businesses in pilot" },
-      { value: "4", label: "Channels live (LinkedIn, X, Facebook, Bluesky)" },
+      { value: "5", label: "Networks live (LinkedIn, X, Facebook, Instagram, Bluesky)" },
       { value: "100%", label: "Approval before publishing" },
     ],
     employees: [
@@ -84,7 +84,7 @@ export const departments: Department[] = [
         role: "Social Media Manager",
         avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Social Media",
-        description: "Builds daily multi-network publishing calendars across LinkedIn, X, Facebook, and Bluesky to grow organic community engagement.",
+        description: "Builds daily multi-network publishing calendars across LinkedIn, X, Facebook, Instagram and Bluesky to grow organic community engagement.",
         skills: ["Multi-network Scheduling", "Audience Engagement", "Copy Variations", "Trend Piggybacking"],
       },
       {

@@ -8,23 +8,25 @@ import { CodeView } from "@/components/CodeView";
 import { cn } from "@/lib/utils";
 import {
   AGENTS_EXAMPLE,
-  CLI_COMMANDS,
+  BUILDER_API,
+  CONNECTIONS,
+  CONNECTION_GROUPS,
+  CORE_PACKAGES,
   COUNTRIES,
   DEPARTMENTS,
+  EVALUATION_CATEGORIES,
+  EVALUATION_EXAMPLE,
   LANGUAGES,
   MANIFEST_EXAMPLE,
   MODEL_TIERS,
-  PLUGINS,
-  PLUGIN_CATEGORIES,
-  PLUGIN_STATUS_NOTE,
+  PACKAGES,
+  PACKAGE_CATEGORIES,
   PRICING_MODELS,
-  SANDBOX_OUTPUT,
-  SDK_PACKAGES,
+  SANDBOX_EXAMPLE,
   TYPES_SNIPPET,
-  USAGE_EVENTS,
-  VERIFY_OUTPUT,
-  type Plugin,
-  type PluginStatus,
+  USAGE_RATES,
+  type ConnectionStatus,
+  type Package,
 } from "@/lib/sdk";
 
 // ---------- Navigation ----------
@@ -45,38 +47,42 @@ const NAV: NavGroup[] = [
     title: "Build",
     items: [
       { id: "manifest", title: "The manifest" },
-      { id: "skills", title: "Skills" },
+      { id: "skills", title: "Skills and workflows" },
       { id: "knowledge", title: "Knowledge" },
       { id: "agents", title: "Agents and teams" },
-      { id: "approvals", title: "Approvals and security" },
+      { id: "policies", title: "Policies and security" },
+      { id: "settings", title: "Customer settings" },
       { id: "pricing", title: "Pricing" },
     ],
   },
   {
-    title: "Packages and plugins",
+    title: "Packages",
     items: [
-      { id: "packages", title: "Core packages" },
-      { id: "plugins", title: "Plugin catalog" },
-      ...PLUGINS.map((p) => ({ id: `plugin-${p.id}`, title: p.name })),
+      { id: "packages", title: "All packages" },
+      ...PACKAGES.map((p) => ({ id: `package-${p.id}`, title: p.name })),
     ],
+  },
+  {
+    title: "Connections",
+    items: [{ id: "connections", title: "Official API connections" }],
   },
   {
     title: "Test and ship",
     items: [
       { id: "sandbox", title: "Test in the sandbox" },
-      { id: "verify", title: "Verification" },
-      { id: "publish", title: "Publish and get paid" },
+      { id: "evaluate", title: "Evaluation" },
+      { id: "submit", title: "Submit and get paid" },
     ],
   },
   {
     title: "Reference",
     items: [
+      { id: "api", title: "Builder API" },
       { id: "capabilities", title: "Capabilities" },
       { id: "model-tiers", title: "Model tiers" },
       { id: "markets", title: "Countries and languages" },
       { id: "departments", title: "Departments" },
       { id: "types", title: "TypeScript types" },
-      { id: "cli", title: "CLI" },
     ],
   },
 ];
@@ -86,17 +92,22 @@ const ALIASES: Record<string, string> = {
   intro: "overview",
   "single-sdk": "packages",
   "sdk-overview": "packages",
+  plugins: "packages",
   "define-employee": "manifest",
   "create-employee": "manifest",
   "define-agent": "agents",
   "multi-agent": "agents",
   "skills-workflows": "skills",
   "rag-knowledge": "knowledge",
-  "security-boundaries": "approvals",
+  approvals: "policies",
+  "security-boundaries": "policies",
   "ref-pricing": "pricing",
   "sandbox-runner": "sandbox",
-  evaluations: "verify",
-  publishing: "publish",
+  verify: "evaluate",
+  evaluations: "evaluate",
+  publish: "submit",
+  publishing: "submit",
+  cli: "api",
   "ref-capabilities": "capabilities",
   "ref-model-tiers": "model-tiers",
   "ref-countries": "markets",
@@ -108,7 +119,8 @@ const ALIASES: Record<string, string> = {
 
 const ALL_ITEMS = NAV.flatMap((g) => g.items);
 const resolve = (hash: string) => {
-  const id = ALIASES[hash] ?? hash;
+  // Old plugin pages were #plugin-<id>; packages now live at #package-<id>.
+  const id = ALIASES[hash] ?? hash.replace(/^plugin-/, "package-");
   return ALL_ITEMS.some((i) => i.id === id) ? id : "overview";
 };
 
@@ -246,14 +258,13 @@ function Chips({ items }: { items: string[] }) {
   );
 }
 
-const statusTone: Record<PluginStatus, string> = {
-  Live: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
-  Beta: "text-primary bg-brand-soft",
-  Planned: "text-muted-foreground bg-muted",
+const statusTone: Record<ConnectionStatus, string> = {
+  Available: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
+  "Rolling out": "text-primary bg-brand-soft",
 };
 
-function Status({ status }: { status: PluginStatus }) {
-  return <span className={cn("text-[11px] font-medium rounded-full px-2 py-0.5", statusTone[status])}>{status}</span>;
+function Status({ status }: { status: ConnectionStatus }) {
+  return <span className={cn("text-[11px] font-medium rounded-full px-2 py-0.5 whitespace-nowrap", statusTone[status])}>{status}</span>;
 }
 
 function LinkRow({ href, title, text }: { href: string; title: string; text: string }) {
@@ -276,40 +287,52 @@ export default defineEmployee({
   id: 'social-assistant',
   name: 'Social Media Assistant',
   department: 'MARKETING',
-  role: 'Plans and schedules weekly posts',
-  description: 'Turns a weekly brief into approved, scheduled posts.',
+  role: 'Plans and publishes weekly posts',
+  description: 'Turns a weekly brief into approved posts on Facebook and Instagram.',
 
-  requiredPackages: ['@fless/social'],
-  capabilities: ['marketing.social_publishing'],
-  tools: ['social.schedulePost', 'social.listChannels'],
+  requiredPackages: ['@fless/meta'],
+  capabilities: ['social.publish', 'social.analytics'],
+  tools: ['social.publish', 'social.analytics.get'],
 
-  approvals: { requireHumanApproval: ['social.schedulePost'] },
+  policies: { requireApprovalFor: ['social.publish'] },
 
-  pricing: { model: 'SUBSCRIPTION', currency: 'USD', basePriceCents: 4900 },
-  systemInstructions: 'Write in the brand voice. Never post without approval.',
+  pricing: { model: 'MONTHLY', currency: 'USD', monthlyPriceCents: 4900 },
+  systemInstructions: 'Write in the brand voice. Never publish without approval.',
 });`;
 
 const SKILLS_EXAMPLE = `skills: [
   {
-    id: 'invoice-chase',
-    name: 'Chase overdue invoices',
-    description: 'Follows up on invoices more than 14 days late.',
-    triggerConditions: ['invoice overdue > 14 days'],
+    id: 'lead-follow-up',
+    name: 'Lead follow-up',
+    description: 'Follows up new leads within an hour.',
+    triggerConditions: ['new lead', 'missed call'],
     workflowSteps: [
-      'Check payment status',
-      'Send a polite reminder by email',
-      'If still unpaid after 7 days, alert the finance channel',
+      'Look up the contact',
+      'Send a WhatsApp with two call-back times',
+      'Update the lead status',
     ],
-    requiredTools: ['stripe.getPaymentStatus', 'mail.sendEmail', 'slack.postMessage'],
+    requiredTools: ['crm.lookupContact', 'whatsapp.sendMessage', 'crm.syncLead'],
   },
-  // A skill can also point at your existing SOP
+  // A skill can point at an existing SOP instead of listing steps
   {
     id: 'refund-policy',
     name: 'Refund handling',
     description: 'Applies the company refund policy.',
     url: 'https://help.example.com/refunds',
   },
-]`;
+],
+
+workflows: [
+  {
+    id: 'weekly-report',
+    title: 'Weekly social report',
+    trigger: 'schedule.weekly',
+    steps: [
+      { name: 'Collect', action: 'Pull last week\\'s numbers', requiredTool: 'social.analytics.get' },
+      { name: 'Share', action: 'Post a summary to the team', requiredTool: 'slack.postMessage' },
+    ],
+  },
+],`;
 
 const KNOWLEDGE_EXAMPLE = `knowledge: [
   {
@@ -329,96 +352,117 @@ const KNOWLEDGE_EXAMPLE = `knowledge: [
     id: 'lagos-hours',
     name: 'Lagos branch hours',
     type: 'TEXT',
-    content: 'Open 8am–6pm, Monday to Saturday.',
+    content: 'Open 8am to 6pm, Monday to Saturday.',
     country: 'NG',
   },
 ]`;
 
-const APPROVALS_EXAMPLE = `approvals: {
-  // These tools always pause until a person approves
-  requireHumanApproval: ['social.schedulePost', 'stripe.createInvoice'],
-  // Where the request goes
-  escalationChannel: 'slack:#approvals',
+const POLICIES_EXAMPLE = `policies: {
+  // These tools always wait for a person to approve
+  requireApprovalFor: ['social.publish', 'crm.syncLead'],
+  // Hand the conversation to a person when any of these happen
+  escalateToHumanWhen: ['customer is angry', 'customer asks for a refund'],
+  // Never say these
+  forbiddenKeywords: ['guarantee', 'diagnosis'],
+  // Only act inside working hours
+  operatingHours: { timezone: 'Africa/Lagos', start: '08:00', end: '18:00', workDays: [1, 2, 3, 4, 5] },
+}`;
+
+const SETTINGS_EXAMPLE = `settingsSchema: {
+  fields: [
+    {
+      key: 'brand_voice',
+      label: 'Brand voice',
+      type: 'select',
+      options: [
+        { value: 'friendly', label: 'Friendly' },
+        { value: 'formal', label: 'Formal' },
+      ],
+      default: 'friendly',
+      editableBy: 'customer',
+      group: 'Brand & Voice',
+    },
+    {
+      key: 'posts_per_week',
+      label: 'Posts per week',
+      type: 'number',
+      min: 1,
+      max: 21,
+      default: 5,
+      editableBy: 'customer',
+      group: 'Schedule',
+    },
+  ],
 }`;
 
 const PRICING_EXAMPLE = `pricing: {
   model: 'BASE_PLUS_USAGE',
   currency: 'USD',
-  basePriceCents: 4900,          // $49 a month
-  billingInterval: 'MONTHLY',
-  usageRates: [
-    { eventType: 'VOICE_CALL_MINUTE', unitPriceCents: 15, includedUnits: 300 },
-  ],
+  baseMonthlyPriceCents: 4900,          // $49 a month
+  usageRates: {
+    perVoiceMinuteCents: 15,            // plus $0.15 per call minute
+  },
+  trialDays: 14,
 }`;
 
-const RUNNER_EXAMPLE = `import { EmployeeSandboxRunner } from '@fless/employee-sdk';
-import employee from './employee';
+const INSTALL = `npm install @fless/employee-sdk`;
 
-const runner = new EmployeeSandboxRunner(employee);
+const SUBMIT_EXAMPLE = `# 1. Upload the new version
+POST /api/v1/builder/employees/emp_31d9/versions
 
-const reply = await runner.simulateMessage({
-  channel: 'voice',
-  text: 'Can I book a check-up on Friday at 2pm?',
-});
+# 2. Run the evaluation suite
+POST /api/v1/builder/versions/ver_8f2c/evaluate
 
-console.log(reply.text);        // what the employee said
-console.log(reply.toolCalls);   // which tools it called, with arguments`;
-
-const INSTALL = `npm install @fless/employee-sdk
-npm install --save-dev @fless/cli`;
+# 3. Submit for review
+POST /api/v1/builder/versions/ver_8f2c/submit`;
 
 // ---------- Pages ----------
 
-function PluginPage({ plugin }: { plugin: Plugin }) {
+function PackagePage({ pkg }: { pkg: Package }) {
   return (
     <>
       <header className="mb-12 md:mb-16">
-        <p className="text-[12px] font-medium text-primary mb-4">Plugin · {plugin.category}</p>
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-[32px] sm:text-[40px] font-display font-semibold tracking-[-0.035em] leading-[1.1] text-foreground">
-            {plugin.name}
-          </h1>
-          <Status status={plugin.status} />
-        </div>
-        <p className="mt-3 font-mono text-[14px] text-muted-foreground">{plugin.packageName}</p>
-        <p className="mt-5 text-[17px] sm:text-[18px] text-muted-foreground leading-[1.7]">{plugin.summary}</p>
+        <p className="text-[12px] font-medium text-primary mb-4">Package · {pkg.category}</p>
+        <h1 className="text-[32px] sm:text-[40px] font-display font-semibold tracking-[-0.035em] leading-[1.1] text-foreground">
+          {pkg.name}
+        </h1>
+        <p className="mt-3 font-mono text-[14px] text-muted-foreground">{pkg.packageName}</p>
+        <p className="mt-5 text-[17px] sm:text-[18px] text-muted-foreground leading-[1.7]">{pkg.summary}</p>
       </header>
-
-      {plugin.status === "Planned" && (
-        <Note>This plugin is on the roadmap. Tool names below show the intended shape and may change before release.</Note>
-      )}
 
       <Defs
         items={[
-          { term: "Status", text: PLUGIN_STATUS_NOTE[plugin.status] },
-          { term: "Works with", text: plugin.services.join(", ") },
-          { term: "Capabilities", text: <Chips items={plugin.capabilities} /> },
-          { term: "Permissions", text: <Chips items={plugin.permissions} /> },
+          ...(pkg.connects.length > 0 ? [{ term: "Connects to", text: pkg.connects.join(", ") }] : []),
+          { term: "Capabilities", text: <Chips items={pkg.capabilities} /> },
+          { term: "Permissions", text: <Chips items={pkg.permissions} /> },
+          { term: "Sandbox", text: "Every tool is mocked in the sandbox, so tests never touch live accounts." },
         ]}
       />
 
       <H2>Add it to your employee</H2>
       <P>
         List the package in <C>requiredPackages</C>, then allow only the tools you need in <C>tools</C>. The business
-        connects their own account when they hire your employee. Your code never sees their credentials.
+        connects its own account when it hires your employee. Your code never sees their credentials.
       </P>
       <CodeView
-        code={`requiredPackages: ['${plugin.packageName}'],\ncapabilities: [${plugin.capabilities.map((c) => `'${c}'`).join(", ")}],\ntools: [${plugin.tools.map((t) => `'${t.id}'`).join(", ")}],`}
+        code={`requiredPackages: ['${pkg.packageName}'],\ncapabilities: [${pkg.capabilities.map((c) => `'${c}'`).join(", ")}],\ntools: [${pkg.tools.map((t) => `'${t.id}'`).join(", ")}],`}
         filename="employee.ts"
       />
 
       <H2>Tools</H2>
-      <div className="space-y-12">
-        {plugin.tools.map((t) => (
+      <div className="space-y-14">
+        {pkg.tools.map((t) => (
           <section key={t.id}>
             <h3 className="font-mono text-[15px] text-foreground mb-2">{t.id}</h3>
             <p className="text-[15px] text-muted-foreground leading-relaxed mb-5">{t.description}</p>
-            {t.parameters.length > 0 && (
+            {t.parameters.length > 0 ? (
               <Table
                 head={["Parameter", "Type", "Required", "Description"]}
                 mono={[0, 1]}
                 rows={t.parameters.map((p) => [p.name, p.type, p.required ? "Yes" : "No", p.description])}
               />
+            ) : (
+              <p className="text-[14px] text-muted-foreground">No parameters.</p>
             )}
           </section>
         ))}
@@ -428,9 +472,9 @@ function PluginPage({ plugin }: { plugin: Plugin }) {
 }
 
 function PageContent({ id }: { id: string }) {
-  if (id.startsWith("plugin-")) {
-    const plugin = PLUGINS.find((p) => `plugin-${p.id}` === id);
-    if (plugin) return <PluginPage plugin={plugin} />;
+  if (id.startsWith("package-")) {
+    const pkg = PACKAGES.find((p) => `package-${p.id}` === id);
+    if (pkg) return <PackagePage pkg={pkg} />;
   }
 
   switch (id) {
@@ -440,13 +484,13 @@ function PageContent({ id }: { id: string }) {
           <PageHead
             eyebrow="Builder docs"
             title="Build AI employees businesses can hire."
-            lede="An AI employee on Fless is one TypeScript file that describes a job: what it does, what it knows, which tools it can use and what it costs. You write the file. Fless runs it, keeps it safe, bills the customer and pays you."
+            lede="An AI employee on Fless is one TypeScript file that describes a job: what it does, what it knows, which tools it may use, what needs a person's approval and what it costs. You write the file. Fless runs it, keeps it safe, bills the customer and pays you."
           />
           <H2>How it fits together</H2>
           <Defs
             items={[
-              { term: "You write", text: "A manifest with skills, knowledge, tools, approvals and a price." },
-              { term: "Fless runs", text: "The models, plugins, customer logins, audit log and billing." },
+              { term: "You write", text: "A manifest with skills, workflows, knowledge, tools, policies and a price." },
+              { term: "Fless runs", text: "The models, packages, official API connections, audit trail and billing." },
               { term: "Businesses hire", text: "Your employee from the marketplace. You keep 35% of what they pay." },
             ]}
           />
@@ -454,15 +498,16 @@ function PageContent({ id }: { id: string }) {
           <div className="border-t border-border/60">
             <LinkRow href="#quickstart" title="Quickstart" text="From an empty folder to a tested employee." />
             <LinkRow href="#manifest" title="The manifest" text="A complete example, field by field." />
-            <LinkRow href="#plugins" title="Plugin catalog" text={`${PLUGINS.length} plugins for voice, messaging, CRM, calendars and more.`} />
-            <LinkRow href="#publish" title="Publish and get paid" text="Review, launch and monthly payouts." />
+            <LinkRow href="#packages" title="Packages" text={`${PACKAGES.length} packages and their tools.`} />
+            <LinkRow href="#connections" title="Connections" text="Official APIs businesses can connect." />
+            <LinkRow href="#submit" title="Submit and get paid" text="Review, launch and monthly payouts." />
           </div>
           <Note>
             The SDK is in private beta.{" "}
             <Link href="/builders#apply" className="font-medium text-foreground underline underline-offset-4">
               Request access
             </Link>{" "}
-            to get the packages and a sandbox account.
+            to get the packages, builder API keys and a sandbox account.
           </Note>
         </>
       );
@@ -477,11 +522,11 @@ function PageContent({ id }: { id: string }) {
                 title: "Get access",
                 body: (
                   <P>
-                    The packages are distributed to accepted builders.{" "}
+                    The SDK is distributed to accepted builders.{" "}
                     <Link href="/builders#apply" className="font-medium text-foreground underline underline-offset-4">
-                      Request SDK access
+                      Request access
                     </Link>
-                    , then sign in to the private registry with the token we send you.
+                    , then create an API key in your builder dashboard.
                   </P>
                 ),
               },
@@ -491,7 +536,7 @@ function PageContent({ id }: { id: string }) {
                 body: (
                   <>
                     <P>
-                      Create <C>src/employee.ts</C>. This one drafts posts and schedules them only after a person approves.
+                      Create <C>src/employee.ts</C>. This one drafts posts and publishes only after a person approves.
                     </P>
                     <CodeView code={MINIMAL_EXAMPLE} filename="src/employee.ts" />
                   </>
@@ -501,19 +546,18 @@ function PageContent({ id }: { id: string }) {
                 title: "Test it",
                 body: (
                   <>
-                    <P>Run conversations against mock plugins. Nothing is posted and no real accounts are used.</P>
-                    <CodeView code="npx @fless/cli test ./src/employee.ts" language="bash" filename="terminal" />
+                    <P>Run messages through it locally. Packages are mocked, so nothing is posted.</P>
+                    <CodeView code={SANDBOX_EXAMPLE} filename="src/sandbox.ts" />
                   </>
                 ),
               },
               {
-                title: "Verify and publish",
+                title: "Evaluate and submit",
                 body: (
-                  <CodeView
-                    code={"npx @fless/cli verify ./src/employee.ts\nnpx @fless/cli publish"}
-                    language="bash"
-                    filename="terminal"
-                  />
+                  <P>
+                    Upload the version, run the evaluation suite and submit it for review. See{" "}
+                    <a href="#submit" className="text-foreground underline underline-offset-4">Submit and get paid</a>.
+                  </P>
                 ),
               },
             ]}
@@ -524,17 +568,18 @@ function PageContent({ id }: { id: string }) {
     case "concepts":
       return (
         <>
-          <PageHead eyebrow="Get started" title="Core concepts" lede="Eight words you'll see everywhere in these docs." />
+          <PageHead eyebrow="Get started" title="Core concepts" lede="The words you'll see everywhere in these docs." />
           <Defs
             items={[
               { term: "Employee", text: "The thing a business hires. Defined with defineEmployee()." },
               { term: "Agent", text: "A specialist inside an employee, such as a booking agent. Optional." },
               { term: "Skill", text: "A repeatable procedure: when it applies, the steps, and the tools each step uses." },
+              { term: "Workflow", text: "A multi-step job that starts on an event or schedule." },
               { term: "Knowledge", text: "Facts the employee answers from: text, web pages, PDFs and documents." },
-              { term: "Plugin", text: "A package that connects to an outside service, such as @fless/whatsapp." },
-              { term: "Tool", text: "One action a plugin offers, such as whatsapp.sendMessage." },
-              { term: "Capability", text: "A broad permission, such as calendar.booking, used for marketplace matching." },
-              { term: "Approval", text: "A rule that makes a tool wait for a person before it runs." },
+              { term: "Package", text: "A set of tools, such as @fless/whatsapp." },
+              { term: "Tool", text: "One action a package offers, such as whatsapp.sendMessage." },
+              { term: "Connection", text: "A business's own account on a service, linked through the official API." },
+              { term: "Policy", text: "A rule: what needs approval, when to hand over to a person, working hours." },
             ]}
           />
         </>
@@ -546,26 +591,28 @@ function PageContent({ id }: { id: string }) {
           <PageHead
             eyebrow="Build"
             title="The manifest"
-            lede={<>Everything about an employee lives in one object passed to <C>defineEmployee()</C>. Here is a complete, production-shaped example.</>}
+            lede={<>Everything about an employee lives in one object passed to <C>defineEmployee()</C>. Here is a complete example.</>}
           />
           <CodeView code={MANIFEST_EXAMPLE} filename="src/employee.ts" maxHeight={640} />
           <H2>Fields</H2>
           <Table
             head={["Field", "Required", "What it does"]}
             rows={[
-              ["id, name, version", "Yes", "Unique ID, display name and semantic version."],
+              ["id, name", "Yes", "Unique ID and display name. slug defaults to id, version to 1.0.0."],
               ["department, role", "Yes", "Which desk it works on and its job in one line."],
               ["description", "Yes", "What businesses read on the marketplace."],
-              ["targetMarket", "No", "Countries, industries, business types and languages it serves."],
-              ["requiredPackages", "Yes", "Plugins the employee needs."],
-              ["capabilities", "Yes", "Broad permissions, used for review and marketplace search."],
+              ["countries, industries, businessTypes, languages", "No", "Who it is for."],
+              ["requiredPackages, optionalPackages", "No", "Packages it needs, and ones it can use if connected."],
+              ["capabilities", "No", "Broad permissions, used for review and marketplace search."],
               ["tools", "Yes", "Exact tools it may call. Anything else is blocked."],
-              ["skills", "No", "Procedures with triggers, steps and required tools."],
+              ["skills, workflows", "No", "Procedures and event-driven jobs."],
               ["knowledge", "No", "Sources it answers from."],
-              ["agents, orchestration", "No", "Specialist sub-agents and how they share work."],
-              ["approvals", "No", "Tools that always wait for a person."],
+              ["agents, orchestration", "No", "Specialists and how they share work. One lead agent is created if omitted."],
+              ["policies", "No", "Approvals, escalation, forbidden words and working hours."],
+              ["settingsSchema", "No", "Settings each business fills in."],
+              ["evaluationScenarios", "No", "Your own tests, run on every version."],
               ["pricing", "No", "How businesses pay. See Pricing."],
-              ["concurrencyLimit", "No", "Maximum tasks at once per customer."],
+              ["concurrencyLimit", "No", "Tasks at once per customer. Defaults to 5."],
               ["systemInstructions", "Yes", "Tone and rules that apply to everything it does."],
             ]}
           />
@@ -577,28 +624,33 @@ function PageContent({ id }: { id: string }) {
         <>
           <PageHead
             eyebrow="Build"
-            title="Skills"
-            lede="A skill is a procedure your employee follows the same way every time, like a page from a team handbook."
+            title="Skills and workflows"
+            lede="Skills are procedures the employee follows when a situation comes up. Workflows are jobs that start on an event or a schedule."
           />
-          <P>
-            Give each skill the situations that trigger it, the steps in order, and the tools those steps need. Verification
-            fails if a skill needs a tool that isn&apos;t listed in <C>tools</C>.
-          </P>
           <CodeView code={SKILLS_EXAMPLE} filename="employee.ts" />
-          <H2>Fields</H2>
+          <H2>Skill fields</H2>
           <Table
             head={["Field", "What it does"]}
             rows={[
-              ["id, name", "How the skill is referenced and shown."],
-              ["description", "One line on what the skill achieves."],
+              ["id, name, description", "How the skill is referenced and shown."],
+              ["agentId", "Which agent owns it, in a multi-agent employee."],
               ["triggerConditions", "Phrases or events that should start it."],
               ["workflowSteps", "The steps, in order."],
-              ["requiredTools", "Tools the steps call. Checked at verify time."],
+              ["requiredTools", "Tools the steps call."],
               ["instructions", "Extra guidance in plain language."],
-              ["url", "Link to an existing SOP instead of writing steps."],
+              ["url, docs", "Point to an existing SOP instead of writing steps."],
+              ["parametersSchema, outputSchema", "Optional JSON Schemas for structured input and output."],
             ]}
           />
-          <Note>Agents can share skills by ID, for example <C>skills: [&apos;invoice-chase&apos;]</C>.</Note>
+          <H2>Workflow fields</H2>
+          <Table
+            head={["Field", "What it does"]}
+            rows={[
+              ["id, title", "How the workflow is referenced and shown."],
+              ["trigger", "The event or schedule that starts it."],
+              ["steps", "Each step's name, action and the tool it uses."],
+            ]}
+          />
         </>
       );
 
@@ -625,8 +677,9 @@ function PageContent({ id }: { id: string }) {
           />
           <H2>Keeping it fresh</H2>
           <P>
-            Set <C>refreshInterval</C> to <C>DAILY</C> or <C>WEEKLY</C> for sources that change. Add <C>country</C> or{" "}
-            <C>industry</C> to a source and it is only used for matching customers.
+            Set <C>refreshInterval</C> to <C>DAILY</C> or <C>WEEKLY</C> for sources that change. Tag a source with{" "}
+            <C>country</C>, <C>industry</C> or <C>businessType</C> and it is only used for matching customers. Tune
+            retrieval with <C>vectorConfig</C>.
           </P>
         </>
       );
@@ -645,37 +698,70 @@ function PageContent({ id }: { id: string }) {
             head={["orchestration.mode", "How it works"]}
             rows={[
               ["SUPERVISOR", "A lead agent reads each request and hands parts to specialists. The default."],
-              ["PIPELINE", "Work passes through agents in order, for example extract → check → file."],
-              ["ROUND_ROBIN", "Requests are spread evenly across identical agents."],
+              ["PIPELINE", "Work passes through agents in pipelineOrder, for example extract → check → file."],
+              ["ROUND_ROBIN", "Requests are spread evenly across agents."],
               ["DIRECT", "Requests go straight to one agent."],
             ]}
           />
           <P>
-            Pick a <a href="#model-tiers" className="text-foreground underline underline-offset-4">model tier</a> per
-            agent: fast for routing, reasoning for lead agents, voice for live calls.
+            Set <C>leadAgentId</C>, a <C>fallbackAgentId</C> and <C>maxTurns</C> to control the team. If you define no
+            agents, Fless creates one lead agent from your manifest. Agents default to the <C>standard</C> tier,
+            temperature 0.7 and 5 steps.
           </P>
         </>
       );
 
-    case "approvals":
+    case "policies":
       return (
         <>
           <PageHead
             eyebrow="Build"
-            title="Approvals and security"
-            lede="Businesses trust Fless because people stay in charge. Every employee inherits these protections."
+            title="Policies and security"
+            lede="Businesses trust Fless because people stay in charge. Policies let you decide what needs a person, and every employee inherits the platform's protections."
           />
-          <H2>Approval gates</H2>
-          <P>List any tool that should never run without a person signing off. The request goes to the business&apos;s approval queue.</P>
-          <CodeView code={APPROVALS_EXAMPLE} filename="employee.ts" />
+          <CodeView code={POLICIES_EXAMPLE} filename="employee.ts" />
+          <H2>Policy fields</H2>
+          <Table
+            head={["Field", "What it does"]}
+            rows={[
+              ["requireApprovalFor", "Tools that pause until a person approves."],
+              ["escalateToHumanWhen", "Situations that hand the conversation to a person."],
+              ["forbiddenKeywords", "Words the employee must never use."],
+              ["operatingHours", "When it may act: time zone, start, end and work days."],
+            ]}
+          />
           <H2>Built in for every employee</H2>
           <Defs
             items={[
-              { term: "No secret access", text: "Your code never sees customer passwords, tokens or API keys. Fless injects them at the moment a tool runs." },
-              { term: "Least privilege", text: "Only the tools in your manifest can be called, with the permissions each plugin declares." },
-              { term: "Time limits", text: "Model reasoning stops after 30 seconds and outside requests after 10, so nothing hangs." },
-              { term: "Audit log", text: "Every message, tool call and approval is recorded and exportable by the business." },
-              { term: "Isolation", text: "Each customer's data and knowledge is kept separate from every other customer." },
+              { term: "No secret access", text: "Your code never sees customer passwords or tokens. Fless stores, refreshes and injects them when a tool runs." },
+              { term: "Least privilege", text: "Only the tools in your manifest can be called, with the permissions each package declares." },
+              { term: "Audit trail", text: "Every tool call is recorded with a signed receipt the business can review." },
+              { term: "Isolation", text: "Each customer's data and knowledge is kept separate." },
+            ]}
+          />
+        </>
+      );
+
+    case "settings":
+      return (
+        <>
+          <PageHead
+            eyebrow="Build"
+            title="Customer settings"
+            lede="Let each business tailor your employee without code. Fields appear in their dashboard when they hire it."
+          />
+          <CodeView code={SETTINGS_EXAMPLE} filename="employee.ts" />
+          <H2>Field options</H2>
+          <Table
+            head={["Field", "What it does"]}
+            rows={[
+              ["key, label", "A stable snake_case key and a friendly label."],
+              ["type", "text, textarea, number, boolean, select, multiselect, time, schedule or url."],
+              ["options, default", "Choices for select fields, and the starting value."],
+              ["required, min, max, maxLength", "Validation."],
+              ["group", "Section heading in the dashboard, e.g. Brand & Voice."],
+              ["editableBy", "customer, or builder to fix the value for this version."],
+              ["requiresCapability", "Hide the field until the matching package is connected."],
             ]}
           />
         </>
@@ -691,22 +777,26 @@ function PageContent({ id }: { id: string }) {
           />
           <CodeView code={PRICING_EXAMPLE} filename="employee.ts" />
           <H2>Pricing models</H2>
-          <Table head={["pricing.model", "How it bills", "Example"]} rows={PRICING_MODELS.map((m) => [m.model, m.summary, m.example])} />
-          <H2>Usage events</H2>
+          <Table head={["pricing.model", "Set this", "Example"]} mono={[0, 1]} rows={PRICING_MODELS.map((m) => [m.model, m.fields, m.example])} />
+          <H2>Usage rates</H2>
+          <Table head={["usageRates field", "Charged"]} rows={USAGE_RATES.map((u) => [u.field, u.meaning])} />
           <P>
-            Use these in <C>usageRates[].eventType</C> to charge for metered work.
+            Add <C>trialDays</C> to offer a free trial.
           </P>
-          <Chips items={USAGE_EVENTS} />
         </>
       );
 
     case "packages":
       return (
         <>
-          <PageHead eyebrow="Packages and plugins" title="Core packages" lede="Three packages cover everything you need to build, test and ship." />
+          <PageHead
+            eyebrow="Packages"
+            title="Packages"
+            lede="Core packages to build with, and packages that give your employee tools. Every tool is mocked in the sandbox."
+          />
           <CodeView code={INSTALL} language="bash" filename="terminal" />
           <div className="mt-12 space-y-12">
-            {SDK_PACKAGES.map((p) => (
+            {CORE_PACKAGES.map((p) => (
               <section key={p.name}>
                 <p className="text-[12px] font-medium text-muted-foreground mb-2">{p.role}</p>
                 <h2 className="font-mono text-[18px] text-foreground mb-3">{p.name}</h2>
@@ -715,31 +805,52 @@ function PageContent({ id }: { id: string }) {
               </section>
             ))}
           </div>
-        </>
-      );
-
-    case "plugins":
-      return (
-        <>
-          <PageHead
-            eyebrow="Packages and plugins"
-            title="Plugin catalog"
-            lede="Plugins connect your employee to the services businesses already use. The business connects its own account; you only declare which tools you need."
-          />
-          <Defs items={(["Live", "Beta", "Planned"] as PluginStatus[]).map((s) => ({ term: <Status status={s} />, text: PLUGIN_STATUS_NOTE[s] }))} />
-          {PLUGIN_CATEGORIES.map((cat) => (
+          {PACKAGE_CATEGORIES.map((cat) => (
             <section key={cat}>
               <H2>{cat}</H2>
               <div className="border-t border-border/60">
-                {PLUGINS.filter((p) => p.category === cat).map((p) => (
-                  <a key={p.id} href={`#plugin-${p.id}`} className="group block py-5 border-b border-border/60">
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                {PACKAGES.filter((p) => p.category === cat).map((p) => (
+                  <a key={p.id} href={`#package-${p.id}`} className="group block py-5 border-b border-border/60">
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                       <span className="text-[16px] font-medium text-foreground group-hover:text-primary transition-colors">{p.name}</span>
-                      <Status status={p.status} />
                       <span className="font-mono text-[13px] text-muted-foreground">{p.packageName}</span>
                     </div>
                     <p className="mt-1.5 text-[14px] text-muted-foreground leading-relaxed">{p.summary}</p>
                   </a>
+                ))}
+              </div>
+            </section>
+          ))}
+        </>
+      );
+
+    case "connections":
+      return (
+        <>
+          <PageHead
+            eyebrow="Connections"
+            title="Official API connections"
+            lede="Fless connects straight to each provider's official API, with no third-party schedulers in between. Businesses sign in with their own accounts; Fless stores and refreshes the tokens."
+          />
+          <Defs
+            items={(["Available", "Rolling out"] as ConnectionStatus[]).map((s) => ({
+              term: <Status status={s} />,
+              text: s === "Available" ? "Built and connectable today." : "Being released now.",
+            }))}
+          />
+          {CONNECTION_GROUPS.map((g) => (
+            <section key={g}>
+              <H2>{g}</H2>
+              <div className="border-t border-border/60">
+                {CONNECTIONS.filter((c) => c.group === g).map((c) => (
+                  <div key={c.id} className="py-5 border-b border-border/60">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <span className="text-[16px] font-medium text-foreground">{c.name}</span>
+                      <Status status={c.status} />
+                      <span className="text-[13px] text-muted-foreground">{c.api}</span>
+                    </div>
+                    <p className="mt-1.5 text-[14px] text-muted-foreground leading-relaxed">{c.summary}</p>
+                  </div>
                 ))}
               </div>
             </section>
@@ -753,61 +864,85 @@ function PageContent({ id }: { id: string }) {
           <PageHead
             eyebrow="Test and ship"
             title="Test in the sandbox"
-            lede="The sandbox runs your employee against mock versions of every plugin, so you can test real conversations without touching live accounts."
+            lede="The sandbox runs your employee with every package mocked, so you can test real conversations without touching live accounts."
           />
-          <CodeView code={SANDBOX_OUTPUT} language="bash" filename="terminal" />
-          <H2>From code</H2>
-          <P>Use the runner in your own test suite to check replies and tool calls.</P>
-          <CodeView code={RUNNER_EXAMPLE} filename="employee.test.ts" />
+          <CodeView code={SANDBOX_EXAMPLE} filename="src/sandbox.ts" />
+          <H2>From the API</H2>
+          <P>
+            The same simulation is available at <C>POST /api/v1/builder/sandbox/simulate</C>, which is useful in CI.
+          </P>
         </>
       );
 
-    case "verify":
+    case "evaluate":
       return (
         <>
           <PageHead
             eyebrow="Test and ship"
-            title="Verification"
-            lede="Before anything reaches the marketplace, an automated review checks that your employee is correct, safe and fast. Passing builds are signed."
+            title="Evaluation"
+            lede="Every version is tested before it can reach the marketplace. Your evaluationScenarios run alongside Fless's own checks."
           />
-          <CodeView code={VERIFY_OUTPUT} language="bash" filename="terminal" />
+          <CodeView code={EVALUATION_EXAMPLE} filename="Builder API" />
           <H2>What is checked</H2>
-          <Defs
-            items={[
-              { term: "Schema", text: "The manifest is complete and every field is valid." },
-              { term: "Permissions", text: "Every tool is declared and no more access is requested than needed." },
-              { term: "Skills", text: "Every tool a skill needs is listed in tools." },
-              { term: "Approvals", text: "Tools listed for approval actually pause for a person." },
-              { term: "Conversations", text: "Standard test conversations produce correct replies and tool calls." },
-              { term: "Safety", text: "Resistance to prompt injection and attempts to leak data." },
-              { term: "Speed and cost", text: "Replies stay within the latency and cost budget for the model tier." },
-            ]}
-          />
+          <Table head={["Category", "What it checks"]} rows={EVALUATION_CATEGORIES.map((c) => [c.id, c.meaning])} />
+          <H2>Writing scenarios</H2>
+          <P>
+            Give each scenario a <C>prompt</C> and what should happen: <C>expectedTools</C>, <C>expectedKeywords</C>,{" "}
+            <C>prohibitedKeywords</C> or an <C>expectedOutcome</C>. Add <C>maxLatencyMs</C> and <C>maxCostCents</C> to
+            hold it to a budget.
+          </P>
         </>
       );
 
-    case "publish":
+    case "submit":
       return (
         <>
-          <PageHead eyebrow="Test and ship" title="Publish and get paid" lede="Ship a signed build to the marketplace and earn from every business that hires it." />
+          <PageHead eyebrow="Test and ship" title="Submit and get paid" lede="Ship a passing version to the marketplace and earn from every business that hires it." />
           <Steps
             items={[
-              { title: "Verify", body: <CodeView code="npx @fless/cli verify ./src/employee.ts" language="bash" filename="terminal" /> },
-              { title: "Publish", body: <CodeView code="npx @fless/cli publish" language="bash" filename="terminal" /> },
-              { title: "Review", body: <P>The Fless team reviews the listing, description and pricing. You&apos;ll hear back by email.</P> },
-              { title: "Go live", body: <P>Your employee appears on the marketplace for the countries and industries in targetMarket.</P> },
+              { title: "Upload, evaluate, submit", body: <CodeView code={SUBMIT_EXAMPLE} language="bash" filename="Builder API" /> },
+              { title: "Review", body: <P>The Fless team reviews the listing, description and pricing. Replies to reviews show up in your builder dashboard.</P> },
+              { title: "Go live", body: <P>Your employee appears on the marketplace for the countries and industries in your manifest.</P> },
               {
                 title: "Get paid",
-                body: <P>You receive 35% of every subscription and metered charge, paid monthly to your bank or Stripe account. Fless keeps 65% for computing, security, billing and distribution.</P>,
+                body: (
+                  <P>
+                    You receive 35% of every subscription and usage charge. Fless keeps 65% for computing, security,
+                    billing and distribution. Track it at <C>GET /builder/earnings</C> and request payouts at{" "}
+                    <C>POST /builder/payouts</C>.
+                  </P>
+                ),
               },
             ]}
           />
         </>
       );
 
+    case "api":
+      return (
+        <>
+          <PageHead
+            eyebrow="Reference"
+            title="Builder API"
+            lede="Everything in the builder dashboard is also available over HTTPS. Authenticate with an API key from your dashboard."
+          />
+          <div className="border-t border-border/60">
+            {BUILDER_API.map((e) => (
+              <div key={e.path} className="py-5 border-b border-border/60">
+                <code className="font-mono text-[13.5px] text-foreground break-all">
+                  <span className="text-primary mr-2">{e.method}</span>
+                  {e.path}
+                </code>
+                <p className="mt-1.5 text-[14px] text-muted-foreground">{e.summary}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      );
+
     case "capabilities": {
       const caps = Array.from(
-        PLUGINS.reduce((m, p) => {
+        PACKAGES.reduce((m, p) => {
           p.capabilities.forEach((c) => m.set(c, [...(m.get(c) ?? []), p.packageName]));
           return m;
         }, new Map<string, string[]>())
@@ -824,14 +959,14 @@ function PageContent({ id }: { id: string }) {
       return (
         <>
           <PageHead eyebrow="Reference" title="Model tiers" lede={<>Set <C>modelTier</C> on each agent to balance speed, depth and cost.</>} />
-          <Table head={["Tier", "Typical latency", "Best for"]} rows={MODEL_TIERS.map((m) => [m.tier, m.latency, m.use])} />
+          <Table head={["Tier", "Best for"]} rows={MODEL_TIERS.map((m) => [m.tier, m.use])} />
         </>
       );
 
     case "markets":
       return (
         <>
-          <PageHead eyebrow="Reference" title="Countries and languages" lede={<>Values for <C>targetMarket.countries</C> and <C>targetMarket.languages</C>.</>} />
+          <PageHead eyebrow="Reference" title="Countries and languages" lede={<>Values for <C>countries</C> and <C>languages</C>.</>} />
           <H2>Countries</H2>
           <Table head={["Code", "Country", "Currency"]} rows={COUNTRIES.map((c) => [c.code, c.name, c.currency])} />
           <H2>Languages</H2>
@@ -842,7 +977,7 @@ function PageContent({ id }: { id: string }) {
     case "departments":
       return (
         <>
-          <PageHead eyebrow="Reference" title="Departments" lede={<>Values for <C>department</C>. Marketing is live for businesses today; the rest are in early access.</>} />
+          <PageHead eyebrow="Reference" title="Departments" lede={<>Values for <C>department</C>.</>} />
           <Chips items={DEPARTMENTS} />
         </>
       );
@@ -852,21 +987,6 @@ function PageContent({ id }: { id: string }) {
         <>
           <PageHead eyebrow="Reference" title="TypeScript types" lede={<>Exported from <C>@fless/contracts</C> and re-exported by the SDK.</>} />
           <CodeView code={TYPES_SNIPPET} filename="@fless/contracts" maxHeight={720} />
-        </>
-      );
-
-    case "cli":
-      return (
-        <>
-          <PageHead eyebrow="Reference" title="CLI" lede={<>Commands in <C>@fless/cli</C>.</>} />
-          <div className="space-y-10">
-            {CLI_COMMANDS.map((c) => (
-              <section key={c.command}>
-                <CodeView code={c.command} language="bash" filename="terminal" />
-                <p className="mt-4 text-[15px] text-muted-foreground leading-relaxed">{c.summary}</p>
-              </section>
-            ))}
-          </div>
         </>
       );
 

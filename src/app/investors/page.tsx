@@ -51,7 +51,7 @@ const story = [
   {
     kicker: "What we built",
     title: "AI employees that finish the work, with a person in charge.",
-    copy: "On Fless, a business hires an AI employee by department. It plans, drafts and publishes, and pauses for human approval before anything important goes out. Every action is logged. Marketing is live today, publishing to LinkedIn, X, Facebook and Bluesky.",
+    copy: "On Fless, a business hires an AI employee by department. It plans, drafts and publishes, and pauses for human approval before anything important goes out. Every action is logged. Marketing is live today, publishing to LinkedIn, X, Facebook, Instagram and Bluesky.",
   },
   {
     kicker: "Why Fless",
@@ -76,7 +76,7 @@ const model = [
 ]
 
 const milestones = [
-  { done: true, text: "Marketing employee live, publishing to 4 social channels" },
+  { done: true, text: "Marketing employee live, publishing directly to 5 social networks through their official APIs" },
   { done: true, text: "18 businesses in pilot across Nigeria, the UK and North America" },
   { done: true, text: "Accepted into the NVIDIA Inception program" },
   { done: true, text: "Multi-currency billing across 8 currencies" },

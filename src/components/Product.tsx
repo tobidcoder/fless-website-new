@@ -7,7 +7,7 @@ const rows = [
   { who: "You", text: "Draft next week’s product campaign for the launch." },
   { who: "Fless", text: "Brief locked. 4 posts drafted, review pending in approvals queue." },
   { who: "You", text: "Approve LinkedIn and X posts. Keep Bluesky for Thursday." },
-  { who: "Fless", text: "Approved posts queued for Buffer. Bluesky scheduled for Thursday 10:00 AM." },
+  { who: "Fless", text: "LinkedIn and X posts scheduled. Bluesky set for Thursday 10:00 AM." },
 ]
 
 export function Product() {
@@ -55,7 +55,7 @@ export function Product() {
               rows={[
                 { title: "Marketing", line: "Launch brief · 4 posts queued", time: "Live" },
                 { title: "Approvals", line: "Human review confirmed", time: "Audit log" },
-                { title: "Channels", line: "LinkedIn & X connected via Buffer", time: "Active" },
+                { title: "Channels", line: "LinkedIn & X connected via official APIs", time: "Active" },
               ]}
               className="rounded-2xl min-h-[340px] md:min-h-[480px] h-full"
             />

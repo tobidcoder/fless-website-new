@@ -99,4 +99,10 @@ Every page was tested at 320px (small phone), 375px (iPhone), 768px (tablet) and
 | CLI and field names contradicted each other (`publish` vs `submit`, `systemPrompt` vs `systemInstructions`, `countries` vs `targetMarket`) | **Fixed.** One spelling everywhere. |
 | Footer links such as /docs#quickstart always opened the intro | **Fixed.** Docs pages follow the URL, and old links are redirected to their new sections. |
 
-**To confirm with the team:** plugin statuses (only Social Publishing is marked Live), the Planned list (Google Workspace, Microsoft 365, Zoom, Calendly, Stripe, taken from the integrations roadmap) and the new `approvals` manifest field, which describes the approval gates the product already promises.
+**Third pass: cross-checked against `getfless/backend-employees`.**
+- Removed every mention of Buffer. The backend connects directly to official APIs: Meta Graph (Facebook, Instagram, WhatsApp, Meta Ads), X API v2, LinkedIn, Bluesky (AT Protocol), Google (Gmail, Calendar, YouTube, Business Profile, Ads), Microsoft Graph (Outlook Calendar, Teams) and Zoom.
+- The website now lists 22 connections: 17 **Available** (built in the backend) and 5 **Rolling out** (Threads, Calendly, Stripe, Google Workspace Drive/Docs/Sheets and Microsoft 365 Outlook mail/OneDrive/Excel).
+- Packages, tool IDs and parameters now match `packages/contracts/src/package-manifest.ts` and `packages/package-adapters`. 10 packages: meta, linkedin, whatsapp, mail, google-calendar, voice, crm, slack, documents and custom-api.
+- The example employee uses the real `EmployeeManifest` fields: `policies`, `workflows`, `settingsSchema`, `evaluationScenarios`, top-level `countries`/`industries`/`languages` and the real pricing fields.
+- There is no `@fless/cli` package, so the CLI was replaced with the real builder API (`/api/v1/builder/...`).
+- Marketing publishes directly to 5 networks (LinkedIn, X, Facebook, Instagram, Bluesky). Site-wide counts were updated from 4 to 5.

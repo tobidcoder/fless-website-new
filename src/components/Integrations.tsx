@@ -2,28 +2,11 @@
 
 import { motion } from "framer-motion"
 import { BrandedStage } from "@/components/BrandedStage"
+import { CONNECTIONS } from "@/lib/sdk"
 
-const liveTools = [
-  "LinkedIn",
-  "X",
-  "Facebook",
-  "Bluesky",
-  "Buffer",
-]
-
-const roadmapTools = [
-  "Google Workspace",
-  "Microsoft 365",
-  "Slack",
-  "HubSpot",
-  "Salesforce",
-  "Stripe",
-  "Zoom",
-  "Calendly",
-  "Meta",
-  "AWS",
-  "GitHub",
-]
+// Ads connections are summarised separately to keep the homepage list short.
+const liveTools = CONNECTIONS.filter((c) => c.status === "Available" && c.group !== "Ads").map((c) => c.name)
+const roadmapTools = CONNECTIONS.filter((c) => c.status === "Rolling out").map((c) => c.name)
 
 export function Integrations() {
   return (
@@ -39,9 +22,9 @@ export function Integrations() {
             alt="Office with the tools teams already use"
             label="Connected"
             rows={[
-              { title: "LinkedIn & X", line: "Buffer · OAuth connected", time: "Live" },
-              { title: "Facebook & Bluesky", line: "Official APIs connected", time: "Live" },
-              { title: "HubSpot & Slack", line: "CRM & chat integration", time: "Roadmap" },
+              { title: "LinkedIn & X", line: "Official APIs · signed in", time: "Live" },
+              { title: "Facebook & Instagram", line: "Meta Graph API", time: "Live" },
+              { title: "Google Workspace", line: "Drive, Docs & Sheets", time: "Rolling out" },
             ]}
             className="aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] rounded-2xl"
           />
@@ -70,7 +53,8 @@ export function Integrations() {
             viewport={{ once: true }}
             className="text-[15px] text-muted-foreground leading-relaxed mb-8 max-w-md"
           >
-            Marketing publishes via LinkedIn, X, Facebook, and Bluesky today. Additional workplace tools are on our roadmap.
+            Fless connects straight to each platform&apos;s official API, with no third-party schedulers in between.
+            Businesses sign in with their own accounts. Meta, LinkedIn, X and Google ad reporting is connected too.
           </motion.p>
           <div className="space-y-6">
             <div>
@@ -86,12 +70,12 @@ export function Integrations() {
             </div>
 
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">On the roadmap</div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Rolling out</div>
               <div className="grid grid-cols-2 gap-x-8 gap-y-2.5">
                 {roadmapTools.map((t) => (
                   <div key={t} className="text-sm text-muted-foreground py-1 border-b border-border/30 flex items-center justify-between">
                     <span>{t}</span>
-                    <span className="text-[10px] uppercase text-muted-foreground/70">Roadmap</span>
+                    <span className="text-[10px] uppercase text-primary/80">Rolling out</span>
                   </div>
                 ))}
               </div>
