@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { API_URL } from "@/lib/env"
 import {
   ArrowRight,
   Star,
@@ -16,7 +17,6 @@ import {
 } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
-import { departments } from "@/lib/departments"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -81,86 +81,15 @@ interface PublicProfileData {
 }
 
 async function getProfileData(slug: string): Promise<PublicProfileData | null> {
-  const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+  if (!API_URL) return null
   try {
-    const res = await fetch(`${backendUrl}/api/v1/marketplace/public/employees/${slug}`, {
+    const res = await fetch(`${API_URL}/api/v1/marketplace/public/employees/${encodeURIComponent(slug)}`, {
       next: { revalidate: 3600 },
     })
-    if (res.ok) {
-      return await res.json()
-    }
+    return res.ok ? ((await res.json()) as PublicProfileData) : null
   } catch {
-    // Fallback static profile resolution if backend API is offline during build/dev
+    return null
   }
-
-  // Find fallback from local departments dictionary
-  for (const dept of departments) {
-    const foundEmp = dept.employees.find(
-      (e) => e.id.toLowerCase() === slug.toLowerCase() || e.name.toLowerCase() === slug.toLowerCase()
-    )
-    if (foundEmp) {
-      return {
-        id: foundEmp.id,
-        slug,
-        name: foundEmp.name,
-        title: foundEmp.role,
-        role: foundEmp.role,
-        department: dept.name,
-        category: "Specialist",
-        description: foundEmp.description,
-        avatarUrl: foundEmp.avatar,
-        industries: [dept.name, "Healthcare", "Retail & E-commerce", "Finance"],
-        countries: ["Nigeria", "United Kingdom", "United States", "Global"],
-        businessTypes: ["Clinics", "Agencies", "Mid-Market Enterprises"],
-        languages: ["English", "French"],
-        capabilities: foundEmp.skills.map((s, idx) => ({
-          id: `cap-${idx}`,
-          label: s,
-          description: `Executes ${s} with automated Fless platform policy gates.`,
-        })),
-        requiredPackages: [
-          { packageName: "@fless/meta", displayName: "Meta (Facebook & Instagram)", isRequired: true },
-          { packageName: "@fless/google-calendar", displayName: "Google Calendar", isRequired: false },
-        ],
-        pricingModel: "MONTHLY",
-        pricingType: "RANGE",
-        pricingDisplay: {
-          formattedRate: "$1,600 – $2,500 / month",
-          rateMinCents: 160000,
-          rateMaxCents: 250000,
-          hourlyDisplay: "$35 – $55 / hour",
-          monthlyDisplay: "$1,600 – $2,500 / month",
-          supportedTenures: ["hour", "day", "week", "month", "year"],
-          hasUsage: false,
-        },
-        verificationLevel: "FLESS_VERIFIED",
-        authorType: "FLESS",
-        authorName: "Built by Fless",
-        authorBio: "Official verified Fless core employee distribution.",
-        currentVersion: "1.0.0",
-        rating: 0,
-        reviewCount: 0,
-        hireCount: 0,
-        status: "PUBLISHED",
-        updatedAt: new Date().toISOString(),
-        reviews: [],
-        relatedEmployees: [
-          {
-            id: "rel-1",
-            slug: "mkt-seo",
-            name: "Nora",
-            title: "SEO Manager",
-            department: "Marketing",
-            rating: 0,
-            formattedRate: "$1,800 / month",
-            avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=256&h=256&fit=crop&crop=faces&q=80",
-          },
-        ],
-      }
-    }
-  }
-
-  return null
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -195,7 +124,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: "profile",
       images: [
         {
-          url: profile.avatarUrl || "https://getfless.com/og-employee-fallback.png",
+          url: profile.avatarUrl || "https://getfless.com/fless-og.png",
           width: 1200,
           height: 630,
           alt: `${profile.name} Fless AI Employee`,
@@ -208,7 +137,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       creator: "@getfless",
       title,
       description,
-      images: [profile.avatarUrl || "https://getfless.com/og-employee-fallback.png"],
+      images: [profile.avatarUrl || "https://getfless.com/fless-og.png"],
     },
     robots: {
       index: true,

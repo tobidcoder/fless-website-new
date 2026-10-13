@@ -14,6 +14,7 @@ import {
   EVALUATION_EXAMPLE,
   MANIFEST_EXAMPLE,
   PACKAGES,
+  PACKAGES_STATUS_NOTE,
   SANDBOX_EXAMPLE,
   type ConnectionStatus,
 } from "@/lib/sdk";
@@ -51,7 +52,7 @@ const split = {
   fless: [
     "Hosting, models and GPU computing",
     "Customer logins and API keys, kept out of your code",
-    "Connections to Meta, LinkedIn, X, Bluesky, Google, Microsoft and Zoom through their official APIs",
+    "Sign-in and token handling for Meta, LinkedIn, X, Bluesky, Google, Microsoft and Zoom through their official APIs",
     "Approvals, audit log and data isolation per customer",
     "Billing in 8 currencies, invoices and monthly payouts",
   ],
@@ -256,6 +257,9 @@ export default function BuildersPage() {
               ))}
             </div>
 
+            <p className="mb-6 text-[14px] text-muted-foreground leading-relaxed max-w-2xl border-l-2 border-primary/60 pl-4">
+              {PACKAGES_STATUS_NOTE}
+            </p>
             <ul className="border-t border-border/70">
               {PACKAGES.map((p) => (
                 <li key={p.id} className="border-b border-border/70">

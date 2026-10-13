@@ -4,7 +4,6 @@ import { Hero } from "@/components/Hero"
 import { GlobalStats } from "@/components/GlobalStats"
 import { LogoMarquee } from "@/components/LogoMarquee"
 import { Product } from "@/components/Product"
-import { TryCommand } from "@/components/TryCommand"
 import { HowItWorks } from "@/components/HowItWorks"
 import { Departments } from "@/components/Departments"
 import { Industries } from "@/components/Industries"
@@ -83,22 +82,6 @@ export default function Home() {
         <AudienceRouter />
         <LogoMarquee />
         <Product />
-        <section className="py-20 md:py-28 border-t border-border/60">
-          <div className="max-w-[1200px] mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-            <div className="lg:col-span-5 min-w-0">
-              <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-4">Try it</p>
-              <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-4">
-                Assign the work. Then keep it running.
-              </h2>
-              <p className="text-[15px] text-muted-foreground leading-relaxed mb-6">
-                Type a brief. See what Fless would do. Join the pilot to turn the desk on — fast onboarding, no card.
-              </p>
-            </div>
-            <div className="lg:col-span-7 min-w-0">
-              <TryCommand />
-            </div>
-          </div>
-        </section>
         <HowItWorks />
         <Departments />
         <Industries />

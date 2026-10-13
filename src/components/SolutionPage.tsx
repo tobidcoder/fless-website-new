@@ -6,7 +6,6 @@ import { ArrowRight } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { BrandedStage, PhotoTile } from "@/components/BrandedStage"
-import { TryCommand } from "@/components/TryCommand"
 import { EmailCapture } from "@/components/EmailCapture"
 import {
   Accordion,
@@ -93,8 +92,6 @@ export function SolutionPage({ solution }: { solution: Solution }) {
               <BrandedStage
                 image={solution.hero}
                 alt={solution.heroAlt}
-                label={`${solution.name} · Playbook`}
-                rows={solution.activity}
                 className="rounded-2xl aspect-[16/11]"
               />
             </motion.div>
@@ -144,17 +141,13 @@ export function SolutionPage({ solution }: { solution: Solution }) {
             </div>
             <div className="lg:col-span-5">
               <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-primary mb-4">Built for</p>
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-3">
                 {solution.audience.map((item) => (
                   <li key={item} className="text-[15px] text-foreground pl-4 border-l border-border">
                     {item}
                   </li>
                 ))}
               </ul>
-              <TryCommand
-                desk={solution.slug}
-                prompts={solution.plays.slice(0, 3).map((p) => p.title + " — " + p.copy.split(".")[0] + ".")}
-              />
             </div>
           </div>
         </section>
@@ -176,9 +169,6 @@ export function SolutionPage({ solution }: { solution: Solution }) {
                   <BrandedStage
                     image={cap.image}
                     alt={cap.title}
-                    label={cap.title}
-                    rows={cap.snippet}
-                    compact
                     className="aspect-[4/5] rounded-2xl mb-4"
                   />
                   <h3 className="text-[15px] font-semibold tracking-tight text-foreground mb-1.5">{cap.title}</h3>
@@ -247,7 +237,6 @@ export function SolutionPage({ solution }: { solution: Solution }) {
                     alt={d.name}
                     title={d.name}
                     status={d.status}
-                    live={d.status === "live" ? "Live today" : "Early access"}
                     className="aspect-[5/4] rounded-xl mb-2"
                   />
                   <p className="text-[12px] text-muted-foreground">{d.line}</p>
@@ -320,7 +309,6 @@ export function SolutionPage({ solution }: { solution: Solution }) {
                     alt={s.name}
                     title={s.name}
                     subtitle={s.line}
-                    live={s.cities[0]}
                     className="aspect-[4/5] rounded-xl mb-2"
                   />
                 </Link>
@@ -337,7 +325,6 @@ export function SolutionPage({ solution }: { solution: Solution }) {
                     image={s.hero}
                     alt={s.name}
                     title={s.name}
-                    live={s.kind === "size" ? "Size" : "Industry"}
                     className="aspect-[5/4] rounded-xl mb-2"
                   />
                   <p className="text-[11px] text-muted-foreground">{s.line}</p>

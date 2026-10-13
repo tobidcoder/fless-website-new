@@ -30,7 +30,7 @@ const faqs: Record<Group, { q: string; a: string }[]> = {
     },
     {
       q: "How much does it cost?",
-      a: "You pay a monthly workforce rate per AI employee, not per user seat. Marketing currently starts from about $1,600 a month. You see the exact price before you deploy, and you can hire for anything from a few hours to several years. The pricing page has a calculator.",
+      a: "You pay a monthly workforce rate per AI employee, not per user seat. Each employee has its own listed price, shown on the pricing page and before you hire, and you can hire for anything from a few hours to several years. The pricing page has a calculator.",
     },
     {
       q: "Does it work in my country and currency?",

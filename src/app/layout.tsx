@@ -148,13 +148,7 @@ const organizationSchema = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Cloud",
       description:
-        "Autonomous AI employee platform. Deploy Marketing Employees today to plan, draft, design, and schedule multi-channel campaigns with human approval gates.",
-      offers: {
-        "@type": "AggregateOffer",
-        priceCurrency: "USD",
-        lowPrice: "1600",
-        highPrice: "2500",
-      },
+        "Autonomous AI employee platform. Deploy Marketing Employees today to plan, draft, design, and schedule multi-channel campaigns with human approval gates."
     },
   ],
 };

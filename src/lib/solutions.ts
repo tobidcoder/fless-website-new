@@ -16,12 +16,10 @@ export type Solution = {
     title: string
     copy: string
     image: string
-    snippet: { title: string; line: string; time: string }[]
   }[]
   plays: { title: string; copy: string }[]
   steps: { n: string; title: string; copy: string }[]
   desks: string[]
-  activity: { title: string; line: string; time: string }[]
   quote: { text: string; author: string; role: string }
   faqs: { q: string; a: string }[]
   plan: { label: string; href: string; note: string }
@@ -48,9 +46,9 @@ export const solutions: Solution[] = [
       { value: "Pro-rata", label: "Unused tenure refund" },
     ],
     capabilities: [
-      { title: "Ship the story", copy: "Site, social, and a launch calendar without a content hire. Briefs become posts in the markets you actually sell.", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Launch", line: "Campaign posts queued", time: "6m" }, { title: "Calendar", line: "Week 1 posts queued", time: "22m" }] },
-      { title: "Talk to users", copy: "Support and follow-up capabilities planned alongside your workflow.", image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Inbox", line: "Support workflow staged", time: "22m" }, { title: "Voice", line: "Early access on roadmap", time: "1h" }] },
-      { title: "Keep the books", copy: "Financial and administrative operations scheduled on the roadmap.", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Finance", line: "Multi-currency display ready", time: "1h" }, { title: "Ledger", line: "Early access roadmap", time: "2h" }] },
+      { title: "Ship the story", copy: "Site, social, and a launch calendar without a content hire. Briefs become posts in the markets you actually sell.", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Talk to users", copy: "Support and follow-up capabilities planned alongside your workflow.", image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Keep the books", copy: "Financial and administrative operations scheduled on the roadmap.", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "Launch week", copy: "Waitlist, social, and landing copy from one brief with approval before anything publishes." },
@@ -64,11 +62,6 @@ export const solutions: Solution[] = [
       { n: "03", title: "Ship in the first week", copy: "First drafts in your first week. You review and approve before publishing." },
     ],
     desks: ["marketing", "sales", "support", "finance"],
-    activity: [
-      { title: "Launch", line: "Campaign draft approved", time: "6m" },
-      { title: "Social", line: "LinkedIn and X posts queued", time: "22m" },
-      { title: "Calendar", line: "Q3 calendar filled", time: "1h" },
-    ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
       author: "Fless Pilot Program",
@@ -91,7 +84,7 @@ export const solutions: Solution[] = [
     plan: {
       label: "Get started",
       href: "/start",
-      note: "Priced per AI employee — from $35/hour or $1,600/month for Marketing. See pricing.",
+      note: "Priced per AI employee. See live prices on the pricing page.",
     },
   },
   {
@@ -114,9 +107,9 @@ export const solutions: Solution[] = [
       { value: "1", label: "Workspace" },
     ],
     capabilities: [
-      { title: "Marketing execution", copy: "Multi-channel publishing across LinkedIn, X, Facebook, Instagram and Bluesky with brand memory.", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Campaign", line: "Multi-channel calendar live", time: "9m" }, { title: "Approval", line: "Review queue clear", time: "31m" }] },
-      { title: "Team alignment", copy: "Keep stakeholders updated on content schedules and performance metrics.", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Report", line: "Weekly review ready", time: "16m" }, { title: "Memory", line: "Brand voice updated", time: "42m" }] },
-      { title: "Multi-market presence", copy: "One workspace coordinates local copy and regional calendars without separate tools.", image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Markets", line: "Local copy approved", time: "1h" }, { title: "Audit", line: "Exportable log current", time: "2h" }] },
+      { title: "Marketing execution", copy: "Multi-channel publishing across LinkedIn, X, Facebook, Instagram and Bluesky with brand memory.", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Team alignment", copy: "Keep stakeholders updated on content schedules and performance metrics.", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Multi-market presence", copy: "One workspace coordinates local copy and regional calendars without separate tools.", image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "Marketing cadence", copy: "Social, SEO, and content that ships consistently every week." },
@@ -130,11 +123,6 @@ export const solutions: Solution[] = [
       { n: "03", title: "Run the calendar", copy: "Briefs become scheduled campaigns. First drafts in your first week." },
     ],
     desks: ["marketing", "sales", "operations", "recruitment"],
-    activity: [
-      { title: "Campaign", line: "Regional campaign approved", time: "9m" },
-      { title: "Social", line: "Calendar queued for the week", time: "31m" },
-      { title: "Review", line: "Draft approved by manager", time: "1h" },
-    ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
       author: "Fless Pilot Program",
@@ -180,9 +168,9 @@ export const solutions: Solution[] = [
       { value: "Private", label: "Deployment option" },
     ],
     capabilities: [
-      { title: "Security and isolation", copy: "Logical workspace isolation, AES-256 encryption at rest, TLS in transit, and exportable audit logs.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Audit", line: "Exportable log ready", time: "14m" }, { title: "DPA", line: "Available on request", time: "1h" }] },
-      { title: "Governance gates", copy: "High-impact actions wait for a named approver. Reversible actions with documented logs.", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Approval", line: "Named approver gate held", time: "8m" }, { title: "SSO", line: "Available on agreement", time: "2h" }] },
-      { title: "Named rollout", copy: "A named Fless contact works directly with your team throughout rollout and integration.", image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Rollout", line: "Named contact assigned", time: "12m" }, { title: "Region", line: "Private options available", time: "1d" }] },
+      { title: "Security and isolation", copy: "Logical workspace isolation, AES-256 encryption at rest, TLS in transit, and exportable audit logs.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Governance gates", copy: "High-impact actions wait for a named approver. Reversible actions with documented logs.", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Named rollout", copy: "A named Fless contact works directly with your team throughout rollout and integration.", image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "Security review", copy: "Security questionnaire and subprocessor list provided under NDA." },
@@ -196,11 +184,6 @@ export const solutions: Solution[] = [
       { n: "03", title: "Expansion", copy: "Onboard additional departments as early-access seats open." },
     ],
     desks: ["marketing", "operations", "finance", "hr"],
-    activity: [
-      { title: "Audit", line: "Activity log exported", time: "14m" },
-      { title: "Review", line: "Approval gate recorded", time: "1h" },
-      { title: "Policy", line: "Workspace settings updated", time: "3h" },
-    ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
       author: "Fless Pilot Program",
@@ -246,9 +229,9 @@ export const solutions: Solution[] = [
       { value: "Audit", label: "Per-client logs" },
     ],
     capabilities: [
-      { title: "Isolated workspaces", copy: "Each client retainer gets its own workspace, voice profile, and connected social accounts.", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Client A", line: "Calendar queued", time: "8m" }, { title: "Client B", line: "Brand memory isolated", time: "19m" }] },
-      { title: "Client approval flow", copy: "Drafts wait for your team or the client to sign off before anything publishes.", image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Review", line: "Campaign sent for sign-off", time: "11m" }, { title: "Status", line: "Approved by client lead", time: "2h" }] },
-      { title: "Multi-channel delivery", copy: "Schedule across LinkedIn, X, Facebook, Instagram and Bluesky from unified campaign briefs.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Publish", line: "Posts queued via official APIs", time: "4m" }, { title: "Report", line: "Campaign report ready", time: "1h" }] },
+      { title: "Isolated workspaces", copy: "Each client retainer gets its own workspace, voice profile, and connected social accounts.", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Client approval flow", copy: "Drafts wait for your team or the client to sign off before anything publishes.", image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Multi-channel delivery", copy: "Schedule across LinkedIn, X, Facebook, Instagram and Bluesky from unified campaign briefs.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "New client intake", copy: "Create a dedicated workspace with its own brand voice and guidelines." },
@@ -262,11 +245,6 @@ export const solutions: Solution[] = [
       { n: "03", title: "Client approval", copy: "Client approves drafts; posts publish automatically on schedule." },
     ],
     desks: ["marketing", "support", "operations"],
-    activity: [
-      { title: "Client A", line: "Campaign approved for publishing", time: "8m" },
-      { title: "Client B", line: "Drafts submitted for review", time: "19m" },
-      { title: "Client C", line: "Brand voice memory updated", time: "1h" },
-    ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
       author: "Fless Pilot Program",
@@ -312,9 +290,9 @@ export const solutions: Solution[] = [
       { value: "DPA", label: "On request" },
     ],
     capabilities: [
-      { title: "Administrative front desk", copy: "Designed to answer general practice inquiries and route calls with structured notes.", image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Inquiry", line: "Hours confirmed", time: "Just now" }, { title: "Notes", line: "Logged to record", time: "12s" }] },
-      { title: "Booking coordination", copy: "Helps coordinate calendar holds and reminders according to clinic hours.", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Booking", line: "Hold confirmed", time: "8m" }, { title: "Reminder", line: "SMS queued", time: "22m" }] },
-      { title: "Practice marketing", copy: "Keep practice announcements, educational articles, and social updates active.", image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Marketing", line: "Practice announcement live", time: "2m" }, { title: "Review", line: "Approved by lead", time: "1h" }] },
+      { title: "Administrative front desk", copy: "Designed to answer general practice inquiries and route calls with structured notes.", image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Booking coordination", copy: "Helps coordinate calendar holds and reminders according to clinic hours.", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Practice marketing", copy: "Keep practice announcements, educational articles, and social updates active.", image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "After-hours inquiries", copy: "General questions answered with escalation to clinical staff." },
@@ -328,11 +306,6 @@ export const solutions: Solution[] = [
       { n: "03", title: "Onboard desk", copy: "Configure escalation rules, site hours, and practice guidelines." },
     ],
     desks: ["voice", "support", "marketing"],
-    activity: [
-      { title: "Inquiry", line: "Clinic hours inquiry answered", time: "Just now" },
-      { title: "Marketing", line: "Holiday hours update published", time: "18m" },
-      { title: "Calendar", line: "Site diary updated", time: "1h" },
-    ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
       author: "Fless Pilot Program",
@@ -378,9 +351,9 @@ export const solutions: Solution[] = [
       { value: "Marketing", label: "Live today" },
     ],
     capabilities: [
-      { title: "Academy marketing", copy: "Course announcements, student spotlights, and enrollment deadlines published on schedule.", image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Admissions", line: "Application deadline post live", time: "6m" }, { title: "Social", line: "Student story scheduled", time: "22m" }] },
-      { title: "Inquiry triage", copy: "Designed to answer common prospectus, fee schedule, and calendar questions.", image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Prospectus", line: "Fee schedule inquiry routed", time: "14m" }, { title: "Queue", line: "Staged for review", time: "1h" }] },
-      { title: "Campus coordination", copy: "Manage announcements across multiple campuses and program tracks.", image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Campuses", line: "3 campus schedules synced", time: "18m" }, { title: "Update", line: "Term dates published", time: "2h" }] },
+      { title: "Academy marketing", copy: "Course announcements, student spotlights, and enrollment deadlines published on schedule.", image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Inquiry triage", copy: "Designed to answer common prospectus, fee schedule, and calendar questions.", image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Campus coordination", copy: "Manage announcements across multiple campuses and program tracks.", image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "Enrollment campaigns", copy: "Multi-channel recruitment drives across LinkedIn, X, Facebook, Instagram and Bluesky." },
@@ -394,11 +367,6 @@ export const solutions: Solution[] = [
       { n: "03", title: "Scale enrollment", copy: "Coordinate open day promotions and student communications." },
     ],
     desks: ["marketing", "support", "voice"],
-    activity: [
-      { title: "Marketing", line: "Enrollment post published", time: "6m" },
-      { title: "Campaign", line: "Open day promotion queued", time: "22m" },
-      { title: "Calendar", line: "Term schedule updated", time: "1h" },
-    ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
       author: "Fless Pilot Program",
@@ -444,9 +412,9 @@ export const solutions: Solution[] = [
       { value: "Marketing", label: "Live today" },
     ],
     capabilities: [
-      { title: "Product promotions", copy: "Launch new collections, drop announcements, and seasonal discount campaigns.", image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Drop", line: "New collection teaser live", time: "4m" }, { title: "Campaign", line: "Weekend promotion scheduled", time: "18m" }] },
-      { title: "Brand consistency", copy: "Maintains voice and aesthetic across LinkedIn, X, Facebook, Instagram and Bluesky.", image: "https://images.unsplash.com/photo-1555421689-491a97ff2040?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Social", line: "Visual cards approved", time: "12m" }, { title: "Calendar", line: "Filled through Sunday", time: "44m" }] },
-      { title: "Customer support readiness", copy: "Knowledge base preparation for order status and store policy inquiries.", image: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Policy", line: "Return policy docs indexed", time: "1h" }, { title: "Support", line: "Early access roadmap", time: "2h" }] },
+      { title: "Product promotions", copy: "Launch new collections, drop announcements, and seasonal discount campaigns.", image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Brand consistency", copy: "Maintains voice and aesthetic across LinkedIn, X, Facebook, Instagram and Bluesky.", image: "https://images.unsplash.com/photo-1555421689-491a97ff2040?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Customer support readiness", copy: "Knowledge base preparation for order status and store policy inquiries.", image: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "Product drop", copy: "Social assets, email copy, and landing headlines prepared together." },
@@ -460,11 +428,6 @@ export const solutions: Solution[] = [
       { n: "03", title: "Scale during peak", copy: "Increase tenure capacity by the day or week as volume grows." },
     ],
     desks: ["marketing", "support", "voice"],
-    activity: [
-      { title: "Promotion", line: "Weekend offer published", time: "4m" },
-      { title: "Creative", line: "Product cards approved", time: "18m" },
-      { title: "Calendar", line: "Weekly drops scheduled", time: "1h" },
-    ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
       author: "Fless Pilot Program",
@@ -487,7 +450,7 @@ export const solutions: Solution[] = [
     plan: {
       label: "Get started",
       href: "/start?industry=retail",
-      note: "Priced per AI employee — from $35/hour or $1,600/month for Marketing.",
+      note: "Priced per AI employee. See live prices on the pricing page.",
     },
   },
   {
@@ -510,9 +473,9 @@ export const solutions: Solution[] = [
       { value: "SSO", label: "Enterprise agreements" },
     ],
     capabilities: [
-      { title: "Compliant content workflow", copy: "Market commentary and announcements held for compliance sign-off before publishing.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Commentary", line: "Market brief approved by legal", time: "8m" }, { title: "Publish", line: "Scheduled to LinkedIn", time: "22m" }] },
-      { title: "Multi-entity separation", copy: "Maintain distinct workspaces for holding companies, subsidiaries, and advisory entities.", image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Entity 1", line: "Advisory desk isolated", time: "14m" }, { title: "Entity 2", line: "Fintech brand separate", time: "1h" }] },
-      { title: "Exportable audit logs", copy: "Every draft, revision, and approval is logged and exportable for regulatory review.", image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Audit", line: "Quarterly log export ready", time: "31m" }, { title: "Access", line: "Role permissions verified", time: "2h" }] },
+      { title: "Compliant content workflow", copy: "Market commentary and announcements held for compliance sign-off before publishing.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Multi-entity separation", copy: "Maintain distinct workspaces for holding companies, subsidiaries, and advisory entities.", image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Exportable audit logs", copy: "Every draft, revision, and approval is logged and exportable for regulatory review.", image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "Market insights", copy: "Research and commentary drafted from internal notes, waiting for compliance review." },
@@ -526,11 +489,6 @@ export const solutions: Solution[] = [
       { n: "03", title: "Publish with audit trail", copy: "Approved posts deploy with exportable verification logs." },
     ],
     desks: ["marketing", "operations", "finance"],
-    activity: [
-      { title: "Compliance", line: "Market commentary signed off", time: "8m" },
-      { title: "Publishing", line: "LinkedIn announcement live", time: "22m" },
-      { title: "Audit", line: "Activity export generated", time: "1h" },
-    ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
       author: "Fless Pilot Program",
@@ -576,9 +534,9 @@ export const solutions: Solution[] = [
       { value: "Marketing", label: "Live today" },
     ],
     capabilities: [
-      { title: "Property marketing", copy: "Showcase menus, weekend packages, and seasonal amenities across social channels.", image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Weekend", line: "Package promotion published", time: "5m" }, { title: "Social", line: "Dining menu teaser queued", time: "19m" }] },
-      { title: "Multi-property calendars", copy: "Manage distinct promotional calendars for individual hotels or restaurant locations.", image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Property 1", line: "Menu drop approved", time: "11m" }, { title: "Property 2", line: "Event notices scheduled", time: "42m" }] },
-      { title: "Guest desk readiness", copy: "Playbooks in development for reservation inquiries and concierge FAQs.", image: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Concierge", line: "FAQ knowledge base indexed", time: "1h" }, { title: "Voice", line: "Early access roadmap", time: "2h" }] },
+      { title: "Property marketing", copy: "Showcase menus, weekend packages, and seasonal amenities across social channels.", image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Multi-property calendars", copy: "Manage distinct promotional calendars for individual hotels or restaurant locations.", image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Guest desk readiness", copy: "Playbooks in development for reservation inquiries and concierge FAQs.", image: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "Seasonal dining menus", copy: "Promote seasonal menu launches and chef specials." },
@@ -592,11 +550,6 @@ export const solutions: Solution[] = [
       { n: "03", title: "Join guest desk waitlist", copy: "Get onboarded to guest inquiry desks as early access expands." },
     ],
     desks: ["marketing", "voice", "support"],
-    activity: [
-      { title: "Package", line: "Weekend package promotion live", time: "5m" },
-      { title: "Menu", line: "Dining specials queued", time: "19m" },
-      { title: "Calendar", line: "Location schedule updated", time: "1h" },
-    ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
       author: "Fless Pilot Program",
@@ -642,9 +595,9 @@ export const solutions: Solution[] = [
       { value: "Marketing", label: "Live today" },
     ],
     capabilities: [
-      { title: "Thought leadership publishing", copy: "Articles, case studies, and insights published with partner review.", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Article", line: "Advisory insight published", time: "7m" }, { title: "Review", line: "Approved by practice lead", time: "33m" }] },
-      { title: "Client communications", copy: "Regular practice announcements and updates across official channels.", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Update", line: "Practice update queued", time: "33m" }, { title: "Calendar", line: "Q3 schedule confirmed", time: "1h" }] },
-      { title: "Operational workflows", copy: "Task tracking and delivery checklists on the operational roadmap.", image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Delivery", line: "Checklist updated", time: "1h" }, { title: "Roadmap", line: "Operations desk staged", time: "1h" }] },
+      { title: "Thought leadership publishing", copy: "Articles, case studies, and insights published with partner review.", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Client communications", copy: "Regular practice announcements and updates across official channels.", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Operational workflows", copy: "Task tracking and delivery checklists on the operational roadmap.", image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&auto=format&fit=crop&q=80" },
     ],
     plays: [
       { title: "Advisory insights", copy: "Structured thought leadership from partner briefs." },
@@ -658,11 +611,6 @@ export const solutions: Solution[] = [
       { n: "03", title: "Approve and publish", copy: "Partners sign off; content deploys with full audit trails." },
     ],
     desks: ["marketing", "sales", "operations", "finance"],
-    activity: [
-      { title: "Publishing", line: "Insight article published", time: "7m" },
-      { title: "Review", line: "Announcement approved", time: "33m" },
-      { title: "Calendar", line: "Content schedule updated", time: "1h" },
-    ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories coming soon.",
       author: "Fless Pilot Program",

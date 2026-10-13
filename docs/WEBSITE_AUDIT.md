@@ -106,3 +106,26 @@ Every page was tested at 320px (small phone), 375px (iPhone), 768px (tablet) and
 - The example employee uses the real `EmployeeManifest` fields: `policies`, `workflows`, `settingsSchema`, `evaluationScenarios`, top-level `countries`/`industries`/`languages` and the real pricing fields.
 - There is no `@fless/cli` package, so the CLI was replaced with the real builder API (`/api/v1/builder/...`).
 - Marketing publishes directly to 5 networks (LinkedIn, X, Facebook, Instagram, Bluesky). Site-wide counts were updated from 4 to 5.
+
+## 9. Launch pass: no fake data
+
+Removed from the website:
+- Invented activity cards, "Fless · Live" browser chrome and pulsing "live" dots layered over stock photos (BrandedStage, PhotoTile)
+- The scripted hotspot replies on the hero screenshot (IntroFilm); the real product screenshot stays
+- The "Simulated preview · multi-desk" feed, the "Sample workspace" chat, and the invented department dashboards (names, pipeline values, invoices)
+- The "Try it" demo, which returned canned answers whatever you typed
+- Invented "human benchmark" savings, capacity claims (e.g. "99.4% CSAT") and hardcoded exchange rates on the pricing page
+- The fake fallback employee profile and fallback sitemap slugs used when the API was unreachable
+- Hardcoded prices in copy, metadata and structured data
+- All ads connections (no ads API is called in the backend) and any Buffer reference
+- Unused mock components
+
+Now real:
+- **Pricing** loads every published employee and its listed price from `GET /api/v1/marketplace/public/employees/*`, refreshed hourly. If the API is unreachable it says so instead of showing numbers.
+- **Employee profiles and the sitemap** come only from the same API.
+- **Log in** goes to the customer dashboard when `NEXT_PUBLIC_APP_URL` is set.
+- **Connections** are marked Available only where the backend really connects and acts. Anything that only signs in, or is still being built, is marked Rolling out.
+
+Required environment variables in production:
+- `NEXT_PUBLIC_API_URL`: backend origin, e.g. https://api.getfless.com
+- `NEXT_PUBLIC_APP_URL`: dashboard origin, e.g. https://app.getfless.com

@@ -4,8 +4,7 @@ import { motion } from "framer-motion"
 import { BrandedStage } from "@/components/BrandedStage"
 import { CONNECTIONS } from "@/lib/sdk"
 
-// Ads connections are summarised separately to keep the homepage list short.
-const liveTools = CONNECTIONS.filter((c) => c.status === "Available" && c.group !== "Ads").map((c) => c.name)
+const liveTools = CONNECTIONS.filter((c) => c.status === "Available").map((c) => c.name)
 const roadmapTools = CONNECTIONS.filter((c) => c.status === "Rolling out").map((c) => c.name)
 
 export function Integrations() {
@@ -20,12 +19,6 @@ export function Integrations() {
           <BrandedStage
             image="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&auto=format&fit=crop&q=80"
             alt="Office with the tools teams already use"
-            label="Connected"
-            rows={[
-              { title: "LinkedIn & X", line: "Official APIs · signed in", time: "Live" },
-              { title: "Facebook & Instagram", line: "Meta Graph API", time: "Live" },
-              { title: "Google Workspace", line: "Drive, Docs & Sheets", time: "Rolling out" },
-            ]}
             className="aspect-[4/5] sm:aspect-[5/4] lg:aspect-[4/5] rounded-2xl"
           />
         </motion.div>
@@ -54,7 +47,7 @@ export function Integrations() {
             className="text-[15px] text-muted-foreground leading-relaxed mb-8 max-w-md"
           >
             Fless connects straight to each platform&apos;s official API, with no third-party schedulers in between.
-            Businesses sign in with their own accounts. Meta, LinkedIn, X and Google ad reporting is connected too.
+            Businesses sign in with their own accounts.
           </motion.p>
           <div className="space-y-6">
             <div>

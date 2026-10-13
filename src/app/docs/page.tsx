@@ -20,6 +20,7 @@ import {
   MANIFEST_EXAMPLE,
   MODEL_TIERS,
   PACKAGES,
+  PACKAGES_STATUS_NOTE,
   PACKAGE_CATEGORIES,
   PRICING_MODELS,
   SANDBOX_EXAMPLE,
@@ -430,12 +431,14 @@ function PackagePage({ pkg }: { pkg: Package }) {
         <p className="mt-5 text-[17px] sm:text-[18px] text-muted-foreground leading-[1.7]">{pkg.summary}</p>
       </header>
 
+      <Note>{PACKAGES_STATUS_NOTE}</Note>
+
       <Defs
         items={[
           ...(pkg.connects.length > 0 ? [{ term: "Connects to", text: pkg.connects.join(", ") }] : []),
           { term: "Capabilities", text: <Chips items={pkg.capabilities} /> },
           { term: "Permissions", text: <Chips items={pkg.permissions} /> },
-          { term: "Sandbox", text: "Every tool is mocked in the sandbox, so tests never touch live accounts." },
+          { term: "Sandbox", text: "Every tool has a sandbox version, so tests never touch live accounts." },
         ]}
       />
 
@@ -795,6 +798,7 @@ function PageContent({ id }: { id: string }) {
             lede="Core packages to build with, and packages that give your employee tools. Every tool is mocked in the sandbox."
           />
           <CodeView code={INSTALL} language="bash" filename="terminal" />
+          <Note>{PACKAGES_STATUS_NOTE}</Note>
           <div className="mt-12 space-y-12">
             {CORE_PACKAGES.map((p) => (
               <section key={p.name}>

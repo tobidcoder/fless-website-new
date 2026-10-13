@@ -23,30 +23,25 @@ export const CONNECTIONS: Connection[] = [
   { id: "threads", name: "Threads", api: "Threads API", group: "Social", status: "Rolling out", summary: "Publish posts and replies to Threads." },
   { id: "linkedin", name: "LinkedIn", api: "LinkedIn API", group: "Social", status: "Available", summary: "Publish to profiles and company pages." },
   { id: "x", name: "X", api: "X API v2", group: "Social", status: "Available", summary: "Publish posts and threads." },
-  { id: "bluesky", name: "Bluesky", api: "AT Protocol", group: "Social", status: "Available", summary: "Publish posts to Bluesky." },
-  { id: "youtube", name: "YouTube", api: "YouTube Data API", group: "Social", status: "Available", summary: "Upload videos and read channel stats." },
-  { id: "google-business", name: "Google Business Profile", api: "Business Profile API", group: "Social", status: "Available", summary: "Post updates to your Google listing." },
+  { id: "bluesky", name: "Bluesky", api: "AT Protocol", group: "Social", status: "Available", summary: "Publish posts to Bluesky. Connect with an app password." },
+  { id: "youtube", name: "YouTube", api: "YouTube Data API", group: "Social", status: "Rolling out", summary: "Upload videos and read channel stats." },
+  { id: "google-business", name: "Google Business Profile", api: "Business Profile API", group: "Social", status: "Rolling out", summary: "Post updates to your Google listing." },
 
-  // Ads
-  { id: "meta-ads", name: "Meta Ads", api: "Marketing API", group: "Ads", status: "Available", summary: "Read Facebook and Instagram ad performance." },
-  { id: "linkedin-ads", name: "LinkedIn Ads", api: "LinkedIn Marketing API", group: "Ads", status: "Available", summary: "Read campaign reporting." },
-  { id: "x-ads", name: "X Ads", api: "X Ads API", group: "Ads", status: "Available", summary: "Read campaign reporting." },
-  { id: "google-ads", name: "Google Ads", api: "Google Ads API", group: "Ads", status: "Available", summary: "Read YouTube and Google ad reporting." },
 
   // Messaging and email
-  { id: "whatsapp", name: "WhatsApp Business", api: "WhatsApp Cloud API", group: "Messaging", status: "Available", summary: "Two-way chats, templates and confirmations." },
-  { id: "gmail", name: "Gmail", api: "Gmail API", group: "Messaging", status: "Available", summary: "Read and send email from a connected inbox." },
+  { id: "whatsapp", name: "WhatsApp Business", api: "WhatsApp Cloud API", group: "Messaging", status: "Rolling out", summary: "Two-way chats, templates and confirmations." },
+  { id: "gmail", name: "Gmail", api: "Gmail API", group: "Messaging", status: "Rolling out", summary: "Send and draft email from a connected inbox." },
 
   // Calendars and meetings
   { id: "google-calendar", name: "Google Calendar", api: "Google Calendar API", group: "Calendars and meetings", status: "Available", summary: "Check availability and book events." },
   { id: "microsoft-calendar", name: "Outlook Calendar", api: "Microsoft Graph", group: "Calendars and meetings", status: "Available", summary: "Check availability and book events." },
-  { id: "microsoft-teams", name: "Microsoft Teams meetings", api: "Microsoft Graph", group: "Calendars and meetings", status: "Available", summary: "Create online meetings." },
+  { id: "microsoft-teams", name: "Microsoft Teams meetings", api: "Microsoft Graph", group: "Calendars and meetings", status: "Rolling out", summary: "Create online meetings." },
   { id: "zoom", name: "Zoom", api: "Zoom API", group: "Calendars and meetings", status: "Available", summary: "Create, update and cancel meetings." },
   { id: "calendly", name: "Calendly", api: "Calendly API", group: "Calendars and meetings", status: "Rolling out", summary: "Share booking links and react to new bookings." },
 
   // Workspace suites
-  { id: "google-workspace", name: "Google Workspace", api: "Drive, Docs and Sheets APIs", group: "Workspace", status: "Rolling out", summary: "Files, documents and spreadsheets. Gmail and Calendar are already available." },
-  { id: "microsoft-365", name: "Microsoft 365", api: "Microsoft Graph", group: "Workspace", status: "Rolling out", summary: "Outlook mail, OneDrive and Excel. Calendar and Teams are already available." },
+  { id: "google-workspace", name: "Google Workspace", api: "Google Workspace APIs", group: "Workspace", status: "Rolling out", summary: "Gmail, Drive, Docs and Sheets. Google Calendar is already available." },
+  { id: "microsoft-365", name: "Microsoft 365", api: "Microsoft Graph", group: "Workspace", status: "Rolling out", summary: "Outlook mail, Teams, OneDrive and Excel. Outlook Calendar is already available." },
 
   // Payments
   { id: "stripe", name: "Stripe", api: "Stripe API", group: "Payments", status: "Rolling out", summary: "Invoices, payment links and payment status." },
@@ -379,6 +374,11 @@ export const PACKAGES: Package[] = [
     ],
   },
 ]
+
+// Honest status of SDK packages: tools run against mocks in the sandbox today;
+// live execution against each provider is being switched on package by package.
+export const PACKAGES_STATUS_NOTE =
+  "SDK packages run in the sandbox today. Live execution against each provider is being switched on package by package, and the docs mark each one when it goes live."
 
 export const PACKAGE_CATEGORIES = Array.from(new Set(PACKAGES.map((p) => p.category)))
 

@@ -10,10 +10,6 @@ const steps = [
     description: "Goals, tools, and how work actually gets done — not a 40-field form.",
     image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format&fit=crop&q=80",
     alt: "Someone setting up a workspace on a laptop",
-    snippet: [
-      { title: "Brief", line: "Goals and tools locked", time: "2m" },
-      { title: "Stack", line: "Calendar + CRM connected", time: "2m" },
-    ],
   },
   {
     n: "02",
@@ -21,10 +17,6 @@ const steps = [
     description: "Deploy Marketing today, and request early access for sales, support, and people desks.",
     image: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=1200&auto=format&fit=crop&q=80",
     alt: "Team collaborating around a table",
-    snippet: [
-      { title: "Desks", line: "Marketing live · Others early access", time: "4m" },
-      { title: "Review", line: "Approval gates required", time: "4m" },
-    ],
   },
   {
     n: "03",
@@ -32,10 +24,6 @@ const steps = [
     description: "Campaigns, copy, and creative. You review and approve before anything goes live.",
     image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&auto=format&fit=crop&q=80",
     alt: "People working together in an open office",
-    snippet: [
-      { title: "Marketing", line: "Posts drafted for review", time: "18m" },
-      { title: "Approval", line: "Approved & published", time: "22m" },
-    ],
   },
   {
     n: "04",
@@ -43,10 +31,6 @@ const steps = [
     description: "One clear view of published campaigns, audit logs, and performance metrics.",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80",
     alt: "Laptop showing business performance charts",
-    snippet: [
-      { title: "Audit log", line: "Every change tracked", time: "Fri" },
-      { title: "Channels", line: "Official APIs connected", time: "Fri" },
-    ],
   },
 ]
 
@@ -86,9 +70,6 @@ export function HowItWorks() {
               <BrandedStage
                 image={step.image}
                 alt={step.alt}
-                label={step.title}
-                rows={step.snippet}
-                compact
                 className="hidden sm:block aspect-[4/5] rounded-2xl mb-5"
               />
               <span className="sm:hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-soft text-[13px] font-semibold text-primary tabular-nums">

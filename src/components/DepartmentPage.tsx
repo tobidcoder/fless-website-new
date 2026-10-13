@@ -6,7 +6,6 @@ import { ArrowRight, Crown } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { BrandedStage, PhotoTile } from "@/components/BrandedStage"
-import { TryCommand } from "@/components/TryCommand"
 import { EmailCapture } from "@/components/EmailCapture"
 import {
   Accordion,
@@ -84,8 +83,6 @@ export function DepartmentPage({ dept }: { dept: Department }) {
               <BrandedStage
                 image={dept.hero}
                 alt={dept.heroAlt}
-                label={`${dept.name} · ${dept.status === "live" ? "Live" : "Sample workspace"}`}
-                rows={dept.activity}
                 className="rounded-2xl aspect-[16/11]"
               />
             </motion.div>
@@ -142,8 +139,7 @@ export function DepartmentPage({ dept }: { dept: Department }) {
               <div className="lg:col-span-6">
                 <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-4">How it actually runs</p>
                 <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-5 max-w-lg">{dept.line}</h2>
-                <p className="text-[16px] text-muted-foreground leading-relaxed max-w-xl mb-8">{extra.story}</p>
-                <TryCommand desk={dept.slug} prompts={extra.prompts} reply={extra.reply} />
+                <p className="text-[16px] text-muted-foreground leading-relaxed max-w-xl">{extra.story}</p>
               </div>
               <div className="lg:col-span-6">
                 <p className="text-[11px] font-medium tracking-[0.18em] uppercase text-primary mb-4">In practice</p>
@@ -177,9 +173,6 @@ export function DepartmentPage({ dept }: { dept: Department }) {
                   <BrandedStage
                     image={cap.image}
                     alt={cap.title}
-                    label={cap.title}
-                    rows={cap.snippet}
-                    compact
                     className="aspect-[4/5] rounded-2xl mb-4"
                   />
                   <h3 className="text-[15px] font-semibold tracking-tight text-foreground mb-1.5">{cap.title}</h3>
@@ -356,7 +349,6 @@ export function DepartmentPage({ dept }: { dept: Department }) {
                     alt={d.name}
                     title={d.name}
                     status={d.status}
-                    live={d.status === "live" ? "Live today" : "Early access"}
                     className="aspect-[3/4] rounded-xl mb-2"
                   />
                   <p className="text-[11px] text-muted-foreground leading-snug">{d.line}</p>

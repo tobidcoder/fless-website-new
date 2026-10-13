@@ -36,7 +36,6 @@ function Grid({
                 alt={s.heroAlt}
                 title={s.name}
                 subtitle={s.line}
-                live={s.cities[0]}
                 className="aspect-[4/5] rounded-2xl mb-3"
               />
               <p className="text-[13px] text-muted-foreground leading-relaxed px-0.5">

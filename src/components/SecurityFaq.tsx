@@ -46,12 +46,6 @@ export function SecurityFaq() {
             <BrandedStage
               image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1400&auto=format&fit=crop&q=80"
               alt="Global headquarters built for procurement"
-              label="Audit log"
-              rows={[
-                { title: "SSO", line: "Okta group mapped", time: "14m" },
-                { title: "Export", line: "Q2 log ready", time: "3h" },
-                { title: "Questionnaire", line: "Completed on request", time: "Ready" },
-              ]}
               className="aspect-[16/10] rounded-2xl"
             />
           </motion.div>

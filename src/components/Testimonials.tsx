@@ -3,7 +3,6 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-import { FlessChrome } from "@/components/BrandedStage"
 import { NvidiaInceptionBadge } from "@/components/NvidiaInceptionBadge"
 
 export function Testimonials() {
@@ -41,7 +40,6 @@ export function Testimonials() {
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
-            <FlessChrome />
             <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
               <p className="text-white text-xl md:text-2xl font-display font-medium tracking-tight leading-snug max-w-lg mb-4">
                 Private pilots running with founders, operators, and growth teams.

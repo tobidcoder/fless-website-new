@@ -154,7 +154,7 @@ export function StartView() {
                 Thanks for joining the beta.
               </h1>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                A lot of teams want in right now. We’ll reach out soon at{" "}
+                You’re on the list. We’ll be in touch at{" "}
                 <span className="text-foreground font-medium">{email}</span>.
               </p>
               <p className="text-[14px] text-muted-foreground leading-relaxed mb-8">

@@ -133,7 +133,6 @@ export function Industries() {
                   alt={s.heroAlt}
                   title={s.name}
                   subtitle={s.line}
-                  live={s.cities[0]}
                   className="aspect-[4/5] rounded-2xl"
                 />
               </Link>

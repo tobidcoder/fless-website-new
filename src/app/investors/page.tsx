@@ -63,7 +63,7 @@ const story = [
 const model = [
   {
     title: "Workforce subscriptions",
-    copy: "Businesses pay a monthly rate for each AI employee they hire, plus metered usage. Marketing currently starts from about $1,600 a month.",
+    copy: "Businesses pay a monthly rate for each AI employee they hire, plus metered usage. Each employee has its own listed price.",
   },
   {
     title: "Builder marketplace",

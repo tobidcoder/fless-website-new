@@ -10,6 +10,10 @@ import { featuredIndustries, industryHref } from "@/lib/industries"
 import { StickyRegister } from "@/components/StickyRegister"
 import { FlessLogo } from "@/components/FlessLogo"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { APP_URL } from "@/lib/env"
+
+// Existing customers sign in on the dashboard; without it configured, /login explains access.
+const LOGIN_HREF = APP_URL ? `${APP_URL}/login` : "/login"
 
 interface HeaderProps {
   activePage?: string
@@ -110,7 +114,7 @@ export function Header({ activePage }: HeaderProps) {
 
         <div className="flex items-center gap-2 sm:gap-4">
           <ThemeToggle className="hidden md:inline-flex" />
-          <Link href="/login" className="hidden md:block text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <Link href={LOGIN_HREF} className="hidden md:block text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
             Log in
           </Link>
           <Link
@@ -299,7 +303,7 @@ export function Header({ activePage }: HeaderProps) {
 
             <div className="grid grid-cols-2 gap-3">
               <Link
-                href="/login"
+                href={LOGIN_HREF}
                 className="inline-flex h-12 items-center justify-center rounded-full border border-border text-[15px] font-medium"
                 onClick={() => setMobileOpen(false)}
               >

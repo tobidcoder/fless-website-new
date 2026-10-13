@@ -46,7 +46,7 @@ export function Footer() {
               <span>Departments</span>
             </h4>
             <ul className="space-y-2.5 text-[13px] text-white/60">
-              <li><Link href="/departments/marketing" className="hover:text-white transition-colors flex items-center justify-between">Marketing & Ads <span className="text-[10px] text-emerald-400 font-mono">Live</span></Link></li>
+              <li><Link href="/departments/marketing" className="hover:text-white transition-colors flex items-center justify-between">Marketing <span className="text-[10px] text-emerald-400 font-mono">Live</span></Link></li>
               <li><Link href="/departments/voice" className="hover:text-white transition-colors flex items-center justify-between">Voice <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
               <li><Link href="/departments/sales" className="hover:text-white transition-colors flex items-center justify-between">Sales <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
               <li><Link href="/departments/support" className="hover:text-white transition-colors flex items-center justify-between">Customer Support <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
@@ -97,7 +97,6 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-[13px] text-white/60">
               <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-              <li><Link href="/pricing" className="hover:text-white transition-colors">Cost Calculator</Link></li>
               <li><Link href="/security" className="hover:text-white transition-colors">Security</Link></li>
               <li><Link href="/security#compliance" className="hover:text-white transition-colors">Compliance Alignment</Link></li>
                             <li><Link href="/docs#security-boundaries" className="hover:text-white transition-colors">Security Architecture</Link></li>
