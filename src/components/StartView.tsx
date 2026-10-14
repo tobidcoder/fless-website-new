@@ -174,7 +174,7 @@ export function StartView() {
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans">
       <Header />
-      <main className="flex-1 pt-24 md:pt-28 pb-20">
+      <main data-reveal className="flex-1 pt-24 md:pt-28 pb-20">
         <div className="max-w-[760px] mx-auto px-6">
           <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">Private beta</p>
           <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight mb-3">

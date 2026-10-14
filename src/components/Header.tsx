@@ -66,7 +66,7 @@ export function Header({ activePage }: HeaderProps) {
           <nav className="hidden lg:flex items-center gap-1 text-[13px] font-medium text-muted-foreground">
             <Link
               href="/"
-              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "home" && "text-primary")}
+              className={cn("nav-link px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "home" && "text-primary")}
             >
               Home
             </Link>
@@ -75,39 +75,33 @@ export function Header({ activePage }: HeaderProps) {
             >
               <Link
                 href="/solutions"
-                className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", (activeMenu === "solutions" || activePage === "solutions") && "text-primary")}
+                className={cn("nav-link px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", (activeMenu === "solutions" || activePage === "solutions") && "text-primary")}
               >
                 Solutions <ChevronDown className={cn("w-3.5 h-3.5 transition-transform", activeMenu === "solutions" && "rotate-180")} />
               </Link>
             </div>
             <div onMouseEnter={() => setActiveMenu("departments")}>
-              <button className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", (activeMenu === "departments" || activePage === "departments") && "text-primary")}>
+              <button className={cn("nav-link px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", (activeMenu === "departments" || activePage === "departments") && "text-primary")}>
                 Departments <ChevronDown className={cn("w-3.5 h-3.5 transition-transform", activeMenu === "departments" && "rotate-180")} />
               </button>
             </div>
             <Link
               href="/pricing"
-              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "pricing" && "text-primary")}
+              className={cn("nav-link px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "pricing" && "text-primary")}
             >
               Pricing
             </Link>
             <Link
               href="/builders"
-              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "builders" && "text-primary")}
+              className={cn("nav-link px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "builders" && "text-primary")}
             >
               Builders
             </Link>
             <Link
               href="/docs"
-              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "docs" && "text-primary")}
+              className={cn("nav-link px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "docs" && "text-primary")}
             >
               Docs
-            </Link>
-            <Link
-              href="/investors"
-              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "investors" && "text-primary")}
-            >
-              Investors
             </Link>
           </nav>
         </div>
@@ -251,7 +245,6 @@ export function Header({ activePage }: HeaderProps) {
                 { label: "Solutions", href: "/solutions" },
                 { label: "Builders", href: "/builders" },
                 { label: "Docs", href: "/docs" },
-                { label: "Investors", href: "/investors" },
                 { label: "Contact", href: "/contact" },
               ].map((item) => (
                 <Link

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
+import { MotionProvider, ScrollProgress } from "@/components/motion"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -185,7 +186,10 @@ export default function RootLayout({
           storageKey="fless-theme"
           disableTransitionOnChange
         >
-          {children}
+          <MotionProvider>
+            <ScrollProgress />
+            {children}
+          </MotionProvider>
         </ThemeProvider>
       </body>
     </html>

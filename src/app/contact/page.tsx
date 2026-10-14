@@ -8,7 +8,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col font-sans">
       <Header />
-      <main className="flex-1 pt-28 pb-20">
+      <main data-reveal className="flex-1 pt-28 pb-20">
         <div id="enterprise" className="max-w-[560px] mx-auto px-6">
           <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">Enterprise</p>
           <h1 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-4">

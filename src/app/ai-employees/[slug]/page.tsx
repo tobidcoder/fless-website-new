@@ -188,7 +188,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
       />
       <Header activePage="departments" />
 
-      <main className="flex-1 pt-24 md:pt-28 pb-20">
+      <main data-reveal className="flex-1 pt-24 md:pt-28 pb-20">
         {/* BREADCRUMB */}
         <div className="max-w-[1200px] mx-auto px-6 py-4">
           <nav className="flex items-center gap-2 text-xs text-muted-foreground">

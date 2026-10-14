@@ -73,7 +73,7 @@ export default async function PricingPage() {
     <div className="min-h-screen bg-background flex flex-col font-sans">
       <Header activePage="pricing" />
 
-      <main className="flex-1">
+      <main data-reveal className="flex-1">
         <section className="pt-28 pb-14 sm:pt-32 md:pt-40 md:pb-20">
           <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
             <div className="max-w-3xl">

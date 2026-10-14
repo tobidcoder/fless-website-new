@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { CountUp, EASE } from "@/components/motion"
 
 const stats = [
   { value: "18", label: "Businesses in pilot" },
@@ -17,16 +18,16 @@ export function GlobalStats() {
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ delay: i * 0.08, duration: 0.7, ease: EASE }}
               className={`py-7 sm:py-8 md:py-10 px-4 sm:px-6 md:px-8 border-border/60 ${
                 i % 2 === 0 ? "border-r" : ""
               } ${i < 2 ? "border-b lg:border-b-0" : ""} ${i < 3 ? "lg:border-r" : ""}`}
             >
               <div className="text-2xl sm:text-3xl md:text-4xl font-display font-semibold tracking-tight tabular-nums text-foreground">
-                {s.value}
+                <CountUp value={s.value} />
               </div>
               <div className="text-xs sm:text-[13px] text-muted-foreground mt-1">{s.label}</div>
             </motion.div>

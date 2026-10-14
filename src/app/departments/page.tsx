@@ -61,7 +61,7 @@ export default function DepartmentsDirectoryPage() {
       />
       <Header activePage="departments" />
 
-      <main className="flex-1 pt-24 md:pt-32 pb-24">
+      <main data-reveal className="flex-1 pt-24 md:pt-32 pb-24">
         <section className="max-w-[1200px] mx-auto px-6 mb-16">
           <div className="max-w-2xl">
             <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-4 block">

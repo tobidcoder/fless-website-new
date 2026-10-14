@@ -84,7 +84,7 @@ export default function BuildersPage() {
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
       <Header activePage="builders" />
 
-      <main className="flex-1">
+      <main data-reveal className="flex-1">
         {/* HERO */}
         <section className="pt-28 pb-16 sm:pt-32 md:pt-40 md:pb-24">
           <div className="max-w-[1200px] mx-auto px-5 sm:px-6">

@@ -140,3 +140,13 @@ The docs no longer describe the retired 10-package v1 SDK.
 - **Package pages:** the sync script also writes `public/catalog/<package>.json`, one file per package with its actions, modes, risk flags, parameters and triggers. Each package page loads its file on demand, so the docs bundle stays small.
 - **Examples:** the example employee and the docs examples use the real `packageActions` format with real action ids.
 - **Old links:** `#plugin-meta`, `#plugin-mail` and `#plugin-crm` open Facebook, Gmail and HubSpot. Packages that no longer exist open the full list.
+
+## 12. Investor content removed, motion added
+
+- **Removed:** the /investors page, the investor card in "One platform. Two ways in.", the Investors FAQ tab, and the investor links in the header, footer, hero and sitemap. /investors now returns 404.
+- **Motion** (`src/components/motion.tsx`, one easing curve site-wide, and turned off for visitors whose device is set to reduce motion):
+  - **Hero:** the headline reveals word by word, a soft brand glow drifts behind it, and the product screenshot settles from a slight tilt as you scroll to it.
+  - **Stats:** the numbers count up when they come into view.
+  - **Cards and FAQ:** cards enter one after another and lift on hover. The FAQ has a sliding tab indicator and crossfading answers.
+  - **Site-wide:** a thin scroll-progress bar at the top, pages fade in on navigation, and the navigation links get a hover underline.
+  - **Pages without motion before** (Builders, Pricing, Departments, Contact, Start, employee profiles): blocks and grid items rise into view as you scroll. This uses CSS scroll-driven animations, so browsers without support just show the content.

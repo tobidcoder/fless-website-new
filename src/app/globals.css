@@ -279,3 +279,53 @@
   }
 }
 
+
+/*
+ * Scroll reveals for server-rendered pages. Add data-reveal to <main>: each
+ * block inside a section, and each card in a grid, fades and rises as it
+ * enters the viewport. Pure CSS (scroll-driven animations); browsers without
+ * support simply show the content.
+ */
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal] section > div > *,
+    [data-reveal] .grid > * {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 180px;
+    }
+  }
+}
+
+/* Navigation underline that grows from the centre on hover. */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 4px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: hsl(var(--primary));
+  transform: scaleX(0);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}

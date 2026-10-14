@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { AnimatePresence, motion } from "framer-motion"
+import { EASE, Reveal } from "@/components/motion"
 import {
   Accordion,
   AccordionContent,
@@ -10,9 +12,9 @@ import {
 } from "@/components/ui/accordion"
 import { cn } from "@/lib/utils"
 
-type Group = "Businesses" | "Builders" | "Investors"
+type Group = "Businesses" | "Builders"
 
-const groups: Group[] = ["Businesses", "Builders", "Investors"]
+const groups: Group[] = ["Businesses", "Builders"]
 
 const faqs: Record<Group, { q: string; a: string }[]> = {
   Businesses: [
@@ -59,34 +61,11 @@ const faqs: Record<Group, { q: string; a: string }[]> = {
       a: "The SDK is in private beta. Apply on the builders page and we'll add you to the next builder cohort.",
     },
   ],
-  Investors: [
-    {
-      q: "What does Fless do, in one sentence?",
-      a: "Fless is infrastructure for AI employees: businesses hire them by department, builders create and sell them, and Fless runs the computing, governance and billing in between.",
-    },
-    {
-      q: "What stage is the company at?",
-      a: "Pre-seed. The Marketing employee is live with pilot customers, and seven more departments are in early access.",
-    },
-    {
-      q: "What traction do you have?",
-      a: "18 businesses are in pilot across Nigeria, the UK and North America. Marketing publishes directly to six social networks through their official APIs. Fless is a member of the NVIDIA Inception program.",
-    },
-    {
-      q: "How does Fless make money?",
-      a: "Two ways. First, businesses pay monthly workforce rates for each AI employee they hire, plus metered usage. Second, Fless keeps 65% of revenue from employees that builders publish on the marketplace.",
-    },
-    {
-      q: "How do I get in touch about investing or an accelerator program?",
-      a: "Email hello@getfless.com with \"Investor\" or \"Accelerator\" in the subject line, or see the company overview page for the short version of the story.",
-    },
-  ],
 }
 
 const links: Record<Group, { label: string; href: string }> = {
   Businesses: { label: "See pricing", href: "/pricing" },
   Builders: { label: "Builder program", href: "/builders" },
-  Investors: { label: "Company overview", href: "/investors" },
 }
 
 export function AudienceFaq() {
@@ -95,7 +74,7 @@ export function AudienceFaq() {
   return (
     <section id="faq" className="py-20 md:py-28 bg-[#fafafa] dark:bg-secondary border-t border-border/60">
       <div className="max-w-[1200px] mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-        <div className="lg:col-span-4">
+        <Reveal className="lg:col-span-4">
           <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-4">FAQ</p>
           <h2 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight leading-[1.12] text-foreground mb-4">
             Straight answers.
@@ -116,19 +95,34 @@ export function AudienceFaq() {
                 aria-selected={group === g}
                 onClick={() => setGroup(g)}
                 className={cn(
-                  "h-10 rounded-full px-4 text-[14px] font-medium transition-colors border",
+                  "relative h-10 rounded-full px-4 text-[14px] font-medium transition-colors border",
                   group === g
-                    ? "bg-primary text-primary-foreground border-primary"
+                    ? "text-primary-foreground border-primary"
                     : "bg-background text-muted-foreground border-border hover:text-foreground"
                 )}
               >
-                {g}
+                {group === g && (
+                  <motion.span
+                    layoutId="faq-tab"
+                    className="absolute inset-0 rounded-full bg-primary"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                  />
+                )}
+                <span className="relative">{g}</span>
               </button>
             ))}
           </div>
-        </div>
+        </Reveal>
 
-        <div className="lg:col-span-8 min-w-0">
+        <Reveal className="lg:col-span-8 min-w-0" delay={0.1}>
+          <AnimatePresence mode="wait">
+          <motion.div
+            key={group}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.35, ease: EASE }}
+          >
           <Accordion type="single" collapsible defaultValue="item-0" key={group} className="w-full">
             {faqs[group].map((faq, i) => (
               <AccordionItem key={faq.q} value={`item-${i}`}>
@@ -141,13 +135,15 @@ export function AudienceFaq() {
               </AccordionItem>
             ))}
           </Accordion>
+          </motion.div>
+          </AnimatePresence>
           <Link
             href={links[group].href}
             className="mt-7 inline-flex h-11 items-center rounded-full border border-border bg-background px-5 text-[14px] font-medium text-foreground hover:border-primary/40 transition-colors"
           >
             {links[group].label} →
           </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   )
