@@ -133,3 +133,10 @@ Required environment variables in production:
 ## 10. Connections generated from the backend catalog
 
 The connection list is no longer written by hand. `scripts/sync-connections.mts` reads `PACKAGE_CATALOG` from `getfless/backend-employees` and writes `src/lib/connections.generated.ts`. The first run listed 176 connections: 19 Available (GA), 150 Beta and 7 Awaiting provider approval. Unofficial partner integrations are excluded. Re-run the script whenever the backend catalog changes.
+
+## 11. SDK docs rebuilt on the actions catalog
+
+The docs no longer describe the retired 10-package v1 SDK.
+- **Package pages:** the sync script also writes `public/catalog/<package>.json`, one file per package with its actions, modes, risk flags, parameters and triggers. Each package page loads its file on demand, so the docs bundle stays small.
+- **Examples:** the example employee and the docs examples use the real `packageActions` format with real action ids.
+- **Old links:** `#plugin-meta`, `#plugin-mail` and `#plugin-crm` open Facebook, Gmail and HubSpot. Packages that no longer exist open the full list.

@@ -15,8 +15,7 @@ import {
   CORE_PACKAGES,
   EVALUATION_EXAMPLE,
   MANIFEST_EXAMPLE,
-  PACKAGES,
-  PACKAGES_STATUS_NOTE,
+  ACTION_MODE_NOTE,
   SANDBOX_EXAMPLE,
   type ConnectionStatus,
 } from "@/lib/sdk";
@@ -31,8 +30,8 @@ const tabs = [
 // What each block of the manifest does, in plain words.
 const anatomy = [
   { key: "countries · industries · languages", text: "Who can hire it, and which languages it speaks." },
-  { key: "requiredPackages", text: "The packages it needs, such as voice, WhatsApp, calendar and CRM." },
-  { key: "capabilities · tools", text: "What it is allowed to do. Any tool not listed is blocked." },
+  { key: "packageActions", text: "The exact actions it may take in each connected app, with a mode and a reason for each." },
+  { key: "tools · capabilities", text: "Built-in Fless tools it uses, such as knowledge search. Anything not declared is blocked." },
   { key: "skills", text: "Repeatable procedures with triggers, steps and the tools each step uses." },
   { key: "workflows", text: "Multi-step jobs that start on an event, such as a missed call." },
   { key: "knowledge", text: "The business facts it answers from: text, URLs, PDFs and docs." },
@@ -234,8 +233,9 @@ export default function BuildersPage() {
                   Packages.
                 </h2>
                 <p className="text-[16px] text-muted-foreground leading-relaxed">
-                  Two core packages to build with, and {PACKAGES.length} packages that give your employee tools. List the
-                  ones you need; the business connects its own accounts and your code never sees their keys.
+                  Two core packages to build with, and {CONNECTIONS.length} app packages with{" "}
+                  {CONNECTIONS.reduce((n, c) => n + c.actions, 0).toLocaleString()} actions. Declare the actions your
+                  employee needs; the business connects its own accounts and your code never sees their keys.
                 </p>
               </div>
               <Link href="/docs#packages" className="text-[14px] font-medium text-primary hover:opacity-80 shrink-0">
@@ -260,28 +260,19 @@ export default function BuildersPage() {
               ))}
             </div>
 
-            <p className="mb-6 text-[14px] text-muted-foreground leading-relaxed max-w-2xl border-l-2 border-primary/60 pl-4">
-              {PACKAGES_STATUS_NOTE}
+            <h3 className="text-xl font-display font-semibold tracking-tight mb-2">Every action has a mode.</h3>
+            <p className="text-[15px] text-muted-foreground leading-relaxed max-w-2xl mb-8">
+              You set a default for each action you declare. The business can always lower it, and nothing can go above
+              the limit Fless sets for risky actions such as spending money or deleting data.
             </p>
-            <ul className="border-t border-border/70">
-              {PACKAGES.map((p) => (
-                <li key={p.id} className="border-b border-border/70">
-                  <Link
-                    href={`/docs#package-${p.id}`}
-                    className="group grid grid-cols-1 md:grid-cols-12 gap-x-6 gap-y-2 py-6 md:items-center"
-                  >
-                    <div className="md:col-span-3 text-[16px] font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                      {p.name}
-                    </div>
-                    <div className="md:col-span-3 font-mono text-[13px] text-muted-foreground">{p.packageName}</div>
-                    <p className="md:col-span-4 text-[14px] text-muted-foreground leading-relaxed">{p.summary}</p>
-                    <div className="md:col-span-2 md:text-right text-[13px] text-muted-foreground tabular-nums">
-                      {p.tools.length} {p.tools.length === 1 ? "tool" : "tools"}
-                    </div>
-                  </Link>
-                </li>
+            <dl className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {(["ALLOW", "ASK", "OFF"] as const).map((m) => (
+                <div key={m} className="rounded-2xl border border-border/70 p-6">
+                  <dt className="font-mono text-[14px] text-foreground mb-2">{m}</dt>
+                  <dd className="text-[14px] text-muted-foreground leading-relaxed">{ACTION_MODE_NOTE[m]}</dd>
+                </div>
               ))}
-            </ul>
+            </dl>
           </div>
         </section>
 
@@ -320,12 +311,16 @@ export default function BuildersPage() {
 
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 border-t border-border/70">
               {visibleConnections.map((c) => (
-                <li key={c.id} className="py-5 border-b border-border/70">
+                <li key={c.id} className="border-b border-border/70">
+                  <Link href={`/docs#package-${c.id}`} className="group block py-5">
                   <div className="flex items-center gap-2.5">
-                    <span className="text-[15px] font-semibold tracking-tight text-foreground">{c.name}</span>
+                    <span className="text-[15px] font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">{c.name}</span>
                     <span className={cn("text-[11px] font-medium rounded-full px-2 py-0.5", statusTone[c.status])}>{c.status}</span>
                   </div>
-                  <div className="mt-1 text-[13px] text-muted-foreground">{categoryLabel(c.category)}</div>
+                  <div className="mt-1 text-[13px] text-muted-foreground">
+                    {categoryLabel(c.category)} · {c.actions} actions
+                  </div>
+                  </Link>
                 </li>
               ))}
             </ul>

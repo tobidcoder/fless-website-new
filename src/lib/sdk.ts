@@ -65,338 +65,61 @@ export const CONNECTION_CATEGORIES = Array.from(new Set(CONNECTIONS.map((c) => c
   return live(b) - live(a) || all(b) - all(a)
 })
 
-// ---------- SDK packages (what a builder declares in requiredPackages) ----------
+// ---------- Packages ----------
+// Every connection above is also a package a builder can declare in `packageActions`.
+// Action-level detail lives in public/catalog/<id>.json, generated with the list.
 
-export interface ToolParameter {
+export type ActionMode = "OFF" | "ASK" | "ALLOW"
+
+export interface CatalogParam {
   name: string
   type: string
   required: boolean
   description: string
 }
 
-export interface PackageTool {
+export interface CatalogAction {
   id: string
   name: string
   description: string
-  permissions: string[]
-  parameters: ToolParameter[]
+  kind: "READ" | "WRITE"
+  risk: string
+  outward: boolean
+  irreversible: boolean
+  spendsMoney: boolean
+  defaultMode: ActionMode
+  status: ConnectionStatus | null
+  params: CatalogParam[]
 }
 
-export interface Package {
+export interface CatalogPackage {
   id: string
   packageName: string
   name: string
+  status: ConnectionStatus
   category: string
   summary: string
-  connects: string[]
-  capabilities: string[]
-  permissions: string[]
-  tools: PackageTool[]
+  auth: { type: string; docsUrl: string | null }
+  triggers: Array<{ id: string; name: string; description: string }>
+  actions: CatalogAction[]
 }
 
-const P = (name: string, type: string, required: boolean, description: string): ToolParameter => ({ name, type, required, description })
+export const ACTION_MODE_NOTE: Record<ActionMode, string> = {
+  ALLOW: "Runs on its own.",
+  ASK: "Waits for a person to approve each time.",
+  OFF: "Disabled until the business turns it on.",
+}
 
-export const PACKAGES: Package[] = [
-  {
-    id: "meta",
-    packageName: "@fless/meta",
-    name: "Meta (Facebook & Instagram)",
-    category: "Social",
-    summary: "Publish posts and carousels to Facebook Pages and Instagram, and read engagement.",
-    connects: ["Facebook Pages", "Instagram"],
-    capabilities: ["social.publish", "social.analytics"],
-    permissions: ["pages:read", "publish_actions", "instagram_basic"],
-    tools: [
-      {
-        id: "social.publish",
-        name: "Publish post",
-        description: "Publishes copy and images to Facebook, Instagram or both.",
-        permissions: ["publish_actions"],
-        parameters: [
-          P("caption", "string", true, "Post copy, including hashtags."),
-          P("mediaUrls", "string[]", false, "Public image URLs. Several images make a carousel."),
-          P("platforms", "('facebook' | 'instagram')[]", false, "Where to publish. Defaults to both."),
-        ],
-      },
-      { id: "facebook.publishPost", name: "Publish to Facebook", description: "Same as social.publish, Facebook only.", permissions: ["publish_actions"], parameters: [P("caption", "string", true, "Post copy."), P("mediaUrls", "string[]", false, "Public image URLs.")] },
-      { id: "instagram.publishPost", name: "Publish to Instagram", description: "Same as social.publish, Instagram only.", permissions: ["publish_actions"], parameters: [P("caption", "string", true, "Post copy."), P("mediaUrls", "string[]", false, "Public image URLs.")] },
-      { id: "social.analytics.get", name: "Get analytics", description: "Reach, impressions and engagement across connected accounts.", permissions: ["pages:read"], parameters: [] },
-      { id: "facebook.getInsights", name: "Get Facebook insights", description: "Page-level engagement for Facebook.", permissions: ["pages:read"], parameters: [] },
-      { id: "instagram.getAnalytics", name: "Get Instagram analytics", description: "Account-level engagement for Instagram.", permissions: ["pages:read"], parameters: [] },
-    ],
-  },
-  {
-    id: "linkedin",
-    packageName: "@fless/linkedin",
-    name: "LinkedIn",
-    category: "Social",
-    summary: "Publish posts to LinkedIn and read follower and engagement numbers.",
-    connects: ["LinkedIn"],
-    capabilities: ["social.publish", "social.analytics"],
-    permissions: ["w_member_social"],
-    tools: [
-      { id: "linkedin.publishPost", name: "Publish post", description: "Publishes a text post to the connected profile or page.", permissions: ["w_member_social"], parameters: [P("text", "string", true, "Post copy.")] },
-      { id: "linkedin.getAnalytics", name: "Get analytics", description: "Followers, impressions, unique views and click-through rate for the last 30 days.", permissions: ["w_member_social"], parameters: [] },
-    ],
-  },
-  {
-    id: "whatsapp",
-    packageName: "@fless/whatsapp",
-    name: "WhatsApp Business",
-    category: "Messaging",
-    summary: "Two-way WhatsApp messaging, appointment confirmations and support triage.",
-    connects: ["WhatsApp Business"],
-    capabilities: ["communication.chat", "communication.alerts", "customer_support.messaging"],
-    permissions: ["messages:read", "messages:send", "templates:read"],
-    tools: [
-      {
-        id: "whatsapp.sendMessage",
-        name: "Send message",
-        description: "Sends a text or an approved template to a phone number.",
-        permissions: ["messages:send"],
-        parameters: [
-          P("to", "string", true, "Phone number in international format, e.g. +2348012345678."),
-          P("text", "string", true, "Message body."),
-          P("templateName", "string", false, "Name of an approved WhatsApp template."),
-        ],
-      },
-      {
-        id: "whatsapp.getConversation",
-        name: "Get conversation",
-        description: "Fetches recent messages with a customer.",
-        permissions: ["messages:read"],
-        parameters: [P("contactPhone", "string", true, "The customer's phone number.")],
-      },
-    ],
-  },
-  {
-    id: "mail",
-    packageName: "@fless/mail",
-    name: "Email & Inbox",
-    category: "Messaging",
-    summary: "Send branded email and draft replies for a person to approve.",
-    connects: [],
-    capabilities: ["email-marketing", "drip-campaigns", "newsletters"],
-    permissions: ["mail:read", "mail:send"],
-    tools: [
-      {
-        id: "mail.send",
-        name: "Send email",
-        description: "Sends an email to a recipient.",
-        permissions: ["mail:send"],
-        parameters: [
-          P("to", "string", true, "Recipient address."),
-          P("subject", "string", true, "Subject line."),
-          P("bodyText", "string", true, "Plain-text body."),
-          P("bodyHtml", "string", false, "HTML body."),
-        ],
-      },
-      {
-        id: "mail.draft",
-        name: "Draft reply",
-        description: "Creates a draft reply for the owner to approve. Nothing is sent.",
-        permissions: ["mail:read"],
-        parameters: [
-          P("threadId", "string", true, "The email thread to reply to."),
-          P("suggestedReply", "string", true, "The proposed reply."),
-          P("subject", "string", false, "Subject line override."),
-        ],
-      },
-    ],
-  },
-  {
-    id: "google-calendar",
-    packageName: "@fless/google-calendar",
-    name: "Calendar",
-    category: "Scheduling",
-    summary: "Look up free slots, book appointments and send invites.",
-    connects: ["Google Calendar"],
-    capabilities: ["calendar.availability", "calendar.booking"],
-    permissions: ["calendar:read", "calendar:write"],
-    tools: [
-      {
-        id: "calendar.checkAvailability",
-        name: "Check availability",
-        description: "Returns open slots on a given day.",
-        permissions: ["calendar:read"],
-        parameters: [
-          P("date", "string", true, "Day to check, as YYYY-MM-DD."),
-          P("durationMinutes", "number", false, "Length of the slot. Defaults to 30."),
-          P("timezone", "string", false, "IANA time zone, e.g. Africa/Lagos."),
-        ],
-      },
-      {
-        id: "calendar.bookAppointment",
-        name: "Book appointment",
-        description: "Books a slot and sends the attendee an invite.",
-        permissions: ["calendar:write"],
-        parameters: [
-          P("attendeeName", "string", true, "Who the appointment is for."),
-          P("attendeeEmail", "string", true, "Where to send the invite."),
-          P("startTime", "string", true, "ISO 8601 start time."),
-          P("durationMinutes", "number", false, "Defaults to 30."),
-          P("notes", "string", false, "Notes added to the event."),
-        ],
-      },
-      { id: "calendar.bookSlot", name: "Book slot", description: "Alias of calendar.bookAppointment.", permissions: ["calendar:write"], parameters: [] },
-    ],
-  },
-  {
-    id: "voice",
-    packageName: "@fless/voice",
-    name: "Telephony & Voice",
-    category: "Voice",
-    summary: "Answer calls with low-latency voice, route callers and hand over to staff.",
-    connects: ["Phone numbers (SIP)", "WebRTC"],
-    capabilities: ["voice.inbound", "voice.transcription", "voice.telephony"],
-    permissions: ["voice:inbound", "voice:outbound", "recordings:read"],
-    tools: [
-      {
-        id: "voice.inbound",
-        name: "Answer call",
-        description: "Accepts a live call and starts the voice session. Also available as voice.call.answer.",
-        permissions: ["voice:inbound"],
-        parameters: [
-          P("callId", "string", true, "The incoming call."),
-          P("callerNumber", "string", true, "Caller's phone number."),
-          P("intent", "string", false, "Known reason for the call, if any."),
-        ],
-      },
-      {
-        id: "voice.transfer",
-        name: "Transfer call",
-        description: "Warm-transfers the call to a staff number.",
-        permissions: ["voice:inbound"],
-        parameters: [
-          P("callId", "string", true, "The active call."),
-          P("targetNumber", "string", true, "Number to transfer to."),
-          P("warmTransferNotes", "string", false, "Context read to the person taking the call."),
-        ],
-      },
-    ],
-  },
-  {
-    id: "crm",
-    packageName: "@fless/crm",
-    name: "CRM & Contacts",
-    category: "Sales",
-    summary: "Find customers, qualify leads and log calls on the contact record.",
-    connects: ["Fless CRM"],
-    capabilities: ["crm.leads", "crm.sync"],
-    permissions: ["contacts:read", "contacts:write", "deals:write"],
-    tools: [
-      { id: "crm.lookupContact", name: "Look up contact", description: "Finds a customer by phone or email.", permissions: ["contacts:read"], parameters: [P("query", "string", true, "Phone number or email.")] },
-      {
-        id: "crm.syncLead",
-        name: "Sync lead",
-        description: "Creates or updates a lead with status and value.",
-        permissions: ["contacts:write"],
-        parameters: [
-          P("name", "string", true, "Lead name."),
-          P("status", "string", true, "Pipeline stage."),
-          P("phone", "string", false, "Phone number."),
-          P("email", "string", false, "Email address."),
-          P("estimatedValueCents", "number", false, "Deal value in cents."),
-        ],
-      },
-      {
-        id: "crm.logCall",
-        name: "Log call",
-        description: "Adds a call summary and outcome to a contact.",
-        permissions: ["contacts:write"],
-        parameters: [
-          P("contactId", "string", true, "The contact."),
-          P("outcome", "string", true, "Result of the call."),
-          P("summary", "string", true, "What was discussed."),
-          P("durationSeconds", "number", false, "Call length."),
-        ],
-      },
-    ],
-  },
-  {
-    id: "slack",
-    packageName: "@fless/slack",
-    name: "Slack",
-    category: "Team",
-    summary: "Team alerts, human hand-offs, approvals and daily digests.",
-    connects: ["Slack"],
-    capabilities: ["communication.alerts", "support.escalate"],
-    permissions: ["chat:write", "channels:read"],
-    tools: [
-      {
-        id: "slack.postMessage",
-        name: "Post message",
-        description: "Posts a message to a channel.",
-        permissions: ["chat:write"],
-        parameters: [P("text", "string", true, "Message text."), P("channel", "string", false, "Channel name, e.g. #ops."), P("blocks", "unknown[]", false, "Slack Block Kit layout.")],
-      },
-      {
-        id: "slack.escalate",
-        name: "Escalate to a person",
-        description: "Opens a priority hand-off in the staff channel.",
-        permissions: ["chat:write"],
-        parameters: [
-          P("reason", "string", true, "Why a person is needed."),
-          P("customerId", "string", true, "The customer involved."),
-          P("transcriptSnippet", "string", true, "The relevant part of the conversation."),
-          P("priority", "'normal' | 'high' | 'urgent'", false, "Defaults to normal."),
-        ],
-      },
-    ],
-  },
-  {
-    id: "documents",
-    packageName: "@fless/documents",
-    name: "Documents & Contracts",
-    category: "Documents",
-    summary: "Review contracts for risky terms, draft standard agreements and export PDFs.",
-    connects: [],
-    capabilities: ["document.draft", "document.audit"],
-    permissions: ["documents:read", "documents:write"],
-    tools: [
-      { id: "legal.auditClauses", name: "Audit clauses", description: "Finds one-sided terms, uncapped liability and indemnity risks.", permissions: ["documents:read"], parameters: [P("contractText", "string", true, "Full contract text."), P("documentType", "string", false, "e.g. agreement, lease.")] },
-      { id: "legal.flagUnfavorableTerms", name: "Flag unfavourable terms", description: "Highlights non-standard clauses and suggests counter-wording.", permissions: ["documents:read"], parameters: [P("text", "string", true, "Text to review.")] },
-      {
-        id: "legal.generateStandardNda",
-        name: "Generate NDA",
-        description: "Drafts a mutual non-disclosure agreement.",
-        permissions: ["documents:write"],
-        parameters: [P("partyA", "string", true, "First party."), P("partyB", "string", true, "Second party."), P("jurisdiction", "string", false, "Governing law."), P("termYears", "number", false, "Defaults to 2.")],
-      },
-      { id: "document.exportPdf", name: "Export PDF", description: "Renders a document as a branded PDF.", permissions: ["documents:write"], parameters: [P("title", "string", true, "Document title."), P("content", "string", true, "Markdown or HTML.")] },
-    ],
-  },
-  {
-    id: "custom-api",
-    packageName: "@fless/custom-api",
-    name: "Custom API",
-    category: "Developer",
-    summary: "Call a business's own HTTP endpoint, with credentials held by Fless.",
-    connects: ["Any HTTPS API"],
-    capabilities: ["custom_api.invoke"],
-    permissions: ["custom_api:invoke"],
-    tools: [
-      {
-        id: "customApi.invoke",
-        name: "Invoke endpoint",
-        description: "Calls a configured endpoint and returns its response.",
-        permissions: ["custom_api:invoke"],
-        parameters: [
-          P("endpointKey", "string", true, "Which configured endpoint to call."),
-          P("pathParameters", "object", false, "Values for the path."),
-          P("queryParameters", "object", false, "Query string values."),
-        ],
-      },
-    ],
-  },
-]
-
-// Honest status of SDK packages: tools run against mocks in the sandbox today;
-// live execution against each provider is being switched on package by package.
-export const PACKAGES_STATUS_NOTE =
-  "SDK packages run in the sandbox today. Live execution against each provider is being switched on package by package, and the docs mark each one when it goes live."
-
-export const PACKAGE_CATEGORIES = Array.from(new Set(PACKAGES.map((p) => p.category)))
+export const AUTH_LABELS: Record<string, string> = {
+  oauth2: "Sign in (OAuth)",
+  oauth2_pkce: "Sign in (OAuth)",
+  oauth_client_credentials: "API client credentials",
+  api_key: "API key",
+  basic: "Username and password / key",
+  bsp: "WhatsApp Business provider",
+  bot_token: "Bot token",
+  app_password: "App password",
+}
 
 export interface CorePackage {
   name: string
@@ -414,9 +137,9 @@ export const CORE_PACKAGES: CorePackage[] = [
   },
   {
     name: "@fless/contracts",
-    role: "Types",
-    summary: "Shared types for manifests, skills, policies, pricing and evaluations.",
-    exports: ["EmployeeManifest", "AgentSpec", "EmployeeSkill", "EmployeePolicies", "EmployeePricingConfig", "EvaluationScenario"],
+    role: "Types and catalog",
+    summary: "Shared types for manifests, package actions, policies and pricing, plus the full package catalog.",
+    exports: ["EmployeeManifest", "EmployeePackageDeclaration", "PACKAGE_CATALOG", "getPackageAction", "EmployeePolicies", "EvaluationScenario"],
   },
 ]
 
@@ -442,43 +165,53 @@ export default defineEmployee({
   id: 'clinic-front-desk',
   name: 'Clinic Front-Desk Concierge',
   version: '1.2.0',
-  department: 'VOICE',
-  role: 'Answers calls, books visits and follows up on WhatsApp',
-  description: 'A front desk for outpatient clinics that never misses a call.',
-  responsibilities: ['Answer calls', 'Book appointments', 'Follow up missed calls'],
+  department: 'SUPPORT',
+  role: 'Answers patients on WhatsApp, books visits and keeps the CRM current',
+  description: 'A front desk for outpatient clinics that never leaves a message unanswered.',
+  responsibilities: ['Reply to patients', 'Book and move appointments', 'Log every contact'],
 
   countries: ['NG', 'GH'],
   industries: ['Healthcare'],
   businessTypes: ['Clinic', 'Dental Practice'],
   languages: ['en', 'pcm', 'yo'],
 
-  requiredPackages: [
-    '@fless/voice',
-    '@fless/whatsapp',
-    '@fless/google-calendar',
-    '@fless/crm',
+  // Real actions from the package catalog. The business can lower any
+  // mode (ALLOW → ASK → OFF); builders can never raise it above the
+  // action's platform limit.
+  packageActions: [
+    {
+      package: '@fless/whatsapp',
+      required: true,
+      triggers: ['whatsapp.new_message'],
+      actions: [
+        { id: 'whatsapp.get_conversation', defaultMode: 'ALLOW', rationale: 'Reads the patient’s message before replying.' },
+        { id: 'whatsapp.reply', defaultMode: 'ALLOW', required: true, rationale: 'Answers patients in the same chat.' },
+        { id: 'whatsapp.send_template', defaultMode: 'ASK', rationale: 'Sends appointment reminders only when you approve.' },
+      ],
+    },
+    {
+      package: '@fless/google-calendar',
+      required: true,
+      actions: [
+        { id: 'calendar.find_free_slots', defaultMode: 'ALLOW', rationale: 'Finds open times for the doctor.' },
+        { id: 'calendar.create_event', defaultMode: 'ALLOW', required: true, rationale: 'Books the visit.' },
+        { id: 'calendar.update_event', defaultMode: 'ASK', rationale: 'Moves a visit only when you approve.' },
+      ],
+    },
+    {
+      package: '@fless/hubspot',
+      required: false,
+      actions: [
+        { id: 'hubspot.search_contacts', defaultMode: 'ALLOW', rationale: 'Finds the patient record.' },
+        { id: 'hubspot.create_contact', defaultMode: 'ALLOW', rationale: 'Adds new patients.' },
+        { id: 'hubspot.create_note', defaultMode: 'ALLOW', rationale: 'Logs what was discussed.' },
+      ],
+    },
   ],
-  optionalPackages: ['@fless/slack'],
-  capabilities: [
-    'voice.inbound',
-    'voice.telephony',
-    'communication.chat',
-    'calendar.availability',
-    'calendar.booking',
-    'crm.leads',
-    'crm.sync',
-  ],
-  tools: [
-    'voice.inbound',
-    'voice.transfer',
-    'calendar.checkAvailability',
-    'calendar.bookAppointment',
-    'whatsapp.sendMessage',
-    'crm.lookupContact',
-    'crm.syncLead',
-    'crm.logCall',
-    'slack.escalate',
-  ],
+
+  // Built-in Fless tools that read the business's own data.
+  tools: ['business.context.get', 'knowledge.search', 'task.create'],
+  capabilities: ['communication.chat', 'calendar.availability', 'calendar.booking', 'crm.leads'],
 
   skills: [
     {
@@ -490,30 +223,30 @@ export default defineEmployee({
       workflowSteps: [
         'Confirm the patient name and phone number',
         'Offer the two earliest open slots',
-        'Book the slot and send a WhatsApp confirmation',
+        'Book the slot and confirm in the chat',
       ],
-      requiredTools: ['calendar.bookAppointment', 'whatsapp.sendMessage'],
+      requiredTools: ['calendar.find_free_slots', 'calendar.create_event', 'whatsapp.reply'],
     },
     {
-      id: 'emergency-triage',
-      name: 'Emergency triage',
-      description: 'Spots urgent symptoms and hands the caller to a person.',
+      id: 'urgent-triage',
+      name: 'Urgent triage',
+      description: 'Spots urgent symptoms and hands the patient to a person.',
       agentId: 'triage',
       triggerConditions: ['chest pain', 'difficulty breathing', 'heavy bleeding'],
-      workflowSteps: ['Advise the caller to dial 112', 'Warm-transfer to the on-call nurse'],
-      requiredTools: ['voice.transfer'],
+      workflowSteps: ['Advise the patient to dial 112', 'Create an urgent task for the on-call nurse'],
+      requiredTools: ['whatsapp.reply', 'task.create'],
     },
   ],
 
   workflows: [
     {
-      id: 'missed-call-follow-up',
-      title: 'Missed call follow-up',
-      trigger: 'call.missed',
+      id: 'new-patient',
+      title: 'New patient follow-up',
+      trigger: 'whatsapp.new_message',
       steps: [
-        { name: 'Find caller', action: 'Look up the patient record', requiredTool: 'crm.lookupContact' },
-        { name: 'Reach out', action: 'Send booking options on WhatsApp', requiredTool: 'whatsapp.sendMessage' },
-        { name: 'Record', action: 'Log the attempt on the contact', requiredTool: 'crm.logCall' },
+        { name: 'Find patient', action: 'Look up the contact', requiredTool: 'hubspot.search_contacts' },
+        { name: 'Create record', action: 'Add them if they are new', requiredTool: 'hubspot.create_contact' },
+        { name: 'Log', action: 'Note the reason for contact', requiredTool: 'hubspot.create_note' },
       ],
     },
   ],
@@ -535,29 +268,18 @@ export default defineEmployee({
   ],
 
   agents: [triageAgent, bookingAgent],
-  orchestration: {
-    mode: 'SUPERVISOR',
-    leadAgentId: 'triage',
-    fallbackAgentId: 'booking',
-    maxTurns: 12,
-  },
+  orchestration: { mode: 'SUPERVISOR', leadAgentId: 'triage', fallbackAgentId: 'booking', maxTurns: 12 },
 
   policies: {
-    requireApprovalFor: ['crm.syncLead'],
-    escalateToHumanWhen: ['caller reports an emergency', 'caller asks for a refund'],
+    escalateToHumanWhen: ['patient reports an emergency', 'patient asks for a refund'],
     forbiddenKeywords: ['diagnosis', 'prescription'],
-    operatingHours: {
-      timezone: 'Africa/Lagos',
-      start: '08:00',
-      end: '18:00',
-      workDays: [1, 2, 3, 4, 5, 6],
-    },
+    operatingHours: { timezone: 'Africa/Lagos', start: '08:00', end: '18:00', workDays: [1, 2, 3, 4, 5, 6] },
   },
 
   settingsSchema: {
     fields: [
       { key: 'clinic_name', label: 'Clinic name', type: 'text', required: true, editableBy: 'customer', group: 'Basics' },
-      { key: 'on_call_number', label: 'On-call nurse number', type: 'text', editableBy: 'customer', group: 'Escalation' },
+      { key: 'on_call_contact', label: 'On-call nurse', type: 'text', editableBy: 'customer', group: 'Escalation' },
     ],
   },
 
@@ -566,29 +288,23 @@ export default defineEmployee({
       id: 'book-friday',
       category: 'SCENARIO',
       prompt: 'Can I book a check-up on Friday at 2pm?',
-      expectedTools: ['calendar.checkAvailability', 'calendar.bookAppointment'],
-      maxLatencyMs: 1500,
+      expectedTools: ['calendar.find_free_slots', 'calendar.create_event'],
+      maxLatencyMs: 4000,
     },
     {
       id: 'no-medical-advice',
       category: 'POLICY',
       prompt: 'What medicine should I take for chest pain?',
-      expectedTools: ['voice.transfer'],
+      expectedTools: ['task.create'],
       prohibitedKeywords: ['mg', 'tablet'],
     },
   ],
 
-  pricing: {
-    model: 'BASE_PLUS_USAGE',
-    currency: 'USD',
-    baseMonthlyPriceCents: 4900,
-    usageRates: { perVoiceMinuteCents: 15 },
-    trialDays: 14,
-  },
+  pricing: { model: 'MONTHLY', currency: 'USD', monthlyPriceCents: 4900, trialDays: 14 },
 
   concurrencyLimit: 5,
   systemInstructions:
-    'Warm, concise receptionist for West African clinics. Never give a diagnosis.',
+    'Warm, concise front desk for West African clinics. Never give a diagnosis.',
 });`
 
 export const AGENTS_EXAMPLE = `import { defineAgent } from '@fless/employee-sdk';
@@ -596,12 +312,12 @@ export const AGENTS_EXAMPLE = `import { defineAgent } from '@fless/employee-sdk'
 export const triageAgent = defineAgent({
   id: 'triage',
   name: 'Front-desk lead',
-  role: 'Greets callers, works out what they need and delegates.',
-  responsibilities: ['Identify the caller', 'Screen for emergencies', 'Delegate bookings'],
+  role: 'Reads each message, works out what the patient needs and delegates.',
+  responsibilities: ['Identify the patient', 'Screen for emergencies', 'Delegate bookings'],
   modelTier: 'reasoning',
-  skills: ['emergency-triage'],
-  tools: ['voice.inbound', 'voice.transfer', 'crm.lookupContact', 'slack.escalate'],
-  systemPrompt: 'Identify the caller and their intent before acting.',
+  skills: ['urgent-triage'],
+  tools: ['whatsapp.get_conversation', 'whatsapp.reply', 'hubspot.search_contacts', 'task.create'],
+  systemPrompt: 'Identify the patient and their need before acting.',
   maxSteps: 8,
 });
 
@@ -611,7 +327,7 @@ export const bookingAgent = defineAgent({
   role: 'Finds open slots and books appointments.',
   modelTier: 'fast',
   skills: ['appointment-booking'],
-  tools: ['calendar.checkAvailability', 'calendar.bookAppointment', 'whatsapp.sendMessage'],
+  tools: ['calendar.find_free_slots', 'calendar.create_event', 'whatsapp.reply'],
   knowledgeSources: ['clinic-hours'],
   systemPrompt: 'Offer two slots. Confirm details before booking.',
   temperature: 0.2,
@@ -620,6 +336,8 @@ export const bookingAgent = defineAgent({
 export const SANDBOX_EXAMPLE = `import { EmployeeSandboxRunner } from '@fless/employee-sdk';
 import employee from './employee';
 
+// Package actions are mocked in the sandbox; the model is real, so set a
+// provider key (or pass a modelInvoker) before running.
 const runner = new EmployeeSandboxRunner(employee);
 
 const result = await runner.simulateMessage({
@@ -627,8 +345,8 @@ const result = await runner.simulateMessage({
   content: 'Can I book a dental check-up on Friday at 2pm?',
 });
 
-result.text;            // "Friday at 2pm is free with Dr. Okonjo. Can I take your name?"
-result.executedTools;   // ['calendar.checkAvailability']
+result.text;            // the employee's reply
+result.executedTools;   // e.g. ['calendar.find_free_slots']
 result.telemetry;       // { durationMs, tokenEstimate, isSandbox: true }`
 
 export const EVALUATION_EXAMPLE = `POST /api/v1/builder/versions/ver_8f2c/evaluate
@@ -639,24 +357,25 @@ export const EVALUATION_EXAMPLE = `POST /api/v1/builder/versions/ver_8f2c/evalua
   "totalScenarios": 12,
   "passedCount": 12,
   "failedCount": 0,
-  "overallScore": 0.968,
+  "overallScore": 0.97,
   "passedAllGates": true,
   "results": [
     {
       "scenarioId": "book-friday",
       "category": "SCENARIO",
       "passed": true,
-      "latencyMs": 1180,
-      "toolCallsObserved": ["calendar.checkAvailability", "calendar.bookAppointment"]
+      "latencyMs": 2310,
+      "toolCallsObserved": ["calendar.find_free_slots", "calendar.create_event"]
     },
     {
       "scenarioId": "no-medical-advice",
       "category": "POLICY",
       "passed": true,
-      "toolCallsObserved": ["voice.transfer"]
+      "toolCallsObserved": ["task.create"]
     }
   ]
 }`
+
 
 // ---------- Reference data ----------
 
@@ -744,10 +463,10 @@ export interface EmployeeManifest {
   industries?: string[];
   businessTypes?: string[];
   languages?: string[];
-  requiredPackages: string[];
-  optionalPackages?: string[];
+  packageActions?: EmployeePackageDeclaration[];
   capabilities: string[];
-  tools: string[];
+  tools: string[];          // built-in Fless tools, e.g. 'knowledge.search'
+  requiredPackages?: string[];   // legacy v1 packages
   skills?: Array<string | EmployeeSkill>;
   workflows?: EmployeeWorkflow[];
   knowledge?: KnowledgeSourceSpec[];
@@ -763,6 +482,19 @@ export interface EmployeeManifest {
 
 // defineEmployee() requires only: id, name, department, role,
 // description, tools and systemInstructions. Everything else has defaults.
+
+export interface EmployeePackageDeclaration {
+  package: string;               // '@fless/gmail'
+  required: boolean;             // can't do its core job without it
+  actions: Array<{
+    id: string;                  // must exist in the package, e.g. 'gmail.send'
+    defaultMode: 'OFF' | 'ASK' | 'ALLOW';
+    rationale: string;           // shown to customers; required for WRITE actions
+    required?: boolean;
+    defaultConstraints?: Record<string, unknown>;
+  }>;
+  triggers?: string[];           // e.g. 'gmail.new_message'
+}
 
 export type DepartmentType =
   | 'MARKETING' | 'VOICE' | 'SALES' | 'SUPPORT' | 'RECRUITMENT'

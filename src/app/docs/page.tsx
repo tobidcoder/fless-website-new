@@ -21,15 +21,14 @@ import {
   LANGUAGES,
   MANIFEST_EXAMPLE,
   MODEL_TIERS,
-  PACKAGES,
-  PACKAGES_STATUS_NOTE,
-  PACKAGE_CATEGORIES,
+  ACTION_MODE_NOTE,
+  AUTH_LABELS,
   PRICING_MODELS,
   SANDBOX_EXAMPLE,
   TYPES_SNIPPET,
   USAGE_RATES,
   type ConnectionStatus,
-  type Package,
+  type CatalogPackage,
 } from "@/lib/sdk";
 
 // ---------- Navigation ----------
@@ -61,13 +60,10 @@ const NAV: NavGroup[] = [
   {
     title: "Packages",
     items: [
-      { id: "packages", title: "All packages" },
-      ...PACKAGES.map((p) => ({ id: `package-${p.id}`, title: p.name })),
+      { id: "packages", title: "Core packages" },
+      { id: "package-actions", title: "Declaring actions" },
+      { id: "connections", title: "All app packages" },
     ],
-  },
-  {
-    title: "Connections",
-    items: [{ id: "connections", title: "Official API connections" }],
   },
   {
     title: "Test and ship",
@@ -81,7 +77,6 @@ const NAV: NavGroup[] = [
     title: "Reference",
     items: [
       { id: "api", title: "Builder API" },
-      { id: "capabilities", title: "Capabilities" },
       { id: "model-tiers", title: "Model tiers" },
       { id: "markets", title: "Countries and languages" },
       { id: "departments", title: "Departments" },
@@ -111,7 +106,8 @@ const ALIASES: Record<string, string> = {
   publish: "submit",
   publishing: "submit",
   cli: "api",
-  "ref-capabilities": "capabilities",
+  "ref-capabilities": "package-actions",
+  capabilities: "package-actions",
   "ref-model-tiers": "model-tiers",
   "ref-countries": "markets",
   "ref-languages": "markets",
@@ -121,9 +117,17 @@ const ALIASES: Record<string, string> = {
 };
 
 const ALL_ITEMS = NAV.flatMap((g) => g.items);
+// Legacy v1 package ids that were renamed in the actions catalog.
+const LEGACY_PACKAGES: Record<string, string> = { meta: "facebook", mail: "gmail", crm: "hubspot" };
+
 const resolve = (hash: string) => {
-  // Old plugin pages were #plugin-<id>; packages now live at #package-<id>.
+  // Old plugin pages were #plugin-<id>; packages live at #package-<id>.
   const id = ALIASES[hash] ?? hash.replace(/^plugin-/, "package-");
+  if (id.startsWith("package-") && id !== "package-actions") {
+    const slug = id.slice("package-".length)
+    const resolved = LEGACY_PACKAGES[slug] ?? slug
+    return CONNECTIONS.some((c) => c.id === resolved) ? `package-${resolved}` : "connections"
+  }
   return ALL_ITEMS.some((i) => i.id === id) ? id : "overview";
 };
 
@@ -294,11 +298,25 @@ export default defineEmployee({
   role: 'Plans and publishes weekly posts',
   description: 'Turns a weekly brief into approved posts on Facebook and Instagram.',
 
-  requiredPackages: ['@fless/meta'],
-  capabilities: ['social.publish', 'social.analytics'],
-  tools: ['social.publish', 'social.analytics.get'],
-
-  policies: { requireApprovalFor: ['social.publish'] },
+  packageActions: [
+    {
+      package: '@fless/facebook',
+      required: true,
+      actions: [
+        { id: 'facebook.list_pages', defaultMode: 'ALLOW', rationale: 'Finds the Page to post to.' },
+        { id: 'facebook.publish_post', defaultMode: 'ASK', rationale: 'Posts only after you approve.' },
+        { id: 'facebook.get_insights', defaultMode: 'ALLOW', rationale: 'Reads results to improve next week.' },
+      ],
+    },
+    {
+      package: '@fless/instagram',
+      required: false,
+      actions: [
+        { id: 'instagram.publish_image', defaultMode: 'ASK', rationale: 'Posts only after you approve.' },
+      ],
+    },
+  ],
+  tools: ['business.context.get', 'content.draft'],
 
   pricing: { model: 'MONTHLY', currency: 'USD', monthlyPriceCents: 4900 },
   systemInstructions: 'Write in the brand voice. Never publish without approval.',
@@ -315,7 +333,7 @@ const SKILLS_EXAMPLE = `skills: [
       'Send a WhatsApp with two call-back times',
       'Update the lead status',
     ],
-    requiredTools: ['crm.lookupContact', 'whatsapp.sendMessage', 'crm.syncLead'],
+    requiredTools: ['hubspot.search_contacts', 'whatsapp.send_text', 'hubspot.update_contact'],
   },
   // A skill can point at an existing SOP instead of listing steps
   {
@@ -332,8 +350,8 @@ workflows: [
     title: 'Weekly social report',
     trigger: 'schedule.weekly',
     steps: [
-      { name: 'Collect', action: 'Pull last week\\'s numbers', requiredTool: 'social.analytics.get' },
-      { name: 'Share', action: 'Post a summary to the team', requiredTool: 'slack.postMessage' },
+      { name: 'Collect', action: 'Pull last week\\'s numbers', requiredTool: 'facebook.get_insights' },
+      { name: 'Share', action: 'Post a summary to the team', requiredTool: 'slack.post_message' },
     ],
   },
 ],`;
@@ -362,8 +380,9 @@ const KNOWLEDGE_EXAMPLE = `knowledge: [
 ]`;
 
 const POLICIES_EXAMPLE = `policies: {
-  // These tools always wait for a person to approve
-  requireApprovalFor: ['social.publish', 'crm.syncLead'],
+  // Approval for app actions is set per action with defaultMode: 'ASK'.
+  // These built-in tools also wait for a person:
+  requireApprovalFor: ['task.create'],
   // Hand the conversation to a person when any of these happen
   escalateToHumanWhen: ['customer is angry', 'customer asks for a refund'],
   // Never say these
@@ -422,50 +441,117 @@ POST /api/v1/builder/versions/ver_8f2c/submit`;
 
 // ---------- Pages ----------
 
-function PackagePage({ pkg }: { pkg: Package }) {
+const modeTone: Record<string, string> = {
+  ALLOW: "text-emerald-600 dark:text-emerald-400",
+  ASK: "text-amber-700 dark:text-amber-400",
+  OFF: "text-muted-foreground",
+};
+
+function PackagePage({ id }: { id: string }) {
+  const [pkg, setPkg] = useState<CatalogPackage | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    let live = true;
+    setPkg(null);
+    setFailed(false);
+    fetch(`/catalog/${id}.json`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((data: CatalogPackage) => live && setPkg(data))
+      .catch(() => live && setFailed(true));
+    return () => {
+      live = false;
+    };
+  }, [id]);
+
+  const summary = CONNECTIONS.find((c) => c.id === id);
+  if (failed) {
+    return <PageHead eyebrow="Package" title={summary?.name ?? id} lede="This package's details couldn't be loaded. Refresh to try again." />;
+  }
+  if (!pkg) {
+    return <PageHead eyebrow={`Package · ${categoryLabel(summary?.category ?? "")}`} title={summary?.name ?? id} lede={summary?.summary ?? "Loading…"} />;
+  }
+
+  const writes = pkg.actions.filter((a) => a.kind === "WRITE");
+  const reads = pkg.actions.filter((a) => a.kind === "READ");
+  const example = writes[0] ?? pkg.actions[0];
+
   return (
     <>
       <header className="mb-12 md:mb-16">
-        <p className="text-[12px] font-medium text-primary mb-4">Package · {pkg.category}</p>
-        <h1 className="text-[32px] sm:text-[40px] font-display font-semibold tracking-[-0.035em] leading-[1.1] text-foreground">
-          {pkg.name}
-        </h1>
+        <p className="text-[12px] font-medium text-primary mb-4">Package · {categoryLabel(pkg.category)}</p>
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-[32px] sm:text-[40px] font-display font-semibold tracking-[-0.035em] leading-[1.1] text-foreground">
+            {pkg.name}
+          </h1>
+          <Status status={pkg.status} />
+        </div>
         <p className="mt-3 font-mono text-[14px] text-muted-foreground">{pkg.packageName}</p>
         <p className="mt-5 text-[17px] sm:text-[18px] text-muted-foreground leading-[1.7]">{pkg.summary}</p>
       </header>
 
-      <Note>{PACKAGES_STATUS_NOTE}</Note>
-
       <Defs
         items={[
-          ...(pkg.connects.length > 0 ? [{ term: "Connects to", text: pkg.connects.join(", ") }] : []),
-          { term: "Capabilities", text: <Chips items={pkg.capabilities} /> },
-          { term: "Permissions", text: <Chips items={pkg.permissions} /> },
-          { term: "Sandbox", text: "Every tool has a sandbox version, so tests never touch live accounts." },
+          { term: "Status", text: CONNECTION_STATUS_NOTE[pkg.status] },
+          {
+            term: "Connects with",
+            text: (
+              <>
+                {AUTH_LABELS[pkg.auth.type] ?? pkg.auth.type}
+                {pkg.auth.docsUrl && (
+                  <>
+                    {" · "}
+                    <a href={pkg.auth.docsUrl} target="_blank" rel="noreferrer" className="text-foreground underline underline-offset-4">
+                      where to find keys
+                    </a>
+                  </>
+                )}
+              </>
+            ),
+          },
+          { term: "Actions", text: `${pkg.actions.length} (${reads.length} read, ${writes.length} write)` },
+          ...(pkg.triggers.length > 0 ? [{ term: "Triggers", text: <Chips items={pkg.triggers.map((t) => t.id)} /> }] : []),
         ]}
       />
 
-      <H2>Add it to your employee</H2>
-      <P>
-        List the package in <C>requiredPackages</C>, then allow only the tools you need in <C>tools</C>. The business
-        connects its own account when it hires your employee. Your code never sees their credentials.
-      </P>
-      <CodeView
-        code={`requiredPackages: ['${pkg.packageName}'],\ncapabilities: [${pkg.capabilities.map((c) => `'${c}'`).join(", ")}],\ntools: [${pkg.tools.map((t) => `'${t.id}'`).join(", ")}],`}
-        filename="employee.ts"
-      />
+      {example && (
+        <>
+          <H2>Declare it</H2>
+          <P>
+            Add the package to <C>packageActions</C> and list only the actions your employee needs, each with a default
+            mode and a reason the business will see.
+          </P>
+          <CodeView
+            code={`packageActions: [\n  {\n    package: '${pkg.packageName}',\n    required: true,\n    actions: [\n      { id: '${example.id}', defaultMode: '${example.defaultMode}', rationale: '…' },\n    ],\n  },\n],`}
+            filename="employee.ts"
+          />
+        </>
+      )}
 
-      <H2>Tools</H2>
+      <H2>Actions</H2>
       <div className="space-y-14">
-        {pkg.tools.map((t) => (
-          <section key={t.id}>
-            <h3 className="font-mono text-[15px] text-foreground mb-2">{t.id}</h3>
-            <p className="text-[15px] text-muted-foreground leading-relaxed mb-5">{t.description}</p>
-            {t.parameters.length > 0 ? (
+        {pkg.actions.map((a) => (
+          <section key={a.id}>
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2">
+              <h3 className="font-mono text-[15px] text-foreground">{a.id}</h3>
+              <span className="text-[12px] text-muted-foreground">{a.kind === "READ" ? "Read" : "Write"}</span>
+              <span className={cn("text-[12px] font-medium", modeTone[a.defaultMode])}>Default {a.defaultMode}</span>
+              {a.status && a.status !== pkg.status && <Status status={a.status} />}
+            </div>
+            <p className="text-[15px] text-foreground mb-1">{a.name}</p>
+            <p className="text-[15px] text-muted-foreground leading-relaxed mb-4">{a.description}</p>
+            {(a.outward || a.irreversible || a.spendsMoney) && (
+              <p className="text-[13px] text-muted-foreground mb-4">
+                {[a.outward && "Visible to people outside the business", a.irreversible && "Can't be undone", a.spendsMoney && "Spends money"]
+                  .filter(Boolean)
+                  .join(" · ")}
+              </p>
+            )}
+            {a.params.length > 0 ? (
               <Table
                 head={["Parameter", "Type", "Required", "Description"]}
                 mono={[0, 1]}
-                rows={t.parameters.map((p) => [p.name, p.type, p.required ? "Yes" : "No", p.description])}
+                rows={a.params.map((p) => [p.name, p.type, p.required ? "Yes" : "No", p.description])}
               />
             ) : (
               <p className="text-[14px] text-muted-foreground">No parameters.</p>
@@ -478,9 +564,8 @@ function PackagePage({ pkg }: { pkg: Package }) {
 }
 
 function PageContent({ id }: { id: string }) {
-  if (id.startsWith("package-")) {
-    const pkg = PACKAGES.find((p) => `package-${p.id}` === id);
-    if (pkg) return <PackagePage pkg={pkg} />;
+  if (id.startsWith("package-") && id !== "package-actions") {
+    return <PackagePage id={id.slice("package-".length)} />;
   }
 
   switch (id) {
@@ -504,7 +589,7 @@ function PageContent({ id }: { id: string }) {
           <div className="border-t border-border/60">
             <LinkRow href="#quickstart" title="Quickstart" text="From an empty folder to a tested employee." />
             <LinkRow href="#manifest" title="The manifest" text="A complete example, field by field." />
-            <LinkRow href="#packages" title="Packages" text={`${PACKAGES.length} packages and their tools.`} />
+            <LinkRow href="#package-actions" title="Declaring actions" text="How employees ask for exactly what they need." />
             <LinkRow href="#connections" title="Connections" text="Official APIs businesses can connect." />
             <LinkRow href="#submit" title="Submit and get paid" text="Review, launch and monthly payouts." />
           </div>
@@ -582,8 +667,9 @@ function PageContent({ id }: { id: string }) {
               { term: "Skill", text: "A repeatable procedure: when it applies, the steps, and the tools each step uses." },
               { term: "Workflow", text: "A multi-step job that starts on an event or schedule." },
               { term: "Knowledge", text: "Facts the employee answers from: text, web pages, PDFs and documents." },
-              { term: "Package", text: "A set of tools, such as @fless/whatsapp." },
-              { term: "Tool", text: "One action a package offers, such as whatsapp.sendMessage." },
+              { term: "Package", text: "An app connection and its actions, such as @fless/whatsapp." },
+              { term: "Action", text: "One thing a package can do, such as whatsapp.send_text, with a mode: ALLOW, ASK or OFF." },
+              { term: "Tool", text: "A built-in Fless capability, such as knowledge.search." },
               { term: "Connection", text: "A business's own account on a service, linked through the official API." },
               { term: "Policy", text: "A rule: what needs approval, when to hand over to a person, working hours." },
             ]}
@@ -608,9 +694,9 @@ function PageContent({ id }: { id: string }) {
               ["department, role", "Yes", "Which desk it works on and its job in one line."],
               ["description", "Yes", "What businesses read on the marketplace."],
               ["countries, industries, businessTypes, languages", "No", "Who it is for."],
-              ["requiredPackages, optionalPackages", "No", "Packages it needs, and ones it can use if connected."],
+              ["packageActions", "No", "The actions it may take in each connected app, with a mode and a reason."],
               ["capabilities", "No", "Broad permissions, used for review and marketplace search."],
-              ["tools", "Yes", "Exact tools it may call. Anything else is blocked."],
+              ["tools", "Yes", "Built-in Fless tools it may call. Anything not declared is blocked."],
               ["skills, workflows", "No", "Procedures and event-driven jobs."],
               ["knowledge", "No", "Sources it answers from."],
               ["agents, orchestration", "No", "Specialists and how they share work. One lead agent is created if omitted."],
@@ -797,11 +883,10 @@ function PageContent({ id }: { id: string }) {
         <>
           <PageHead
             eyebrow="Packages"
-            title="Packages"
-            lede="Core packages to build with, and packages that give your employee tools. Every tool is mocked in the sandbox."
+            title="Core packages"
+            lede={`Two packages to build with. Everything your employee does in other apps comes from the ${CONNECTIONS.length} app packages, declared action by action.`}
           />
           <CodeView code={INSTALL} language="bash" filename="terminal" />
-          <Note>{PACKAGES_STATUS_NOTE}</Note>
           <div className="mt-12 space-y-12">
             {CORE_PACKAGES.map((p) => (
               <section key={p.name}>
@@ -812,22 +897,56 @@ function PageContent({ id }: { id: string }) {
               </section>
             ))}
           </div>
-          {PACKAGE_CATEGORIES.map((cat) => (
-            <section key={cat}>
-              <H2>{cat}</H2>
-              <div className="border-t border-border/60">
-                {PACKAGES.filter((p) => p.category === cat).map((p) => (
-                  <a key={p.id} href={`#package-${p.id}`} className="group block py-5 border-b border-border/60">
-                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                      <span className="text-[16px] font-medium text-foreground group-hover:text-primary transition-colors">{p.name}</span>
-                      <span className="font-mono text-[13px] text-muted-foreground">{p.packageName}</span>
-                    </div>
-                    <p className="mt-1.5 text-[14px] text-muted-foreground leading-relaxed">{p.summary}</p>
-                  </a>
-                ))}
-              </div>
-            </section>
-          ))}
+          <div className="mt-12 border-t border-border/60">
+            <LinkRow href="#package-actions" title="Declaring actions" text="How packageActions, modes and rationales work." />
+            <LinkRow href="#connections" title="All app packages" text={`${CONNECTIONS.length} packages, grouped by category.`} />
+          </div>
+        </>
+      );
+
+    case "package-actions":
+      return (
+        <>
+          <PageHead
+            eyebrow="Packages"
+            title="Declaring actions"
+            lede="An employee asks for exactly the actions it needs in each app, not blanket access. Each one has a default mode and a reason the business sees before it connects."
+          />
+          <CodeView
+            code={`packageActions: [
+  {
+    package: '@fless/google-calendar',
+    required: true,
+    actions: [
+      { id: 'calendar.find_free_slots', defaultMode: 'ALLOW', rationale: 'Finds open times.' },
+      { id: 'calendar.create_event', defaultMode: 'ALLOW', required: true, rationale: 'Books the visit.' },
+      { id: 'calendar.update_event', defaultMode: 'ASK', rationale: 'Moves a visit only when you approve.' },
+    ],
+  },
+],`}
+            filename="employee.ts"
+          />
+          <H2>Modes</H2>
+          <Defs items={(["ALLOW", "ASK", "OFF"] as const).map((m) => ({ term: <C>{m}</C>, text: ACTION_MODE_NOTE[m] }))} />
+          <P>
+            The business can lower any mode after hiring. Your default can never go above the limit Fless sets on an
+            action. Actions that spend money, can&apos;t be undone or reach people outside the business are capped at{" "}
+            <C>ASK</C> or <C>OFF</C>.
+          </P>
+          <H2>Fields</H2>
+          <Table
+            head={["Field", "What it does"]}
+            rows={[
+              ["package", "The package id, e.g. '@fless/gmail'."],
+              ["required", "Whether the employee can do its core job without the package."],
+              ["actions[].id", "An action from that package. Unknown ids fail verification."],
+              ["actions[].defaultMode", "ALLOW, ASK or OFF."],
+              ["actions[].rationale", "Shown to the business. Required for write actions."],
+              ["actions[].required", "Core action: if the business turns it off, the employee shows as Limited."],
+              ["actions[].defaultConstraints", "Limits such as a daily spend cap, where the action supports them."],
+              ["triggers", "Events that start work, e.g. 'gmail.new_message'."],
+            ]}
+          />
         </>
       );
 
@@ -835,8 +954,8 @@ function PageContent({ id }: { id: string }) {
       return (
         <>
           <PageHead
-            eyebrow="Connections"
-            title="Official API connections"
+            eyebrow="Packages"
+            title="All app packages"
             lede={`${CONNECTIONS.length} connections, each built on the provider's official API with no third-party schedulers in between. Businesses sign in with their own accounts; Fless stores and refreshes the tokens.`}
           />
           <Defs
@@ -850,14 +969,14 @@ function PageContent({ id }: { id: string }) {
               <H2>{categoryLabel(g)}</H2>
               <div className="border-t border-border/60">
                 {CONNECTIONS.filter((c) => c.category === g).map((c) => (
-                  <div key={c.id} className="py-5 border-b border-border/60">
+                  <a key={c.id} href={`#package-${c.id}`} className="group block py-5 border-b border-border/60">
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                      <span className="text-[16px] font-medium text-foreground">{c.name}</span>
+                      <span className="text-[16px] font-medium text-foreground group-hover:text-primary transition-colors">{c.name}</span>
                       <Status status={c.status} />
                       <span className="text-[13px] text-muted-foreground tabular-nums">{c.actions} actions</span>
                     </div>
                     <p className="mt-1.5 text-[14px] text-muted-foreground leading-relaxed">{c.summary}</p>
-                  </div>
+                  </a>
                 ))}
               </div>
             </section>
@@ -947,21 +1066,6 @@ function PageContent({ id }: { id: string }) {
         </>
       );
 
-    case "capabilities": {
-      const caps = Array.from(
-        PACKAGES.reduce((m, p) => {
-          p.capabilities.forEach((c) => m.set(c, [...(m.get(c) ?? []), p.packageName]));
-          return m;
-        }, new Map<string, string[]>())
-      ).sort(([a], [b]) => a.localeCompare(b));
-      return (
-        <>
-          <PageHead eyebrow="Reference" title="Capabilities" lede="Capabilities are broad permissions. Declare the ones your tools need; the marketplace also uses them for search." />
-          <Table head={["Capability", "Provided by"]} rows={caps.map(([c, pkgs]) => [c, pkgs.join(", ")])} />
-        </>
-      );
-    }
-
     case "model-tiers":
       return (
         <>
@@ -1028,10 +1132,16 @@ export default function DocsPage() {
     );
   }, [query]);
 
-  const index = ALL_ITEMS.findIndex((i) => i.id === active);
-  const prev = ALL_ITEMS[index - 1];
-  const next = ALL_ITEMS[index + 1];
+  // Package pages aren't in the sidebar; treat them as children of "All app packages".
+  const isPackagePage = active.startsWith("package-") && active !== "package-actions";
+  const index = ALL_ITEMS.findIndex((i) => i.id === (isPackagePage ? "connections" : active));
   const current = ALL_ITEMS[index];
+  // On a package page, "Previous" goes back to the full list.
+  const prev = isPackagePage ? current : ALL_ITEMS[index - 1];
+  const next = isPackagePage ? undefined : ALL_ITEMS[index + 1];
+  const currentTitle = isPackagePage
+    ? CONNECTIONS.find((c) => `package-${c.id}` === active)?.name ?? current?.title
+    : current?.title;
 
   const nav = (
     <nav aria-label="Documentation">
@@ -1084,7 +1194,7 @@ export default function DocsPage() {
             >
               <span className="text-muted-foreground">
                 Docs <span className="mx-1.5">/</span>
-                <span className="text-foreground font-medium">{current?.title}</span>
+                <span className="text-foreground font-medium">{currentTitle}</span>
               </span>
               <span className="text-muted-foreground">{menuOpen ? "Close" : "Menu"}</span>
             </button>
