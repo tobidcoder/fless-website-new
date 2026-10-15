@@ -1,3 +1,4 @@
+import { BILLING_STATEMENT } from "@/lib/billing"
 export const departmentDetail: Record<
   string,
   {
@@ -16,7 +17,7 @@ export const departmentDetail: Record<
       { title: "Launch week", copy: "Waitlist, social, and landing copy from one brief." },
       { title: "Always-on calendar", copy: "The week stays full when the team is in a product sprint." },
       { title: "SEO pack", copy: "Titles, internals, a report you can review." },
-      { title: "Ads that match stock", copy: "Creative queued for review — you approve the set." },
+      { title: "Ad creative (publishing coming soon)", copy: "Ad copy and creative drafted for review. Launching ads directly is coming soon." },
     ],
     steps: [
       { n: "01", title: "Drop the brief", copy: "Market, offer, and the channels that matter this quarter." },
@@ -186,7 +187,7 @@ export const departmentDetail: Record<
       },
       {
         q: "Currencies?",
-        a: "Billing is displayed in USD, NGN, GBP, EUR, KES, GHS, ZAR and AED and invoiced in USD.",
+        a: BILLING_STATEMENT,
       },
     ],
   },

@@ -133,3 +133,41 @@ Required environment variables in production:
 ## 10. Connections generated from the backend catalog
 
 The connection list is no longer written by hand. `scripts/sync-connections.mts` reads `PACKAGE_CATALOG` from `getfless/backend-employees` and writes `src/lib/connections.generated.ts`. The first run listed 176 connections: 19 Available (GA), 150 Beta and 7 Awaiting provider approval. Unofficial partner integrations are excluded. Re-run the script whenever the backend catalog changes.
+
+## 11. Re-architecture pass (October 2026): Studio, three-part pricing, real forms
+
+The site now sells the approved model: businesses hire employees made by builders **or build their own in Studio**; builders describe, test and publish with no code.
+
+**Removed (D19, D20)**
+- The developer SDK story: `src/lib/sdk.ts`, `CodeView`, the code tabs and manifest anatomy on /builders, the SDK reference on /docs, the "Plugins", "SDK Overview" and "Request SDK access" footer links, and every "SDK", "plugin", "TypeScript file" and "npm install" mention. The app-catalog types moved to `src/lib/connections.ts`.
+- Google Form forwarding: `src/app/api/beta/route.ts` and `src/lib/betaForm.ts`.
+- The tenure discount table, "model use included" copy, and hourly or multi-year hire wording.
+
+**New and changed pages**
+- **/builders**: "Describe it. Test it. Publish it. Earn every month it works." Shows the Studio chat flow (describe, questions, test live, publish privately or to the marketplace), builders keep 70%, payouts through Stripe and Paystack, review before the marketplace, automatic sales pages and referral links, reusable and sellable skills, a builder FAQ and a builder application form (role=builder).
+- **/docs** is now a help centre with no code: getting started, hiring, connecting apps (apps with sign-in, apps that connect through a standard connector, websites on approved sites, any API), approvals (Off, Ask first, Automatic), workspace limits, activity log, building in Studio, skills, publishing and review, pricing and credits, payouts, hosting (Fless Cloud, Private Cloud, your own servers), and security. Old `/docs#…` anchors are mapped to the new sections.
+- **/pricing** has three parts: the plans table (Free $0, Starter $39, Growth $149, Business $499, Enterprise custom; $5/$20/$100/$400 of included credits; key limits), live marketplace employee prices labelled monthly, annual or per task, and work credits explained (what uses them, the spending cap, bringing your own model key). It adds a currency switcher with local price lists in NGN, GHS, KES and ZAR plus USD, GBP and EUR, a monthly or annual toggle (2 months free), and the calculator the FAQ promised (plan + employees + estimated credits).
+- **/hire** (new): marketplace browse page with search, category filters and paging, using the new public `GET /api/v1/marketplace/public/employees` (PUBLISHED only, minimal fields).
+- **/build** (new): "Build an AI employee for your business in minutes", with a prompt box that opens `${NEXT_PUBLIC_APP_URL}/#/studio?prompt=<text>`.
+- **Department pages** are now categories. They show live published employees from the API first, then the old roles relabelled as "Examples". The persona names and stock-photo faces were removed.
+- **Header**: Hire, Build, Categories, Solutions, Pricing, Builders, Help, plus a language switcher. **Footer**: the link columns were rebuilt around the new pages.
+
+**Forms**: /start (role=business|builder|investor, chosen in the form or with `?role=`), the builder application and the new contact form post to `POST /api/v1/public/waitlist`, which is rate limited, validates email and has a honeypot. Staff see sign-ups at `GET /api/v1/admin/waitlist`. The hero and footer email boxes hand over to /start.
+
+**Claims**
+- Pilot count, regions, social networks and SOC 2 wording now live in one place, `src/lib/claims.ts`, with TODO(owner) notes to confirm them. "18 businesses" is no longer hard-coded anywhere else.
+- SOC 2 now reads "planned", not "in progress". SSO and data region are now "Business and Enterprise plans"; SAML and "private region" wording was removed. Ads now read "coming soon". The network count is 6 everywhere, matching LinkedIn, X, Facebook, Instagram, Threads and Bluesky.
+- There is one billing statement, `BILLING_STATEMENT` in `src/lib/billing.ts`, used on pricing, docs, FAQ and solutions. This replaces the three conflicting statements (USD-only invoicing, "8 currencies with local invoices", and "USD converted at invoice date"). AED was dropped.
+
+**Analytics and consent**: Plausible loads only when `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` is set. It is cookieless, and the only cookie the site sets is the `NEXT_LOCALE` language preference, so there is no consent banner. Add one before adding any tool that sets non-essential cookies.
+
+**Translations**: next-intl 4.14.9 is pinned. English is the default. French and Portuguese cover the header, footer, home hero and pricing, and other text falls back to English. The language comes from the `NEXT_LOCALE` cookie set by the switcher, falling back to Accept-Language. Because of this, pages render per request; marketplace data is still cached for 10 minutes.
+
+**Catalog sync**: `scripts/sync-connections.mts` reads the backend capability catalog (`CAPABILITY_CATALOG`, covering sign-in apps, standard connectors, API connections and website tasks) when it exists, and otherwise the package catalog as before.
+
+**Still to do (owner)**
+1. Confirm every value in `src/lib/claims.ts` and the plan and regional prices in `src/lib/billing.ts` (proposals from the plan).
+2. Add the site origin to the API's `CORS_ORIGINS` so the forms work in production.
+3. Translate the remaining pages into French and Portuguese (Arabic next, which needs right-to-left layout).
+4. Re-run the catalog sync once the backend capability catalog lands. The committed list predates it.
+5. Earlier to-dos still stand: replace stock photos, add customer proof, and add the team.

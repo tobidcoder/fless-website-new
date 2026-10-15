@@ -1,32 +1,26 @@
 import type { Metadata } from "next"
 
+const title = "Help centre — Fless"
+const description =
+  "Plain-language guides for Fless: hiring and building AI employees, connecting apps, approvals, workspace limits, Studio, publishing, pricing, payouts, hosting and security."
+
 export const metadata: Metadata = {
-  title: "Documentation & Developer Guide — Fless",
-  description:
-    "Runtime architecture, stateful supervisor engines, tool permission policy gates, and accelerated compute infrastructure for Fless AI employees.",
+  title,
+  description,
   alternates: {
     canonical: "https://getfless.com/docs",
   },
   openGraph: {
-    title: "Documentation & Developer Guide — Fless",
-    description:
-      "Runtime architecture, supervisor engines, policy gates, and GPU-accelerated compute for Fless AI employees.",
+    title,
+    description,
     url: "https://getfless.com/docs",
     siteName: "Fless",
-    images: [
-      {
-        url: "/fless-og.png",
-        width: 1200,
-        height: 630,
-        alt: "Fless Documentation",
-      },
-    ],
+    images: [{ url: "/fless-og.png", width: 1200, height: 630, alt: "Fless help centre" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Documentation & Developer Guide — Fless",
-    description:
-      "Architecture, runtime supervisors, policy gates, and compute specs for Fless AI employees.",
+    title,
+    description,
     images: ["/fless-og.png"],
   },
 }

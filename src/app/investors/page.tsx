@@ -4,18 +4,20 @@ import { ArrowRight, Check, Circle, Mail } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { NvidiaInceptionBadge } from "@/components/NvidiaInceptionBadge"
+import { PILOT_BUSINESS_COUNT, PILOT_REGION_COUNT } from "@/lib/claims"
+import { BUILDER_SHARE, FLESS_SHARE } from "@/lib/billing"
 
 export const metadata: Metadata = {
   title: "Investors & Accelerators — Fless",
   description:
-    "Fless is pre-seed infrastructure for AI employees. 18 businesses in pilot across Nigeria, the UK and North America. Workforce subscriptions plus a builder marketplace. NVIDIA Inception member.",
+    `Fless is pre-seed infrastructure for AI employees. ${PILOT_BUSINESS_COUNT} businesses in pilot across Nigeria, the UK and North America. Workforce subscriptions plus a builder marketplace. NVIDIA Inception member.`,
   alternates: {
     canonical: "https://getfless.com/investors",
   },
   openGraph: {
     title: "Investors & Accelerators — Fless",
     description:
-      "Pre-seed infrastructure for AI employees. 18 businesses in pilot. Workforce subscriptions plus a builder marketplace.",
+      `Pre-seed infrastructure for AI employees. ${PILOT_BUSINESS_COUNT} businesses in pilot. Workforce subscriptions plus a builder marketplace.`,
     url: "https://getfless.com/investors",
     siteName: "Fless",
     images: [{ url: "/fless-og.png", width: 1200, height: 630, alt: "Fless for investors" }],
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Investors & Accelerators — Fless",
-    description: "Pre-seed infrastructure for AI employees. 18 businesses in pilot across 3 regions.",
+    description: `Pre-seed infrastructure for AI employees. ${PILOT_BUSINESS_COUNT} businesses in pilot across ${PILOT_REGION_COUNT} regions.`,
     images: ["/fless-og.png"],
   },
 }
@@ -36,7 +38,7 @@ const acceleratorMail =
 const snapshot = [
   { label: "Stage", value: "Pre-seed" },
   { label: "Live product", value: "AI Marketing employee" },
-  { label: "Pilots", value: "18 businesses" },
+  { label: "Pilots", value: `${PILOT_BUSINESS_COUNT} businesses` },
   { label: "Markets", value: "Nigeria · UK · North America" },
   { label: "Company", value: "Brainstack Tech LTD · Lagos HQ" },
   { label: "Program", value: "NVIDIA Inception" },
@@ -56,7 +58,7 @@ const story = [
   {
     kicker: "Why Fless",
     title: "Global from day one, with governance built in.",
-    copy: "Fless bills in eight currencies, including NGN, KES, GHS and ZAR alongside USD, GBP and EUR, so it works for businesses that most AI products overlook. Approval gates, audit logs and enterprise controls are part of the core product, not an add-on.",
+    copy: "Fless has local prices in NGN, GHS, KES and ZAR alongside USD, GBP and EUR, so it works for businesses that most AI products overlook. Approval gates, audit logs and enterprise controls are part of the core product, not an add-on.",
   },
 ]
 
@@ -67,22 +69,22 @@ const model = [
   },
   {
     title: "Builder marketplace",
-    copy: "Developers and domain experts publish AI employees with our SDK. Fless keeps 65% of the revenue and pays the builder 35%, monthly.",
+    copy: `Anyone who knows a job can build an AI employee in Studio, with no code, and sell it on the marketplace. Builders keep ${BUILDER_SHARE}%; Fless keeps ${FLESS_SHARE}%.`,
   },
   {
     title: "Enterprise",
-    copy: "Larger customers add SSO, private regions or VPC deployment, custom SLAs and a named rollout contact.",
+    copy: "Workspace plans from free to $499 a month, plus Enterprise with Private Cloud or customer-hosted runners, SSO and dedicated support. Metered work credits on every plan.",
   },
 ]
 
 const milestones = [
   { done: true, text: "Marketing employee live, publishing directly to 6 social networks through their official APIs" },
-  { done: true, text: "18 businesses in pilot across Nigeria, the UK and North America" },
+  { done: true, text: `${PILOT_BUSINESS_COUNT} businesses in pilot across Nigeria, the UK and North America` },
   { done: true, text: "Accepted into the NVIDIA Inception program" },
-  { done: true, text: "Multi-currency billing across 8 currencies" },
+  { done: false, text: "Billing in USD, GBP and EUR, with local prices in NGN, GHS, KES and ZAR" },
   { done: false, text: "Voice, Sales, Support, Recruitment, HR, Operations and Finance employees: in early access" },
-  { done: false, text: "Builder SDK: in private beta, ahead of opening the marketplace" },
-  { done: false, text: "SOC 2 audit: in progress with an independent firm" },
+  { done: false, text: "Employee Studio: builders describe, test and publish employees with no code" },
+  { done: false, text: "SOC 2 audit: planned" },
 ]
 
 export default function InvestorsPage() {

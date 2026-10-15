@@ -23,7 +23,7 @@ const pairs = [
         id: "marketing",
         name: "Marketing",
         headline: "Campaigns that ship themselves.",
-        description: "Briefs become posts, ads, and reports. Your calendar stays full without a 12-tool stack.",
+        description: "Briefs become posts, pages and reports. Your calendar stays full without a 12-tool stack. Ads: coming soon.",
         points: ["Content + social", "SEO drafts", "Ad creative"],
         href: "/departments/marketing",
         image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1400&auto=format&fit=crop&q=80",

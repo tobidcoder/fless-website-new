@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer"
 import { PhotoTile } from "@/components/BrandedStage"
 import { DepartmentShowcases } from "@/components/DepartmentShowcases"
 import { departments } from "@/lib/departments"
+import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
 
 export const metadata: Metadata = {
   title: "AI Employee Departments & Desks — Fless",
@@ -143,7 +144,7 @@ export default function DepartmentsDirectoryPage() {
                 Deploy Marketing today or request early access
               </h3>
               <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                Join 18 businesses piloting Fless AI employees. Full audit log, strict policy gates, and human approval before every publication.
+                Join {PILOT_BUSINESS_COUNT} businesses piloting Fless AI employees. Full audit log, strict policy gates, and human approval before every publication.
               </p>
             </div>
             <Link

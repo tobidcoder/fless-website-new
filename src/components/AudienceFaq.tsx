@@ -9,6 +9,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { cn } from "@/lib/utils"
+import { PILOT_BUSINESS_COUNT, PILOT_REGIONS_TEXT, SOCIAL_NETWORK_COUNT, SOCIAL_NETWORKS_TEXT } from "@/lib/claims"
+import { BILLING_STATEMENT, BUILDER_SHARE, FLESS_SHARE } from "@/lib/billing"
 
 type Group = "Businesses" | "Builders" | "Investors"
 
@@ -22,7 +24,7 @@ const faqs: Record<Group, { q: string; a: string }[]> = {
     },
     {
       q: "What can it do today?",
-      a: "The Marketing employee is live. It turns a brief into a content plan, drafts posts and creative, and publishes approved work to LinkedIn, X, Facebook, Instagram, Threads and Bluesky. Voice, Sales, Support, Recruitment, HR, Operations and Finance are in early access, and you can request them now.",
+      a: `Hire employees made by builders from the marketplace, or build your own in Studio by describing the job. The Marketing employee is live: it turns a brief into a content plan, drafts posts and creative, and publishes approved work to ${SOCIAL_NETWORKS_TEXT}. Other categories are in early access.`,
     },
     {
       q: "Will it post or send anything without my say-so?",
@@ -30,33 +32,33 @@ const faqs: Record<Group, { q: string; a: string }[]> = {
     },
     {
       q: "How much does it cost?",
-      a: "You pay a monthly workforce rate per AI employee, not per user seat. Each employee has its own listed price, shown on the pricing page and before you hire, and you can hire for anything from a few hours to several years. The pricing page has a calculator.",
+      a: "One bill with three parts: a workspace plan (from free; paid plans from $39 a month), the price of any marketplace employee you hire, set by its builder, and work credits for what your employees use, with a spending cap you set. The pricing page has a calculator.",
     },
     {
       q: "Does it work in my country and currency?",
-      a: "Fless is built for global teams. You can be billed in USD, GBP, EUR, NGN, KES, GHS, ZAR or AED, with local invoices. Our current pilots run in Nigeria, the UK and North America.",
+      a: `Yes. ${BILLING_STATEMENT} Our current pilots run in ${PILOT_REGIONS_TEXT}.`,
     },
     {
       q: "What happens to our data?",
-      a: "We use it only to run your workspace. We don't train public models on it, and you own everything you put in and everything Fless produces. Data is encrypted in transit and at rest, and a SOC 2 audit is in progress.",
+      a: "We use it only to run your workspace. We don't train public models on it, and you own everything you put in and everything Fless produces. Data is encrypted in transit and at rest, and a SOC 2 audit is planned.",
     },
   ],
   Builders: [
     {
       q: "What is a Fless builder?",
-      a: "A developer or domain expert who packages an AI employee, such as a clinic receptionist or a sales assistant, using the Fless SDK, then publishes it to the Fless marketplace for businesses to hire.",
+      a: "Anyone who knows how a job is done, such as a clinic manager, a consultant or an agency, and turns that know-how into an AI employee. You build it by chatting with Fless Studio, with no code, then publish it to the marketplace for businesses to hire.",
     },
     {
       q: "How do I get paid?",
-      a: "You earn 35% of every subscription and every metered-usage charge, paid out monthly. Fless keeps 65%, which covers computing, security, billing and distribution.",
+      a: `You keep ${BUILDER_SHARE}% of what businesses pay for your employee, monthly, yearly or per task. Payouts go out monthly through Stripe worldwide and Paystack in Nigeria, Ghana, Kenya and South Africa.`,
     },
     {
       q: "What does Fless handle for me?",
-      a: "Hosting and GPU computing, credential storage, voice and messaging plugins, multi-currency billing, invoicing and payouts. You focus on the employee's knowledge, prompts and workflow.",
+      a: "Hosting, the AI models, app connections and their passwords, approvals, review, billing in every currency, invoices and payouts. Every published employee also gets a sales page and referral links. You focus on how the job is done.",
     },
     {
       q: "How do I get access?",
-      a: "The SDK is in private beta. Apply on the builders page and we'll add you to the next builder cohort.",
+      a: "Studio is opening to builders in small groups. Apply on the builders page and we'll email you when your access is ready.",
     },
   ],
   Investors: [
@@ -70,11 +72,11 @@ const faqs: Record<Group, { q: string; a: string }[]> = {
     },
     {
       q: "What traction do you have?",
-      a: "18 businesses are in pilot across Nigeria, the UK and North America. Marketing publishes directly to six social networks through their official APIs. Fless is a member of the NVIDIA Inception program.",
+      a: `${PILOT_BUSINESS_COUNT} businesses are in pilot across Nigeria, the UK and North America. Marketing publishes directly to ${SOCIAL_NETWORK_COUNT} social networks through their official APIs. Fless is a member of the NVIDIA Inception program.`,
     },
     {
       q: "How does Fless make money?",
-      a: "Two ways. First, businesses pay monthly workforce rates for each AI employee they hire, plus metered usage. Second, Fless keeps 65% of revenue from employees that builders publish on the marketplace.",
+      a: `Three ways on one bill: workspace plans, a ${FLESS_SHARE}% share of what businesses pay for marketplace employees (builders keep ${BUILDER_SHARE}%), and a margin on metered work credits.`,
     },
     {
       q: "How do I get in touch about investing or an accelerator program?",

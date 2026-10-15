@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { BrandedStage } from "@/components/BrandedStage"
 import Link from "next/link"
-import { CONNECTIONS, categoryLabel } from "@/lib/sdk"
+import { CONNECTIONS, categoryLabel } from "@/lib/connections"
 
 const liveTools = CONNECTIONS.filter((c) => c.status === "Available").map((c) => c.name)
 const beta = CONNECTIONS.filter((c) => c.status !== "Available")

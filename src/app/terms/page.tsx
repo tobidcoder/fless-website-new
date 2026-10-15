@@ -84,7 +84,7 @@ export default function TermsPage() {
           Fless is software that staffs departments with AI employees: it takes briefs, uses connected context, and produces work you can review and ship. Features, credit limits, and regions depend on your plan. We may change the product as we improve it; we will not remove a material paid feature without notice on that plan’s cycle.
         </p>
         <p>
-          Enterprise options (SSO/SAML, private region, VPC, named CSM) are described on the plan or order form. They are not included unless purchased.
+          Business and Enterprise options (SSO, data region choice, Private Cloud, running on your own servers, dedicated support) are described on the plan or order form. They are not included unless purchased.
         </p>
       </Section>
 
@@ -132,7 +132,7 @@ export default function TermsPage() {
 
       <Section id="cancellation" title="Cancellation and refunds">
         <p>
-          You can decommission an employee deployment whenever capacity is no longer required. Unused tenure is refunded pro-rata according to the worker&apos;s contract terms. Ledger-consumed metered usage is non-refundable.
+          You can decommission an employee deployment whenever capacity is no longer required. A cancelled plan or hire stays active until the end of the period already paid for. Ledger-consumed metered usage is non-refundable.
         </p>
       </Section>
 

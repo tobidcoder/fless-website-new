@@ -2,6 +2,9 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { departments, getDepartment } from "@/lib/departments"
 import { DepartmentPage } from "@/components/DepartmentPage"
+import { listEmployees } from "@/lib/marketplace"
+
+export const revalidate = 600
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -52,5 +55,6 @@ export default async function Page({ params }: Props) {
   const { slug } = await params
   const dept = getDepartment(slug)
   if (!dept) notFound()
-  return <DepartmentPage dept={dept} />
+  const live = await listEmployees({ department: dept.slug.toUpperCase(), pageSize: 6 })
+  return <DepartmentPage dept={dept} live={live.items} />
 }

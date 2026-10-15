@@ -1,11 +1,14 @@
+import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
+/**
+ * An example of the kind of employee builders make for a category. These are illustrations,
+ * not real published employees; live employees come from the marketplace API.
+ */
 export type DepartmentEmployee = {
   id: string
-  name: string
   role: string
   isManager?: boolean
   ownerType?: "FLESS" | "BUILDER" | "PARTNER"
   ownerName?: string
-  avatar: string
   badge: string
   description: string
   skills: string[]
@@ -36,79 +39,65 @@ export const departments: Department[] = [
     slug: "marketing",
     name: "Marketing",
     status: "live",
-    line: "Content, SEO, ads, social",
+    line: "Content, SEO, social",
     headline: "Campaigns that ship — in every market.",
-    lede: "Briefs become posts, pages, and ads. One calendar for every market you operate — without a 12-tool stack.",
+    lede: "Briefs become posts and pages. One calendar for every market you operate — without a 12-tool stack.",
     hero: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1800&auto=format&fit=crop&q=80",
     heroAlt: "Marketing team reviewing a campaign",
     markets: "Built for teams across Africa, Europe, the Middle East and North America",
     metrics: [
-      { value: "18", label: "Businesses in pilot" },
+      { value: String(PILOT_BUSINESS_COUNT), label: "Businesses in pilot" },
       { value: "6", label: "Networks live (LinkedIn, X, Facebook, Instagram, Threads, Bluesky)" },
       { value: "100%", label: "Approval before publishing" },
     ],
     employees: [
       {
         id: "mkt-manager",
-        name: "Maya",
         role: "Marketing Manager",
         isManager: true,
-        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Department Lead",
         description: "Orchestrates multi-channel marketing roadmaps, cross-team campaign sprints, CAC goals, and brand positioning.",
         skills: ["Campaign Orchestration", "Brand Strategy", "Channel Budgeting", "Performance Auditing"],
       },
       {
         id: "mkt-content",
-        name: "Chloe",
         role: "Content Manager",
-        avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Editorial Lead",
         description: "Authors high-converting case studies, editorial articles, whitepapers, and long-form narrative content.",
         skills: ["Long-form Editorial", "Case Studies", "Copywriting", "Content Calendars"],
       },
       {
         id: "mkt-seo",
-        name: "Nora",
         role: "SEO Manager",
-        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Organic Search",
         description: "Optimizes site architecture, targets high-intent keyword clusters, monitors SERP rankings, and writes programmatic content.",
         skills: ["Keyword Discovery", "Technical On-page SEO", "SERP Monitoring", "Backlink Architecture"],
       },
       {
         id: "mkt-social",
-        name: "Zoe",
         role: "Social Media Manager",
-        avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Social Media",
         description: "Builds daily multi-network publishing calendars across LinkedIn, X, Facebook, Instagram, Threads and Bluesky to grow organic community engagement.",
         skills: ["Multi-network Scheduling", "Audience Engagement", "Copy Variations", "Trend Piggybacking"],
       },
       {
         id: "mkt-designer",
-        name: "Felix",
         role: "Designer",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Creative & Brand",
         description: "Designs brand identities, marketing assets, vector illustrations, hero banners, and high-impact social cards.",
         skills: ["Visual Brand Identity", "UI / Graphic Design", "Social Visuals", "Design Systems"],
       },
       {
         id: "mkt-email",
-        name: "Ava",
         role: "Email Marketers",
-        avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Lifecycle & Nurture",
         description: "Plans and deploys automated onboarding sequences, segment broadcasts, customer newsletters, and retention triggers.",
         skills: ["Email Sequences", "List Segmentation", "Deliverability", "A/B Subject Testing"],
       },
       {
         id: "mkt-ads",
-        name: "Lucas",
         role: "Ads Manager",
-        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=256&h=256&fit=crop&crop=faces&q=80",
-        badge: "Paid Acquisition",
+        badge: "Ads: coming soon",
         description: "Plans paid campaigns and writes ad copy, hooks and creative briefs for Meta, Google and LinkedIn, ready for you to launch.",
         skills: ["Ad Copy", "Creative Briefs", "Audience Planning", "Campaign Plans"],
       },
@@ -125,15 +114,15 @@ export const departments: Department[] = [
         image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80",
       },
       {
-        title: "Ads & social",
+        title: "Social (ads coming soon)",
         copy: "Creative, captions, and a calendar that stays full across official APIs.",
         image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&auto=format&fit=crop&q=80",
       },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
   },
   {
@@ -154,20 +143,16 @@ export const departments: Department[] = [
     employees: [
       {
         id: "voice-manager",
-        name: "Julian",
         role: "Voice Manager",
         isManager: true,
-        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Department Lead & Operations",
         description: "Manages telephony infrastructure, oversees call routing trees, audits conversation quality, and analyzes appointment conversion rates.",
         skills: ["Telephony Architecture", "Call Quality Auditing", "Routing Trees & IVR", "Conversion Analytics", "SIP Trunking"],
       },
       {
         id: "voice-receptionist",
-        name: "Rachel",
         role: "Receptionist",
         isManager: false,
-        avatar: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Front Desk & Live Answering",
         description: "Operates telephony workflows, answers inbound calls, qualifies prospects, books calendar appointments, and routes VIP callers.",
         skills: ["Live Call Answering", "Calendar Booking", "Caller Qualification", "VIP Routing", "SMS Confirmations"],
@@ -179,9 +164,9 @@ export const departments: Department[] = [
       { title: "Booking", copy: "Calendar holds, confirmations, and no-show reminders with human escalation rules.", image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
   },
   {
@@ -202,37 +187,29 @@ export const departments: Department[] = [
     employees: [
       {
         id: "sales-manager",
-        name: "Marcus",
         role: "Sales Manager",
         isManager: true,
-        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Department Lead",
         description: "Oversees revenue targets, pipeline velocity, deal reviews, rep assignment, and sales coaching.",
         skills: ["Pipeline Forecasting", "Quota Oversight", "Deal Win-loss Reviews", "Territory Allocation"],
       },
       {
         id: "sales-rep",
-        name: "Stan",
         role: "Sales Representative",
-        avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Account Executive",
         description: "Engages qualified prospects, delivers tailored product demonstrations, handles objections, and closes agreements.",
         skills: ["Discovery Calls", "Pitch Delivery", "Objection Handling", "Proposal Negotiation"],
       },
       {
         id: "sales-leadgen",
-        name: "Kofi",
         role: "Lead Generation Manager",
-        avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Outbound Growth",
         description: "Identifies high-fit target accounts, extracts verified decision-maker emails, and runs multi-touch outbound cadences.",
         skills: ["ICP Account Research", "Contact Enrichment", "Cold Email Cadences", "Lead Scoring"],
       },
       {
         id: "sales-crm",
-        name: "Devon",
         role: "CRM Manager",
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Sales Ops & CRM",
         description: "Keeps pipeline data accurate, automates deal stage changes, cleans contact records, and tracks rep response times.",
         skills: ["Pipeline Stage Tracking", "HubSpot / Salesforce Sync", "Data Enrichment", "Activity Auditing"],
@@ -244,9 +221,9 @@ export const departments: Department[] = [
       { title: "Follow-up", copy: "Sequences that run until someone replies — then a human takes the meeting.", image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
   },
   {
@@ -267,28 +244,22 @@ export const departments: Department[] = [
     employees: [
       {
         id: "sup-manager",
-        name: "Alex",
         role: "Support Manager",
         isManager: true,
-        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Department Lead",
         description: "Supervises ticket queues, SLA compliance, CSAT metrics, escalation policies, and knowledge base curation.",
         skills: ["SLA Monitoring", "Queue Load Balancing", "CSAT Quality Control", "Incident Protocols"],
       },
       {
         id: "sup-customer",
-        name: "Lena",
         role: "Customer Support",
-        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Frontline Support",
         description: "Resolves customer questions across email, chat, and help desk channels with empathetic, technical solutions.",
         skills: ["Ticket Resolution", "Troubleshooting", "Knowledge Base Search", "Customer Empathy"],
       },
       {
         id: "sup-success",
-        name: "Liam",
         role: "Customer Success",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Retention & Health",
         description: "Monitors account product usage, runs regular health checks, leads customer check-ins, and reduces churn risks.",
         skills: ["Account Health Audits", "Onboarding Check-ins", "Churn Prevention", "Usage Analytics"],
@@ -300,9 +271,9 @@ export const departments: Department[] = [
       { title: "Escalation", copy: "A clean handoff with context — not an unorganized message at 6pm.", image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
   },
   {
@@ -323,37 +294,29 @@ export const departments: Department[] = [
     employees: [
       {
         id: "rec-manager",
-        name: "Olivia",
         role: "Recruitment Manager",
         isManager: true,
-        avatar: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Department Lead",
         description: "Oversees company hiring roadmaps, job specification rubrics, candidate interview loops, and compensation offers.",
         skills: ["Talent Pipeline Oversight", "Hiring Strategy", "Job Rubric Definition", "Offer Formulation"],
       },
       {
         id: "rec-acquisition",
-        name: "Dylan",
         role: "Talent Acquisition Manager",
-        avatar: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Candidate Screening",
         description: "Evaluates resumes against role criteria, conducts structured preliminary candidate assessments, and scores competency rubrics.",
         skills: ["Resume Parsing", "Competency Scoring", "Structured Screening", "Candidate Shortlisting"],
       },
       {
         id: "rec-sourcer",
-        name: "Kai",
         role: "Talent Sourcer",
-        avatar: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Passive Talent Sourcing",
         description: "Hunts top passive engineering and leadership talent across GitHub, LinkedIn, and developer communities with personalized outreach.",
         skills: ["Boolean Search Strings", "Competitor Team Mapping", "Personalized Outreach", "Talent Pooling"],
       },
       {
         id: "rec-coordinator",
-        name: "Jessica",
         role: "Recruitment Coordinator",
-        avatar: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Interview Logistics",
         description: "Schedules panel interviews across international timezones, prepares candidate briefings, and collects evaluator scorecards.",
         skills: ["Panel Scheduling", "Candidate Prep Briefs", "Scorecard Aggregation", "Logistics Coordination"],
@@ -365,9 +328,9 @@ export const departments: Department[] = [
       { title: "Hiring", copy: "Interviews booked, offers drafted, and the hiring manager stays in the loop.", image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
   },
   {
@@ -388,37 +351,29 @@ export const departments: Department[] = [
     employees: [
       {
         id: "hr-manager",
-        name: "Victoria",
         role: "HR Manager",
         isManager: true,
-        avatar: "https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Department Lead",
         description: "Leads people operations governance, HR compliance, workplace policy updates, and company-wide performance review cadences.",
         skills: ["HR Governance", "Policy Enforcement", "Performance Review Design", "Labor Compliance"],
       },
       {
         id: "hr-assistant",
-        name: "Daniel",
         role: "HR Assistant",
-        avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "People Support",
         description: "Answers employee administrative inquiries, issues employment verification letters, manages leave balances, and updates personnel files.",
         skills: ["PTO Management", "Employment Verification", "Employee Inquiries", "Records Maintenance"],
       },
       {
         id: "hr-peopleops",
-        name: "Priya",
         role: "People Operations Manager",
-        avatar: "https://images.unsplash.com/photo-1548142813-c348350df52b?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Onboarding & Lifecycle",
         description: "Executes seamless new hire onboarding, workstation setups, 30-60-90 check-ins, buddy assignments, and team offboarding.",
         skills: ["New Hire Onboarding", "Hardware & Access Provisioning", "30-60-90 Reviews", "Lifecycle Workflows"],
       },
       {
         id: "hr-experience",
-        name: "Hannah",
         role: "Employee Experience Manager",
-        avatar: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Culture & Benefits",
         description: "Tracks team pulse survey sentiment, administers health and wellness perks, and coordinates team connection initiatives.",
         skills: ["Pulse Surveys", "Benefits Guidance", "Team Engagement", "Culture Programs"],
@@ -430,9 +385,9 @@ export const departments: Department[] = [
       { title: "Reviews", copy: "Cycles that start on time, with notes that hiring already has.", image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
   },
   {
@@ -453,37 +408,29 @@ export const departments: Department[] = [
     employees: [
       {
         id: "ops-manager",
-        name: "Robert",
         role: "Operations Manager",
         isManager: true,
-        avatar: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Department Lead",
         description: "Maintains business operational health, oversees company SLA benchmarks, identifies cross-team bottlenecks, and runs weekly operational closes.",
         skills: ["Operational Governance", "Cross-team Auditing", "Bottleneck Removal", "SLA Monitoring"],
       },
       {
         id: "ops-coordinator",
-        name: "Sam",
         role: "Project Coordinator",
-        avatar: "https://images.unsplash.com/photo-1545167622-3a6ac756afa4?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Project Delivery",
         description: "Tracks project milestones across departments, monitors deliverables, flags overdue dependencies, and keeps stakeholders aligned.",
         skills: ["Milestone Tracking", "Cross-team Dependencies", "Deadline Reminders", "Delivery Checklists"],
       },
       {
         id: "ops-workflow",
-        name: "Adam",
         role: "Workflow Manager",
-        avatar: "https://images.unsplash.com/photo-1528892952291-009c663ce843?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Automation Engineering",
         description: "Designs automated webhook pipes, multi-step integrations, error auto-retries, and synchronized data handoffs.",
         skills: ["Webhook Bridges", "Automation Workflows", "API Rate Limiting", "Payload Transformation"],
       },
       {
         id: "ops-documentation",
-        name: "Natalie",
         role: "Documentation Manager",
-        avatar: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Knowledge & SOPs",
         description: "Standardizes operating procedures (SOPs), maintains company wikis, authors process diagrams, and archives obsolete documentation.",
         skills: ["SOP Playbook Authoring", "Knowledge Base Indexing", "Process Flowcharts", "Policy Auditing"],
@@ -495,9 +442,9 @@ export const departments: Department[] = [
       { title: "Workflows", copy: "Intake → review → done. Visible on one board across teams.", image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
   },
   {
@@ -518,37 +465,29 @@ export const departments: Department[] = [
     employees: [
       {
         id: "fin-manager",
-        name: "Arthur",
         role: "Finance Manager",
         isManager: true,
-        avatar: "https://images.unsplash.com/photo-1507152832244-10d45c7eda57?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Department Lead",
         description: "Monitors company capital runway, forecasts quarterly net burn, audits multi-currency ledger hygiene, and presents fiscal summaries.",
         skills: ["Runway Forecasting", "Ledger Governance", "Burn Analysis", "Fiscal Audits"],
       },
       {
         id: "fin-accounts",
-        name: "Evan",
         role: "Accounts Manager",
-        avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "General Ledger",
         description: "Reconciles daily bank payouts with payment transactions, classifies chart-of-account debits, and prepares clean balance sheets.",
         skills: ["Bank Reconciliation", "Chart of Accounts", "Ledger Classification", "Balance Sheets"],
       },
       {
         id: "fin-invoicing",
-        name: "Oscar",
         role: "Invoicing Manager",
-        avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Billing & AR",
         description: "Generates corporate invoices, runs automated payment reminders, manages customer billing queries, and tracks overdue receivables.",
         skills: ["Invoice Generation", "Automated Dunning", "Accounts Receivable", "Payment Retries"],
       },
       {
         id: "fin-expense",
-        name: "Grace",
         role: "Expense Manager",
-        avatar: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=256&h=256&fit=crop&crop=faces&q=80",
         badge: "Expense Oversight",
         description: "Extracts receipt data with OCR, enforces company meal and travel caps, flags policy anomalies, and batches employee reimbursements.",
         skills: ["Receipt OCR Validation", "Spend Policy Auditing", "Reimbursement Batches", "Per Diem Enforcement"],
@@ -560,9 +499,9 @@ export const departments: Department[] = [
       { title: "Payroll", copy: "Runs, exceptions, and a file finance and HR both trust.", image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
   },
 ]

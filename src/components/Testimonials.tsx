@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { NvidiaInceptionBadge } from "@/components/NvidiaInceptionBadge"
+import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
 
 export function Testimonials() {
   return (
@@ -23,7 +24,7 @@ export function Testimonials() {
           viewport={{ once: true }}
           className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.12] text-foreground mb-12 md:mb-16 max-w-2xl"
         >
-          In pilot with 18 businesses.
+          In pilot with {PILOT_BUSINESS_COUNT} businesses.
         </motion.h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">

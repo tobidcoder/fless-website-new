@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, Crown } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { BrandedStage, PhotoTile } from "@/components/BrandedStage"
@@ -15,8 +15,10 @@ import {
 } from "@/components/ui/accordion"
 import { departments, type Department } from "@/lib/departments"
 import { departmentDetail } from "@/lib/departmentDetail"
+import { formatListedPrice, type ListedEmployee } from "@/lib/marketplace"
+import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
 
-export function DepartmentPage({ dept }: { dept: Department }) {
+export function DepartmentPage({ dept, live = [] }: { dept: Department; live?: ListedEmployee[] }) {
   const others = departments.filter((d) => d.slug !== dept.slug)
   const extra = departmentDetail[dept.slug]
 
@@ -183,89 +185,78 @@ export function DepartmentPage({ dept }: { dept: Department }) {
           </div>
         </section>
 
-        {/* Provisioned AI Employees Section */}
-        {dept.employees && dept.employees.length > 0 && (
-          <section className="py-20 md:py-28 border-b border-border/60">
-            <div className="max-w-[1200px] mx-auto px-6">
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
-                <div>
-                  <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">
-                    Autonomous Staff · {dept.employees.length} {dept.employees.length === 1 ? "Employee" : "Employees"}
-                  </p>
-                  <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight text-foreground">
-                    The {dept.name} Team.
-                  </h2>
-                </div>
-                <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
-                  Every employee is dedicated to autonomous execution with specialized domain skills and connected tools.
-                </p>
+        {/* Live employees from the marketplace, then example roles builders make */}
+        <section className="py-20 md:py-28 border-b border-border/60">
+          <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+              <div>
+                <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">On the marketplace</p>
+                <h2 className="text-3xl md:text-4xl font-display font-semibold tracking-tight text-foreground">
+                  {dept.name} employees, made by builders.
+                </h2>
               </div>
+              <Link href={`/hire?department=${dept.slug.toUpperCase()}`} className="text-sm font-medium text-primary shrink-0">
+                Browse all {dept.name.toLowerCase()} employees →
+              </Link>
+            </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-                {dept.employees.map((emp, i) => (
-                  <motion.div
-                    key={emp.id}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.05 }}
-                    className="rounded-2xl border border-border/80 bg-card p-5 sm:p-6 flex flex-col justify-between transition-all duration-200 hover:border-primary/40 hover:shadow-sm group"
-                  >
-                    <div>
-                      <div className="flex items-start justify-between gap-3 mb-4">
-                        <div className="relative">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={emp.avatar}
-                            alt={emp.name}
-                            className="w-12 h-12 rounded-full object-cover ring-2 ring-border/70 group-hover:ring-primary/30 transition-all"
-                          />
-                          <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-background" />
+            {live.length > 0 ? (
+              <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
+                {live.map((e) => (
+                  <li key={e.id}>
+                    <Link href={`/ai-employees/${e.slug}`} className="group h-full rounded-2xl border border-border/80 p-5 flex flex-col hover:border-primary/40 transition-colors">
+                      <div className="text-[15px] font-semibold tracking-tight group-hover:text-primary transition-colors">{e.name}</div>
+                      <div className="text-[12px] text-muted-foreground mb-3">{e.title} · by {e.authorName}</div>
+                      <p className="text-[14px] text-muted-foreground leading-relaxed line-clamp-3 flex-1">{e.description}</p>
+                      <div className="mt-4 text-[14px] font-medium tabular-nums">{formatListedPrice(e.price)}</div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-[15px] text-muted-foreground mb-16 max-w-2xl">
+                No {dept.name.toLowerCase()} employees are published yet. Builders are working on them, or you can{" "}
+                <Link href="/build" className="text-primary font-medium">build one for your business</Link> in minutes.
+              </p>
+            )}
+
+            {dept.employees && dept.employees.length > 0 && (
+              <>
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                  <div>
+                    <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-muted-foreground mb-2">Examples</p>
+                    <h3 className="text-2xl font-display font-semibold tracking-tight">Roles builders make for {dept.name.toLowerCase()}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
+                    Illustrations of the kind of employee you can hire or build. They are examples, not listed employees.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+                  {dept.employees.map((emp) => (
+                    <div key={emp.id} className="rounded-2xl border border-dashed border-border/80 p-5 sm:p-6 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-start justify-between gap-3 mb-3">
+                          <div className="text-base font-semibold text-foreground tracking-tight">{emp.role}</div>
+                          <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold tracking-wide text-muted-foreground shrink-0">
+                            Example
+                          </span>
                         </div>
-                        {emp.isManager ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 border border-amber-500/20">
-                            <Crown className="w-2.5 h-2.5" />
-                            Manager
-                          </span>
-                        ) : (
-                          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-primary border border-primary/20">
-                            {emp.badge}
-                          </span>
-                        )}
+                        <p className="text-[13px] text-muted-foreground leading-relaxed">{emp.description}</p>
                       </div>
-
-                      <div className="text-base font-semibold text-foreground tracking-tight">
-                        {emp.name}
-                      </div>
-                      <div className="text-[13px] font-medium text-primary mt-0.5">
-                        {emp.role}
-                      </div>
-                      <p className="text-[13px] text-muted-foreground leading-relaxed mt-2.5">
-                        {emp.description}
-                      </p>
-                    </div>
-
-                    <div className="pt-4 mt-4 border-t border-border/60">
-                      <div className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                        Core Capabilities
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
+                      <div className="pt-4 mt-4 border-t border-border/60 flex flex-wrap gap-1.5">
                         {emp.skills.map((skill) => (
-                          <span
-                            key={skill}
-                            className="inline-block text-[11px] px-2 py-0.5 rounded-md bg-secondary/80 text-foreground/80 font-medium"
-                          >
+                          <span key={skill} className="inline-block text-[11px] px-2 py-0.5 rounded-md bg-secondary/80 text-foreground/80 font-medium">
                             {skill}
                           </span>
                         ))}
                       </div>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        </section>
 
         {extra && (
           <section className="py-20 md:py-28">
@@ -292,11 +283,11 @@ export function DepartmentPage({ dept }: { dept: Department }) {
               </p>
               <p className="text-2xl md:text-3xl font-display font-medium tracking-tight leading-snug max-w-2xl">
                 {dept.status === "live"
-                  ? "Marketing is live today with 18 businesses in pilot. Join to run your multi-channel marketing autonomously."
+                  ? `Marketing is live today with ${PILOT_BUSINESS_COUNT} businesses in pilot. Join to run your multi-channel marketing autonomously.`
                   : `${dept.name} is on our roadmap. Join the early access waitlist to get priority onboarding.`}
               </p>
               <p className="mt-4 text-sm text-white/70">
-                {dept.status === "live" ? "18 businesses in pilot · NVIDIA Inception member" : "Rolling onboarding · DPA on request"}
+                {dept.status === "live" ? `${PILOT_BUSINESS_COUNT} businesses in pilot · NVIDIA Inception member` : "Rolling onboarding · DPA on request"}
               </p>
             </div>
             <div className="lg:col-span-4 lg:text-right">

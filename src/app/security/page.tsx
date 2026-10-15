@@ -5,14 +5,14 @@ import { LegalDoc, Section } from "@/components/LegalDoc"
 export const metadata: Metadata = {
   title: "Security, Governance & Compliance — Fless",
   description:
-    "How Fless protects enterprise workspaces: independent CPA SOC 2 audit in progress, TLS 1.3, AES-256 at rest, exportable audit logs, human approval gates, and NDPR/GDPR alignment.",
+    "How Fless protects enterprise workspaces: SOC 2 audit planned, TLS 1.3, AES-256 at rest, exportable audit logs, human approval gates, and NDPR/GDPR alignment.",
   alternates: {
     canonical: "https://getfless.com/security",
   },
   openGraph: {
     title: "Security, Governance & Compliance — Fless",
     description:
-      "Enterprise security architecture: SOC 2 audit in progress, TLS 1.3, AES-256 at rest, exportable audit logs, and NDPR/GDPR compliance.",
+      "Enterprise security architecture: SOC 2 audit planned, TLS 1.3, AES-256 at rest, exportable audit logs, and NDPR/GDPR compliance.",
     url: "https://getfless.com/security",
     siteName: "Fless",
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Security, Governance & Compliance — Fless",
     description:
-      "Enterprise security controls: SOC 2 audit in progress, encryption at rest/transit, and audit logs.",
+      "Enterprise security controls: SOC 2 audit planned, encryption at rest/transit, and audit logs.",
     images: ["/fless-og.png"],
   },
 }
@@ -48,11 +48,11 @@ const nav = [
 ]
 
 const controls = [
-  { title: "SOC 2", copy: "Audit in progress with an independent CPA firm. We complete security questionnaires on request." },
+  { title: "SOC 2", copy: "Audit planned. Until then we complete security questionnaires on request." },
   { title: "Encryption", copy: "TLS in transit. AES-256 at rest. Keys we can rotate." },
-  { title: "SSO & SAML", copy: "Enterprise maps your identity provider and groups." },
+  { title: "SSO", copy: "Sign in with your identity provider on the Business and Enterprise plans." },
   { title: "Audit log", copy: "Desk actions, admin changes, exports — available to owners." },
-  { title: "Regions", copy: "Local hours in every market you operate. Private region on Enterprise." },
+  { title: "Data region", copy: "Choice of data region on the Business and Enterprise plans. Private Cloud or your own servers on Enterprise." },
   { title: "Human pause", copy: "High-risk actions wait for a person before they ship." },
 ]
 
@@ -80,7 +80,7 @@ export default function SecurityPage() {
           Fless is an AI workforce platform. Customers put briefs, knowledge, and sometimes recordings into desks. We treat that as production customer data: least privilege, encryption, logging, and a path for your security team to review us.
         </p>
         <p>
-          We design so a compromised seat does not equal the whole company: roles, workspace isolation, and optional SSO on Enterprise.
+          We design so a compromised seat does not equal the whole company: roles, workspace isolation, and SSO on the Business and Enterprise plans.
         </p>
       </Section>
 
@@ -104,7 +104,7 @@ export default function SecurityPage() {
           Employee access to production is via SSO, MFA, and time-bound roles. We do not use shared root passwords. Access is logged and reviewed. Support staff see customer content only when you open a ticket and grant it, or when required to restore service — and that access is audited.
         </p>
         <p>
-          Your side: use unique work emails, turn on SSO when you have it, and revoke leavers the same day. We will help map IdP groups on Enterprise.
+          Your side: use unique work emails, turn on SSO when you have it, and revoke leavers the same day. We will help map identity provider groups on the Business and Enterprise plans.
         </p>
       </Section>
 
@@ -147,7 +147,7 @@ export default function SecurityPage() {
 
       <Section id="compliance" title="Compliance">
         <p>
-          Fless has initiated a SOC 2 audit with an independent CPA firm. While the audit is in progress, we complete security questionnaires on request. We support DPAs and, where needed, SCCs for international transfers.
+          A SOC 2 audit is planned. Until it is complete, we answer security questionnaires on request. We support DPAs and, where needed, SCCs for international transfers.
         </p>
         <p>
           Fless is not a HIPAA BA, PCI merchant-of-record, or ISO 27001 certified environment unless an order form says so. Do not put card PAN or protected health information into desks unless you have a signed addendum that covers it.
@@ -166,7 +166,7 @@ export default function SecurityPage() {
           Security questionnaires, DPA, and subprocessors:{" "}
           <a href="mailto:security@getfless.com">security@getfless.com</a>
           <br />
-          Named rollout and private region: <Link href="/contact">Contact</Link>
+          Private Cloud, your own servers and data region: <Link href="/contact">Contact</Link>
           <br />
           Legal terms: <Link href="/terms">Terms of Service</Link>
         </p>

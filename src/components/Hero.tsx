@@ -6,15 +6,13 @@ import { Check } from "lucide-react"
 import { EmailCapture } from "@/components/EmailCapture"
 import { IntroFilm } from "@/components/IntroFilm"
 import { NvidiaInceptionBadge } from "@/components/NvidiaInceptionBadge"
-
-// The three facts a first-time visitor needs in under ten seconds.
-const quickFacts = [
-  "Marketing employee live today",
-  "You approve before anything goes out",
-  "Pay in USD, GBP, NGN + 5 more",
-]
+import { useTranslations } from "next-intl"
+import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
 
 export function Hero() {
+  const t = useTranslations("hero")
+  // The three facts a first-time visitor needs in under ten seconds.
+  const quickFacts = [t("fact1"), t("fact2"), t("fact3")]
   return (
     <>
       <section className="relative pt-28 pb-14 sm:pt-32 md:pt-40 md:pb-20 overflow-hidden bg-background">
@@ -26,7 +24,7 @@ export function Hero() {
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-background px-3 py-1 text-[12px] font-medium text-muted-foreground">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              In pilot with 18 businesses
+              {t("badge", { count: PILOT_BUSINESS_COUNT })}
             </span>
             <NvidiaInceptionBadge variant="pill" />
           </motion.div>
@@ -37,9 +35,9 @@ export function Hero() {
             transition={{ delay: 0.05, duration: 0.55 }}
             className="text-[40px] sm:text-[56px] md:text-[68px] lg:text-[78px] font-display font-semibold leading-[1.04] tracking-[-0.045em] text-foreground text-balance"
           >
-            AI employees that do the work.{" "}
+            {t("title1")}{" "}
             <span className="bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
-              You approve what ships.
+              {t("title2")}
             </span>
           </motion.h1>
 
@@ -49,9 +47,7 @@ export function Hero() {
             transition={{ delay: 0.12 }}
             className="mt-6 sm:mt-8 text-[17px] sm:text-xl text-muted-foreground leading-[1.6] max-w-[680px] mx-auto text-pretty"
           >
-            Fless lets any business hire AI employees by department. They plan, write and publish real work,
-            and a person on your team signs off first. Marketing is live today; seven more departments are in
-            early access.
+            {t("lede")}
           </motion.p>
 
           <motion.div
@@ -60,16 +56,19 @@ export function Hero() {
             transition={{ delay: 0.18 }}
             className="mt-9 sm:mt-10 flex flex-col items-center"
           >
-            <EmailCapture source="hero" cta="Join the beta" />
+            <EmailCapture source="hero" cta={t("cta")} />
             <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[14px] font-medium">
               <Link href="/#how-it-works" className="text-muted-foreground hover:text-primary transition-colors">
-                How it works →
+                {t("howItWorks")}
+              </Link>
+              <Link href="/build" className="text-muted-foreground hover:text-primary transition-colors">
+                {t("build")}
               </Link>
               <Link href="/builders" className="text-muted-foreground hover:text-primary transition-colors">
-                I&apos;m a builder →
+                {t("builder")}
               </Link>
               <Link href="/investors" className="text-muted-foreground hover:text-primary transition-colors">
-                I&apos;m an investor →
+                {t("investor")}
               </Link>
             </div>
           </motion.div>

@@ -1,32 +1,26 @@
 import type { Metadata } from "next"
 
+const title = "Build AI employees and earn — Fless Builders"
+const description =
+  "Describe an AI employee in Fless Studio, test it live and publish it to the marketplace. No code. You keep 70% of what it earns, paid out worldwide."
+
 export const metadata: Metadata = {
-  title: "Builders & SDK — Fless",
-  description:
-    "Build, package, and distribute domain-specific AI employees. Earn 35% revenue share on customer deployments. Request private beta SDK access.",
+  title,
+  description,
   alternates: {
     canonical: "https://getfless.com/builders",
   },
   openGraph: {
-    title: "Builders & SDK — Fless",
-    description:
-      "Build, package, and distribute domain-specific AI employees. Earn 35% revenue share on customer deployments. Request private beta SDK access.",
+    title,
+    description,
     url: "https://getfless.com/builders",
     siteName: "Fless",
-    images: [
-      {
-        url: "/fless-og.png",
-        width: 1200,
-        height: 630,
-        alt: "Fless Builder SDK",
-      },
-    ],
+    images: [{ url: "/fless-og.png", width: 1200, height: 630, alt: "Build AI employees on Fless" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Builders & SDK — Fless",
-    description:
-      "Package domain expertise into autonomous AI workers. Earn 35% revenue share. Private beta SDK.",
+    title,
+    description,
     images: ["/fless-og.png"],
   },
 }

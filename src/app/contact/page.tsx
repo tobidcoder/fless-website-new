@@ -1,6 +1,7 @@
 "use client"
 
-import { EmailCapture } from "@/components/EmailCapture"
+import Link from "next/link"
+import { ContactForm } from "@/components/ContactForm"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 
@@ -9,17 +10,18 @@ export default function ContactPage() {
     <div className="min-h-screen bg-background flex flex-col font-sans">
       <Header />
       <main className="flex-1 pt-28 pb-20">
-        <div id="enterprise" className="max-w-[560px] mx-auto px-6">
-          <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">Enterprise</p>
+        <div id="enterprise" className="max-w-[640px] mx-auto px-5 sm:px-6">
+          <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">Contact</p>
           <h1 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-4">
-            Talk to the team that runs rollout.
+            Talk to the Fless team.
           </h1>
           <p className="text-[15px] text-muted-foreground leading-relaxed mb-8">
-            SSO, regions, a named CSM. Leave your work email — we’ll send a time, not a drip sequence.
+            Private Cloud, running Fless on your own servers, SSO on the Business and Enterprise plans, or anything
+            else. Leave your details and we’ll send a time, not a drip sequence.
           </p>
-          <EmailCapture source="contact" extra={{ plan: "enterprise" }} cta="Request a walkthrough" />
+          <ContactForm />
           <p className="mt-6 text-[13px] text-muted-foreground">
-            Or join the beta today if you don’t need an enterprise rollout yet.
+            Just want to try Fless? <Link href="/start" className="text-primary font-medium">Join the beta</Link>.
           </p>
 
           <div className="mt-12 pt-8 border-t border-border/60 space-y-3 text-sm">

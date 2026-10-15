@@ -1,48 +1,147 @@
-// Regenerates src/lib/connections.generated.ts from the backend's package catalog.
+// Regenerates src/lib/connections.generated.ts from the backend's catalog.
 //
 // Run it from a checkout of getfless/backend-employees with dependencies installed,
 // so its TypeScript sources resolve:
 //   cd ../backend-employees
 //   OUT=../fless-website-new/src/lib/connections.generated.ts \
 //     node --import tsx ../fless-website-new/scripts/sync-connections.mts
+//
+// Source of the list, in order:
+// 1. The capability catalog (`CAPABILITY_CATALOG`), when the backend has one. It lists
+//    every app however Fless reaches it: sign-in adapters, standard connectors (MCP
+//    servers), API connections and website tasks. Set CAPABILITY_CATALOG_MODULE to point
+//    at its module if it lives somewhere other than the default paths below.
+// 2. Otherwise the package catalog (`PACKAGE_CATALOG`), as before.
 import { execSync } from "node:child_process"
-import { writeFileSync } from "node:fs"
+import { existsSync, writeFileSync } from "node:fs"
 import { resolve } from "node:path"
 
 const backend = process.cwd()
 const outFile = resolve(process.env.OUT ?? "../fless-website-new/src/lib/connections.generated.ts")
-const { PACKAGE_CATALOG } = await import(`${backend}/packages/contracts/src/packages/index.ts`)
 const commit = execSync("git rev-parse --short HEAD", { cwd: backend }).toString().trim()
 
 // Website statuses. Unofficial partner integrations are excluded: Fless only lists
-// connections that use the provider's official API.
+// connections that use the provider's official API or connector.
 const STATUS: Record<string, string> = {
   GA: "Available",
+  AVAILABLE: "Available",
   BETA: "Beta",
   NEEDS_PROVIDER_APPROVAL: "Awaiting approval",
 }
 
-type Entry = { id: string; displayName: string; status: string; category: string; description?: string; actions?: unknown[] }
+// Capability-catalog source kinds → plain-language source on the website.
+const SOURCE: Record<string, string> = {
+  oauth: "sign-in",
+  adapter: "sign-in",
+  package: "sign-in",
+  mcp: "connector",
+  connector: "connector",
+  api: "api",
+  openapi: "api",
+  browser: "website",
+  website: "website",
+}
 
-const rows = (PACKAGE_CATALOG as Entry[])
-  .filter((p) => STATUS[p.status])
-  .map((p) => ({
-    id: p.id.replace(/^@fless\//, ""),
-    name: p.displayName,
-    status: STATUS[p.status],
-    category: p.category,
-    summary: p.description ?? "",
-    actions: p.actions?.length ?? 0,
-  }))
+type Row = {
+  id: string
+  name: string
+  status: string
+  category: string
+  summary: string
+  actions: number
+  source?: string
+}
+
+type PackageEntry = { id: string; displayName: string; status: string; category: string; description?: string; actions?: unknown[] }
+
+type CapabilityEntry = {
+  id: string
+  displayName?: string
+  name?: string
+  status?: string
+  category?: string
+  description?: string
+  summary?: string
+  source?: string
+  kind?: string
+  type?: string
+  actions?: unknown[] | number
+  actionCount?: number
+}
+
+const CAPABILITY_CANDIDATES = [
+  process.env.CAPABILITY_CATALOG_MODULE,
+  "packages/contracts/src/capability-catalog.ts",
+  "packages/contracts/src/capability-catalog/index.ts",
+  "packages/contracts/src/capabilities/catalog.ts",
+  "packages/contracts/src/capability-hub/catalog.ts",
+  "packages/contracts/src/index.ts",
+].filter((p): p is string => Boolean(p))
+
+async function loadCapabilityCatalog(): Promise<{ from: string; entries: CapabilityEntry[] } | null> {
+  for (const rel of CAPABILITY_CANDIDATES) {
+    const file = resolve(backend, rel)
+    if (!existsSync(file)) continue
+    try {
+      const mod = (await import(file)) as Record<string, unknown>
+      const catalog = mod.CAPABILITY_CATALOG
+      if (Array.isArray(catalog) && catalog.length > 0) return { from: rel, entries: catalog as CapabilityEntry[] }
+    } catch (err) {
+      if (rel === process.env.CAPABILITY_CATALOG_MODULE) throw err
+    }
+  }
+  return null
+}
+
+function fromCapabilities(entries: CapabilityEntry[]): Row[] {
+  return entries
+    .filter((e) => STATUS[(e.status ?? "GA").toUpperCase()])
+    .map((e) => {
+      const kind = (e.source ?? e.kind ?? e.type ?? "").toLowerCase()
+      const actions = typeof e.actions === "number" ? e.actions : (e.actions?.length ?? e.actionCount ?? 0)
+      const row: Row = {
+        id: e.id.replace(/^@fless\//, ""),
+        name: e.displayName ?? e.name ?? e.id,
+        status: STATUS[(e.status ?? "GA").toUpperCase()],
+        category: e.category ?? "other",
+        summary: e.description ?? e.summary ?? "",
+        actions,
+      }
+      if (SOURCE[kind]) row.source = SOURCE[kind]
+      return row
+    })
+}
+
+async function fromPackages(): Promise<Row[]> {
+  const { PACKAGE_CATALOG } = await import(`${backend}/packages/contracts/src/packages/index.ts`)
+  return (PACKAGE_CATALOG as PackageEntry[])
+    .filter((p) => STATUS[p.status])
+    .map((p) => ({
+      id: p.id.replace(/^@fless\//, ""),
+      name: p.displayName,
+      status: STATUS[p.status],
+      category: p.category,
+      summary: p.description ?? "",
+      actions: p.actions?.length ?? 0,
+    }))
+}
+
+const capability = await loadCapabilityCatalog()
+const rows = capability ? fromCapabilities(capability.entries) : await fromPackages()
+const sourceNote = capability ? `${capability.from} CAPABILITY_CATALOG` : "packages/contracts PACKAGE_CATALOG"
+
+// De-duplicate by id (a capability catalog may list an app once per source).
+const seen = new Set<string>()
+const unique = rows.filter((r) => (seen.has(r.id) ? false : (seen.add(r.id), true)))
 
 const out = `// Generated by scripts/sync-connections.mts from getfless/backend-employees@${commit}
-// (packages/contracts PACKAGE_CATALOG). Do not edit by hand; re-run the script.
+// (${sourceNote}). Do not edit by hand; re-run the script.
 
-import type { Connection } from "@/lib/sdk"
+import type { Connection } from "@/lib/connections"
 
 export const CATALOG_COMMIT = "${commit}"
 
-export const CONNECTIONS: Connection[] = ${JSON.stringify(rows, null, 2)}
+export const CONNECTIONS: Connection[] = ${JSON.stringify(unique, null, 2)}
 `
 writeFileSync(outFile, out)
-console.log(`Wrote ${rows.length} connections from ${commit}`)
+console.log(`Wrote ${unique.length} connections from ${commit} (${sourceNote})`)

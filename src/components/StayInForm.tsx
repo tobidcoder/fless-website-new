@@ -4,13 +4,17 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Check } from "lucide-react"
 import { cn } from "@/lib/utils"
+import type { WaitlistRole } from "@/lib/waitlist"
 
+/** Footer email box: hands over to /start, which posts to the Fless waitlist. */
 export function StayInForm({
   source,
+  role = "business",
   variant = "light",
   className,
 }: {
   source: string
+  role?: WaitlistRole
   variant?: "light" | "dark"
   className?: string
 }) {
@@ -23,7 +27,8 @@ export function StayInForm({
     const cleanEmail = email.trim()
     if (!cleanEmail) return
     setSent(true)
-    router.push(`/start?email=${encodeURIComponent(cleanEmail)}&source=${encodeURIComponent(source)}`)
+    const params = new URLSearchParams({ email: cleanEmail, source, role })
+    router.push(`/start?${params.toString()}`)
   }
 
   const dark = variant === "dark"

@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 const description =
-  "Live prices for every Fless AI employee, straight from the marketplace. Pay per employee, not per seat, with discounts for longer hires."
+  "Fless pricing: a workspace plan from free to Enterprise, builder-set prices for marketplace employees, and work credits with a spending cap you control. Local prices in Nigeria, Ghana, Kenya and South Africa."
 
 export const metadata: Metadata = {
   title: "Pricing — Fless",

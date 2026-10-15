@@ -11,9 +11,9 @@ import {
 import { BrandedStage } from "@/components/BrandedStage"
 
 const credentials = [
-  { title: "SOC 2", copy: "Audit in progress with an independent CPA firm. Security questionnaires on request." },
+  { title: "SOC 2", copy: "Audit planned. Security questionnaires and DPAs on request." },
   { title: "Encryption", copy: "TLS in transit, AES-256 at rest." },
-  { title: "SSO & SAML", copy: "Available on enterprise agreements." },
+  { title: "SSO", copy: "On the Business and Enterprise plans." },
   { title: "Audit log", copy: "Exportable audit log for all employee actions." },
 ]
 

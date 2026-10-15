@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@/components/Analytics";
+import { PILOT_LINE_LONG } from "@/lib/claims";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,11 +29,12 @@ export const metadata: Metadata = {
     template: "%s | Fless",
   },
   description:
-    "Fless lets businesses hire AI employees by department. They plan, write and publish real work, and you approve before anything goes live. Marketing is live today; 18 businesses in pilot across Nigeria, the UK and North America.",
+    `Hire AI employees made by builders, or build your own in minutes. They plan, write and publish real work, and you approve before anything goes live. ${PILOT_LINE_LONG}.`,
   keywords: [
     "AI employees",
     "autonomous workforce",
-    "infrastructure for AI employees",
+    "build an AI employee",
+    "AI employee marketplace",
     "AI marketing employee",
     "enterprise AI workforce",
     "Fless",
@@ -51,7 +56,7 @@ export const metadata: Metadata = {
     siteName: "Fless",
     title: "Fless — AI employees that do the work",
     description:
-      "Hire AI employees by department. They do the work; you approve what ships. Marketing is live today.",
+      "Hire AI employees or build your own. They do the work; you approve what ships.",
     images: [
       {
         url: "/fless-og.png",
@@ -67,7 +72,7 @@ export const metadata: Metadata = {
     creator: "@getfless",
     title: "Fless — AI employees that do the work",
     description:
-      "Deploy autonomous AI employees starting with Marketing. 18 businesses in pilot across Nigeria, the UK, and North America.",
+      `Hire AI employees or build your own. You approve what ships. ${PILOT_LINE_LONG}.`,
     images: ["/fless-og.png"],
   },
   robots: {
@@ -107,7 +112,7 @@ const organizationSchema = {
       logo: "https://getfless.com/app-icon.png",
       image: "https://getfless.com/app-icon.png",
       description:
-        "Infrastructure for AI employees. Fless enables businesses to deploy autonomous AI employees with strict governance, human approvals, and transparent billing.",
+        "Fless lets businesses hire AI employees made by builders, or build their own, with approvals, workspace limits and an activity log.",
       address: {
         "@type": "PostalAddress",
         streetAddress: "3a Habitat Close, Lekki Phase 1",
@@ -156,18 +161,20 @@ const organizationSchema = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Cloud",
       description:
-        "Autonomous AI employee platform. Deploy Marketing Employees today to plan, draft, design, and schedule multi-channel campaigns with human approval gates."
+        "Hire or build AI employees that plan, write and publish real work, with approval before anything goes out."
     },
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -185,8 +192,11 @@ export default function RootLayout({
           storageKey="fless-theme"
           disableTransitionOnChange
         >
-          {children}
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

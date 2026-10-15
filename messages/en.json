@@ -1,0 +1,292 @@
+{
+  "header": {
+    "home": "Home",
+    "hire": "Hire",
+    "build": "Build",
+    "solutions": "Solutions",
+    "departments": "Categories",
+    "pricing": "Pricing",
+    "builders": "Builders",
+    "help": "Help",
+    "investors": "Investors",
+    "contact": "Contact",
+    "howItWorks": "How it works",
+    "login": "Log in",
+    "joinBeta": "Join beta",
+    "joinTheBeta": "Join the beta",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "live": "Live",
+    "earlyAccess": "Early access",
+    "categoriesNote": "Employees made by builders, grouped by the work they do.",
+    "browseAll": "Browse all employees →",
+    "size": "Size",
+    "industry": "Industry",
+    "more": "More",
+    "allIndustries": "All industries →",
+    "bySize": "By company size",
+    "browseIndustries": "Browse 35 industries →",
+    "appearance": "Appearance",
+    "language": "Language",
+    "enterpriseTitle": "Enterprise",
+    "enterpriseLine": "Private Cloud, SSO and a named rollout.",
+    "dept": {
+      "marketing": {
+        "title": "Marketing",
+        "sub": "Content, SEO, social"
+      },
+      "voice": {
+        "title": "Voice",
+        "sub": "Inbound, outbound, booking"
+      },
+      "sales": {
+        "title": "Sales",
+        "sub": "Leads, CRM, follow-up"
+      },
+      "recruitment": {
+        "title": "Recruitment",
+        "sub": "Sourcing, screening, hiring"
+      },
+      "support": {
+        "title": "Support",
+        "sub": "Tickets, success, escalation"
+      },
+      "operations": {
+        "title": "Operations",
+        "sub": "Projects, docs, workflows"
+      },
+      "finance": {
+        "title": "Finance",
+        "sub": "Invoices, expenses, payroll"
+      },
+      "hr": {
+        "title": "HR",
+        "sub": "Onboarding, policy, reviews"
+      }
+    }
+  },
+  "footer": {
+    "headline1": "Every department.",
+    "headline2": "Every market.",
+    "tagline": "Hire AI employees, or build your own. You approve what ships.",
+    "categories": "Categories",
+    "solutions": "Solutions",
+    "builders": "For builders",
+    "platform": "Platform",
+    "company": "Company",
+    "legal": "Legal",
+    "live": "Live",
+    "earlyAccess": "Early access",
+    "deptMarketing": "Marketing",
+    "deptVoice": "Voice",
+    "deptSales": "Sales",
+    "deptSupport": "Customer support",
+    "deptOperations": "Operations",
+    "deptFinance": "Finance",
+    "deptRecruitment": "Recruitment",
+    "deptHr": "People and HR",
+    "forStartups": "For startups",
+    "growingTeams": "Growing teams",
+    "enterprise": "Enterprise",
+    "healthcare": "Healthcare and clinics",
+    "retail": "Retail and e-commerce",
+    "financialServices": "Financial services",
+    "education": "Education and academies",
+    "allIndustries": "All 35 industries",
+    "builderProgram": "Builder program",
+    "buildEmployee": "Build an employee",
+    "studioGuide": "Building in Studio",
+    "publishing": "Publishing and review",
+    "earnings": "Earnings (you keep 70%)",
+    "payouts": "Payouts",
+    "applyBuilder": "Apply as a builder",
+    "hire": "Hire an employee",
+    "pricing": "Pricing",
+    "helpCentre": "Help centre",
+    "connectingApps": "Connecting apps",
+    "security": "Security",
+    "hosting": "Hosting options",
+    "investors": "Investors and accelerators",
+    "joinBeta": "Join the beta",
+    "support": "Customer support",
+    "sales": "Sales enquiries",
+    "faq": "FAQ",
+    "privacy": "Privacy policy",
+    "terms": "Terms of service",
+    "dataDeletion": "Data deletion",
+    "cancellation": "Cancellation terms",
+    "retention": "Data retention",
+    "billing": "Billing",
+    "billingLine": "USD · GBP · EUR, or local prices in NGN · GHS · KES · ZAR",
+    "compliance": "NDPR and GDPR aligned · DPA on request",
+    "entity": "Fless is a product of Brainstack Tech LTD, 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria",
+    "language": "Language"
+  },
+  "hero": {
+    "badge": "In pilot with {count} businesses",
+    "title1": "AI employees that do the work.",
+    "title2": "You approve what ships.",
+    "lede": "Hire AI employees made by builders, or describe the job and build your own in minutes. They plan, write and publish real work, and a person on your team signs off first.",
+    "cta": "Join the beta",
+    "howItWorks": "How it works →",
+    "build": "Build your own →",
+    "builder": "I'm a builder →",
+    "investor": "I'm an investor →",
+    "fact1": "Assign work in plain language",
+    "fact2": "You approve before anything goes out",
+    "fact3": "Pay in USD, GBP, EUR or local currency"
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title1": "One bill.",
+    "title2": "Three simple parts.",
+    "lede": "A plan for your workspace, the price each builder sets for an employee you hire, and work credits for what your employees use. Your own employees have no employee price.",
+    "partPlan": "Workspace plan",
+    "partPlanText": "Seats, connected apps, approvals, limits and support. Every plan includes work credits.",
+    "partEmployee": "Employee price",
+    "partEmployeeText": "Only for employees you hire from the marketplace. Set by the builder: monthly, annual or per task.",
+    "partCredits": "Work credits",
+    "partCreditsText": "What your employees use, at cost plus a small margin. Top up automatically within a cap you set.",
+    "currency": "Currency",
+    "monthly": "Monthly",
+    "annual": "Annual",
+    "annualSave": "2 months free",
+    "perMonth": "/ month",
+    "perYear": "/ year",
+    "custom": "Custom",
+    "free": "Free",
+    "creditsIncluded": "{amount} of work credits a month",
+    "creditsCustom": "Credits to fit your volume",
+    "localNote": "Local price for {region}.",
+    "popular": "Most popular",
+    "plansTitle": "Plans",
+    "employeesTitle": "Employee prices",
+    "employeesLede": "Each employee on the marketplace has a price its builder sets. These come straight from the marketplace.",
+    "employeesUnavailable": "Live employee prices are unavailable right now.",
+    "employeesUnavailableText": "We couldn't reach the marketplace. Browse employees later, or join the beta and we'll send you current prices.",
+    "employeesEmpty": "No employees are published yet.",
+    "browseAll": "Browse all employees →",
+    "creditsTitle": "Work credits, explained",
+    "creditsLede": "Credits pay for the work itself. Plans include a monthly allowance; most small teams never go past it.",
+    "creditsUses": "What uses credits",
+    "creditsCap": "You set the spending cap",
+    "creditsCapText": "When your allowance runs out, credits top up automatically, never past the monthly cap you choose. At the cap, employees pause and ask you first.",
+    "creditsByok": "Bring your own model key",
+    "creditsByokText": "Connect your own AI model account and model use is billed by your provider, not by Fless. Other credits still apply.",
+    "regionalTitle": "Local prices where you work",
+    "calcTitle": "Estimate your monthly bill",
+    "calcLede": "Pick a plan, add the employees you'd hire, and estimate how much work they'll do.",
+    "calcPlan": "Plan",
+    "calcEmployees": "Marketplace employees",
+    "calcEmployeePrice": "Average employee price (USD / month)",
+    "calcCredits": "Estimated work credits (USD / month)",
+    "calcIncluded": "Included in plan",
+    "calcExtra": "Extra credits",
+    "calcTotal": "Estimated total",
+    "calcNote": "Estimate in US dollars. Local price lists apply at checkout; taxes are added where required.",
+    "calcPlanLine": "Plan",
+    "calcEmployeesLine": "Employees",
+    "faqTitle": "Pricing questions",
+    "ctaTitle": "Start free. Upgrade when it's working.",
+    "ctaButton": "Join the beta",
+    "plans": {
+      "free": {
+        "for": "Trying Fless, new builders",
+        "employees": "1 private employee live",
+        "seats": "1 seat",
+        "features": [
+          "Unlimited drafts and tests in Studio",
+          "Approvals and activity log",
+          "Community support"
+        ],
+        "cta": "Start free"
+      },
+      "starter": {
+        "for": "Small businesses",
+        "employees": "3 employees live",
+        "seats": "3 seats",
+        "features": [
+          "Apps with sign-in (Google, Microsoft, social and more)",
+          "Apps that connect through a standard connector",
+          "Connect any API"
+        ],
+        "cta": "Choose Starter"
+      },
+      "growth": {
+        "for": "Growing teams and agencies",
+        "employees": "15 employees live",
+        "seats": "10 seats",
+        "features": [
+          "Website tasks on approved sites",
+          "Bring your own connectors",
+          "Workspace limits",
+          "Priority support"
+        ],
+        "cta": "Choose Growth"
+      },
+      "business": {
+        "for": "Mid-size companies",
+        "employees": "Unlimited employees",
+        "seats": "Unlimited seats",
+        "features": [
+          "SSO and audit export",
+          "Choice of data region",
+          "Uptime commitment"
+        ],
+        "cta": "Choose Business"
+      },
+      "enterprise": {
+        "for": "Regulated and large companies",
+        "employees": "Unlimited employees",
+        "seats": "Unlimited seats",
+        "features": [
+          "Private Cloud or your own servers",
+          "Zero data retention",
+          "DPA and invoicing",
+          "Dedicated support"
+        ],
+        "cta": "Talk to us"
+      }
+    },
+    "faq": [
+      {
+        "q": "What do I pay for?",
+        "a": "Three things on one bill: your workspace plan, the price of any marketplace employee you hire (set by its builder), and work credits for what your employees use. Employees you build for your own business have no employee price."
+      },
+      {
+        "q": "How do annual and per-task prices work?",
+        "a": "Plans and most employees can be paid monthly or yearly; yearly gets 2 months free. Some builders charge per completed task instead, for example per booked appointment. You see the price before you hire."
+      },
+      {
+        "q": "Can I try an employee first?",
+        "a": "Many builders offer a 7-day trial. The employee profile says when one is available."
+      },
+      {
+        "q": "What stops credits running away?",
+        "a": "You set a monthly spending cap. Credits top up automatically only up to that cap; at the cap your employees pause and ask you first."
+      },
+      {
+        "q": "Which currencies can I pay in?",
+        "a": "Pay in USD, GBP or EUR anywhere. In Nigeria, Ghana, Kenya and South Africa you get local prices and pay in NGN, GHS, KES or ZAR. Cards and invoices worldwide through Stripe; local cards, bank transfer and mobile money in Africa through Paystack."
+      },
+      {
+        "q": "Can I cancel?",
+        "a": "Yes. Cancel a plan or an employee at any time; it stays active until the end of the period you paid for. Credits already used are not refunded."
+      }
+    ],
+    "creditUses": [
+      "Thinking and writing (AI model use)",
+      "Research and web search",
+      "Images and video created for you",
+      "Website tasks, by the minute",
+      "Voice calls, by the minute",
+      "Paid app actions, such as WhatsApp template messages or X posts"
+    ]
+  },
+  "locale": {
+    "label": "Language",
+    "en": "English",
+    "fr": "Français",
+    "pt": "Português"
+  }
+}

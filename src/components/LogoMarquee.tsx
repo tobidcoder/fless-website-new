@@ -1,5 +1,7 @@
 "use client"
 
+import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
+
 const sectors = [
   "Healthcare Clinics",
   "Retail & E-commerce",
@@ -17,7 +19,7 @@ export function LogoMarquee() {
   return (
     <section className="py-12 md:py-16 overflow-hidden border-y border-border/60 bg-background">
       <p className="text-center text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-8">
-        18 businesses in pilot across Nigeria, the UK, and North America
+        {PILOT_BUSINESS_COUNT} businesses in pilot across Nigeria, the UK, and North America
       </p>
       <div className="relative">
         <div className="absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />

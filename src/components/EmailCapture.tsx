@@ -4,15 +4,22 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
+import type { WaitlistRole } from "@/lib/waitlist"
 
+/**
+ * Collects an email and hands over to /start, which completes the sign-up and posts it
+ * to the Fless waitlist (POST /api/v1/public/waitlist) with the right role.
+ */
 export function EmailCapture({
   source = "site",
+  role = "business",
   extra = {},
   cta = "Join the beta",
   placeholder = "Work email",
   className,
 }: {
   source?: string
+  role?: WaitlistRole
   extra?: Record<string, string>
   cta?: string
   placeholder?: string
@@ -25,7 +32,7 @@ export function EmailCapture({
     e.preventDefault()
     const cleanEmail = email.trim()
     if (!cleanEmail) return
-    const params = new URLSearchParams({ email: cleanEmail, source, ...extra })
+    const params = new URLSearchParams({ email: cleanEmail, source, role, ...extra })
     router.push(`/start?${params.toString()}`)
   }
 

@@ -1,86 +1,67 @@
-"use client";
+import Link from "next/link"
+import { Header } from "@/components/Header"
+import { Footer } from "@/components/Footer"
+import { BuilderApplyForm } from "@/components/BuilderApplyForm"
+import { CONNECTIONS } from "@/lib/connections"
+import { BUILDER_SHARE, FLESS_SHARE, TRIAL_DAYS } from "@/lib/billing"
 
-import { useState } from "react";
-import Link from "next/link";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { CodeView } from "@/components/CodeView";
-import { cn } from "@/lib/utils";
-import {
-  AGENTS_EXAMPLE,
-  BUILDER_API,
-  CONNECTIONS,
-  CONNECTION_STATUS_NOTE,
-  categoryLabel,
-  CORE_PACKAGES,
-  EVALUATION_EXAMPLE,
-  MANIFEST_EXAMPLE,
-  PACKAGES,
-  PACKAGES_STATUS_NOTE,
-  SANDBOX_EXAMPLE,
-  type ConnectionStatus,
-} from "@/lib/sdk";
+const appCount = CONNECTIONS.length
 
-const tabs = [
-  { id: "manifest", label: "employee.ts", file: "src/employee.ts", code: MANIFEST_EXAMPLE },
-  { id: "agents", label: "agents.ts", file: "src/agents.ts", code: AGENTS_EXAMPLE },
-  { id: "sandbox", label: "sandbox.ts", file: "src/sandbox.ts", code: SANDBOX_EXAMPLE },
-  { id: "evaluate", label: "evaluate", file: "Builder API", code: EVALUATION_EXAMPLE },
-];
-
-// What each block of the manifest does, in plain words.
-const anatomy = [
-  { key: "countries · industries · languages", text: "Who can hire it, and which languages it speaks." },
-  { key: "requiredPackages", text: "The packages it needs, such as voice, WhatsApp, calendar and CRM." },
-  { key: "capabilities · tools", text: "What it is allowed to do. Any tool not listed is blocked." },
-  { key: "skills", text: "Repeatable procedures with triggers, steps and the tools each step uses." },
-  { key: "workflows", text: "Multi-step jobs that start on an event, such as a missed call." },
-  { key: "knowledge", text: "The business facts it answers from: text, URLs, PDFs and docs." },
-  { key: "agents · orchestration", text: "Specialist sub-agents, each with its own model, skills and tools." },
-  { key: "policies", text: "What needs approval, when to hand over to a person, and working hours." },
-  { key: "settingsSchema", text: "The settings each business fills in when they hire it." },
-  { key: "evaluationScenarios", text: "Tests it must pass before it can be published." },
-  { key: "pricing", text: "Your price and metered usage. You keep 35%." },
-];
+// The Studio flow, step by step. This is an illustration of how a build goes, not a real customer.
+const conversation: { who: "you" | "studio"; text: string }[] = [
+  { who: "you", text: "A front-desk assistant for dental clinics. It answers WhatsApp messages, books appointments and sends reminders." },
+  { who: "studio", text: "Got it. Which calendar do the clinics use, and should it book straight away or ask the clinic first?" },
+  { who: "you", text: "Google Calendar. Ask first for new patients, book directly for check-ups." },
+  { who: "studio", text: "Done. I’ve set new-patient bookings to Ask first and check-ups to Automatic. Want to try it? Send it a message as a patient." },
+]
 
 const steps = [
-  { n: "01", title: "Write it", copy: "Describe the job in one TypeScript file: skills, knowledge, tools and price." },
-  { n: "02", title: "Test it", copy: "Run real conversations in the sandbox. Packages are mocked, so no live accounts are touched." },
-  { n: "03", title: "Evaluate it", copy: "Your scenarios plus Fless\u2019s policy, security and cost checks run against every version." },
-  { n: "04", title: "Submit it", copy: "Passing versions go to review, then the marketplace. You're paid every month it works." },
-];
+  {
+    n: "01",
+    title: "Describe it",
+    copy: "Tell Studio the job in plain words, the way you’d brief a new hire. It drafts the employee: what it does, which apps it uses and what needs approval.",
+  },
+  {
+    n: "02",
+    title: "Answer a few questions",
+    copy: "Studio asks what it needs to know: tone, working hours, when to hand over to a person, which actions should ask first.",
+  },
+  {
+    n: "03",
+    title: "Test it live",
+    copy: "Chat with your employee as a customer would. Test runs never touch real accounts, so you can try anything.",
+  },
+  {
+    n: "04",
+    title: "Publish",
+    copy: "Keep it private for your own business, or publish it to the marketplace. Marketplace employees are reviewed by Fless first.",
+  },
+]
 
-const split = {
-  fless: [
-    "Hosting, models and GPU computing",
-    "Customer logins and API keys, kept out of your code",
-    "Sign-in and token handling for every connection, through each provider's official API",
-    "Approvals, audit log and data isolation per customer",
-    "Billing in 8 currencies, invoices and monthly payouts",
-  ],
-  you: [
-    "The know-how: how the job is actually done",
-    "Skills and procedures for real situations",
-    "The knowledge your employee answers from",
-    "Which markets and industries it is for",
-    "Your price",
-  ],
-};
+const money = [
+  { title: `You keep ${BUILDER_SHARE}%`, copy: `Of every subscription and every per-task charge your employee earns. Fless keeps ${FLESS_SHARE}% for hosting, billing, support and distribution.` },
+  { title: "Your price, your way", copy: `Charge monthly, yearly, or per completed task, such as per booked appointment. Offer a ${TRIAL_DAYS}-day trial if you want to.` },
+  { title: "Paid out worldwide", copy: "Monthly payouts through Stripe in most countries, and Paystack transfers in Nigeria, Ghana, Kenya and South Africa. Identity and tax checks are built in." },
+]
 
-const statusTone: Record<ConnectionStatus, string> = {
-  Available: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
-  Beta: "text-primary bg-brand-soft",
-  "Awaiting approval": "text-amber-700 dark:text-amber-400 bg-amber-500/10",
-};
+const handled = [
+  { title: "Review before the marketplace", copy: "Every marketplace employee is reviewed for safety and quality before businesses can hire it. You get clear notes if something needs fixing." },
+  { title: "A sales page, made for you", copy: "Each published employee gets its own page with a live demo, and referral links you can share to earn on every hire you bring in." },
+  { title: "Apps, safely", copy: `Your employee can use ${appCount}+ apps. Businesses connect their own accounts; you never see their passwords or keys.` },
+  { title: "Approvals and limits", copy: "Businesses choose Off, Ask first or Automatic for every action, set workspace limits, and see everything in the activity log." },
+  { title: "Hosting and billing", copy: "Fless runs your employee, bills the business in their currency and handles invoices, tax and refunds." },
+  { title: "Skills you can reuse and sell", copy: "Turn a procedure you’ve perfected, like chasing an unpaid invoice, into a skill. Use it in all your employees, or sell it to other builders." },
+]
 
-const statuses: ConnectionStatus[] = ["Available", "Beta", "Awaiting approval"];
+const faqs = [
+  { q: "Do I need to write code?", a: "No. You build in Studio by describing the job and answering questions. If you can explain how the work is done, you can build an employee." },
+  { q: "What can my employee do?", a: "Anything the job needs within the apps a business connects: answer messages, write and publish posts, book meetings, update a CRM, work on approved websites and more. Businesses decide which actions need their approval." },
+  { q: "How much can I earn?", a: `You set the price and keep ${BUILDER_SHARE}% of what businesses pay for your employee, every month they keep it. Popular employees earn from many businesses at once.` },
+  { q: "How does review work?", a: "When you publish to the marketplace, Fless tests your employee against its scenarios and checks safety, quality and cost. Most reviews finish within a few working days." },
+  { q: "Can I build just for my own business?", a: "Yes. Private employees stay in your workspace and never appear on the marketplace. They have no employee price; you only pay your plan and work credits." },
+]
 
 export default function BuildersPage() {
-  const [tab, setTab] = useState(tabs[0].id);
-  const [status, setStatus] = useState<ConnectionStatus>("Available");
-  const active = tabs.find((t) => t.id === tab) ?? tabs[0];
-  const visibleConnections = CONNECTIONS.filter((c) => c.status === status);
-
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
       <Header activePage="builders" />
@@ -88,322 +69,155 @@ export default function BuildersPage() {
       <main className="flex-1">
         {/* HERO */}
         <section className="pt-28 pb-16 sm:pt-32 md:pt-40 md:pb-24">
-          <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
-            <div className="max-w-3xl">
-              <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-6">
-                For builders · SDK in private beta
-              </p>
-              <h1 className="text-[40px] sm:text-6xl md:text-[68px] font-display font-semibold tracking-[-0.045em] leading-[1.03] text-balance">
-                Build an AI employee once. <span className="text-primary">Earn every month it works.</span>
+          <div className="max-w-[1200px] mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+            <div className="lg:col-span-7">
+              <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-6">For builders</p>
+              <h1 className="text-[40px] sm:text-6xl md:text-[64px] font-display font-semibold tracking-[-0.045em] leading-[1.04] text-balance">
+                Describe it. Test it. Publish it. <span className="text-primary">Earn every month it works.</span>
               </h1>
               <p className="mt-7 text-[17px] sm:text-xl text-muted-foreground leading-[1.65] max-w-2xl text-pretty">
-                Package how a job is really done, such as a clinic front desk or a sales team, into one TypeScript
-                file. Businesses hire it on the Fless marketplace. You keep 35% of every subscription. We run
-                everything else.
+                Build an AI employee by chatting with Fless Studio. Turn what you know about a job, like running a
+                clinic front desk or chasing sales leads, into an employee businesses can hire. You keep{" "}
+                {BUILDER_SHARE}% of what it earns.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row gap-3">
                 <Link
-                  href="/start?role=builder"
-                  id="apply"
+                  href="#apply"
                   className="inline-flex h-12 items-center justify-center rounded-full bg-primary px-7 text-[15px] font-medium text-primary-foreground shadow-sm shadow-primary/25 hover:bg-primary-hover transition-colors"
                 >
-                  Request SDK access →
+                  Apply as a builder →
                 </Link>
                 <Link
-                  href="/docs"
+                  href="/build"
                   className="inline-flex h-12 items-center justify-center rounded-full border border-border px-7 text-[15px] font-medium text-foreground hover:border-primary/40 transition-colors"
                 >
-                  Read the docs
+                  Try describing one
                 </Link>
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* CODE SHOWCASE */}
-        <section className="pb-20 md:pb-32">
-          <div className="max-w-[1200px] mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-            <div className="lg:col-span-8 min-w-0">
-              <div role="tablist" aria-label="Example files" className="flex gap-1 overflow-x-auto no-scrollbar mb-4 -mx-1 px-1">
-                {tabs.map((t) => (
-                  <button
-                    key={t.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={tab === t.id}
-                    onClick={() => setTab(t.id)}
-                    className={cn(
-                      "h-9 shrink-0 rounded-full px-4 font-mono text-[12.5px] transition-colors",
-                      tab === t.id ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
-                    )}
-                  >
-                    {t.label}
-                  </button>
-                ))}
+            {/* STUDIO CHAT ILLUSTRATION */}
+            <figure className="lg:col-span-5 rounded-2xl border border-border/70 bg-card shadow-sm overflow-hidden">
+              <div className="px-5 py-3 border-b border-border/70 flex items-center justify-between text-[12px] text-muted-foreground">
+                <span className="font-medium text-foreground">Studio</span>
+                <span>Example conversation</span>
               </div>
-              <CodeView
-                key={active.id}
-                code={active.code}
-                filename={active.file}
-                maxHeight={560}
-              />
-            </div>
-
-            <div className="lg:col-span-4 lg:pt-14">
-              <h2 className="text-2xl font-display font-semibold tracking-tight mb-2">What&apos;s in the file</h2>
-              <p className="text-[15px] text-muted-foreground leading-relaxed mb-8">
-                A complete, production-shaped employee. Every block is typed and checked before it ships.
-              </p>
-              <dl className="space-y-5">
-                {anatomy.map((a) => (
-                  <div key={a.key}>
-                    <dt className="font-mono text-[13px] text-foreground">{a.key}</dt>
-                    <dd className="mt-1 text-[14px] text-muted-foreground leading-relaxed">{a.text}</dd>
-                  </div>
+              <ol className="p-5 space-y-3">
+                {conversation.map((m, i) => (
+                  <li key={i} className={m.who === "you" ? "flex justify-end" : "flex justify-start"}>
+                    <p
+                      className={
+                        m.who === "you"
+                          ? "max-w-[85%] rounded-2xl rounded-br-md bg-primary text-primary-foreground px-4 py-2.5 text-[14px] leading-relaxed"
+                          : "max-w-[85%] rounded-2xl rounded-bl-md bg-secondary text-foreground px-4 py-2.5 text-[14px] leading-relaxed"
+                      }
+                    >
+                      {m.text}
+                    </p>
+                  </li>
                 ))}
-              </dl>
-            </div>
+              </ol>
+              <figcaption className="px-5 pb-5 flex flex-wrap gap-2 text-[12px]">
+                <span className="rounded-full border border-border px-3 py-1">Test live</span>
+                <span className="rounded-full border border-border px-3 py-1">Publish privately</span>
+                <span className="rounded-full border border-border px-3 py-1">Publish to the marketplace</span>
+              </figcaption>
+            </figure>
           </div>
         </section>
 
-        {/* HOW IT WORKS */}
-        <section className="py-20 md:py-32 border-t border-border/60">
+        {/* STEPS */}
+        <section className="py-20 md:py-28 border-t border-border/60">
           <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
-            <h2 className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.1] max-w-xl mb-14 md:mb-20">
-              From one file to a paying customer.
+            <h2 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight leading-[1.12] mb-12 max-w-2xl">
+              From an idea to a working employee in one conversation.
             </h2>
-            <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-12">
+            <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {steps.map((s) => (
                 <li key={s.n}>
-                  <div className="font-mono text-[13px] text-primary mb-5">{s.n}</div>
-                  <div className="h-px bg-border mb-6" />
-                  <h3 className="text-lg font-semibold tracking-tight mb-2">{s.title}</h3>
+                  <div className="text-[13px] font-medium tabular-nums text-muted-foreground mb-3">{s.n}</div>
+                  <h3 className="text-[18px] font-semibold tracking-tight mb-2">{s.title}</h3>
                   <p className="text-[15px] text-muted-foreground leading-relaxed">{s.copy}</p>
                 </li>
               ))}
             </ol>
-            <div className="mt-16">
-              <h3 className="text-[13px] font-medium text-muted-foreground mb-4">Builder API</h3>
-              <ul className="border-t border-border/70">
-                {BUILDER_API.slice(0, 5).map((e) => (
-                  <li key={e.path} className="grid grid-cols-1 md:grid-cols-12 gap-x-6 gap-y-1 py-4 border-b border-border/70">
-                    <code className="md:col-span-7 font-mono text-[13px] text-foreground break-all">
-                      <span className="text-primary mr-2">{e.method}</span>
-                      {e.path}
-                    </code>
-                    <p className="md:col-span-5 text-[14px] text-muted-foreground">{e.summary}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
         </section>
 
-        {/* DIVISION OF WORK */}
-        <section className="py-20 md:py-32 bg-[#fafafa] dark:bg-secondary border-t border-border/60">
+        {/* MONEY */}
+        <section className="py-20 md:py-28 bg-[#fafafa] dark:bg-secondary border-t border-border/60">
+          <div className="max-w-[1200px] mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+            <div className="lg:col-span-4">
+              <p className="text-[64px] sm:text-[88px] font-display font-semibold tracking-[-0.05em] leading-none text-primary">
+                {BUILDER_SHARE}%
+              </p>
+              <h2 className="mt-4 text-2xl sm:text-3xl font-display font-semibold tracking-tight">is yours, every month.</h2>
+            </div>
+            <dl className="lg:col-span-8 divide-y divide-border/70 border-y border-border/70">
+              {money.map((m) => (
+                <div key={m.title} className="py-6">
+                  <dt className="text-[17px] font-semibold mb-1.5">{m.title}</dt>
+                  <dd className="text-[15px] text-muted-foreground leading-relaxed">{m.copy}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+
+        {/* WHAT FLESS HANDLES */}
+        <section className="py-20 md:py-28 border-t border-border/60">
           <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
-            <h2 className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.1] max-w-2xl mb-14 md:mb-20">
-              You bring the know-how. We run the rest.
+            <h2 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight leading-[1.12] mb-4 max-w-2xl">
+              You bring the know-how. Fless does the rest.
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
-              {[
-                { title: "Fless handles", items: split.fless },
-                { title: "You focus on", items: split.you },
-              ].map((col) => (
-                <div key={col.title}>
-                  <h3 className="text-[13px] font-medium text-muted-foreground mb-4">{col.title}</h3>
-                  <ul className="divide-y divide-border/70 border-y border-border/70">
-                    {col.items.map((item) => (
-                      <li key={item} className="py-4 text-[16px] text-foreground">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* PACKAGES */}
-        <section id="plugins" className="scroll-mt-20 py-20 md:py-32 border-t border-border/60">
-          <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 md:mb-16">
-              <div className="max-w-xl">
-                <h2 className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.1] mb-4">
-                  Packages.
-                </h2>
-                <p className="text-[16px] text-muted-foreground leading-relaxed">
-                  Two core packages to build with, and {PACKAGES.length} packages that give your employee tools. List the
-                  ones you need; the business connects its own accounts and your code never sees their keys.
-                </p>
-              </div>
-              <Link href="/docs#packages" className="text-[14px] font-medium text-primary hover:opacity-80 shrink-0">
-                Package reference →
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16 md:mb-20">
-              {CORE_PACKAGES.map((p) => (
-                <div key={p.name} className="rounded-2xl border border-border/70 p-6 sm:p-7">
-                  <div className="text-[12px] font-medium text-muted-foreground mb-3">{p.role}</div>
-                  <div className="font-mono text-[15px] text-foreground mb-3">{p.name}</div>
-                  <p className="text-[14px] text-muted-foreground leading-relaxed mb-5">{p.summary}</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {p.exports.map((e) => (
-                      <span key={e} className="font-mono text-[11.5px] text-foreground/80 bg-secondary rounded-md px-2 py-1">
-                        {e}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <p className="mb-6 text-[14px] text-muted-foreground leading-relaxed max-w-2xl border-l-2 border-primary/60 pl-4">
-              {PACKAGES_STATUS_NOTE}
+            <p className="text-[16px] text-muted-foreground leading-relaxed max-w-2xl mb-12">
+              The hard parts of selling software are already built.
             </p>
-            <ul className="border-t border-border/70">
-              {PACKAGES.map((p) => (
-                <li key={p.id} className="border-b border-border/70">
-                  <Link
-                    href={`/docs#package-${p.id}`}
-                    className="group grid grid-cols-1 md:grid-cols-12 gap-x-6 gap-y-2 py-6 md:items-center"
-                  >
-                    <div className="md:col-span-3 text-[16px] font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                      {p.name}
-                    </div>
-                    <div className="md:col-span-3 font-mono text-[13px] text-muted-foreground">{p.packageName}</div>
-                    <p className="md:col-span-4 text-[14px] text-muted-foreground leading-relaxed">{p.summary}</p>
-                    <div className="md:col-span-2 md:text-right text-[13px] text-muted-foreground tabular-nums">
-                      {p.tools.length} {p.tools.length === 1 ? "tool" : "tools"}
-                    </div>
-                  </Link>
-                </li>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+              {handled.map((h) => (
+                <div key={h.title} className="border-t border-border/70 pt-5">
+                  <h3 className="text-[17px] font-semibold tracking-tight mb-2">{h.title}</h3>
+                  <p className="text-[15px] text-muted-foreground leading-relaxed">{h.copy}</p>
+                </div>
               ))}
-            </ul>
+            </div>
+            <p className="mt-12 text-[15px]">
+              <Link href="/docs#studio" className="text-primary font-medium">Read the builder guide in the help centre →</Link>
+            </p>
           </div>
         </section>
 
-        {/* CONNECTIONS */}
-        <section id="connections" className="scroll-mt-20 py-20 md:py-32 bg-[#fafafa] dark:bg-secondary border-t border-border/60">
-          <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
-            <div className="max-w-2xl mb-12 md:mb-14">
-              <h2 className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.1] mb-4">
-                Connected through official APIs.
-              </h2>
-              <p className="text-[16px] text-muted-foreground leading-relaxed">
-                Fless connects straight to each provider&apos;s official API, with no third-party schedulers in between.
-                Businesses sign in with their own accounts, and tokens are stored and refreshed by Fless.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2 mb-6">
-              {statuses.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => setStatus(s)}
-                  className={cn(
-                    "h-9 rounded-full px-4 text-[13px] font-medium border transition-colors",
-                    status === s
-                      ? "bg-foreground text-background border-foreground"
-                      : "border-border text-muted-foreground hover:text-foreground bg-background"
-                  )}
-                >
-                  {s}
-                  <span className="ml-1.5 opacity-60 tabular-nums">{CONNECTIONS.filter((c) => c.status === s).length}</span>
-                </button>
+        {/* FAQ */}
+        <section className="py-20 md:py-28 border-t border-border/60">
+          <div className="max-w-[1200px] mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+            <h2 className="lg:col-span-4 text-3xl sm:text-4xl font-display font-semibold tracking-tight leading-[1.12]">
+              Builder questions.
+            </h2>
+            <dl className="lg:col-span-8 divide-y divide-border/70 border-y border-border/70">
+              {faqs.map((f) => (
+                <div key={f.q} className="py-6">
+                  <dt className="text-[16px] font-semibold text-foreground mb-2">{f.q}</dt>
+                  <dd className="text-[15px] text-muted-foreground leading-relaxed">{f.a}</dd>
+                </div>
               ))}
-            </div>
-            <p className="mb-6 text-[13px] text-muted-foreground">{CONNECTION_STATUS_NOTE[status]}</p>
-
-            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 border-t border-border/70">
-              {visibleConnections.map((c) => (
-                <li key={c.id} className="py-5 border-b border-border/70">
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-[15px] font-semibold tracking-tight text-foreground">{c.name}</span>
-                    <span className={cn("text-[11px] font-medium rounded-full px-2 py-0.5", statusTone[c.status])}>{c.status}</span>
-                  </div>
-                  <div className="mt-1 text-[13px] text-muted-foreground">{categoryLabel(c.category)}</div>
-                </li>
-              ))}
-            </ul>
-            <Link href="/docs#connections" className="inline-block mt-8 text-[14px] font-medium text-primary hover:opacity-80">
-              All {CONNECTIONS.length} connections →
-            </Link>
+            </dl>
           </div>
         </section>
 
-        {/* EARNINGS */}
-        <section className="py-20 md:py-32 border-t border-border/60">
-          <div className="max-w-[1200px] mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            <div className="lg:col-span-6">
-              <h2 className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.1] mb-5">
-                You keep 35%. Every month.
+        {/* APPLY */}
+        <section id="apply" className="py-20 md:py-28 bg-[#fafafa] dark:bg-secondary border-t border-border/60 scroll-mt-20">
+          <div className="max-w-[1200px] mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+            <div className="lg:col-span-5">
+              <h2 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight leading-[1.12] mb-4">
+                Apply to build on Fless.
               </h2>
-              <p className="text-[16px] text-muted-foreground leading-relaxed max-w-lg">
-                You earn 35% of every subscription and every metered charge your employee brings in, paid monthly to
-                your bank or Stripe. Fless keeps 65%, which covers computing, security, billing and distribution.
+              <p className="text-[15px] text-muted-foreground leading-relaxed">
+                We’re opening Studio to builders in small groups. Tell us what you’d build first and we’ll email you
+                when your access is ready.
               </p>
             </div>
-            <div className="lg:col-span-6">
-              <div className="rounded-3xl bg-background border border-border/70 p-7 sm:p-10">
-                <div className="text-[13px] text-muted-foreground mb-8">Example: the clinic front desk above</div>
-                <dl className="space-y-5 text-[15px]">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <dt className="text-muted-foreground">Clinics that hire it</dt>
-                    <dd className="font-medium tabular-nums">20</dd>
-                  </div>
-                  <div className="flex items-baseline justify-between gap-4">
-                    <dt className="text-muted-foreground">Monthly price</dt>
-                    <dd className="font-medium tabular-nums">$49</dd>
-                  </div>
-                  <div className="flex items-baseline justify-between gap-4">
-                    <dt className="text-muted-foreground">Monthly revenue</dt>
-                    <dd className="font-medium tabular-nums">$980</dd>
-                  </div>
-                  <div className="h-px bg-border" />
-                  <div className="flex items-baseline justify-between gap-4">
-                    <dt className="font-medium text-foreground">You earn</dt>
-                    <dd className="text-3xl sm:text-4xl font-display font-semibold tracking-tight tabular-nums text-primary">
-                      $343<span className="text-base text-muted-foreground font-sans font-normal">/mo</span>
-                    </dd>
-                  </div>
-                </dl>
-                <p className="mt-8 text-[13px] text-muted-foreground leading-relaxed">
-                  Before metered call minutes, which also pay 35%. Illustrative figures.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="py-20 md:py-32 border-t border-border/60">
-          <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
-            <div className="rounded-3xl bg-night text-white px-7 py-14 sm:px-12 sm:py-20 text-center">
-              <h2 className="text-3xl sm:text-5xl font-display font-semibold tracking-tight leading-[1.08] max-w-2xl mx-auto">
-                Ship your first employee.
-              </h2>
-              <p className="mt-5 text-[16px] text-white/60 leading-relaxed max-w-lg mx-auto">
-                The SDK is in private beta. Apply to join the next builder cohort and get the packages, builder API
-                keys and a sandbox account.
-              </p>
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Link
-                  href="/start?role=builder"
-                  className="inline-flex h-12 w-full sm:w-auto items-center justify-center rounded-full bg-primary px-7 text-[15px] font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
-                >
-                  Request SDK access →
-                </Link>
-                <Link
-                  href="/docs#quickstart"
-                  className="inline-flex h-12 w-full sm:w-auto items-center justify-center rounded-full border border-white/20 px-7 text-[15px] font-medium text-white hover:bg-white/5 transition-colors"
-                >
-                  Quickstart
-                </Link>
-              </div>
+            <div className="lg:col-span-7">
+              <BuilderApplyForm />
             </div>
           </div>
         </section>
@@ -411,5 +225,5 @@ export default function BuildersPage() {
 
       <Footer />
     </div>
-  );
+  )
 }

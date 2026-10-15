@@ -1,9 +1,10 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
 
 const stats = [
-  { value: "18", label: "Businesses in pilot" },
+  { value: String(PILOT_BUSINESS_COUNT), label: "Businesses in pilot" },
   { value: "6", label: "Social networks posted to directly" },
   { value: "8", label: "AI departments (1 live, 7 early access)" },
   { value: "3", label: "Regions: Nigeria, UK, North America" },

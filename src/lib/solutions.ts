@@ -1,3 +1,5 @@
+import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
+import { BILLING_SHORT, BILLING_STATEMENT } from "@/lib/billing"
 export type Solution = {
   slug: string
   name: string
@@ -41,9 +43,9 @@ export const solutions: Solution[] = [
     cities: ["Lagos", "Nairobi", "Berlin", "Austin"],
     audience: ["Founders", "Pre-seed to Series A", "Remote-first teams"],
     metrics: [
-      { value: "18", label: "Businesses in pilot" },
+      { value: String(PILOT_BUSINESS_COUNT), label: "Businesses in pilot" },
       { value: "Marketing", label: "Live today" },
-      { value: "Pro-rata", label: "Unused tenure refund" },
+      { value: "Monthly", label: "Or yearly, 2 months free" },
     ],
     capabilities: [
       { title: "Ship the story", copy: "Site, social, and a launch calendar without a content hire. Briefs become posts in the markets you actually sell.", image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80" },
@@ -54,7 +56,7 @@ export const solutions: Solution[] = [
       { title: "Launch week", copy: "Waitlist, social, and landing copy from one brief with approval before anything publishes." },
       { title: "First customers", copy: "Consistent brand messaging across LinkedIn, X, Facebook, Instagram, Threads and Bluesky." },
       { title: "Support readiness", copy: "Documented knowledge base preparation for upcoming support desks." },
-      { title: "Global operations", copy: "Invoiced in USD with local currency display for clarity." },
+      { title: "Global operations", copy: BILLING_SHORT + "." },
     ],
     steps: [
       { n: "01", title: "Tell us the company", copy: "Market, brand voice, and the channels that matter this quarter." },
@@ -63,9 +65,9 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "sales", "support", "finance"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
     faqs: [
       {
@@ -74,11 +76,11 @@ export const solutions: Solution[] = [
       },
       {
         q: "Does it work outside the US?",
-        a: "Yes. Fless is built for teams across Africa, Europe, the Middle East and North America, with local currency display.",
+        a: `Yes. Fless is built for teams across Africa, Europe, the Middle East and North America. ${BILLING_STATEMENT}`,
       },
       {
         q: "What if we raise and hire?",
-        a: "Keep your AI employees, reduce their hours, or end their tenure. Unused prepaid tenure is refunded pro-rata.",
+        a: "Keep your AI employees, pause them, or cancel. A cancelled plan or hire stays active until the end of the period you paid for.",
       },
     ],
     plan: {
@@ -102,7 +104,7 @@ export const solutions: Solution[] = [
     cities: ["London", "Dubai", "Accra", "Toronto"],
     audience: ["Operators", "20–150 people", "Second and third markets"],
     metrics: [
-      { value: "18", label: "Businesses in pilot" },
+      { value: String(PILOT_BUSINESS_COUNT), label: "Businesses in pilot" },
       { value: "8", label: "Departments on roadmap" },
       { value: "1", label: "Workspace" },
     ],
@@ -124,9 +126,9 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "sales", "operations", "recruitment"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
     faqs: [
       {
@@ -152,7 +154,7 @@ export const solutions: Solution[] = [
     slug: "enterprise",
     name: "Enterprise",
     kind: "size",
-    line: "Controls, regions, and private rollout.",
+    line: "Controls, data region and Private Cloud.",
     headline: "Procurement-ready AI employees.",
     lede: "Enterprise security, audit trails, and private deployment options by agreement.",
     story:
@@ -164,7 +166,7 @@ export const solutions: Solution[] = [
     audience: ["CIOs", "Security teams", "Regulated enterprises"],
     metrics: [
       { value: "DPA", label: "Available on request" },
-      { value: "SSO", label: "Enterprise agreements" },
+      { value: "SSO", label: "Business and Enterprise plans" },
       { value: "Private", label: "Deployment option" },
     ],
     capabilities: [
@@ -174,7 +176,7 @@ export const solutions: Solution[] = [
     ],
     plays: [
       { title: "Security review", copy: "Security questionnaire and subprocessor list provided under NDA." },
-      { title: "SSO mapping", copy: "Identity provider configuration on enterprise agreements." },
+      { title: "SSO", copy: "Sign in with your identity provider on the Business and Enterprise plans." },
       { title: "Audit exports", copy: "Exportable activity logs for compliance and internal audits." },
       { title: "Data processing", copy: "DPA and standard contractual clauses available on request." },
     ],
@@ -185,9 +187,9 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "operations", "finance", "hr"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
     faqs: [
       {
@@ -246,9 +248,9 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "support", "operations"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
     faqs: [
       {
@@ -307,9 +309,9 @@ export const solutions: Solution[] = [
     ],
     desks: ["voice", "support", "marketing"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
     faqs: [
       {
@@ -368,9 +370,9 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "support", "voice"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
     faqs: [
       {
@@ -420,18 +422,18 @@ export const solutions: Solution[] = [
       { title: "Product drop", copy: "Social assets, email copy, and landing headlines prepared together." },
       { title: "Seasonal campaigns", copy: "Holiday schedules and promotional calendars prepared in advance." },
       { title: "Multi-brand retail", copy: "Manage separate product lines in isolated workspaces." },
-      { title: "Peak capacity", copy: "Increase employee tenure hours during holiday surges." },
+      { title: "Peak capacity", copy: "Raise your work-credit cap during holiday surges." },
     ],
     steps: [
       { n: "01", title: "Connect brand channels", copy: "Connect official social accounts by signing in to each platform." },
       { n: "02", title: "Review drafts", copy: "Approve product copy and campaign schedules in your workspace." },
-      { n: "03", title: "Scale during peak", copy: "Increase tenure capacity by the day or week as volume grows." },
+      { n: "03", title: "Scale during peak", copy: "Add employees or raise your credit cap as volume grows." },
     ],
     desks: ["marketing", "support", "voice"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
     faqs: [
       {
@@ -470,7 +472,7 @@ export const solutions: Solution[] = [
     metrics: [
       { value: "Audit log", label: "Every action logged" },
       { value: "Multi-entity", label: "Separate workspaces" },
-      { value: "SSO", label: "Enterprise agreements" },
+      { value: "SSO", label: "Business and Enterprise plans" },
     ],
     capabilities: [
       { title: "Compliant content workflow", copy: "Market commentary and announcements held for compliance sign-off before publishing.", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80" },
@@ -490,9 +492,9 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "operations", "finance"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
     faqs: [
       {
@@ -501,7 +503,7 @@ export const solutions: Solution[] = [
       },
       {
         q: "Can SSO be required?",
-        a: "SSO is available on enterprise agreements.",
+        a: "SSO is available on the Business and Enterprise plans.",
       },
       {
         q: "Is multi-entity supported?",
@@ -551,9 +553,9 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "voice", "support"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
     faqs: [
       {
@@ -612,9 +614,9 @@ export const solutions: Solution[] = [
     ],
     desks: ["marketing", "sales", "operations", "finance"],
     quote: {
-      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      text: `In pilot with ${PILOT_BUSINESS_COUNT} businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.`,
       author: "Fless Pilot Program",
-      role: "18 businesses active",
+      role: `${PILOT_BUSINESS_COUNT} businesses active`,
     },
     faqs: [
       {

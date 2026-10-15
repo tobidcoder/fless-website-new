@@ -17,6 +17,7 @@ import {
 } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
+import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -270,20 +271,10 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
                   <div className="text-2xl md:text-3xl font-display font-semibold text-foreground">
                     {profile.pricingDisplay.formattedRate}
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1 mb-4">
-                    Hourly rate: {profile.pricingDisplay.hourlyDisplay}
+                  <p className="text-xs text-muted-foreground mt-1 mb-6">
+                    Price set by the builder. Pay monthly, or yearly with 2 months free. Your workspace plan and work
+                    credits are billed separately. <Link href="/pricing" className="underline underline-offset-2">How pricing works</Link>
                   </p>
-
-                  <div className="space-y-2 mb-6">
-                    <div className="text-[11px] font-medium uppercase text-muted-foreground">Available Tenures</div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {profile.pricingDisplay.supportedTenures.map((unit) => (
-                        <span key={unit} className="px-2.5 py-1 rounded-md bg-background border border-border/60 text-xs font-medium capitalize">
-                          {unit}ly
-                        </span>
-                      ))}
-                    </div>
-                  </div>
 
                   {profile.pricingDisplay.hasUsage && (
                     <div className="p-3 rounded-xl bg-background border border-border/60 text-xs text-muted-foreground mb-6">
@@ -294,7 +285,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
                 </div>
 
                 <Link
-                  href={`/start?employee=${profile.slug}`}
+                  href={`/start?role=business&source=employee-${profile.slug}`}
                   className="w-full inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground font-medium text-sm hover:bg-primary/90 transition-colors shadow-md"
                 >
                   Hire {profile.name} <ArrowRight className="w-4 h-4" />
@@ -355,7 +346,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
                   <p className="text-xs text-muted-foreground mt-0.5">
                     {profile.reviewCount > 0
                       ? `Reviews submitted by active business deployments of ${profile.name}.`
-                      : "Fless is currently in private pilot with 18 businesses."}
+                      : `Fless is currently in private pilot with ${PILOT_BUSINESS_COUNT} businesses.`}
                   </p>
                 </div>
                 {profile.reviewCount > 0 && (
@@ -416,9 +407,9 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
                   </p>
                 </div>
                 <div className="p-4 rounded-xl bg-card border border-border/70">
-                  <h3 className="text-xs font-semibold text-foreground">Can I cancel or refund unused tenure?</h3>
+                  <h3 className="text-xs font-semibold text-foreground">Can I cancel?</h3>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Yes. Cancel whenever your business no longer needs capacity. Eligible unused tenure service is calculated and pro-rated according to Fless terms.
+                    Yes. Cancel at any time; the employee stays active until the end of the period you paid for.
                   </p>
                 </div>
               </div>

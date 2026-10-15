@@ -3,6 +3,8 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowRight, Briefcase, Code2, LineChart } from "lucide-react"
+import { PILOT_BUSINESS_COUNT, PILOT_REGION_COUNT } from "@/lib/claims"
+import { BUILDER_SHARE } from "@/lib/billing"
 
 const audiences = [
   {
@@ -12,7 +14,7 @@ const audiences = [
     points: [
       "Hire an AI Marketing employee today",
       "It drafts, designs and schedules — you approve",
-      "Monthly workforce rate, no seat licences",
+      "Or describe the job and build your own",
     ],
     cta: "Join the beta",
     href: "/start",
@@ -22,9 +24,9 @@ const audiences = [
     who: "For builders",
     title: "Build an AI employee once. Earn every month it works.",
     points: [
-      "TypeScript SDK and offline test sandbox",
+      "Describe it in Studio, test it live, no code",
       "Publish to the Fless marketplace",
-      "Keep 35% of every subscription, paid monthly",
+      `Keep ${BUILDER_SHARE}% of what it earns, paid monthly`,
     ],
     cta: "See the builder program",
     href: "/builders",
@@ -34,8 +36,8 @@ const audiences = [
     who: "For investors & accelerators",
     title: "Pre-seed infrastructure for the AI workforce.",
     points: [
-      "18 businesses in pilot across 3 regions",
-      "Two revenue lines: workforce + marketplace",
+      `${PILOT_BUSINESS_COUNT} businesses in pilot across ${PILOT_REGION_COUNT} regions`,
+      "Plans, marketplace share and work credits",
       "NVIDIA Inception member",
     ],
     cta: "Company overview",

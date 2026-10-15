@@ -9,7 +9,7 @@ import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { departments } from "@/lib/departments"
 import { industries } from "@/lib/industries"
-import { googleDeskOptions, submitBetaToGoogleForm } from "@/lib/betaForm"
+import { joinWaitlist, parseRole, WaitlistError, type WaitlistRole } from "@/lib/waitlist"
 import {
   countries,
   countryByIso,
@@ -17,90 +17,108 @@ import {
   nationalPhoneDigits,
   phonePlaceholder,
 } from "@/lib/countries"
+import { cn } from "@/lib/utils"
 
-const roles = ["Founder / CEO", "Operator / COO", "Marketing", "Sales", "People / HR", "Finance", "Other"]
 const sizes = ["1–10", "11–50", "51–200", "201–1,000", "1,000+"]
 const heardOptions = ["A person I trust", "Search", "LinkedIn", "X / Twitter", "Event", "Other"]
+const builderInterests = [
+  "Marketing",
+  "Sales",
+  "Customer support",
+  "Voice and calls",
+  "Recruitment",
+  "Operations",
+  "Finance",
+  "A specific industry",
+]
+const builderBackground = ["I run or work in a business", "Consultant or agency", "Developer", "Domain expert", "Other"]
+const investorInterests = ["Investing", "Accelerator programme", "Partnership", "Press"]
 
 const field =
   "w-full h-12 px-4 rounded-xl border border-border bg-background text-foreground text-base sm:text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/25 placeholder:text-muted-foreground transition-all"
 const label = "block text-[13px] font-medium mb-2"
 
-import { cn } from "@/lib/utils"
+const ROLE_COPY: Record<WaitlistRole, { eyebrow: string; title: string; lede: string; cta: string; done: string }> = {
+  business: {
+    eyebrow: "Private beta",
+    title: "Join the Fless beta.",
+    lede: "Hire AI employees made by builders, or build your own. Tell us a little about your business and we’ll get you set up.",
+    cta: "Join the beta",
+    done: "You’re on the list. We’ll be in touch when a seat opens.",
+  },
+  builder: {
+    eyebrow: "Builder programme",
+    title: "Apply to build on Fless.",
+    lede: "Describe an employee in Studio, test it, and publish it to the marketplace. You keep 70% of what it earns. No code needed.",
+    cta: "Apply as a builder",
+    done: "Thanks for applying. We’ll email you when your Studio access is ready.",
+  },
+  investor: {
+    eyebrow: "Investors and accelerators",
+    title: "Talk to the Fless team.",
+    lede: "Leave your details and we’ll send the deck and set up a call.",
+    cta: "Request the deck",
+    done: "Thanks. We’ll send the deck and suggest a time to talk.",
+  },
+}
 
 export function StartView() {
   const params = useSearchParams()
-  const presetEmail = params.get("email") ?? ""
   const presetDesk = params.get("department") ?? params.get("desk") ?? params.get("dept") ?? ""
-  const presetIndustry = params.get("industry") ?? ""
-  const source = params.get("source") ?? params.get("plan") ?? "start"
+  const source = (params.get("source") ?? "start").slice(0, 80)
+  const plan = params.get("plan") ?? ""
 
+  const [role, setRole] = useState<WaitlistRole>(() => parseRole(params.get("role")))
   const [name, setName] = useState("")
-  const [email, setEmail] = useState(presetEmail)
+  const [email, setEmail] = useState(params.get("email")?.trim() ?? "")
   const [company, setCompany] = useState("")
-  const [role, setRole] = useState(roles[0])
   const [companySize, setCompanySize] = useState(sizes[1])
   const [marketIso, setMarketIso] = useState("US")
   const [phoneNational, setPhoneNational] = useState("")
-  const [industry, setIndustry] = useState(() =>
-    industries.some((i) => i.name === presetIndustry || i.id === presetIndustry)
-      ? (industries.find((i) => i.name === presetIndustry || i.id === presetIndustry)?.name ?? "")
-      : "",
-  )
-  const [desks, setDesks] = useState<string[]>(() => {
-    if (presetDesk && departments.some((d) => d.slug === presetDesk)) return [presetDesk]
-    return []
-  })
-  const [firstJob, setFirstJob] = useState("")
+  const [industry, setIndustry] = useState("")
+  const [interests, setInterests] = useState<string[]>([])
+  const [background, setBackground] = useState("")
   const [heard, setHeard] = useState("")
+  const [honeypot, setHoneypot] = useState("")
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState("")
   const [done, setDone] = useState(false)
 
   useEffect(() => {
     const urlEmail = params.get("email")
-    if (urlEmail && urlEmail.trim()) {
-      setEmail(urlEmail.trim())
-    }
-    const urlDesk = params.get("department") ?? params.get("desk") ?? params.get("dept")
-    if (urlDesk && departments.some((d) => d.slug === urlDesk)) {
-      setDesks([urlDesk])
-    }
+    if (urlEmail && urlEmail.trim()) setEmail(urlEmail.trim())
+    setRole(parseRole(params.get("role")))
     const urlIndustry = params.get("industry")
     if (urlIndustry) {
       const match = industries.find((i) => i.name === urlIndustry || i.id === urlIndustry)
       if (match) setIndustry(match.name)
     }
-    const urlEmployee = params.get("employee")
-    if (urlEmployee) {
-      for (const d of departments) {
-        const found = d.employees.find((e) => e.id.toLowerCase() === urlEmployee.toLowerCase() || e.name.toLowerCase() === urlEmployee.toLowerCase())
-        if (found) {
-          setDesks([d.slug])
-          setFirstJob(`Deploy ${found.name} (${found.role})`)
-          break
-        }
-      }
-    }
-  }, [params])
+    const desk = departments.find((d) => d.slug === presetDesk)
+    if (desk) setInterests([desk.name])
+  }, [params, presetDesk])
 
-  const toggle = (slug: string) => {
-    setDesks((cur) => (cur.includes(slug) ? cur.filter((s) => s !== slug) : [...cur, slug]))
+  // Switching role starts the interest list fresh, since each role has its own options.
+  const switchRole = (next: WaitlistRole) => {
+    setRole(next)
+    setInterests([])
+    setError("")
   }
 
+  const options =
+    role === "business" ? departments.map((d) => d.name) : role === "builder" ? builderInterests : investorInterests
+
+  const toggle = (value: string) =>
+    setInterests((cur) => (cur.includes(value) ? cur.filter((s) => s !== value) : [...cur, value]))
+
+  const copy = ROLE_COPY[role]
   const phoneDisplay = formatInternationalPhone(marketIso, phoneNational)
+
   const valid = useMemo(() => {
-    return (
-      name.trim().length > 1 &&
-      /.+@.+\..+/.test(email.trim()) &&
-      company.trim().length > 1 &&
-      Boolean(countryByIso(marketIso)) &&
-      phoneNational.length >= 6 &&
-      Boolean(industry) &&
-      desks.length >= 1 &&
-      firstJob.trim().length > 8
-    )
-  }, [name, email, company, marketIso, phoneNational, industry, desks, firstJob])
+    const base = name.trim().length > 1 && /.+@.+\..+/.test(email.trim()) && Boolean(countryByIso(marketIso))
+    if (role === "business") return base && company.trim().length > 1 && interests.length >= 1
+    if (role === "investor") return base && company.trim().length > 1
+    return base && interests.length >= 1
+  }, [name, email, marketIso, role, company, interests])
 
   const onMarketChange = (iso: string) => {
     setMarketIso(iso)
@@ -112,28 +130,28 @@ export function StartView() {
     if (!valid || busy) return
     setBusy(true)
     setError("")
+    const extra = [
+      industry ? `Industry: ${industry}` : "",
+      background ? `Background: ${background}` : "",
+      heard ? `Heard via: ${heard}` : "",
+    ].filter(Boolean)
     try {
-      await submitBetaToGoogleForm({
+      await joinWaitlist({
+        role,
         name: name.trim(),
         email: email.trim(),
-        company: company.trim(),
-        role,
-        companySize,
+        company: company.trim() || undefined,
+        companySize: role === "business" ? companySize : undefined,
         market: countryByIso(marketIso)?.name ?? marketIso,
-        phone: formatInternationalPhone(marketIso, phoneNational).trim(),
-        desks: desks.map((slug) => googleDeskOptions[slug] ?? departments.find((d) => d.slug === slug)?.name ?? slug),
-        firstJob: firstJob.trim(),
-        heard: [heard, source !== "start" ? source : ""].filter(Boolean).join(" · "),
-        industry,
+        phone: phoneNational ? formatInternationalPhone(marketIso, phoneNational).trim() : undefined,
+        interests: [...interests, ...extra].map((i) => i.slice(0, 80)),
+        source,
+        plan: plan || undefined,
+        website: honeypot,
       })
-      try {
-        localStorage.setItem("fless-beta", JSON.stringify({ email, at: Date.now() }))
-      } catch {
-        /* ignore */
-      }
       setDone(true)
-    } catch {
-      setError("We couldn’t send that just now. Check your connection and try again.")
+    } catch (err) {
+      setError(err instanceof WaitlistError ? err.message : "We couldn’t send that just now. Please try again.")
     } finally {
       setBusy(false)
     }
@@ -144,21 +162,15 @@ export function StartView() {
       <div className="min-h-screen bg-background flex flex-col font-sans">
         <Header />
         <main className="flex-1 flex items-center">
-          <div className="max-w-[560px] mx-auto px-6 py-28 text-center">
+          <div className="max-w-[560px] mx-auto px-5 sm:px-6 py-28 text-center">
             <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
               <div className="mx-auto w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center mb-6">
                 <Check className="w-5 h-5" />
               </div>
-              <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">Beta</p>
-              <h1 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-4">
-                Thanks for joining the beta.
-              </h1>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                You’re on the list. We’ll be in touch at{" "}
-                <span className="text-foreground font-medium">{email}</span>.
-              </p>
-              <p className="text-[14px] text-muted-foreground leading-relaxed mb-8">
-                Sit tight. When a seat opens for {company || "your company"}, you’ll hear from us first.
+              <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">{copy.eyebrow}</p>
+              <h1 className="text-3xl md:text-4xl font-display font-semibold tracking-tight mb-4">Thank you.</h1>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                {copy.done} We’ll write to <span className="text-foreground font-medium">{email}</span>.
               </p>
               <Link href="/" className="text-sm font-medium text-primary hover:text-primary-hover">
                 Back to Fless →
@@ -175,73 +187,82 @@ export function StartView() {
     <div className="min-h-screen bg-background flex flex-col font-sans">
       <Header />
       <main className="flex-1 pt-24 md:pt-28 pb-20">
-        <div className="max-w-[760px] mx-auto px-6">
-          <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">Private beta</p>
-          <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight mb-3">
-            Join the Fless beta.
-          </h1>
-          <p className="text-[15px] text-muted-foreground leading-relaxed mb-8 max-w-xl">
-            One product. Every department. Every market. Demand is high — this form is how we decide who gets a seat next.
-          </p>
+        <div className="max-w-[760px] mx-auto px-5 sm:px-6">
+          <p className="text-[11px] font-medium tracking-[0.2em] uppercase text-primary mb-3">{copy.eyebrow}</p>
+          <h1 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight mb-3">{copy.title}</h1>
+          <p className="text-[15px] text-muted-foreground leading-relaxed mb-8 max-w-xl">{copy.lede}</p>
 
-          {desks.length > 0 && departments.some((d) => desks.includes(d.slug) && d.status === "early-access") && (
-            <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 text-[13px] text-foreground mb-8">
-              <span className="font-semibold text-primary">
-                You&apos;re joining the {departments.find((d) => desks.includes(d.slug) && d.status === "early-access")?.name} waitlist.
-              </span>{" "}
-              Marketing is live today if you&apos;d like to start now.
-            </div>
-          )}
+          <div role="radiogroup" aria-label="I am" className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-10">
+            {(
+              [
+                { id: "business", title: "A business", sub: "Hire or build employees" },
+                { id: "builder", title: "A builder", sub: "Build and sell employees" },
+                { id: "investor", title: "An investor", sub: "Or an accelerator" },
+              ] as const
+            ).map((o) => (
+              <button
+                key={o.id}
+                type="button"
+                role="radio"
+                aria-checked={role === o.id}
+                onClick={() => switchRole(o.id)}
+                className={cn(
+                  "text-left rounded-xl border p-3.5 transition-colors",
+                  role === o.id ? "border-primary bg-brand-soft" : "border-border hover:bg-secondary/40",
+                )}
+              >
+                <div className="text-sm font-semibold">{o.title}</div>
+                <div className="text-[12px] text-muted-foreground mt-0.5">{o.sub}</div>
+              </button>
+            ))}
+          </div>
 
           <form onSubmit={submit} className="space-y-8">
+            {/* Honeypot: hidden from people. */}
+            <div aria-hidden className="absolute -left-[9999px] w-px h-px overflow-hidden">
+              <label htmlFor="beta-website">Website</label>
+              <input id="beta-website" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label className={label} htmlFor="beta-name">
-                  Full name
-                </label>
+                <label className={label} htmlFor="beta-name">Full name</label>
                 <input id="beta-name" required value={name} onChange={(e) => setName(e.target.value)} className={field} placeholder="Tobi Lobo" autoComplete="name" />
               </div>
               <div>
-                <label className={label} htmlFor="beta-email">
-                  Work email
+                <label className={label} htmlFor="beta-email">{role === "business" ? "Work email" : "Email"}</label>
+                <input id="beta-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className={field} placeholder="you@company.com" autoComplete="email" />
+              </div>
+              <div>
+                <label className={label} htmlFor="beta-company">
+                  {role === "investor" ? "Fund or programme" : "Company"}
+                  {role === "builder" && <span className="text-muted-foreground font-normal"> (optional)</span>}
                 </label>
                 <input
-                  id="beta-email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="beta-company"
+                  required={role !== "builder"}
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
                   className={field}
-                  placeholder="you@company.com"
-                  autoComplete="email"
+                  placeholder={role === "investor" ? "Fund name" : "Acme"}
+                  autoComplete="organization"
                 />
               </div>
               <div>
-                <label className={label} htmlFor="beta-market">
-                  Primary market
-                </label>
-                <select
-                  id="beta-market"
-                  required
-                  value={marketIso}
-                  onChange={(e) => onMarketChange(e.target.value)}
-                  className={field}
-                >
+                <label className={label} htmlFor="beta-market">Country</label>
+                <select id="beta-market" required value={marketIso} onChange={(e) => onMarketChange(e.target.value)} className={field}>
                   {countries.map((c) => (
-                    <option key={c.iso} value={c.iso}>
-                      {c.name}
-                    </option>
+                    <option key={c.iso} value={c.iso}>{c.name}</option>
                   ))}
                 </select>
               </div>
               <div>
                 <label className={label} htmlFor="beta-phone">
-                  Phone
+                  Phone <span className="text-muted-foreground font-normal">(optional)</span>
                 </label>
                 <input
                   id="beta-phone"
                   type="tel"
-                  required
                   inputMode="tel"
                   autoComplete="tel"
                   value={phoneDisplay}
@@ -250,137 +271,76 @@ export function StartView() {
                   placeholder={phonePlaceholder(marketIso)}
                 />
               </div>
-              <div>
-                <label className={label} htmlFor="beta-company">
-                  Company
-                </label>
-                <input id="beta-company" required value={company} onChange={(e) => setCompany(e.target.value)} className={field} placeholder="Acme" autoComplete="organization" />
-              </div>
-              <div>
-                <label className={label} htmlFor="beta-role">
-                  Role
-                </label>
-                <select id="beta-role" value={role} onChange={(e) => setRole(e.target.value)} className={field}>
-                  {roles.map((r) => (
-                    <option key={r} value={r}>
-                      {r}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className={label} htmlFor="beta-size">
-                  Company size
-                </label>
-                <select id="beta-size" value={companySize} onChange={(e) => setCompanySize(e.target.value)} className={field}>
-                  {sizes.map((s) => (
-                    <option key={s} value={s}>
-                      {s} people
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className={label} htmlFor="beta-industry">
-                  Industry
-                </label>
-                <select
-                  id="beta-industry"
-                  required
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                  className={field}
-                >
-                  <option value="" disabled>
-                    Select industry
-                  </option>
-                  {industries.map((item) => (
-                    <option key={item.id} value={item.name}>
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label className={label}>How will you use Fless?</label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-                  {[
-                    { id: "BUSINESS", title: "Run my business", sub: "Hire AI employees for my team" },
-                    { id: "BUILDER", title: "Build AI employees", sub: "Author and publish AI workers" },
-                    { id: "BOTH", title: "Both", sub: "Hire workers & build for the platform" },
-                  ].map((option) => (
-                    <label
-                      key={option.id}
-                      className="p-3 rounded-xl border border-border bg-card cursor-pointer flex flex-col justify-between hover:border-primary/50 transition-colors"
-                    >
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="radio"
-                          name="usageIntent"
-                          value={option.id}
-                          defaultChecked={option.id === "BOTH"}
-                          className="text-primary focus:ring-primary"
-                        />
-                        <span className="font-semibold text-xs text-foreground">{option.title}</span>
-                      </div>
-                      <span className="text-[11px] text-muted-foreground pt-1">{option.sub}</span>
+              {role === "business" && (
+                <>
+                  <div>
+                    <label className={label} htmlFor="beta-size">Company size</label>
+                    <select id="beta-size" value={companySize} onChange={(e) => setCompanySize(e.target.value)} className={field}>
+                      {sizes.map((s) => (
+                        <option key={s} value={s}>{s} people</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className={label} htmlFor="beta-industry">
+                      Industry <span className="text-muted-foreground font-normal">(optional)</span>
                     </label>
-                  ))}
+                    <select id="beta-industry" value={industry} onChange={(e) => setIndustry(e.target.value)} className={field}>
+                      <option value="">Select industry</option>
+                      {industries.map((item) => (
+                        <option key={item.id} value={item.name}>{item.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                </>
+              )}
+              {role === "builder" && (
+                <div>
+                  <label className={label} htmlFor="beta-background">
+                    Your background <span className="text-muted-foreground font-normal">(optional)</span>
+                  </label>
+                  <select id="beta-background" value={background} onChange={(e) => setBackground(e.target.value)} className={field}>
+                    <option value="">Select</option>
+                    {builderBackground.map((b) => (
+                      <option key={b} value={b}>{b}</option>
+                    ))}
+                  </select>
                 </div>
-              </div>
+              )}
             </div>
 
-            <div>
-              <p className={label}>Which desks do you want first?</p>
-              <p className="text-[12px] text-muted-foreground -mt-1 mb-3">Pick at least one. Same product in every market.</p>
+            <fieldset>
+              <legend className={label}>
+                {role === "business"
+                  ? "What work do you want help with first?"
+                  : role === "builder"
+                    ? "What kind of employee would you build?"
+                    : "What is this about?"}
+              </legend>
+              <p className="text-[12px] text-muted-foreground -mt-1 mb-3">
+                {role === "investor" ? "Optional. Pick any that apply." : "Pick at least one."}
+              </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {departments.map((d) => {
-                  const on = desks.includes(d.slug)
+                {options.map((o) => {
+                  const on = interests.includes(o)
                   return (
                     <button
-                      key={d.slug}
+                      key={o}
                       type="button"
-                      onClick={() => toggle(d.slug)}
-                      className={`text-left rounded-xl border p-3.5 transition-colors ${
-                        on ? "border-primary bg-brand-soft" : "border-border hover:bg-secondary/40"
-                      }`}
+                      aria-pressed={on}
+                      onClick={() => toggle(o)}
+                      className={cn(
+                        "text-left rounded-xl border p-3.5 transition-colors flex items-center justify-between gap-2",
+                        on ? "border-primary bg-brand-soft" : "border-border hover:bg-secondary/40",
+                      )}
                     >
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-semibold">{d.name}</span>
-                          <span className={cn(
-                            "text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded",
-                            d.status === "live"
-                              ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                              : "bg-muted text-muted-foreground"
-                          )}>
-                            {d.status === "live" ? "Live" : "Early access"}
-                          </span>
-                        </div>
-                        <span className={`w-4 h-4 rounded-full border ${on ? "bg-primary border-primary" : "border-border"}`} />
-                      </div>
-                      <p className="text-[12px] text-muted-foreground mt-0.5">{d.line}</p>
+                      <span className="text-sm font-medium">{o}</span>
+                      <span className={cn("w-4 h-4 rounded-full border shrink-0", on ? "bg-primary border-primary" : "border-border")} />
                     </button>
                   )
                 })}
               </div>
-            </div>
-
-            <div>
-              <label className={label} htmlFor="beta-job">
-                What should Fless take off your plate first?
-              </label>
-              <textarea
-                id="beta-job"
-                required
-                rows={3}
-                value={firstJob}
-                onChange={(e) => setFirstJob(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-border bg-background text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/30 resize-y min-h-[96px]"
-                placeholder="e.g. After-hours inbound, and next week’s campaign calendar."
-              />
-            </div>
+            </fieldset>
 
             <div>
               <label className={label} htmlFor="beta-heard">
@@ -389,14 +349,12 @@ export function StartView() {
               <select id="beta-heard" value={heard} onChange={(e) => setHeard(e.target.value)} className={field}>
                 <option value="">Select</option>
                 {heardOptions.map((h) => (
-                  <option key={h} value={h}>
-                    {h}
-                  </option>
+                  <option key={h} value={h}>{h}</option>
                 ))}
               </select>
             </div>
 
-            {error ? <p className="text-sm text-destructive">{error}</p> : null}
+            {error ? <p role="alert" className="text-sm text-destructive">{error}</p> : null}
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <button
@@ -404,10 +362,13 @@ export function StartView() {
                 disabled={!valid || busy}
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-primary px-7 text-sm font-medium text-primary-foreground shadow-sm shadow-primary/25 hover:bg-primary-hover disabled:opacity-40"
               >
-                {busy ? "Sending…" : "Join the beta"}
+                {busy ? "Sending…" : copy.cta}
                 {!busy && <ArrowRight className="w-4 h-4" />}
               </button>
-              <p className="text-[12px] text-muted-foreground">A lot of teams are on this list. We’ll reach out when a seat opens.</p>
+              <p className="text-[12px] text-muted-foreground">
+                We use these details only to contact you about Fless. See our{" "}
+                <Link href="/privacy" className="underline underline-offset-2">privacy policy</Link>.
+              </p>
             </div>
           </form>
         </div>

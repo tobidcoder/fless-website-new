@@ -14,18 +14,19 @@ import { SecurityFaq } from "@/components/SecurityFaq"
 import { AudienceRouter } from "@/components/AudienceRouter"
 import { AudienceFaq } from "@/components/AudienceFaq"
 import { Footer } from "@/components/Footer"
+import { PILOT_LINE_LONG } from "@/lib/claims"
 
 export const metadata: Metadata = {
   title: "Fless — AI employees that do the work",
   description:
-    "Fless lets businesses hire AI employees by department. They plan, write and publish real work, and you approve before anything goes live. Marketing is live today; 18 businesses in pilot across Nigeria, the UK and North America.",
+    `Hire AI employees made by builders, or describe the job and build your own in minutes. They plan, write and publish real work, and you approve before anything goes live. ${PILOT_LINE_LONG}.`,
   alternates: {
     canonical: "https://getfless.com",
   },
   openGraph: {
     title: "Fless — AI employees that do the work",
     description:
-      "Hire AI employees by department. They do the work; you approve what ships. Marketing is live today.",
+      "Hire AI employees or build your own. They do the work; you approve what ships.",
     url: "https://getfless.com",
     siteName: "Fless",
     images: [
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Fless — AI employees that do the work",
     description:
-      "Deploy autonomous AI employees starting with Marketing. 18 businesses in pilot across Nigeria, the UK, and North America.",
+      `Hire AI employees or build your own. You approve what ships. ${PILOT_LINE_LONG}.`,
     images: ["/fless-og.png"],
   },
 }
@@ -53,7 +54,7 @@ const homeSchema = {
   url: "https://getfless.com",
   name: "Fless — AI employees that do the work",
   description:
-    "Hire AI employees by department. They do the work; you approve what ships. Marketing is live today.",
+    "Hire AI employees or build your own. They do the work; you approve what ships.",
   isPartOf: {
     "@type": "WebSite",
     "@id": "https://getfless.com/#website",

@@ -5,12 +5,90 @@ import { motion, useReducedMotion } from "framer-motion"
 import { StayInForm } from "@/components/StayInForm"
 import { FlessLogo, SparkleMark } from "@/components/FlessLogo"
 import { NvidiaInceptionBadge } from "@/components/NvidiaInceptionBadge"
+import { LocaleSwitcher } from "@/components/LocaleSwitcher"
 import { Globe, ShieldCheck, ArrowUpRight } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { cn } from "@/lib/utils"
 
 const lessLetters = ["L", "E", "S", "S"]
 
+type FooterLink = { label: string; href: string; badge?: "live" | "early"; accent?: boolean }
+
+// Labels are keys in messages/<locale>.json under "footer".
+const columns: { title: string; links: FooterLink[] }[] = [
+  {
+    title: "categories",
+    links: [
+      { label: "deptMarketing", href: "/departments/marketing", badge: "live" },
+      { label: "deptVoice", href: "/departments/voice", badge: "early" },
+      { label: "deptSales", href: "/departments/sales", badge: "early" },
+      { label: "deptSupport", href: "/departments/support", badge: "early" },
+      { label: "deptOperations", href: "/departments/operations", badge: "early" },
+      { label: "deptFinance", href: "/departments/finance", badge: "early" },
+      { label: "deptRecruitment", href: "/departments/recruitment", badge: "early" },
+      { label: "deptHr", href: "/departments/hr", badge: "early" },
+    ],
+  },
+  {
+    title: "solutions",
+    links: [
+      { label: "forStartups", href: "/solutions/startup" },
+      { label: "growingTeams", href: "/solutions/smb" },
+      { label: "enterprise", href: "/solutions/enterprise" },
+      { label: "healthcare", href: "/solutions/healthcare" },
+      { label: "retail", href: "/solutions/retail" },
+      { label: "financialServices", href: "/solutions/finance" },
+      { label: "education", href: "/solutions/education" },
+      { label: "allIndustries", href: "/industries", accent: true },
+    ],
+  },
+  {
+    title: "builders",
+    links: [
+      { label: "builderProgram", href: "/builders" },
+      { label: "buildEmployee", href: "/build" },
+      { label: "studioGuide", href: "/docs#studio" },
+      { label: "publishing", href: "/docs#publishing" },
+      { label: "earnings", href: "/docs#payouts" },
+      { label: "applyBuilder", href: "/builders#apply" },
+    ],
+  },
+  {
+    title: "platform",
+    links: [
+      { label: "hire", href: "/hire" },
+      { label: "pricing", href: "/pricing" },
+      { label: "helpCentre", href: "/docs" },
+      { label: "connectingApps", href: "/docs#connecting-apps" },
+      { label: "hosting", href: "/docs#hosting" },
+      { label: "security", href: "/security" },
+    ],
+  },
+  {
+    title: "company",
+    links: [
+      { label: "investors", href: "/investors" },
+      { label: "joinBeta", href: "/start" },
+      { label: "support", href: "/contact" },
+      { label: "sales", href: "/contact#enterprise" },
+      { label: "faq", href: "/#faq" },
+    ],
+  },
+  {
+    title: "legal",
+    links: [
+      { label: "privacy", href: "/privacy" },
+      { label: "terms", href: "/terms" },
+      { label: "dataDeletion", href: "/data-deletion" },
+      { label: "cancellation", href: "/terms#cancellation" },
+      { label: "retention", href: "/privacy#data-retention" },
+    ],
+  },
+]
+
 export function Footer() {
   const reduce = useReducedMotion()
+  const t = useTranslations("footer")
 
   return (
     <footer className="relative overflow-hidden bg-night text-white border-t border-white/[0.08]">
@@ -20,12 +98,12 @@ export function Footer() {
           <div className="max-w-lg space-y-4">
             <FlessLogo inverted className="mb-3" />
             <h2 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight leading-[1.12]">
-              Every department.
+              {t("headline1")}
               <br />
-              Every market.
+              {t("headline2")}
             </h2>
             <p className="text-white/50 text-[14px] sm:text-[15px] leading-relaxed max-w-md">
-              Hire AI employees for every department. You approve what ships.
+              {t("tagline")}
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -38,117 +116,55 @@ export function Footer() {
           </div>
         </div>
 
-        {/* MEGA FOOTER GRID: 6 DOMAIN-SPECIFIC COLUMNS (NO REPETITIONS) */}
+        {/* LINK COLUMNS */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-10 py-14 md:py-16">
-          {/* 1. DEPARTMENTS */}
-          <div>
-            <h4 className="text-[11px] font-mono font-semibold uppercase tracking-[0.16em] text-white/40 mb-4 flex items-center gap-1.5">
-              <span>Departments</span>
-            </h4>
-            <ul className="space-y-2.5 text-[13px] text-white/60">
-              <li><Link href="/departments/marketing" className="hover:text-white transition-colors flex items-center justify-between">Marketing <span className="text-[10px] text-emerald-400 font-mono">Live</span></Link></li>
-              <li><Link href="/departments/voice" className="hover:text-white transition-colors flex items-center justify-between">Voice <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
-              <li><Link href="/departments/sales" className="hover:text-white transition-colors flex items-center justify-between">Sales <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
-              <li><Link href="/departments/support" className="hover:text-white transition-colors flex items-center justify-between">Customer Support <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
-              <li><Link href="/departments/operations" className="hover:text-white transition-colors flex items-center justify-between">Operations <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
-              <li><Link href="/departments/finance" className="hover:text-white transition-colors flex items-center justify-between">Finance <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
-              <li><Link href="/departments/recruitment" className="hover:text-white transition-colors flex items-center justify-between">Recruitment <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
-              <li><Link href="/departments/hr" className="hover:text-white transition-colors flex items-center justify-between">People & HR <span className="text-[10px] text-white/40 font-mono">Early access</span></Link></li>
-            </ul>
-          </div>
-
-          {/* 2. SOLUTIONS & SECTORS */}
-          <div>
-            <h4 className="text-[11px] font-mono font-semibold uppercase tracking-[0.16em] text-white/40 mb-4 flex items-center gap-1.5">
-              <span>Solutions</span>
-            </h4>
-            <ul className="space-y-2.5 text-[13px] text-white/60">
-              <li><Link href="/solutions/startup" className="hover:text-white transition-colors">For Startups</Link></li>
-              <li><Link href="/solutions/smb" className="hover:text-white transition-colors">Growing Teams</Link></li>
-              <li><Link href="/solutions/enterprise" className="hover:text-white transition-colors">Enterprise</Link></li>
-              <li><Link href="/solutions/healthcare" className="hover:text-white transition-colors">Healthcare & Clinics</Link></li>
-              <li><Link href="/solutions/retail" className="hover:text-white transition-colors">Retail & E-commerce</Link></li>
-              <li><Link href="/solutions/finance" className="hover:text-white transition-colors">Financial Services</Link></li>
-              <li><Link href="/solutions/education" className="hover:text-white transition-colors">Education & Academies</Link></li>
-              <li><Link href="/industries" className="text-primary hover:text-white transition-colors flex items-center gap-1">All 35 Industries <ArrowUpRight className="w-3 h-3" /></Link></li>
-            </ul>
-          </div>
-
-          {/* 3. FOR BUILDERS */}
-          <div>
-            <h4 className="text-[11px] font-mono font-semibold uppercase tracking-[0.16em] text-white/40 mb-4 flex items-center gap-1.5">
-              <span>For Builders</span>
-            </h4>
-            <ul className="space-y-2.5 text-[13px] text-white/60">
-              <li><Link href="/builders" className="hover:text-white transition-colors">Builder Platform</Link></li>
-              <li><Link href="/docs" className="hover:text-white transition-colors">Documentation</Link></li>
-              <li><Link href="/docs#quickstart" className="hover:text-white transition-colors">Quickstart Guide</Link></li>
-              <li><Link href="/docs#sdk-overview" className="hover:text-white transition-colors">SDK Overview</Link></li>
-              <li><Link href="/docs#ref-pricing" className="hover:text-white transition-colors">Builder Earnings (35%)</Link></li>
-              <li><Link href="/docs#plugins" className="hover:text-white transition-colors">Plugins</Link></li>
-              <li><Link href="/builders#apply" className="hover:text-white transition-colors">Request SDK Access</Link></li>
-            </ul>
-          </div>
-
-          {/* 4. PLATFORM & TRUST */}
-          <div>
-            <h4 className="text-[11px] font-mono font-semibold uppercase tracking-[0.16em] text-white/40 mb-4 flex items-center gap-1.5">
-              <span>Platform</span>
-            </h4>
-            <ul className="space-y-2.5 text-[13px] text-white/60">
-              <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-              <li><Link href="/security" className="hover:text-white transition-colors">Security</Link></li>
-              <li><Link href="/security#compliance" className="hover:text-white transition-colors">Compliance Alignment</Link></li>
-                            <li><Link href="/docs#security-boundaries" className="hover:text-white transition-colors">Security Architecture</Link></li>
-            </ul>
-          </div>
-
-          {/* 5. COMPANY */}
-          <div>
-            <h4 className="text-[11px] font-mono font-semibold uppercase tracking-[0.16em] text-white/40 mb-4 flex items-center gap-1.5">
-              <span>Company</span>
-            </h4>
-            <ul className="space-y-2.5 text-[13px] text-white/60">
-              <li><Link href="/investors" className="hover:text-white transition-colors">Investors & Accelerators</Link></li>
-              <li><Link href="/start" className="hover:text-white transition-colors">Join Early Beta</Link></li>
-              <li><Link href="/contact" className="hover:text-white transition-colors">Customer Support</Link></li>
-              <li><Link href="/contact#enterprise" className="hover:text-white transition-colors">Sales Inquiries</Link></li>
-              <li><Link href="/#faq" className="hover:text-white transition-colors">FAQ</Link></li>
-            </ul>
-          </div>
-
-          {/* 6. LEGAL & SECURITY */}
-          <div>
-            <h4 className="text-[11px] font-mono font-semibold uppercase tracking-[0.16em] text-white/40 mb-4 flex items-center gap-1.5">
-              <span>Legal</span>
-            </h4>
-            <ul className="space-y-2.5 text-[13px] text-white/60">
-              <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
-              <li><Link href="/security" className="hover:text-white transition-colors">Security Overview</Link></li>
-              <li><Link href="/data-deletion" className="hover:text-white transition-colors">Data Deletion</Link></li>
-              <li><Link href="/terms#cancellation" className="hover:text-white transition-colors">Cancellation Terms</Link></li>
-              <li><Link href="/privacy#data-retention" className="hover:text-white transition-colors">Data Retention</Link></li>
-            </ul>
-          </div>
+          {columns.map((col) => (
+            <div key={col.title}>
+              <h4 className="text-[11px] font-mono font-semibold uppercase tracking-[0.16em] text-white/40 mb-4">
+                {t(col.title)}
+              </h4>
+              <ul className="space-y-2.5 text-[13px] text-white/60">
+                {col.links.map((l) => (
+                  <li key={l.href + l.label}>
+                    <Link
+                      href={l.href}
+                      className={cn(
+                        "hover:text-white transition-colors",
+                        l.badge && "flex items-center justify-between gap-2",
+                        l.accent && "text-primary flex items-center gap-1",
+                      )}
+                    >
+                      {t(l.label)}
+                      {l.badge === "live" && <span className="text-[10px] text-emerald-400 font-mono">{t("live")}</span>}
+                      {l.badge === "early" && <span className="text-[10px] text-white/40 font-mono">{t("earlyAccess")}</span>}
+                      {l.accent && <ArrowUpRight className="w-3 h-3" />}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* GLOBAL READINESS & ENTITY BAR */}
+        {/* BILLING, LANGUAGE AND ENTITY BAR */}
         <div className="py-6 border-t border-white/[0.08] flex flex-col md:flex-row md:items-center justify-between gap-4 text-[12px] text-white/45">
-          <div className="flex items-start gap-3">
-            <Globe className="w-4 h-4 text-primary shrink-0" />
-            <span>
-              Global Multi-Currency Billing: <strong className="text-white/80 font-mono">USD · NGN · GBP · EUR · KES · GHS · ZAR · AED</strong>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <span className="flex items-start gap-3">
+              <Globe className="w-4 h-4 text-primary shrink-0" />
+              <span>
+                {t("billing")}: <strong className="text-white/80 font-mono">{t("billingLine")}</strong>
+              </span>
             </span>
+            <LocaleSwitcher variant="dark" />
           </div>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>NDPR & GDPR aligned · DPA on request</span>
+              <span>{t("compliance")}</span>
             </span>
             <span className="hidden sm:inline">•</span>
-            <span>Fless is a product of <strong>Brainstack Tech LTD</strong>, 3a Habitat Close, Lekki Phase 1, Lagos, Nigeria</span>
+            <span>{t("entity")}</span>
             <span className="hidden sm:inline">•</span>
             <a href="mailto:hello@getfless.com" className="hover:text-white transition-colors underline underline-offset-2">hello@getfless.com</a>
             <span className="hidden sm:inline">•</span>
