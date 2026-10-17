@@ -18,7 +18,6 @@ import {
   Layers,
   BarChart3,
   Sliders,
-  ExternalLink,
 } from "lucide-react"
 
 export interface EmployeeShowcase {

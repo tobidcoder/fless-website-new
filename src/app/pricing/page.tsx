@@ -1,14 +1,9 @@
 import Link from "next/link"
 import {
   ArrowRight,
-  Plus,
-  Minus,
   Calculator,
   Clock,
-  Users,
   ShieldCheck,
-  TrendingDown,
-  HelpCircle,
   BarChart2,
   Phone,
   DollarSign,
@@ -17,9 +12,7 @@ import {
   Settings,
   CreditCard,
   Briefcase,
-  Globe,
   Zap,
-  Activity,
   Scale,
 } from "lucide-react"
 import { Header } from "@/components/Header"
@@ -72,16 +65,6 @@ const DEPARTMENT_NAMES: Record<string, string> = {
   HR: "HR",
 }
 
-const CURRENCIES: Record<CurrencyCode, CurrencyConfig> = {
-  USD: { code: "USD", symbol: "$", name: "United States (USD)", rate: 1.0, flag: "🇺🇸" },
-  NGN: { code: "NGN", symbol: "₦", name: "Nigeria (NGN)", rate: 1500, flag: "🇳🇬" },
-  GBP: { code: "GBP", symbol: "£", name: "United Kingdom (GBP)", rate: 0.79, flag: "🇬🇧" },
-  EUR: { code: "EUR", symbol: "€", name: "Eurozone (EUR)", rate: 0.92, flag: "🇪🇺" },
-  KES: { code: "KES", symbol: "KSh ", name: "Kenya (KES)", rate: 129, flag: "🇰🇪" },
-  GHS: { code: "GHS", symbol: "GH₵ ", name: "Ghana (GHS)", rate: 15.4, flag: "🇬🇭" },
-  ZAR: { code: "ZAR", symbol: "R ", name: "South Africa (ZAR)", rate: 18.1, flag: "🇿🇦" },
-  AED: { code: "AED", symbol: "AED ", name: "UAE & Gulf (AED)", rate: 3.67, flag: "🇦🇪" },
-}
 
 interface DepartmentPricingSpec {
   slug: string
@@ -243,24 +226,6 @@ const departmentSpecs: Record<string, DepartmentPricingSpec> = {
   },
 }
 
-function calculateDiscount(qty: number, unit: TenureUnit): number {
-  if (unit === "year") {
-    if (qty >= 10) return 35
-    if (qty >= 5) return 30
-    if (qty >= 1) return 25
-  } else if (unit === "month") {
-    if (qty >= 12) return 25
-    if (qty >= 6) return 20
-    if (qty >= 3) return 15
-  } else if (unit === "week") {
-    if (qty >= 4) return 12
-    if (qty >= 2) return 10
-  } else if (unit === "day") {
-    if (qty >= 10) return 8
-    if (qty >= 5) return 5
-  }
-  return 0
-}
 
 function formatLocalizedPrice(centsUSD: number, currency: CurrencyConfig): string {
   const converted = (centsUSD / 100) * currency.rate

@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ArrowLeft,
   ArrowRight,
   Check,
   CheckCircle2,
@@ -12,18 +11,11 @@ import {
   MessageSquare,
   Mail,
   ShoppingBag,
-  Sliders,
-  Play,
   ShieldCheck,
   Workflow,
   Globe,
-  DollarSign,
-  Activity,
-  Layers,
   Terminal,
-  Building2,
   UserCheck,
-  ExternalLink,
   Lock,
 } from "lucide-react";
 
@@ -33,11 +25,9 @@ export function InteractiveBuilderStudio() {
   // Step 2 interactive state
   const [refundLimit, setRefundLimit] = useState<number>(50);
   const [selectedTone, setSelectedTone] = useState<"warm" | "professional" | "direct">("warm");
-  const [requireApproval, setRequireApproval] = useState<boolean>(true);
 
   // Step 3 interactive scenario
   const [testScenario, setTestScenario] = useState<"order" | "return" | "urgent">("order");
-  const [isSimulating, setIsSimulating] = useState<boolean>(false);
 
   // Step 4 deployment type
   const [deployTarget, setDeployTarget] = useState<"private" | "marketplace">("marketplace");

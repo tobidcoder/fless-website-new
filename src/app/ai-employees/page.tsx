@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { VerifiedBadge } from "@/components/VerifiedBadge";
+import { CustomerReviewsModal, type CustomerReview } from "@/components/CustomerReviewsModal";
 import {
   Star,
   ArrowRight,
@@ -16,22 +18,15 @@ import {
   Hash,
   Search,
   ShieldCheck,
-  Workflow,
-  ExternalLink,
   Play,
   X,
-  Sliders,
-  DollarSign,
-  Activity,
-  Layers,
-  Clock,
-  Sparkle,
 } from "lucide-react";
 
 interface MarketplaceEmployee {
   id: string;
   slug: string;
   name: string;
+  role: string;
   category: string;
   rating: number;
   reviewsCount: number;
@@ -42,6 +37,10 @@ interface MarketplaceEmployee {
   startingPrice: string;
   latency: string;
   accuracy: string;
+  isFless: boolean;
+  builderName: string;
+  isRecommended: boolean;
+  reviews: CustomerReview[];
   simulation: {
     customerQuery: string;
     actionTrace: string;
@@ -54,6 +53,7 @@ const marketplaceEmployees: MarketplaceEmployee[] = [
     id: "cust-support-1",
     slug: "customer-support-specialist",
     name: "Customer Support Specialist",
+    role: "Tier 1 Customer Support & Triage",
     category: "Customer Service",
     rating: 4.9,
     reviewsCount: 320,
@@ -68,6 +68,36 @@ const marketplaceEmployees: MarketplaceEmployee[] = [
     startingPrice: "$399/mo",
     latency: "142ms",
     accuracy: "99.4%",
+    isFless: true,
+    builderName: "Fless Core",
+    isRecommended: true,
+    reviews: [
+      {
+        id: "cs-r1",
+        author: "Tariq Mansour",
+        role: "Head of Customer Experience",
+        company: "Moda Direct Retail",
+        industry: "E-Commerce",
+        rating: 5,
+        date: "2 weeks ago",
+        activeDuration: "Active user for 6 months",
+        tasksCompleted: "14,800 tickets",
+        comment: "Sarah cut our WhatsApp customer response latency from 45 minutes to 4 seconds. Our refund chargebacks dropped by 34% because tracking inquiries are resolved before customers file disputes.",
+        builderReply: "Thank you Tariq! We just rolled out improved Shopify multi-warehouse lookups to all Fless Support specialists.",
+      },
+      {
+        id: "cs-r2",
+        author: "Elena Rostova",
+        role: "Operations Lead",
+        company: "Nordic Goods Co",
+        industry: "Consumer Goods",
+        rating: 5,
+        date: "1 month ago",
+        activeDuration: "Active user for 4 months",
+        tasksCompleted: "8,920 tickets",
+        comment: "Zero hallucination on policy rules. If a return is over $50, it triggers an instant Slack notification for human sign-off exactly as configured.",
+      },
+    ],
     simulation: {
       customerQuery: "Where is my order #125645? I need it before Friday.",
       actionTrace: "shopify.orders.lookup('125645') → Status: Out for delivery via DHL",
@@ -78,6 +108,7 @@ const marketplaceEmployees: MarketplaceEmployee[] = [
     id: "sales-sdr-1",
     slug: "b2b-outbound-sdr",
     name: "B2B Sales Development Rep",
+    role: "Outbound Lead Discovery & Booking",
     category: "Sales",
     rating: 4.9,
     reviewsCount: 215,
@@ -92,6 +123,36 @@ const marketplaceEmployees: MarketplaceEmployee[] = [
     startingPrice: "$649/mo",
     latency: "165ms",
     accuracy: "99.1%",
+    isFless: true,
+    builderName: "Fless Core",
+    isRecommended: true,
+    reviews: [
+      {
+        id: "sdr-r1",
+        author: "Marcus Chen",
+        role: "VP of Growth",
+        company: "SaaSStack Cloud",
+        industry: "B2B Software",
+        rating: 5,
+        date: "3 weeks ago",
+        activeDuration: "Active user for 5 months",
+        tasksCompleted: "3,100 qualified leads",
+        comment: "Alex booked 41 discovery calls in his second month. The sequences read like they were written by a top tier SDR who actually researched our prospect companies.",
+        builderReply: "Marcus, great to see the pipeline growth! The new HubSpot bi-directional status sync is now live.",
+      },
+      {
+        id: "sdr-r2",
+        author: "Kemi Adeleke",
+        role: "Head of Commercial Ops",
+        company: "PayStream Africa",
+        industry: "FinTech",
+        rating: 5,
+        date: "1 month ago",
+        activeDuration: "Active user for 4 months",
+        tasksCompleted: "2,450 enriched accounts",
+        comment: "The intent verification prevents spamming unqualified leads. It only routes accounts with confirmed buying signals straight into our calendar.",
+      },
+    ],
     simulation: {
       customerQuery: "We have 45 seats and want to evaluate Fless for our retail chain.",
       actionTrace: "hubspot.deals.create() → Intent Score: 94/100 → calendar.findSlot()",
@@ -102,6 +163,7 @@ const marketplaceEmployees: MarketplaceEmployee[] = [
     id: "social-mgr-1",
     slug: "social-media-manager",
     name: "Social Media Manager",
+    role: "Multi-Channel Content & Engagement",
     category: "Marketing",
     rating: 4.8,
     reviewsCount: 124,
@@ -116,6 +178,23 @@ const marketplaceEmployees: MarketplaceEmployee[] = [
     startingPrice: "$449/mo",
     latency: "190ms",
     accuracy: "98.8%",
+    isFless: true,
+    builderName: "Fless Core",
+    isRecommended: true,
+    reviews: [
+      {
+        id: "sm-r1",
+        author: "Amara Okonjo",
+        role: "Managing Director",
+        company: "Luxe Brands Africa",
+        industry: "Retail & Fashion",
+        rating: 5,
+        date: "1 week ago",
+        activeDuration: "Active user for 7 months",
+        tasksCompleted: "480 posts & carousels",
+        comment: "Maya plans our entire month of social campaigns in a single morning. We review the carousel drafts in one click and our engagement has doubled across LinkedIn and Instagram.",
+      },
+    ],
     simulation: {
       customerQuery: "Draft a product launch announcement for our spring collection.",
       actionTrace: "brand_voice.apply() → creative_studio.generateBanner() → buffer.schedule()",
@@ -126,6 +205,7 @@ const marketplaceEmployees: MarketplaceEmployee[] = [
     id: "fin-ops-1",
     slug: "invoicing-reconciliation-analyst",
     name: "Accounts Receivable Specialist",
+    role: "Accounts Payable & Invoice Matching",
     category: "Finance",
     rating: 4.8,
     reviewsCount: 98,
@@ -140,6 +220,23 @@ const marketplaceEmployees: MarketplaceEmployee[] = [
     startingPrice: "$549/mo",
     latency: "135ms",
     accuracy: "99.8%",
+    isFless: true,
+    builderName: "Fless Core",
+    isRecommended: true,
+    reviews: [
+      {
+        id: "fin-r1",
+        author: "David Sterling",
+        role: "Chief Financial Officer",
+        company: "Apex Meridian Logistics",
+        industry: "Supply Chain",
+        rating: 5,
+        date: "3 weeks ago",
+        activeDuration: "Active user for 5 months",
+        tasksCompleted: "4,200 invoices matched",
+        comment: "Three-way matching catches duplicate supplier invoices instantly. We cut manual reconciliation time by 18 hours per week.",
+      },
+    ],
     simulation: {
       customerQuery: "Reconcile June vendor statement for ACME Logistics.",
       actionTrace: "quickbooks.invoices.scan() → 18/18 PO matches found → Variance: $0.00",
@@ -147,33 +244,10 @@ const marketplaceEmployees: MarketplaceEmployee[] = [
     },
   },
   {
-    id: "legal-ops-1",
-    slug: "contract-review-paralegal",
-    name: "Legal & Contracts Lead",
-    category: "Legal",
-    rating: 4.9,
-    reviewsCount: 88,
-    description: "Triages vendor NDAs, highlights indemnification risks, and alerts counsel before renewals.",
-    badges: ["NDA Redlining", "Indemnity Audits", "Renewal Gates"],
-    channels: [
-      { name: "Email", icon: "mail" },
-      { name: "DocuSign", icon: "crm" },
-      { name: "Slack", icon: "slack" },
-    ],
-    avatarUrl: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&auto=format&fit=crop&q=80",
-    startingPrice: "$699/mo",
-    latency: "180ms",
-    accuracy: "99.9%",
-    simulation: {
-      customerQuery: "Review enterprise mutual NDA with standard liability cap.",
-      actionTrace: "legal_corpus.checkClause('indemnity') → Flag: uncapped IP indemnity detected",
-      resolvedOutput: "Clause 7.2 flags uncapped liability. Redlined to standard 2x contract value cap. Sent to General Counsel for approval.",
-    },
-  },
-  {
     id: "pharm-rec-1",
     slug: "ai-pharmacy-receptionist",
     name: "Clinical Pharmacy Receptionist",
+    role: "Inbound Phone Triage & Booking",
     category: "Healthcare",
     rating: 4.8,
     reviewsCount: 256,
@@ -188,10 +262,69 @@ const marketplaceEmployees: MarketplaceEmployee[] = [
     startingPrice: "$599/mo",
     latency: "128ms",
     accuracy: "99.7%",
+    isFless: true,
+    builderName: "Fless Core",
+    isRecommended: true,
+    reviews: [
+      {
+        id: "ph-r1",
+        author: "Dr. Babatunde Vance",
+        role: "Medical Director",
+        company: "St. Jude Specialist Clinic",
+        industry: "Healthcare",
+        rating: 5,
+        date: "4 days ago",
+        activeDuration: "Active user for 4 months",
+        tasksCompleted: "5,400 calls answered",
+        comment: "Answers phone calls in real time, screens patient symptoms, checks clinic schedules, and dispatches SMS confirmations. Zero missed patients during clinic rush hours.",
+      },
+    ],
     simulation: {
       customerQuery: "Can I refill my prescription #489201 for pickup this afternoon?",
       actionTrace: "hipaa_ehr.verifyPatient() → prescription.checkRefills() → Slot: 3:30 PM",
       resolvedOutput: "Refill confirmed! Your prescription #489201 will be ready at the drive-thru window after 3:30 PM today. A reminder text has been sent.",
+    },
+  },
+  {
+    id: "legal-ops-1",
+    slug: "contract-review-paralegal",
+    name: "Legal & Contracts Lead",
+    role: "Contract Review & Redlining",
+    category: "Legal",
+    rating: 4.9,
+    reviewsCount: 88,
+    description: "Triages vendor NDAs, highlights indemnification risks, and alerts counsel before renewals.",
+    badges: ["NDA Redlining", "Indemnity Audits", "Renewal Gates"],
+    channels: [
+      { name: "Email", icon: "mail" },
+      { name: "DocuSign", icon: "crm" },
+      { name: "Slack", icon: "slack" },
+    ],
+    avatarUrl: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=200&auto=format&fit=crop&q=80",
+    startingPrice: "$699/mo",
+    latency: "180ms",
+    accuracy: "99.9%",
+    isFless: false,
+    builderName: "Lexis Automation",
+    isRecommended: false,
+    reviews: [
+      {
+        id: "leg-r1",
+        author: "Julian Davies",
+        role: "General Counsel",
+        company: "Apex Media Group",
+        industry: "Media & Legal",
+        rating: 5,
+        date: "2 weeks ago",
+        activeDuration: "Active user for 3 months",
+        tasksCompleted: "320 contracts reviewed",
+        comment: "Flags uncapped liabilities and GDPR cross-border transfer issues in under two minutes with redline suggestions formatted exactly to our firm playbook.",
+      },
+    ],
+    simulation: {
+      customerQuery: "Review enterprise mutual NDA with standard liability cap.",
+      actionTrace: "legal_corpus.checkClause('indemnity') → Flag: uncapped IP indemnity detected",
+      resolvedOutput: "Clause 7.2 flags uncapped liability. Redlined to standard 2x contract value cap. Sent to General Counsel for approval.",
     },
   },
 ];
@@ -210,17 +343,26 @@ export default function AiEmployeesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All Roles");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeSimulation, setActiveSimulation] = useState<MarketplaceEmployee | null>(null);
+  const [selectedReviewEmployee, setSelectedReviewEmployee] = useState<MarketplaceEmployee | null>(null);
 
   const filteredEmployees = useMemo(() => {
-    return marketplaceEmployees.filter((emp) => {
-      const matchesCategory =
-        selectedCategory === "All Roles" || emp.category === selectedCategory;
-      const matchesSearch =
-        emp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        emp.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        emp.badges.some((b) => b.toLowerCase().includes(searchQuery.toLowerCase()));
-      return matchesCategory && matchesSearch;
-    });
+    return marketplaceEmployees
+      .filter((emp) => {
+        const matchesCategory =
+          selectedCategory === "All Roles" || emp.category === selectedCategory;
+        const matchesSearch =
+          emp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          emp.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          emp.badges.some((b) => b.toLowerCase().includes(searchQuery.toLowerCase())) ||
+          emp.builderName.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+      })
+      .sort((a, b) => {
+        // All Fless employees must be the most recommended (placed first)
+        if (a.isRecommended && !b.isRecommended) return -1;
+        if (!a.isRecommended && b.isRecommended) return 1;
+        return b.rating - a.rating;
+      });
   }, [selectedCategory, searchQuery]);
 
   return (
@@ -229,14 +371,14 @@ export default function AiEmployeesPage() {
 
       <main className="flex-1">
         {/* ── HERO SECTION ── */}
-        <section className="pt-28 pb-14 md:pt-36 md:pb-20 bg-[#080B14] text-white border-b border-white/10 relative overflow-hidden">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[320px] bg-primary/20 blur-[130px] rounded-full pointer-events-none" />
+        <section className="relative pt-28 pb-14 md:pt-36 md:pb-20 bg-gradient-to-b from-blue-50/40 via-background to-background dark:from-[#0B0F1C] dark:via-background dark:to-background border-b border-border/60 text-foreground overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[320px] bg-primary/10 blur-[130px] rounded-full pointer-events-none" />
 
           <div className="max-w-[1240px] mx-auto px-6 relative z-10 text-center space-y-6">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-white/90 text-xs font-semibold backdrop-blur-md"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold backdrop-blur-md"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-primary" />
               <span>Verified Autonomous Workforce Marketplace</span>
@@ -246,7 +388,7 @@ export default function AiEmployeesPage() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
-              className="text-4xl sm:text-6xl font-display font-semibold tracking-tight leading-[1.08]"
+              className="text-4xl sm:text-6xl font-display font-semibold tracking-tight leading-[1.08] text-foreground"
             >
               Meet our AI Employees
             </motion.h1>
@@ -255,7 +397,7 @@ export default function AiEmployeesPage() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
+              className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
             >
               Pre-built, role-specific autonomous employees ready for hire. Built-in compliance gates, official tool plugins, and human sign-off policies.
             </motion.p>
@@ -265,24 +407,24 @@ export default function AiEmployeesPage() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
-              className="flex flex-wrap items-center justify-center gap-8 pt-4 text-sm text-white/80"
+              className="flex flex-wrap items-center justify-center gap-8 pt-4 text-sm text-muted-foreground"
             >
               <div className="flex items-center gap-2.5">
-                <span className="font-display font-bold text-2xl text-white">100+</span>
-                <span className="text-white/60 text-xs text-left leading-tight">Verified<br />Employees</span>
+                <span className="font-display font-bold text-2xl text-foreground">100+</span>
+                <span className="text-muted-foreground text-xs text-left leading-tight">Verified<br />Employees</span>
               </div>
-              <div className="w-px h-8 bg-white/15" />
+              <div className="w-px h-8 bg-border" />
               <div className="flex items-center gap-2.5">
-                <span className="font-display font-bold text-2xl text-white">&lt;180ms</span>
-                <span className="text-white/60 text-xs text-left leading-tight">Average<br />Turn Latency</span>
+                <span className="font-display font-bold text-2xl text-foreground">&lt;180ms</span>
+                <span className="text-muted-foreground text-xs text-left leading-tight">Average<br />Turn Latency</span>
               </div>
-              <div className="w-px h-8 bg-white/15" />
+              <div className="w-px h-8 bg-border" />
               <div className="flex items-center gap-2.5">
-                <div className="flex items-center gap-1 text-amber-400">
-                  <Star className="w-4 h-4 fill-amber-400" />
-                  <span className="font-display font-bold text-2xl text-white">4.9</span>
+                <div className="flex items-center gap-1 text-emerald-500">
+                  <ShieldCheck className="w-5 h-5 text-emerald-500" />
+                  <span className="font-display font-bold text-2xl text-foreground">100%</span>
                 </div>
-                <span className="text-white/60 text-xs text-left leading-tight">Customer<br />CSAT Score</span>
+                <span className="text-muted-foreground text-xs text-left leading-tight">Human<br />Sign-Off Gate</span>
               </div>
             </motion.div>
           </div>
@@ -318,14 +460,14 @@ export default function AiEmployeesPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by role, capability, or tool..."
+                placeholder="Search by role, capability, or builder..."
                 className="bg-transparent outline-none w-full text-foreground placeholder:text-muted-foreground text-xs"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="p-0.5 rounded hover:bg-muted text-muted-foreground"
+                  className="p-0.5 rounded hover:bg-muted text-muted-foreground cursor-pointer"
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -361,12 +503,29 @@ export default function AiEmployeesPage() {
                         <span className="inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-primary/10 text-primary border border-primary/20 mb-1">
                           {emp.category}
                         </span>
-                        <div className="flex items-center justify-end gap-1 text-xs text-amber-500 font-mono">
+
+                        {/* Rating with Trigger to Verified Reviews */}
+                        <button
+                          type="button"
+                          onClick={() => setSelectedReviewEmployee(emp)}
+                          className="flex items-center justify-end gap-1 text-xs text-amber-500 font-mono hover:underline cursor-pointer ml-auto"
+                          title="View verified customer reviews"
+                        >
                           <Star className="w-3.5 h-3.5 fill-amber-500" />
-                          <span className="font-bold text-foreground">{emp.rating}</span>
+                          <span className="font-bold text-foreground">{emp.rating.toFixed(1)}</span>
                           <span className="text-muted-foreground">({emp.reviewsCount})</span>
-                        </div>
+                        </button>
                       </div>
+                    </div>
+
+                    {/* Builder Tag & Twitter/X Verification Checkmark Stick + Recommended */}
+                    <div>
+                      <VerifiedBadge
+                        isFless={emp.isFless}
+                        builderName={emp.builderName}
+                        isRecommended={emp.isRecommended}
+                        size="sm"
+                      />
                     </div>
 
                     {/* Title & Description */}
@@ -377,6 +536,19 @@ export default function AiEmployeesPage() {
                       <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                         {emp.description}
                       </p>
+                    </div>
+
+                    {/* Reviews Link Callout */}
+                    <div className="flex items-center justify-between text-xs pt-0.5 pb-1 border-y border-border/50">
+                      <span className="text-[11px] text-muted-foreground">Active Deployments</span>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedReviewEmployee(emp)}
+                        className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary hover:underline cursor-pointer"
+                      >
+                        <MessageSquare className="w-3 h-3" />
+                        <span>See Verified Reviews</span>
+                      </button>
                     </div>
 
                     {/* Badges */}
@@ -457,26 +629,51 @@ export default function AiEmployeesPage() {
               href="/builders"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-semibold text-xs hover:bg-primary-hover shadow-md shadow-primary/20 transition-all shrink-0 cursor-pointer"
             >
-              Start Building Free
-              <ArrowRight className="w-4 h-4" />
+              <span>Open Studio &amp; SDK Docs</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </section>
 
-        {/* ── INTERACTIVE LIVE ACTION SIMULATION MODAL ── */}
+        {/* ── CUSTOMER REVIEWS MODAL (TAMPER-PROOF VERIFIED USERS) ── */}
+        <CustomerReviewsModal
+          employee={
+            selectedReviewEmployee
+              ? {
+                  id: selectedReviewEmployee.id,
+                  slug: selectedReviewEmployee.slug,
+                  name: selectedReviewEmployee.name,
+                  role: selectedReviewEmployee.role,
+                  department: selectedReviewEmployee.category,
+                  avatar: selectedReviewEmployee.avatarUrl,
+                  rating: selectedReviewEmployee.rating,
+                  reviewsCount: selectedReviewEmployee.reviewsCount,
+                  pricing: selectedReviewEmployee.startingPrice,
+                  billingUnit: "month",
+                  isFless: selectedReviewEmployee.isFless,
+                  builderName: selectedReviewEmployee.builderName,
+                  isRecommended: selectedReviewEmployee.isRecommended,
+                  reviews: selectedReviewEmployee.reviews,
+                }
+              : null
+          }
+          onClose={() => setSelectedReviewEmployee(null)}
+        />
+
+        {/* ── SIMULATION MODAL ── */}
         <AnimatePresence>
           {activeSimulation && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md">
               <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                className="w-full max-w-xl bg-card border border-border rounded-3xl p-6 shadow-2xl relative overflow-hidden space-y-5"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="w-full max-w-xl rounded-2xl border border-border bg-card p-6 shadow-2xl space-y-5"
               >
-                {/* Header */}
-                <div className="flex items-center justify-between pb-3 border-b border-border">
+                {/* Modal Header */}
+                <div className="flex items-center justify-between border-b border-border pb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border border-border">
+                    <div className="w-10 h-10 rounded-full overflow-hidden bg-muted border border-border">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={activeSimulation.avatarUrl}
@@ -485,9 +682,11 @@ export default function AiEmployeesPage() {
                       />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-sm text-foreground">{activeSimulation.name}</h4>
+                      <h3 className="font-semibold text-sm text-foreground">
+                        {activeSimulation.name}
+                      </h3>
                       <p className="text-[11px] text-muted-foreground font-mono">
-                        Turn Latency: {activeSimulation.latency} • Accuracy: {activeSimulation.accuracy}
+                        Latency: {activeSimulation.latency} · Accuracy: {activeSimulation.accuracy}
                       </p>
                     </div>
                   </div>
@@ -495,16 +694,16 @@ export default function AiEmployeesPage() {
                   <button
                     type="button"
                     onClick={() => setActiveSimulation(null)}
-                    className="p-1.5 rounded-xl hover:bg-muted text-muted-foreground cursor-pointer"
+                    className="p-1 rounded-lg hover:bg-muted text-muted-foreground cursor-pointer"
                   >
                     <X className="w-4 h-4" />
                   </button>
                 </div>
 
-                {/* Simulated Execution Sequence */}
+                {/* Simulation Trace Steps */}
                 <div className="space-y-3 font-mono text-xs">
-                  <div className="p-3 rounded-xl bg-muted/40 border border-border/60 space-y-1">
-                    <span className="text-[10px] text-muted-foreground uppercase font-bold">1. Inbound Request</span>
+                  <div className="p-3 rounded-xl bg-muted/30 border border-border/60 space-y-1">
+                    <span className="text-[10px] text-muted-foreground uppercase font-bold">1. Inbound Customer Trigger</span>
                     <p className="text-foreground font-sans text-xs">
                       &quot;{activeSimulation.simulation.customerQuery}&quot;
                     </p>
