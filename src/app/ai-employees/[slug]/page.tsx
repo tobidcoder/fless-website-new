@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { API_URL } from "@/lib/env"
 import {
   ArrowRight,
   Star,
@@ -81,105 +82,16 @@ interface PublicProfileData {
 }
 
 async function getProfileData(slug: string): Promise<PublicProfileData | null> {
-  const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+  if (!API_URL) return null
   try {
-    const res = await fetch(`${backendUrl}/api/v1/marketplace/public/employees/${slug}`, {
+    const res = await fetch(`${API_URL}/api/v1/marketplace/public/employees/${encodeURIComponent(slug)}`, {
       next: { revalidate: 3600 },
     })
-    if (res.ok) {
-      return await res.json()
-    }
+    return res.ok ? ((await res.json()) as PublicProfileData) : null
   } catch {
-    // Fallback static profile resolution if backend API is offline during build/dev
+    return null
   }
 
-  // Find fallback from local departments dictionary
-  const cleanSlug = slug.toLowerCase().replace(/[^a-z0-9]/g, "")
-  const slugKebab = slug.toLowerCase().replace(/[^a-z0-9]+/g, "-")
-
-  for (const dept of departments) {
-    const foundEmp = dept.employees.find((e) => {
-      const eId = e.id.toLowerCase()
-      const eName = e.name.toLowerCase()
-      const eRoleKebab = e.role.toLowerCase().replace(/[^a-z0-9]+/g, "-")
-      const eRoleClean = e.role.toLowerCase().replace(/[^a-z0-9]/g, "")
-      const eNameClean = e.name.toLowerCase().replace(/[^a-z0-9]/g, "")
-      const eIdClean = e.id.toLowerCase().replace(/[^a-z0-9]/g, "")
-
-      return (
-        eId === slug.toLowerCase() ||
-        eName === slug.toLowerCase() ||
-        eRoleKebab === slugKebab ||
-        eRoleClean === cleanSlug ||
-        eNameClean === cleanSlug ||
-        eIdClean === cleanSlug ||
-        slugKebab.includes(eRoleKebab) ||
-        eRoleKebab.includes(slugKebab)
-      )
-    })
-    if (foundEmp) {
-      return {
-        id: foundEmp.id,
-        slug,
-        name: foundEmp.name,
-        title: foundEmp.role,
-        role: foundEmp.role,
-        department: dept.name,
-        category: "Specialist",
-        description: foundEmp.description,
-        avatarUrl: foundEmp.avatar,
-        industries: [dept.name, "Healthcare", "Retail & E-commerce", "Finance"],
-        countries: ["Nigeria", "United Kingdom", "United States", "Global"],
-        businessTypes: ["Clinics", "Agencies", "Mid-Market Enterprises"],
-        languages: ["English", "French"],
-        capabilities: foundEmp.skills.map((s, idx) => ({
-          id: `cap-${idx}`,
-          label: s,
-          description: `Executes ${s} with automated Fless platform policy gates.`,
-        })),
-        requiredPackages: [
-          { packageName: "@fless/buffer", displayName: "Buffer", isRequired: true },
-          { packageName: "@fless/google-calendar", displayName: "Google Calendar", isRequired: false },
-        ],
-        pricingModel: "MONTHLY",
-        pricingType: "RANGE",
-        pricingDisplay: {
-          formattedRate: "$1,600 – $2,500 / month",
-          rateMinCents: 160000,
-          rateMaxCents: 250000,
-          hourlyDisplay: "$35 – $55 / hour",
-          monthlyDisplay: "$1,600 – $2,500 / month",
-          supportedTenures: ["hour", "day", "week", "month", "year"],
-          hasUsage: false,
-        },
-        verificationLevel: "FLESS_VERIFIED",
-        authorType: "FLESS",
-        authorName: "Built by Fless",
-        authorBio: "Official verified Fless core employee distribution.",
-        currentVersion: "1.0.0",
-        rating: 0,
-        reviewCount: 0,
-        hireCount: 0,
-        status: "PUBLISHED",
-        updatedAt: new Date().toISOString(),
-        reviews: [],
-        relatedEmployees: [
-          {
-            id: "rel-1",
-            slug: "mkt-seo",
-            name: "Nora",
-            title: "SEO Manager",
-            department: "Marketing",
-            rating: 0,
-            formattedRate: "$1,800 / month",
-            avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=256&h=256&fit=crop&crop=faces&q=80",
-          },
-        ],
-      }
-    }
-  }
-
-  return null
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -214,7 +126,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: "profile",
       images: [
         {
-          url: profile.avatarUrl || "https://getfless.com/og-employee-fallback.png",
+          url: profile.avatarUrl || "https://getfless.com/fless-og.png",
           width: 1200,
           height: 630,
           alt: `${profile.name} Fless AI Employee`,
@@ -227,7 +139,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       creator: "@getfless",
       title,
       description,
-      images: [profile.avatarUrl || "https://getfless.com/og-employee-fallback.png"],
+      images: [profile.avatarUrl || "https://getfless.com/fless-og.png"],
     },
     robots: {
       index: true,
@@ -295,7 +207,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
         {/* HERO / IDENTITY SECTION */}
         <section className="max-w-[1200px] mx-auto px-6 pb-12">
           <div className="bg-card border border-border/80 rounded-3xl p-6 md:p-10 shadow-lg">
-            <div className="grid lg:grid-cols-12 gap-8 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               <div className="lg:col-span-8">
                 <div className="flex flex-wrap items-center gap-2.5 mb-4">
                   <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[11px] font-semibold uppercase tracking-wider">
@@ -395,7 +307,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
         </section>
 
         {/* DETAILS GRID */}
-        <section className="max-w-[1200px] mx-auto px-6 pb-16 grid lg:grid-cols-12 gap-10">
+        <section className="max-w-[1200px] mx-auto px-6 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* MAIN CONTENT */}
           <div className="lg:col-span-8 space-y-12">
             {/* CAPABILITIES */}
@@ -403,7 +315,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
               <h2 className="text-xl font-display font-semibold text-foreground mb-4 flex items-center gap-2">
                 <Sparkles className="w-5 h-5 text-primary" /> Key Capabilities
               </h2>
-              <div className="grid sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {profile.capabilities.map((cap) => (
                   <div key={cap.id} className="p-4 rounded-xl bg-card border border-border/70 flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
@@ -421,7 +333,7 @@ export default async function PublicEmployeeProfilePage({ params }: PageProps) {
               <h2 className="text-xl font-display font-semibold text-foreground mb-4 flex items-center gap-2">
                 <Building2 className="w-5 h-5 text-primary" /> Connected Apps & Requirements
               </h2>
-              <div className="grid sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {profile.requiredPackages.map((pkg) => (
                   <div key={pkg.packageName} className="p-4 rounded-xl bg-card border border-border/70 flex items-center justify-between">
                     <span className="text-sm font-medium text-foreground">{pkg.displayName}</span>

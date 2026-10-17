@@ -66,7 +66,7 @@ export default function SecurityPage() {
       nav={nav}
       current="/security"
     >
-      <div className="grid sm:grid-cols-2 gap-4 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
         {controls.map((c) => (
           <div key={c.title} className="rounded-xl border border-border/70 p-4">
             <div className="text-sm font-semibold text-foreground mb-1">{c.title}</div>

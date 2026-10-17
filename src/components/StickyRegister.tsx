@@ -60,7 +60,7 @@ export function StickyRegister() {
           <div className="rounded-2xl border border-border/80 bg-background/95 backdrop-blur-xl shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] p-4 flex items-center justify-between gap-3">
             <div className="min-w-0">
               <div className="text-[13px] font-semibold tracking-tight">Join the Fless beta</div>
-              <div className="text-[11px] text-muted-foreground">A lot of teams want in · we’ll reach out</div>
+              <div className="text-[11px] text-muted-foreground">Marketing employee live · no card needed</div>
             </div>
             <Link
               href="/start"

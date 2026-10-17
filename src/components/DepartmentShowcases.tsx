@@ -1,11 +1,11 @@
 "use client"
 
-import type { ReactNode } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { BrandedStage } from "@/components/BrandedStage"
+import { ReactNode } from "react"
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -359,7 +359,6 @@ const pairs = [
         points: ["Content + social", "SEO drafts", "Ad creative"],
         href: "/departments/marketing",
         image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1400&auto=format&fit=crop&q=80",
-        visual: <MarketingVisual />,
       },
       {
         id: "sales",
@@ -369,7 +368,6 @@ const pairs = [
         points: ["Lead research", "Follow-ups", "Pipeline hygiene"],
         href: "/departments/sales",
         image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1400&auto=format&fit=crop&q=80",
-        visual: <SalesVisual />,
       },
     ],
   },
@@ -387,7 +385,6 @@ const pairs = [
         points: ["Inbound / outbound", "Scheduling", "Call notes"],
         href: "/departments/voice",
         image: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=1400&auto=format&fit=crop&q=80",
-        visual: <VoiceVisual />,
       },
       {
         id: "support",
@@ -397,7 +394,6 @@ const pairs = [
         points: ["Inbox triage", "Help center", "Escalations"],
         href: "/departments/support",
         image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&auto=format&fit=crop&q=80",
-        visual: <SupportVisual />,
       },
     ],
   },
@@ -415,7 +411,6 @@ const pairs = [
         points: ["Sourcing", "Screening", "Interview ops"],
         href: "/departments/recruitment",
         image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1400&auto=format&fit=crop&q=80",
-        visual: <RecruitingVisual />,
       },
       {
         id: "hr",
@@ -425,7 +420,6 @@ const pairs = [
         points: ["Onboarding", "Policies", "Reviews"],
         href: "/departments/hr",
         image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&auto=format&fit=crop&q=80",
-        visual: <HrVisual />,
       },
     ],
   },
@@ -443,7 +437,6 @@ const pairs = [
         points: ["Projects", "Approvals", "Reporting"],
         href: "/departments/operations",
         image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1400&auto=format&fit=crop&q=80",
-        visual: <OperationsVisual />,
       },
       {
         id: "finance",
@@ -453,7 +446,6 @@ const pairs = [
         points: ["Invoicing", "Expenses", "Forecasts"],
         href: "/departments/finance",
         image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1400&auto=format&fit=crop&q=80",
-        visual: <FinanceVisual />,
       },
     ],
   },
@@ -521,9 +513,7 @@ export function DepartmentShowcases() {
                   transition={{ delay: 0.08 + i * 0.08, duration: 0.5 }}
                   className="group scroll-mt-28 flex flex-col rounded-2xl border border-border/70 bg-background overflow-hidden shadow-[0_1px_0_rgba(0,0,0,0.04)] hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.18)] hover:border-border transition-shadow duration-500"
                 >
-                  <Stage image={dept.image} alt={dept.name}>
-                    {dept.visual}
-                  </Stage>
+                  <BrandedStage image={dept.image} alt={dept.name} className="h-[220px] sm:h-[260px]" />
                   <div className="p-6 md:p-8 flex flex-col flex-1">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">

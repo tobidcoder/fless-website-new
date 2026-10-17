@@ -4,6 +4,7 @@ import { ArrowRight, Sparkles } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { PhotoTile } from "@/components/BrandedStage"
+import { DepartmentShowcases } from "@/components/DepartmentShowcases"
 import { departments } from "@/lib/departments"
 
 export const metadata: Metadata = {
@@ -126,6 +127,10 @@ export default function DepartmentsDirectoryPage() {
             ))}
           </div>
         </section>
+
+        <div className="mt-20">
+          <DepartmentShowcases />
+        </div>
 
         {/* PILOT CALLOUT BANNER */}
         <section className="max-w-[1200px] mx-auto px-6 mt-20">

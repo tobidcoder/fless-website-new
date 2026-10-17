@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Contact & Enterprise Inquiries — Fless",
     description:
-      "Enterprise walkthroughs, procurement, and direct team contacts at Fless Inc.",
+      "Enterprise walkthroughs, procurement, and direct team contacts at Fless (Brainstack Tech LTD).",
     images: ["/fless-og.png"],
   },
 }

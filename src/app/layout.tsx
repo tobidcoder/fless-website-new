@@ -21,11 +21,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://getfless.com"),
   title: {
-    default: "Fless — Infrastructure for AI Employees",
+    default: "Fless — AI employees that do the work",
     template: "%s | Fless",
   },
   description:
-    "Deploy autonomous AI employees starting with Marketing. Built-in audit logging, human approval gates, and multi-currency billing. 18 businesses in pilot across Nigeria, the UK, and North America.",
+    "Fless lets businesses hire AI employees by department. They plan, write and publish real work, and you approve before anything goes live. Marketing is live today; 18 businesses in pilot across Nigeria, the UK and North America.",
   keywords: [
     "AI employees",
     "autonomous workforce",
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     "AI marketing employee",
     "enterprise AI workforce",
     "Fless",
-    "Fless Inc",
+    "Brainstack Tech LTD",
     "NVIDIA Inception member",
-    "Buffer integration",
+    "official API integrations",
     "autonomous marketing",
   ],
   authors: [{ name: "Brainstack Tech LTD (trading as Fless)", url: "https://getfless.com" }],
@@ -49,15 +49,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://getfless.com",
     siteName: "Fless",
-    title: "Fless — Infrastructure for AI Employees",
+    title: "Fless — AI employees that do the work",
     description:
-      "Deploy autonomous AI employees starting with Marketing. Built-in audit logging, human approval gates, and multi-currency billing.",
+      "Hire AI employees by department. They do the work; you approve what ships. Marketing is live today.",
     images: [
       {
         url: "/fless-og.png",
         width: 1200,
         height: 630,
-        alt: "Fless — Infrastructure for AI Employees",
+        alt: "Fless — AI employees that do the work",
       },
     ],
   },
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@getfless",
     creator: "@getfless",
-    title: "Fless — Infrastructure for AI Employees",
+    title: "Fless — AI employees that do the work",
     description:
       "Deploy autonomous AI employees starting with Marketing. 18 businesses in pilot across Nigeria, the UK, and North America.",
     images: ["/fless-og.png"],
@@ -156,13 +156,7 @@ const organizationSchema = {
       applicationCategory: "BusinessApplication",
       operatingSystem: "Cloud",
       description:
-        "Autonomous AI employee platform. Deploy Marketing Employees today to plan, draft, design, and schedule multi-channel campaigns with human approval gates.",
-      offers: {
-        "@type": "AggregateOffer",
-        priceCurrency: "USD",
-        lowPrice: "1600",
-        highPrice: "2500",
-      },
+        "Autonomous AI employee platform. Deploy Marketing Employees today to plan, draft, design, and schedule multi-channel campaigns with human approval gates."
     },
   ],
 };

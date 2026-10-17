@@ -48,7 +48,6 @@ export function Departments() {
                   alt={dept.name}
                   title={dept.name}
                   status={dept.status}
-                  live={dept.status === "live" ? "Live today" : "Early access"}
                   className="aspect-[4/5] rounded-2xl mb-3"
                 />
                 <p className="text-[13px] text-muted-foreground leading-relaxed px-0.5 hidden sm:block">

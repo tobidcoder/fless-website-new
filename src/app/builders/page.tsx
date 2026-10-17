@@ -83,7 +83,7 @@ export default function BuildersPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-primary/20 selection:text-primary">
+    <div className="min-h-screen bg-background text-foreground flex flex-col font-sans">
       <Header activePage="builders" />
 
       <main className="flex-1">
