@@ -21,7 +21,6 @@ import { PricingCalculator } from "@/components/PricingCalculator"
 import { getPublishedEmployees, type PublicEmployee } from "@/lib/marketplace"
 import { departments } from "@/lib/departments"
 
-type TenureUnit = "hour" | "day" | "week" | "month" | "year"
 export type CurrencyCode = "USD" | "NGN" | "GBP" | "EUR" | "KES" | "GHS" | "ZAR" | "AED"
 
 interface CurrencyConfig {

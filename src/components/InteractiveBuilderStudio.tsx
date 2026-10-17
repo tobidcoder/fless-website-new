@@ -28,6 +28,7 @@ export function InteractiveBuilderStudio() {
 
   // Step 3 interactive scenario
   const [testScenario, setTestScenario] = useState<"order" | "return" | "urgent">("order");
+  const [isSimulating, setIsSimulating] = useState<boolean>(false);
 
   // Step 4 deployment type
   const [deployTarget, setDeployTarget] = useState<"private" | "marketplace">("marketplace");
@@ -585,10 +586,12 @@ export function InteractiveBuilderStudio() {
                   </div>
 
                   {/* Simulated Terminal / Chat Window */}
-                  <div className="rounded-2xl border border-border bg-[#0B0F19] text-white p-4 space-y-3 font-mono text-[11px]">
+                  <div className={`rounded-2xl border border-border bg-[#0B0F19] text-white p-4 space-y-3 font-mono text-[11px] transition-opacity duration-200 ${isSimulating ? "opacity-70" : "opacity-100"}`}>
                     <div className="flex items-center justify-between pb-2 border-b border-white/10 text-white/50 text-[10px]">
                       <span>SANDBOX_RUNTIME_V2</span>
-                      <span className="text-emerald-400">LATENCY: 142MS • PASS</span>
+                      <span className={isSimulating ? "text-amber-400 animate-pulse" : "text-emerald-400"}>
+                        {isSimulating ? "EXECUTING TRACE..." : "LATENCY: 142MS • PASS"}
+                      </span>
                     </div>
 
                     {testScenario === "order" && (

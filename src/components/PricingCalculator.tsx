@@ -4,7 +4,6 @@ import { useState, useMemo } from "react"
 import Link from "next/link"
 import {
   Calculator,
-  Clock,
   Users,
   ShieldCheck,
   TrendingDown,
@@ -22,7 +21,6 @@ import {
   CreditCard,
   Briefcase,
   Scale,
-  Zap,
 } from "lucide-react"
 import { departments } from "@/lib/departments"
 
