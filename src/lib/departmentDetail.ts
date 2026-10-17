@@ -241,7 +241,5 @@ export const departmentDetail: Record<
         a: "No. Sending for signature and filing always wait for a named approver.",
       },
     ],
-    prompts: ["Review this vendor MSA and flag risky clauses.", "Draft a mutual NDA for Acme Ltd.", "List contracts renewing in the next 60 days."],
-    reply: () => "MSA reviewed: 3 clauses flagged for your lawyer. NDA drafted from your template — approve to send for signature. 2 renewals due within 60 days.",
   },
 }

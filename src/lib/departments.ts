@@ -611,14 +611,9 @@ export const departments: Department[] = [
       },
     ],
     capabilities: [
-      { title: "Intake", copy: "Requests arrive with the facts your lawyer needs — not a forwarded email chain.", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Vendor MSA", line: "Request captured · priority set", time: "9m" }, { title: "NDA", line: "Template selected", time: "22m" }] },
-      { title: "Review & sign", copy: "Risky clauses flagged for review. Approved agreements out for signature.", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "MSA", line: "3 clauses flagged for review", time: "31m" }, { title: "Signature", line: "Sent after approval", time: "1h" }] },
-      { title: "Renewals", copy: "Notice periods and expiries surface weeks ahead, with an owner.", image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Hosting", line: "Notice due in 21 days", time: "2h" }, { title: "Licence", line: "Renewal task assigned", time: "3h" }] },
-    ],
-    activity: [
-      { title: "Intake", line: "Vendor MSA request captured", time: "9m" },
-      { title: "Review", line: "Clauses flagged for your lawyer", time: "31m" },
-      { title: "Renewal", line: "Notice deadline in 21 days", time: "2h" },
+      { title: "Intake", copy: "Requests arrive with the facts your lawyer needs — not a forwarded email chain.", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Review & sign", copy: "Risky clauses flagged for review. Approved agreements out for signature.", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&auto=format&fit=crop&q=80" },
+      { title: "Renewals", copy: "Notice periods and expiries surface weeks ahead, with an owner.", image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1200&auto=format&fit=crop&q=80" },
     ],
     quote: {
       text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",

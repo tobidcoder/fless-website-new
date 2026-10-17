@@ -24,9 +24,38 @@ import {
 } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
+import { PricingCalculator } from "@/components/PricingCalculator"
 import { getPublishedEmployees, type PublicEmployee } from "@/lib/marketplace"
 import { departments } from "@/lib/departments"
-import { motion } from "framer-motion"
+
+type TenureUnit = "hour" | "day" | "week" | "month" | "year"
+export type CurrencyCode = "USD" | "NGN" | "GBP" | "EUR" | "KES" | "GHS" | "ZAR" | "AED"
+
+interface CurrencyConfig {
+  code: CurrencyCode
+  symbol: string
+  name: string
+  rate: number
+  flag: string
+}
+
+const activeCurrency: CurrencyConfig = {
+  code: "USD",
+  symbol: "$",
+  name: "United States (USD)",
+  rate: 1.0,
+  flag: "🇺🇸",
+}
+
+const TENURE_DISCOUNTS = [
+  { term: "2+ weeks", discount: "10%" },
+  { term: "4+ weeks", discount: "12%" },
+  { term: "3+ months", discount: "15%" },
+  { term: "6+ months", discount: "20%" },
+  { term: "12+ months or 1+ year", discount: "25%" },
+  { term: "5+ years", discount: "30%" },
+  { term: "10+ years", discount: "35%" },
+]
 
 // Prices come from the live marketplace and refresh hourly.
 export const revalidate = 3600
@@ -294,51 +323,28 @@ export default async function PricingPage() {
       <main className="flex-1 pt-24 md:pt-28 pb-20">
         {/* HERO SECTION */}
         <section className="max-w-[1240px] mx-auto px-6 pb-12 md:pb-16 text-center space-y-4">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono font-medium tracking-wider uppercase mb-2"
-          >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-mono font-medium tracking-wider uppercase mb-2">
             <Calculator className="w-3.5 h-3.5" />
             <span>Workforce Pricing & Capacity Engine</span>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl sm:text-5xl lg:text-[60px] font-display font-semibold tracking-tight leading-[1.05] text-foreground max-w-4xl mx-auto uppercase"
-          >
+          <h1 className="text-4xl sm:text-5xl lg:text-[60px] font-display font-semibold tracking-tight leading-[1.05] text-foreground max-w-4xl mx-auto uppercase">
             Hire AI employees for the work <br />
             <span className="text-primary">your business needs.</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08 }}
-            className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
-          >
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Predictable, transparent workforce rates across 9 business departments. No seat licensing, no server fees, and full multi-currency global support.
-          </motion.p>
+          </p>
         </section>
 
-        <section className="pb-20 md:pb-28">
-          <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
-            {groups.length === 0 ? (
-              <div className="rounded-2xl border border-border/70 p-8 sm:p-12 max-w-2xl">
-                <h2 className="text-xl font-display font-semibold mb-3">Live prices are unavailable right now.</h2>
-                <p className="text-[15px] text-muted-foreground leading-relaxed mb-6">
-                  We couldn&apos;t reach the marketplace. Join the beta and we&apos;ll send you current prices for the
-                  departments you need.
-                </p>
-                <Link
-                  href="/start"
-                  className="inline-flex h-11 items-center rounded-full bg-primary px-6 text-[14px] font-medium text-primary-foreground hover:bg-primary-hover transition-colors"
-                >
-                  Join the beta →
-                </Link>
-              </div>
-            ) : (
+        {/* INTERACTIVE WORKFORCE CAPACITY & COST CALCULATOR */}
+        <PricingCalculator />
+
+        {/* LIVE MARKETPLACE EMPLOYEES (WHEN AVAILABLE) */}
+        {groups.length > 0 && (
+          <section className="pb-20 md:pb-28">
+            <div className="max-w-[1200px] mx-auto px-5 sm:px-6">
               <div className="space-y-16">
                 {groups.map(([dept, list]) => (
                   <div key={dept}>
@@ -374,9 +380,9 @@ export default async function PricingPage() {
                   </div>
                 ))}
               </div>
-            )}
-          </div>
-        </section>
+            </div>
+          </section>
+        )}
 
         {/* SECTION 2: HOW FLESS PRICING COMPUTES */}
         <section className="max-w-[1240px] mx-auto px-6 py-12 md:py-16 space-y-8">

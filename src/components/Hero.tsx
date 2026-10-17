@@ -49,13 +49,7 @@ export function Hero() {
             transition={{ delay: 0.12 }}
             className="mt-6 sm:mt-8 text-[17px] sm:text-xl text-muted-foreground leading-[1.6] max-w-[680px] mx-auto text-pretty"
           >
-<<<<<<< HEAD
             Marketing is live today. Voice, Sales, Support, Recruitment, HR, Operations, Finance and Legal are in early access.
-=======
-            Fless lets any business hire AI employees by department. They plan, write and publish real work,
-            and a person on your team signs off first. Marketing is live today; seven more departments are in
-            early access.
->>>>>>> 4393e6dd3aa1f7259709f1075a0d99ca3b30af6d
           </motion.p>
 
           <motion.div
@@ -71,9 +65,6 @@ export function Hero() {
               </Link>
               <Link href="/builders" className="text-muted-foreground hover:text-primary transition-colors">
                 I&apos;m a builder →
-              </Link>
-              <Link href="/investors" className="text-muted-foreground hover:text-primary transition-colors">
-                I&apos;m an investor →
               </Link>
             </div>
           </motion.div>

@@ -400,7 +400,7 @@ export function ModernBuilderShowcase() {
                         <span className="text-blue-400 font-bold">from</span>{" "}
                         <span className="text-emerald-400">&apos;@fless/employee&apos;</span>;
                       </div>
-                      <div className="text-white/40">// Configure autonomous worker</div>
+                      <div className="text-white/40">{"// Configure autonomous worker"}</div>
                       <div>
                         <span className="text-blue-400 font-bold">const</span>{" "}
                         <span className="text-amber-300">employee</span> ={" "}

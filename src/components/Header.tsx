@@ -117,12 +117,6 @@ export function Header({ activePage }: HeaderProps) {
             >
               Docs
             </Link>
-            <Link
-              href="/investors"
-              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "investors" && "text-primary")}
-            >
-              Investors
-            </Link>
           </nav>
         </div>
 
@@ -265,7 +259,6 @@ export function Header({ activePage }: HeaderProps) {
                 { label: "Solutions", href: "/solutions" },
                 { label: "Builders", href: "/builders" },
                 { label: "Docs", href: "/docs" },
-                { label: "Investors", href: "/investors" },
                 { label: "Contact", href: "/contact" },
               ].map((item) => (
                 <Link
