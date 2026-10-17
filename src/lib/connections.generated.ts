@@ -1413,5 +1413,53 @@ export const CONNECTIONS: Connection[] = [
     "category": "crm",
     "summary": "People, leads, opportunities and tasks in Copper CRM (Google Workspace CRM).",
     "actions": 7
+  },
+  {
+    "id": "paystack",
+    "name": "Paystack",
+    "status": "Available",
+    "category": "payments",
+    "summary": "Accept payments, verify bank transactions, generate payment links, and handle customer transfers across Nigeria, Ghana, Kenya, and South Africa.",
+    "actions": 4
+  },
+  {
+    "id": "flutterwave",
+    "name": "Flutterwave",
+    "status": "Available",
+    "category": "payments",
+    "summary": "Global and Pan-African payments, mobile money collections, cross-border payouts, and currency conversions across 30+ African nations.",
+    "actions": 4
+  },
+  {
+    "id": "mpesa",
+    "name": "M-Pesa (Safaricom)",
+    "status": "Available",
+    "category": "payments",
+    "summary": "Instant mobile money payments, Lipa na M-Pesa STK Push prompts, customer account validation, and business payouts in Kenya and Tanzania.",
+    "actions": 3
+  },
+  {
+    "id": "termii",
+    "name": "Termii",
+    "status": "Available",
+    "category": "messaging",
+    "summary": "Multi-channel African telecom messaging: verified transactional SMS, OTP generation/verification, and WhatsApp direct notifications.",
+    "actions": 4
+  },
+  {
+    "id": "pipedream",
+    "name": "Pipedream Universal Connector",
+    "status": "Available",
+    "category": "automation",
+    "summary": "Turnkey pre-authenticated sign-in to over 3,000 SaaS apps (HubSpot, Jira, Notion, Linear, Salesforce, Stripe, QuickBooks, Zendesk, Asana) under Fless approval gates.",
+    "actions": 3
+  },
+  {
+    "id": "mcp-catalog",
+    "name": "Model Context Protocol (MCP) Directory",
+    "status": "Available",
+    "category": "developer",
+    "summary": "Governed catalog syncing public MCP app servers with strict admin reviews, risk labeling, and audit logging.",
+    "actions": 3
   }
 ]

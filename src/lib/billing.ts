@@ -103,3 +103,151 @@ export function formatMoney(amount: number, currency: CurrencyCode): string {
 export function annualPrice(monthly: number): number {
   return monthly * 10
 }
+
+// ---------------------------------------------------------------------------
+// Workforce estimator (owner's department/tenure calculator on /pricing).
+// TODO(owner): the reference rate ranges, tenure discounts and indicative
+// exchange rates below came from the owner's calculator on main; confirm them
+// against the backend pricing calculator before launch.
+// ---------------------------------------------------------------------------
+
+export type TenureUnit = "hour" | "day" | "week" | "month" | "year"
+
+export const TENURE_UNITS: TenureUnit[] = ["hour", "day", "week", "month", "year"]
+
+/** Tenure discount tiers, same as the backend's calculateDurationDiscount. */
+export const TENURE_DISCOUNT_TIERS: { unit: TenureUnit; minQty: number; discount: number; term: string }[] = [
+  { unit: "day", minQty: 5, discount: 5, term: "5+ days" },
+  { unit: "day", minQty: 10, discount: 8, term: "10+ days" },
+  { unit: "week", minQty: 2, discount: 10, term: "2+ weeks" },
+  { unit: "week", minQty: 4, discount: 12, term: "4+ weeks" },
+  { unit: "month", minQty: 3, discount: 15, term: "3+ months" },
+  { unit: "month", minQty: 6, discount: 20, term: "6+ months" },
+  { unit: "month", minQty: 12, discount: 25, term: "12+ months or 1+ year" },
+  { unit: "year", minQty: 1, discount: 25, term: "12+ months or 1+ year" },
+  { unit: "year", minQty: 5, discount: 30, term: "5+ years" },
+  { unit: "year", minQty: 10, discount: 35, term: "10+ years" },
+]
+
+/** Unique term → discount rows for display. */
+export const TENURE_DISCOUNTS: { term: string; discount: number }[] = TENURE_DISCOUNT_TIERS.filter(
+  (t, i, all) => all.findIndex((x) => x.term === t.term) === i,
+).map(({ term, discount }) => ({ term, discount }))
+
+export function tenureDiscount(qty: number, unit: TenureUnit): number {
+  return TENURE_DISCOUNT_TIERS.filter((t) => t.unit === unit && qty >= t.minQty).reduce(
+    (best, t) => Math.max(best, t.discount),
+    0,
+  )
+}
+
+type RateRange = { min: number; max: number }
+
+export interface DepartmentRate {
+  /** Reference rate range per tenure unit, in US cents. Builders set the exact listing price. */
+  baseRateCents: Record<TenureUnit, RateRange>
+  usage?: { name: string; unitCents: number; defaultQty: number }
+}
+
+export const DEPARTMENT_RATES: Record<string, DepartmentRate> = {
+  marketing: {
+    baseRateCents: {
+      hour: { min: 3500, max: 5500 },
+      day: { min: 14000, max: 22000 },
+      week: { min: 55000, max: 88000 },
+      month: { min: 160000, max: 250000 },
+      year: { min: 1600000, max: 2500000 },
+    },
+    usage: { name: "Content Packs", unitCents: 10, defaultQty: 500 },
+  },
+  voice: {
+    baseRateCents: {
+      hour: { min: 2500, max: 4500 },
+      day: { min: 10000, max: 18000 },
+      week: { min: 40000, max: 70000 },
+      month: { min: 120000, max: 200000 },
+      year: { min: 1200000, max: 2000000 },
+    },
+    usage: { name: "Telephony Minutes", unitCents: 5, defaultQty: 1000 },
+  },
+  sales: {
+    baseRateCents: {
+      hour: { min: 4000, max: 6500 },
+      day: { min: 16000, max: 26000 },
+      week: { min: 64000, max: 100000 },
+      month: { min: 180000, max: 300000 },
+      year: { min: 1800000, max: 3000000 },
+    },
+  },
+  support: {
+    baseRateCents: {
+      hour: { min: 2000, max: 3500 },
+      day: { min: 8000, max: 14000 },
+      week: { min: 32000, max: 56000 },
+      month: { min: 100000, max: 160000 },
+      year: { min: 1000000, max: 1600000 },
+    },
+    usage: { name: "Resolved Tickets", unitCents: 8, defaultQty: 800 },
+  },
+  recruitment: {
+    baseRateCents: {
+      hour: { min: 3500, max: 5500 },
+      day: { min: 14000, max: 22000 },
+      week: { min: 56000, max: 88000 },
+      month: { min: 160000, max: 240000 },
+      year: { min: 1600000, max: 2400000 },
+    },
+  },
+  operations: {
+    baseRateCents: {
+      hour: { min: 3000, max: 5000 },
+      day: { min: 12000, max: 20000 },
+      week: { min: 48000, max: 80000 },
+      month: { min: 140000, max: 220000 },
+      year: { min: 1400000, max: 2200000 },
+    },
+  },
+  finance: {
+    baseRateCents: {
+      hour: { min: 4500, max: 7500 },
+      day: { min: 18000, max: 30000 },
+      week: { min: 72000, max: 120000 },
+      month: { min: 200000, max: 350000 },
+      year: { min: 2000000, max: 3500000 },
+    },
+  },
+  hr: {
+    baseRateCents: {
+      hour: { min: 2500, max: 4500 },
+      day: { min: 10000, max: 18000 },
+      week: { min: 40000, max: 72000 },
+      month: { min: 120000, max: 200000 },
+      year: { min: 1200000, max: 2000000 },
+    },
+  },
+  legal: {
+    baseRateCents: {
+      hour: { min: 4500, max: 8000 },
+      day: { min: 18000, max: 32000 },
+      week: { min: 72000, max: 128000 },
+      month: { min: 220000, max: 380000 },
+      year: { min: 2200000, max: 3800000 },
+    },
+  },
+}
+
+/** Indicative exchange rates from USD, for estimates only. Checkout uses the plan price lists above. */
+export const INDICATIVE_FX_FROM_USD: Record<CurrencyCode, number> = {
+  USD: 1,
+  GBP: 0.79,
+  EUR: 0.92,
+  NGN: 1500,
+  GHS: 15.4,
+  KES: 129,
+  ZAR: 18.1,
+}
+
+/** Formats a USD-cents amount in another currency at the indicative rate. */
+export function formatEstimate(centsUSD: number, currency: CurrencyCode): string {
+  return formatMoney(Math.round((centsUSD / 100) * INDICATIVE_FX_FROM_USD[currency]), currency)
+}

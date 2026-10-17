@@ -41,7 +41,7 @@ const audiences = [
       "NVIDIA Inception member",
     ],
     cta: "Company overview",
-    href: "/investors",
+    href: "/contact",
   },
 ]
 

@@ -36,3 +36,47 @@ export const REGION_LINE = "Choice of data region on the Business and Enterprise
 
 /** Ads: no ads platform is connected for publishing yet. */
 export const ADS_STATUS = "Ads: coming soon"
+
+/**
+ * Channels the owner lists as live today (from the owner's GlobalStats copy on main).
+ * TODO(owner): reconcile with SOCIAL_NETWORKS above, which lists six adapters.
+ */
+export const LIVE_CHANNELS = ["LinkedIn", "X", "Facebook", "Bluesky"] as const
+export const LIVE_CHANNEL_COUNT = LIVE_CHANNELS.length
+export const LIVE_CHANNELS_TEXT = "LinkedIn, X, Facebook, Bluesky"
+
+/** NVIDIA Inception membership, as stated by the owner on main. TODO(owner): confirm before launch. */
+export const NVIDIA_INCEPTION_MEMBER = true
+
+/**
+ * Illustrative monthly output per AI employee, used by the workforce estimator on /pricing.
+ * From the owner's calculator on main, with unmeasured performance figures (CSAT,
+ * error rates, sync rates) removed. TODO(owner): confirm or replace with measured pilot data.
+ */
+export const DEPARTMENT_CAPACITY_ESTIMATES: Record<string, string> = {
+  marketing: "~140 SEO articles and 450 social posts",
+  voice: "~1,200 inbound calls handled",
+  sales: "~850 inbound leads enriched and 160 meetings booked",
+  support: "~3,200 tickets handled across WhatsApp and web",
+  recruitment: "~450 candidate profiles scored and 60 screening calls booked",
+  operations: "~500 team dispatches, internal Slack escalation and project logs",
+  finance: "~700 PDF invoices scanned and synced to your ledger",
+  hr: "~90 employee onboarding workflows and handbook answers",
+  legal: "~120 contracts triaged and tracked, renewals flagged weeks ahead",
+}
+
+/**
+ * Typical monthly cost of a human hire per department (USD), for the illustrative
+ * comparison in the workforce estimator. TODO(owner): cite a source or remove.
+ */
+export const HUMAN_BENCHMARK_MONTHLY_USD: Record<string, number> = {
+  marketing: 5200,
+  voice: 4100,
+  sales: 5800,
+  support: 3800,
+  recruitment: 4900,
+  operations: 4600,
+  finance: 6200,
+  hr: 4200,
+  legal: 7500,
+}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { ChevronDown, ArrowRight, Menu, X } from "lucide-react"
+import { ArrowRight, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { sizeSolutions } from "@/lib/solutions"
 import { featuredIndustries, industryHref } from "@/lib/industries"
@@ -30,6 +30,7 @@ const departments = [
   { key: "operations", href: "/departments/operations", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=200&auto=format&fit=crop&q=80", status: "early-access" },
   { key: "finance", href: "/departments/finance", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=200&auto=format&fit=crop&q=80", status: "early-access" },
   { key: "hr", href: "/departments/hr", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200&auto=format&fit=crop&q=80", status: "early-access" },
+  { key: "legal", href: "/departments/legal", image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=200&auto=format&fit=crop&q=80", status: "early-access" },
 ]
 
 export function Header({ activePage }: HeaderProps) {
@@ -67,50 +68,64 @@ export function Header({ activePage }: HeaderProps) {
           <FlessLogo />
 
           <nav className="hidden lg:flex items-center gap-1 text-[13px] font-medium text-muted-foreground">
+            <div
+              onMouseEnter={() => setActiveMenu("departments")}
+              className="relative"
+            >
+              <Link
+                href="/#departments"
+                className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", activeMenu === "departments" && "text-foreground font-semibold")}
+              >
+                {t("departmentsMenu")}
+                <span className="text-[10px] opacity-60">▾</span>
+              </Link>
+            </div>
+            <div
+              onMouseEnter={() => setActiveMenu("solutions")}
+              className="relative"
+            >
+              <Link
+                href="/solutions"
+                className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", (activePage === "solutions" || activeMenu === "solutions") && "text-foreground font-semibold")}
+              >
+                {t("forBusinesses")}
+                <span className="text-[10px] opacity-60">▾</span>
+              </Link>
+            </div>
+            <Link
+              href="/builders"
+              onMouseEnter={() => setActiveMenu(null)}
+              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "builders" && "text-primary")}
+            >
+              {t("forBuilders")}
+            </Link>
             <Link
               href="/hire"
-              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "hire" && "text-primary")}
+              onMouseEnter={() => setActiveMenu(null)}
+              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", (activePage === "marketplace" || activePage === "hire") && "text-primary")}
             >
-              {t("hire")}
+              {t("marketplace")}
             </Link>
             <Link
               href="/build"
+              onMouseEnter={() => setActiveMenu(null)}
               className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "build" && "text-primary")}
             >
               {t("build")}
             </Link>
-            <div
-              onMouseEnter={() => setActiveMenu("solutions")}
-            >
-              <Link
-                href="/solutions"
-                className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", (activeMenu === "solutions" || activePage === "solutions") && "text-primary")}
-              >
-                {t("solutions")} <ChevronDown className={cn("w-3.5 h-3.5 transition-transform", activeMenu === "solutions" && "rotate-180")} />
-              </Link>
-            </div>
-            <div onMouseEnter={() => setActiveMenu("departments")}>
-              <button className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", (activeMenu === "departments" || activePage === "departments") && "text-primary")}>
-                {t("departments")} <ChevronDown className={cn("w-3.5 h-3.5 transition-transform", activeMenu === "departments" && "rotate-180")} />
-              </button>
-            </div>
             <Link
               href="/pricing"
+              onMouseEnter={() => setActiveMenu(null)}
               className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "pricing" && "text-primary")}
             >
               {t("pricing")}
             </Link>
             <Link
-              href="/builders"
-              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "builders" && "text-primary")}
-            >
-              {t("builders")}
-            </Link>
-            <Link
               href="/docs"
+              onMouseEnter={() => setActiveMenu(null)}
               className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "docs" && "text-primary")}
             >
-              {t("help")}
+              {t("docs")}
             </Link>
           </nav>
         </div>
@@ -119,13 +134,13 @@ export function Header({ activePage }: HeaderProps) {
           <LocaleSwitcher className="hidden xl:inline-flex" />
           <ThemeToggle className="hidden md:inline-flex" />
           <Link href={LOGIN_HREF} className="hidden md:block text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
-            {t("login")}
+            {t("signIn")}
           </Link>
           <Link
             href="/start"
             className="inline-flex h-8 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-full bg-primary px-3 sm:px-4 text-[12px] sm:text-[13px] font-medium text-primary-foreground shadow-sm shadow-primary/25 hover:bg-primary-hover transition-colors shrink-0"
           >
-            {t("joinBeta")}
+            {t("getStarted")}
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
           <button
@@ -152,7 +167,7 @@ export function Header({ activePage }: HeaderProps) {
             <div className="max-w-[1200px] mx-auto px-6 py-8">
               {activeMenu === "departments" && (
                 <div>
-                  <div className="grid grid-cols-4 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     {departments.map((dept) => (
                       <Link key={dept.key} href={dept.href} className="flex items-center gap-3 p-2 rounded-xl hover:bg-brand-soft transition-colors group">
                         <div className="w-11 h-11 rounded-lg overflow-hidden shrink-0 bg-neutral-200">
@@ -250,13 +265,13 @@ export function Header({ activePage }: HeaderProps) {
             <nav className="grid grid-cols-1 divide-y divide-border/60 border-b border-border/60">
               {[
                 { label: t("home"), href: "/" },
-                { label: t("hire"), href: "/hire" },
+                { label: t("howItWorks"), href: "/#how-it-works" },
+                { label: t("marketplace"), href: "/hire" },
                 { label: t("build"), href: "/build" },
                 { label: t("pricing"), href: "/pricing" },
                 { label: t("solutions"), href: "/solutions" },
                 { label: t("builders"), href: "/builders" },
-                { label: t("help"), href: "/docs" },
-                { label: t("investors"), href: "/investors" },
+                { label: t("docs"), href: "/docs" },
                 { label: t("contact"), href: "/contact" },
               ].map((item) => (
                 <Link

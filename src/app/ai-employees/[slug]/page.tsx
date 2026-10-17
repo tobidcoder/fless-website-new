@@ -18,6 +18,7 @@ import {
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
 import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
+import { departments } from "@/lib/departments"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -91,6 +92,7 @@ async function getProfileData(slug: string): Promise<PublicProfileData | null> {
   } catch {
     return null
   }
+
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

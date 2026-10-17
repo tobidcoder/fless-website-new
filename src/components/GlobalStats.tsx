@@ -1,13 +1,19 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { PILOT_BUSINESS_COUNT } from "@/lib/claims"
+import {
+  PILOT_BUSINESS_COUNT,
+  LIVE_CHANNEL_COUNT,
+  LIVE_CHANNELS_TEXT,
+  NVIDIA_INCEPTION_MEMBER,
+} from "@/lib/claims"
+import { departments } from "@/lib/departments"
 
 const stats = [
   { value: String(PILOT_BUSINESS_COUNT), label: "Businesses in pilot" },
-  { value: "6", label: "Social networks posted to directly" },
-  { value: "8", label: "AI departments (1 live, 7 early access)" },
-  { value: "3", label: "Regions: Nigeria, UK, North America" },
+  { value: String(LIVE_CHANNEL_COUNT), label: `Channels live (${LIVE_CHANNELS_TEXT})` },
+  { value: String(departments.length), label: "Autonomous departments" },
+  ...(NVIDIA_INCEPTION_MEMBER ? [{ value: "NVIDIA", label: "Inception member" }] : []),
 ]
 
 export function GlobalStats() {

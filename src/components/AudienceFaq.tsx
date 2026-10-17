@@ -88,7 +88,7 @@ const faqs: Record<Group, { q: string; a: string }[]> = {
 const links: Record<Group, { label: string; href: string }> = {
   Businesses: { label: "See pricing", href: "/pricing" },
   Builders: { label: "Builder program", href: "/builders" },
-  Investors: { label: "Company overview", href: "/investors" },
+  Investors: { label: "Company overview", href: "/contact" },
 }
 
 export function AudienceFaq() {

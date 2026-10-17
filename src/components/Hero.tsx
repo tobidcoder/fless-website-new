@@ -67,9 +67,6 @@ export function Hero() {
               <Link href="/builders" className="text-muted-foreground hover:text-primary transition-colors">
                 {t("builder")}
               </Link>
-              <Link href="/investors" className="text-muted-foreground hover:text-primary transition-colors">
-                {t("investor")}
-              </Link>
             </div>
           </motion.div>
 
