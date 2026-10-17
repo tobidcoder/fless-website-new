@@ -619,8 +619,70 @@ export const departments: Department[] = [
       role: "18 businesses active",
     },
   },
+  {
+    slug: "legal",
+    name: "Legal",
+    status: "early-access",
+    line: "Contracts, signatures, compliance",
+    headline: "Contracts that move — without losing control.",
+    lede: "Intake, first-pass review, e-signature, and renewals in one record. Your lawyer approves; Fless does the legwork.",
+    hero: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1800&auto=format&fit=crop&q=80",
+    heroAlt: "Contract documents on a desk",
+    markets: "Built for teams across Africa, Europe, the Middle East and North America",
+    metrics: [
+      { value: "Early access", label: "Status" },
+      { value: "Marketing", label: "Live today" },
+      { value: "Roadmap", label: "Legal & compliance desk" },
+    ],
+    employees: [
+      {
+        id: "legal-manager",
+        name: "Amara",
+        role: "Legal Operations Lead",
+        isManager: true,
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=256&h=256&fit=crop&crop=faces&q=80",
+        badge: "Department Lead",
+        description: "Runs legal intake, review queues, signatures, and the compliance calendar, and knows when to bring in your lawyer.",
+        skills: ["Legal Intake", "Contract Lifecycle", "Compliance Calendar", "Lawyer Handoff"],
+      },
+      {
+        id: "legal-contracts-reviewer",
+        name: "Linda",
+        role: "Contracts Reviewer",
+        avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=256&h=256&fit=crop&crop=faces&q=80",
+        badge: "First-Pass Review",
+        description: "Reads NDAs, MSAs, and vendor terms, and flags uncapped liability, auto-renewals, and one-sided clauses for review.",
+        skills: ["NDA Review", "Liability & Indemnity Flags", "Plain-English Summaries", "Redline Notes"],
+      },
+      {
+        id: "legal-drafter",
+        name: "Tomi",
+        role: "Contract Drafter",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=256&h=256&fit=crop&crop=faces&q=80",
+        badge: "Templates & Signatures",
+        description: "Prepares agreements from your approved templates and sends them for e-signature once you approve.",
+        skills: ["Template Drafting", "E-Signature", "Version Control", "Signed-Copy Filing"],
+      },
+    ],
+    capabilities: [
+      { title: "Intake", copy: "Requests arrive with the facts your lawyer needs — not a forwarded email chain.", image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Vendor MSA", line: "Request captured · priority set", time: "9m" }, { title: "NDA", line: "Template selected", time: "22m" }] },
+      { title: "Review & sign", copy: "Risky clauses flagged for review. Approved agreements out for signature.", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "MSA", line: "3 clauses flagged for review", time: "31m" }, { title: "Signature", line: "Sent after approval", time: "1h" }] },
+      { title: "Renewals", copy: "Notice periods and expiries surface weeks ahead, with an owner.", image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1200&auto=format&fit=crop&q=80", snippet: [{ title: "Hosting", line: "Notice due in 21 days", time: "2h" }, { title: "Licence", line: "Renewal task assigned", time: "3h" }] },
+    ],
+    activity: [
+      { title: "Intake", line: "Vendor MSA request captured", time: "9m" },
+      { title: "Review", line: "Clauses flagged for your lawyer", time: "31m" },
+      { title: "Renewal", line: "Notice deadline in 21 days", time: "2h" },
+    ],
+    quote: {
+      text: "In pilot with 18 businesses. Founders, agencies and lean teams are running the Fless Marketing Employee today. Customer stories Launching Soon.",
+      author: "Fless Pilot Program",
+      role: "18 businesses active",
+    },
+  },
 ]
 
 export function getDepartment(slug: string) {
   return departments.find((d) => d.slug === slug)
 }
+

@@ -234,4 +234,32 @@ export const departmentDetail: Record<
     prompts: ["Start onboarding for Tara.", "Send handbook v4 for acknowledgement.", "Open the Q2 review cycle."],
     reply: () => "Tara: offer signed, kit ordered, day-one plan ready. Handbook v4 queued. Q2 cycle can open when you confirm.",
   },
+  legal: {
+    story:
+      "Contracts used to live in inboxes until the renewal surprised you. Fless runs intake, first-pass review, signatures, and renewals in one record — your lawyer approves the parts that matter.",
+    cities: ["Lagos", "London", "Dubai"],
+    plays: [
+      { title: "Intake", copy: "Every request with counterparty, value, and deadline." },
+      { title: "First-pass review", copy: "Risky clauses flagged for your lawyer." },
+      { title: "E-signature", copy: "Sent only after you approve." },
+      { title: "Renewals", copy: "Notice periods surface weeks ahead." },
+    ],
+    steps: [
+      { n: "01", title: "Load your templates", copy: "NDAs, MSAs, and the clauses you accept." },
+      { n: "02", title: "Connect signatures and storage", copy: "DocuSign, Dropbox Sign, Drive, SharePoint." },
+      { n: "03", title: "Set who approves", copy: "Owner, lawyer, or both — per contract type." },
+    ],
+    faqs: [
+      {
+        q: "Does this replace our lawyer?",
+        a: "No. Fless prepares and tracks the work and flags risk; it doesn't give legal advice. A qualified lawyer should review anything that matters.",
+      },
+      {
+        q: "Will it sign or send without us?",
+        a: "No. Sending for signature and filing always wait for a named approver.",
+      },
+    ],
+    prompts: ["Review this vendor MSA and flag risky clauses.", "Draft a mutual NDA for Acme Ltd.", "List contracts renewing in the next 60 days."],
+    reply: () => "MSA reviewed: 3 clauses flagged for your lawyer. NDA drafted from your template — approve to send for signature. 2 renewals due within 60 days.",
+  },
 }

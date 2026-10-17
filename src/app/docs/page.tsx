@@ -681,6 +681,7 @@ const NAV_SECTIONS: NavSection[] = [
     items: [
       { id: "intro", title: "Introduction & Architecture", icon: Compass },
       { id: "quickstart", title: "5-Minute Quickstart", icon: Terminal },
+      { id: "builder-journey", title: "5-Step Builder Journey", badge: "Studio & SDK", icon: Workflow },
       { id: "single-sdk", title: "Single SDK Model", icon: Layers },
     ],
   },
@@ -882,13 +883,13 @@ export default function DocsPage() {
             <div className="space-y-1">
               <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-semibold uppercase tracking-wider">
                 <Terminal className="w-3.5 h-3.5" />
-                Builder Documentation • @fless/employee-sdk
+                Builder Documentation • Employee Studio
               </div>
               <h1 className="text-2xl sm:text-4xl font-display font-semibold tracking-tight text-foreground">
                 Builder Documentation & Technical Reference
               </h1>
               <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl">
-                The comprehensive technical guide for authoring, testing, and distributing autonomous AI employees using <code className="font-mono text-primary font-semibold">@fless/employee-sdk</code>.
+                The comprehensive technical guide for building, testing, and distributing autonomous AI employees using Fless Employee Studio and runtime governance.
               </p>
             </div>
 
@@ -1037,7 +1038,7 @@ export default function DocsPage() {
                   Fless Platform Overview & Architecture
                 </h2>
                 <p className="text-muted-foreground text-base leading-relaxed">
-                  Fless is an infrastructure and distribution platform for autonomous AI employees. Businesses hire modular AI workers for departments like Voice, Marketing, Operations, and Support, while developers author, evaluate, and monetize custom employees via `@fless/employee-sdk`.
+                  Fless is an infrastructure and distribution platform for autonomous AI employees. Businesses hire modular AI workers across 9 specialized departments (Marketing, Voice, Sales, Customer Support, Operations, Finance, Recruitment, HR, and Legal), while creators and developers build, evaluate, and monetize custom employees via Fless Studio and the TypeScript SDK.
                 </p>
               </div>
 
@@ -1055,20 +1056,20 @@ export default function DocsPage() {
                 <div className="p-5 rounded-2xl border border-emerald-500/30 bg-background space-y-2">
                   <div className="font-bold text-foreground flex items-center gap-2">
                     <Layers className="w-4 h-4 text-emerald-500" />
-                    Authoring SDK & Sandbox
+                    Employee Studio & Live Sandbox
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
-                    Install <code className="font-mono text-primary">@fless/employee-sdk</code> to define manifests, tool permissions, and hermetic sandbox test suites.
+                    Build employees in plain words with chat-and-click tools, verified live in a hermetic test sandbox without writing code.
                   </p>
                 </div>
 
                 <div className="p-5 rounded-2xl border border-amber-500/30 bg-background space-y-2">
                   <div className="font-bold text-foreground flex items-center gap-2">
                     <DollarSign className="w-4 h-4 text-amber-500" />
-                    35/65 Creator Payouts
+                    70/30 Creator Payouts
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
-                    Earn 35% of monthly subscriptions and metered token usage fees automatically when businesses hire your verified AI workers.
+                    Earn 70% of monthly subscriptions and metered usage fees automatically when businesses hire your verified AI workers.
                   </p>
                 </div>
               </div>
@@ -1313,6 +1314,121 @@ testLocally();`}
             </div>
           )}
 
+          {/* SECTION: 5-STEP BUILDER JOURNEY */}
+          {activePageId === "builder-journey" && (
+            <div className="space-y-8 animate-in fade-in duration-200">
+              <div className="space-y-2">
+                <span className="text-xs font-semibold uppercase tracking-wider text-primary">Builder Workflow</span>
+                <h2 className="text-3xl font-display font-semibold tracking-tight text-foreground">
+                  The 5-Step Builder Journey
+                </h2>
+                <p className="text-muted-foreground text-base leading-relaxed">
+                  Whether using our no-code Fless Studio or the typed TypeScript SDK, every autonomous employee follows a unified 5-step lifecycle from concept to recurring marketplace revenue.
+                </p>
+              </div>
+
+              {/* 5-Step Visual Flow Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-3 text-xs">
+                {[
+                  { step: "1", title: "Describe", subtitle: "Initial idea", desc: "Specify employee name, role, department, tone, and operational brief." },
+                  { step: "2", title: "Refine", subtitle: "Apps & skills", desc: "Connect official tool plugins, set approval thresholds & guardrails." },
+                  { step: "3", title: "Test", subtitle: "Live sandbox", desc: "Run multi-turn scenarios against mock adapters with zero token burn." },
+                  { step: "4", title: "Publish", subtitle: "Make available", desc: "Deploy to private organization or release to public marketplace." },
+                  { step: "5", title: "Earn", subtitle: "Royalties & payouts", desc: "Receive 70% recurring revenue share settled automatically every week." },
+                ].map((s) => (
+                  <div key={s.step} className="p-4 rounded-2xl border border-border bg-card space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="w-6 h-6 rounded-lg bg-primary/10 text-primary font-mono font-bold text-xs flex items-center justify-center">
+                        {s.step}
+                      </span>
+                      <span className="text-[10px] font-mono text-muted-foreground">{s.subtitle}</span>
+                    </div>
+                    <div className="font-semibold text-foreground text-sm">{s.title}</div>
+                    <p className="text-muted-foreground text-[11.5px] leading-relaxed">{s.desc}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* In-Depth Breakdown */}
+              <div className="space-y-6 pt-2">
+                {/* Step 1 & 2 */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                  <div className="p-5 rounded-2xl border border-border bg-card space-y-3">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-primary/10 text-primary">Step 1</span>
+                      <h4 className="font-semibold text-sm text-foreground">Describe (Idea & Scope Formulation)</h4>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">
+                      In <strong>Fless Studio</strong>, simply type your natural language prompt (e.g. <em>&quot;A customer support assistant for my Shopify store that answers FAQs, tracks orders, and handles returns&quot;</em>). In code, initialize with <code className="font-mono text-primary text-xs">createEmployee()</code>.
+                    </p>
+                    <div className="bg-muted/50 p-3 rounded-xl border border-border/50 text-muted-foreground font-mono text-[11px]">
+                      Required: name, description, department, target countries.
+                    </div>
+                  </div>
+
+                  <div className="p-5 rounded-2xl border border-border bg-card space-y-3">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/10 text-emerald-500">Step 2</span>
+                      <h4 className="font-semibold text-sm text-foreground">Refine (Integrations & Governance)</h4>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Bind pre-built official packages like <code className="font-mono text-primary text-xs">@fless/whatsapp</code> or <code className="font-mono text-primary text-xs">@fless/shopify</code>. Define policy boundaries such as <code className="font-mono text-primary text-xs">maxRefundAutoApproveUSD: 50</code>, requiring human approval for actions above threshold.
+                    </p>
+                    <div className="bg-muted/50 p-3 rounded-xl border border-border/50 text-muted-foreground font-mono text-[11px]">
+                      Security: Zero secret exposure • Automated PII redaction.
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 3 & 4 */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                  <div className="p-5 rounded-2xl border border-border bg-card space-y-3">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/10 text-amber-500">Step 3</span>
+                      <h4 className="font-semibold text-sm text-foreground">Test (Hermetic Sandbox Simulator)</h4>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Run synthetic conversation tests without sending real WhatsApp messages or hitting live APIs. The sandbox verifies turn latency (<code className="font-mono text-primary text-xs">&lt;180ms</code>), tool execution schemas, and zero-hallucination compliance before deployment.
+                    </p>
+                    <div className="bg-muted/50 p-3 rounded-xl border border-border/50 text-muted-foreground font-mono text-[11px]">
+                      Tool trace logging • Automated edge-case assertions.
+                    </div>
+                  </div>
+
+                  <div className="p-5 rounded-2xl border border-border bg-card space-y-3">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/10 text-purple-500">Step 4</span>
+                      <h4 className="font-semibold text-sm text-foreground">Publish (Deployment & Distribution)</h4>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Choose between <strong>Private Deployment</strong> (restricted to internal corporate users with SSO) and <strong>Public Marketplace</strong> (listed to 4,000+ businesses globally with automated checkout). Deploy via Studio or run <code className="font-mono text-primary text-xs">npx fless deploy</code>.
+                    </p>
+                    <div className="bg-muted/50 p-3 rounded-xl border border-border/50 text-muted-foreground font-mono text-[11px]">
+                      CLI: npx fless deploy ./employee.ts --prod
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 5 Banner */}
+                <div className="p-6 rounded-2xl border border-primary/30 bg-primary/[0.04] flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-primary text-white">Step 5</span>
+                      <h4 className="font-semibold text-base text-foreground">Earn: 70% Builder Royalties & Multi-Currency Settlement</h4>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed max-w-2xl">
+                      Whenever an enterprise or SMB hires your AI employee, you receive 70% of all gross monthly subscriptions and metered usage revenue. Fless handles inference hosting, gateway maintenance, and GPU scaling from the 30% platform share.
+                    </p>
+                  </div>
+                  <div className="px-5 py-3 rounded-xl bg-card border border-primary/30 text-center shrink-0">
+                    <div className="text-xs font-mono text-muted-foreground">Payout Ratio</div>
+                    <div className="text-lg font-display font-bold text-primary">70% Builder / 30% Fless</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* SECTION: PRICING CONFIGURATION */}
           {activePageId === "ref-pricing" && (
             <div className="space-y-8 animate-in fade-in duration-200">
@@ -1322,7 +1438,7 @@ testLocally();`}
                   Pricing Models & Usage Units Reference
                 </h2>
                 <p className="text-muted-foreground text-base leading-relaxed">
-                  How creators configure monetized AI employees with subscription plans, metered event rates, and automatic 35/65 payouts.
+                  How creators configure monetized AI employees with subscription plans, metered event rates, and automatic 70/30 payouts.
                 </p>
               </div>
 
@@ -1415,13 +1531,13 @@ testLocally();`}
               {/* Payout Structure */}
               <div className="p-5 rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.04] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <div className="font-semibold text-foreground text-sm">Automatic 35/65 Creator Payouts</div>
+                  <div className="font-semibold text-foreground text-sm">Automatic 70/30 Creator Payouts</div>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    Creators receive 35% of all gross subscription and usage revenues. Flessretains 65% for infrastructure, gateway hosting, and billing operations.
+                    Creators receive 70% of all gross subscription and usage revenues. Fless retains 30% for infrastructure, gateway hosting, and billing operations.
                   </p>
                 </div>
                 <div className="px-4 py-2 rounded-xl bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-mono font-bold text-xs shrink-0">
-                  35% Creator / 65% Platform
+                  70% Creator / 30% Platform
                 </div>
               </div>
             </div>
@@ -1615,15 +1731,15 @@ testLocally();`}
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                 {[
-                  { dept: "VOICE", desc: "Inbound phone reception, cold outbound dialing, consultation booking, warm call transfers." },
-                  { dept: "MARKETING", desc: "Social media publishing, Meta ad campaign monitoring, copy creation, audience engagement." },
-                  { dept: "SALES", desc: "Inbound lead qualification, CRM deal pipeline management, outbound prospecting." },
-                  { dept: "SUPPORT", desc: "WhatsApp customer triage, multi-channel ticketing, appointment rescheduling." },
-                  { dept: "OPERATIONS", desc: "Internal team dispatching, Slack escalation management, logistics tracking." },
-                  { dept: "FINANCE", desc: "Accounts payable, invoice parsing, receipt scanning, payment status checks." },
-                  { dept: "COMPLIANCE", desc: "KYC verification, AML monitoring, regulatory policy guidance." },
-                  { dept: "LEGAL", desc: "Contract metadata extraction, NDA review assistance, policy clause checks." },
-                  { dept: "HR", desc: "Candidate intake, interview scheduling, employee onboarding FAQs." },
+                  { dept: "MARKETING", desc: "Social media publishing, Meta ad campaign monitoring, content drafting, audience engagement." },
+                  { dept: "VOICE", desc: "Real-time telephony phone reception, outbound dialers, booking appointments, warm call transfers." },
+                  { dept: "SALES", desc: "Inbound lead qualification, CRM deal pipeline management, outbound prospecting & demo booking." },
+                  { dept: "SUPPORT", desc: "WhatsApp customer triage, multi-channel ticketing, order tracking, returns & refunds." },
+                  { dept: "OPERATIONS", desc: "Internal team dispatching, Slack escalation management, logistics, and field team tracking." },
+                  { dept: "FINANCE", desc: "Accounts payable, invoice parsing, receipt scanning, payment status checks, ledger sync." },
+                  { dept: "RECRUITMENT", desc: "Candidate sourcing, resume screening, talent pipeline intake, initial screening calls." },
+                  { dept: "HR", desc: "Employee onboarding, handbook FAQs, policy guidance, internal team support." },
+                  { dept: "LEGAL", desc: "Contract metadata extraction, NDA review assistance, policy clause checks, indemnity audits." },
                 ].map((item) => (
                   <div key={item.dept} className="p-4 rounded-xl border border-border bg-background space-y-1.5 shadow-sm">
                     <div className="font-mono font-bold text-primary text-sm">{item.dept}</div>
@@ -1998,6 +2114,44 @@ const employee = createEmployee('ng-clinic-concierge')
 export default employee;`}
                 language="typescript"
               />
+
+              {/* Concise Functional Declaration Alternative */}
+              <div className="pt-4 space-y-3">
+                <div className="space-y-1">
+                  <h3 className="text-base font-semibold text-foreground">
+                    Alternative: Concise Async Declaration
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    For standalone single-file workers, you can also declare an employee with a concise object configuration and deploy it directly via the Fless CLI.
+                  </p>
+                </div>
+
+                <CodeBlock
+                  code={`import { createEmployee } from '@fless/employee';
+
+export const employee = await createEmployee({
+  name: 'Social Media Manager',
+  description: 'Manages social media content, plans feed drops & engages replies',
+  skills: ['content', 'engagement', 'analytics'],
+  tools: ['@fless/instagram', '@fless/facebook'],
+  guardrails: {
+    maxDailyPosts: 4,
+    requireApprovalForDMs: true,
+  },
+});`}
+                  language="typescript"
+                />
+
+                <div className="p-4 rounded-xl bg-card border border-border space-y-2 text-xs">
+                  <span className="font-semibold text-foreground block">One-Command Production Deployment:</span>
+                  <div className="p-2.5 rounded-lg bg-[#070A12] text-white font-mono text-[11px] border border-white/10">
+                    $ npx fless deploy ./employee.ts --prod
+                  </div>
+                  <p className="text-[11.5px] text-muted-foreground">
+                    The CLI validates your skills, builds type-safe hermetic mock adapters, runs unit evaluations, and registers the employee to your private organization or the public marketplace.
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 

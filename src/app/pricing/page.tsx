@@ -24,6 +24,7 @@ import {
   Globe,
   Zap,
   Activity,
+  Scale,
 } from "lucide-react"
 import { Header } from "@/components/Header"
 import { Footer } from "@/components/Footer"
@@ -197,6 +198,20 @@ const departmentSpecs: Record<string, DepartmentPricingSpec> = {
       year: { min: 1200000, max: 2000000 },
     },
   },
+  legal: {
+    slug: "legal",
+    name: "Legal",
+    icon: Scale,
+    humanBenchmarkMonthlyUSD: 7500,
+    capacityOutput: "~120 contracts triaged and tracked, renewals flagged weeks ahead",
+    baseRateCents: {
+      hour: { min: 4500, max: 8000 },
+      day: { min: 18000, max: 32000 },
+      week: { min: 72000, max: 128000 },
+      month: { min: 220000, max: 380000 },
+      year: { min: 2200000, max: 3800000 },
+    },
+  },
 }
 
 function calculateDiscount(qty: number, unit: TenureUnit): number {
@@ -244,8 +259,8 @@ const faqs = [
     a: "You can decommission an employee deployment whenever your business no longer needs the capacity. Eligible unused service is calculated based on elapsed time and refunded according to contract terms. Ledger-consumed metered usage is non-refundable.",
   },
   {
-    q: "How does the 35/65 revenue split work for Builders?",
-    a: "When a business hires a builder-authored AI employee, the settled customer payment is split with 65% retained by Fless (covering GPU compute, inference clustering, and gateway security) and 35% paid directly to the Builder every month.",
+    q: "How does the 70/30 revenue split work for Builders?",
+    a: "When a business hires a builder-authored AI employee, the settled customer payment is split with 70% paid directly to the Builder every month and 30% retained by Fless (covering GPU compute, inference clustering, and gateway security).",
   },
   {
     q: "Are there hidden LLM token or GPU infrastructure surcharges?",
@@ -365,7 +380,7 @@ export default function PricingPage() {
             transition={{ delay: 0.08 }}
             className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
           >
-            Predictable, transparent workforce rates across 8 business departments. No seat licensing, no server fees, and full multi-currency global support.
+            Predictable, transparent workforce rates across 9 business departments. No seat licensing, no server fees, and full multi-currency global support.
           </motion.p>
         </section>
 
@@ -755,13 +770,13 @@ export default function PricingPage() {
           </div>
         </section>
 
-        {/* SECTION 3: DEPARTMENT RATE OVERVIEW (ALL 8 DESKS IN SELECTED CURRENCY) */}
+        {/* SECTION 3: DEPARTMENT RATE OVERVIEW (ALL 9 DEPARTMENTS IN SELECTED CURRENCY) */}
         <section className="max-w-[1240px] mx-auto px-6 py-12 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-1">
               <span className="text-xs font-mono font-semibold uppercase tracking-wider text-primary">Department Rates</span>
               <h2 className="text-2xl md:text-3xl font-display font-semibold tracking-tight text-foreground">
-                Reference Rates across 8 Desks
+                Reference Rates across 9 Departments
               </h2>
             </div>
             <div className="text-xs text-muted-foreground font-mono">
@@ -769,7 +784,7 @@ export default function PricingPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {departments.map((dept) => {
               const spec = departmentSpecs[dept.slug]
               if (!spec) return null

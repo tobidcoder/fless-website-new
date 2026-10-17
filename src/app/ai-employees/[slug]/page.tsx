@@ -94,10 +94,29 @@ async function getProfileData(slug: string): Promise<PublicProfileData | null> {
   }
 
   // Find fallback from local departments dictionary
+  const cleanSlug = slug.toLowerCase().replace(/[^a-z0-9]/g, "")
+  const slugKebab = slug.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+
   for (const dept of departments) {
-    const foundEmp = dept.employees.find(
-      (e) => e.id.toLowerCase() === slug.toLowerCase() || e.name.toLowerCase() === slug.toLowerCase()
-    )
+    const foundEmp = dept.employees.find((e) => {
+      const eId = e.id.toLowerCase()
+      const eName = e.name.toLowerCase()
+      const eRoleKebab = e.role.toLowerCase().replace(/[^a-z0-9]+/g, "-")
+      const eRoleClean = e.role.toLowerCase().replace(/[^a-z0-9]/g, "")
+      const eNameClean = e.name.toLowerCase().replace(/[^a-z0-9]/g, "")
+      const eIdClean = e.id.toLowerCase().replace(/[^a-z0-9]/g, "")
+
+      return (
+        eId === slug.toLowerCase() ||
+        eName === slug.toLowerCase() ||
+        eRoleKebab === slugKebab ||
+        eRoleClean === cleanSlug ||
+        eNameClean === cleanSlug ||
+        eIdClean === cleanSlug ||
+        slugKebab.includes(eRoleKebab) ||
+        eRoleKebab.includes(slugKebab)
+      )
+    })
     if (foundEmp) {
       return {
         id: foundEmp.id,

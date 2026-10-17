@@ -279,6 +279,37 @@ function OperationsVisual() {
   )
 }
 
+function LegalVisual() {
+  const rows = [
+    { label: "Vendor MSA", state: "3 clauses flagged" },
+    { label: "Mutual NDA", state: "Awaiting your approval" },
+    { label: "Hosting renewal", state: "Notice in 21 days" },
+  ]
+  return (
+    <ProductCard>
+      <div className="px-3.5 py-2.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
+        <span className="text-[11px] font-semibold text-neutral-900 dark:text-white">Contracts</span>
+        <span className="text-[10px] text-neutral-500">Sample workspace</span>
+      </div>
+      <div className="p-3 space-y-2">
+        {rows.map((r, i) => (
+          <motion.div
+            key={r.label}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 + i * 0.15 }}
+            className="flex items-center justify-between gap-2"
+          >
+            <span className="text-[11px] text-neutral-900 dark:text-white">{r.label}</span>
+            <span className="text-[10px] text-neutral-500">{r.state}</span>
+          </motion.div>
+        ))}
+      </div>
+    </ProductCard>
+  )
+}
+
 function FinanceVisual() {
   const rows = [
     { name: "Northwind", amount: "$4,200", state: "Paid" },
@@ -426,6 +457,24 @@ const pairs = [
       },
     ],
   },
+  {
+    eyebrow: "Legal",
+    title: "Contracts that move. Risk you can see.",
+    copy: "Intake, first-pass review, e-signature, and renewals in one record — your lawyer approves what matters.",
+    tint: "bg-background",
+    departments: [
+      {
+        id: "legal",
+        name: "Legal",
+        headline: "No more surprise renewals.",
+        description: "Requests captured with the facts, risky clauses flagged for review, approved agreements sent for signature, and notice periods tracked.",
+        points: ["Intake", "Review & sign", "Renewals"],
+        href: "/departments/legal",
+        image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1400&auto=format&fit=crop&q=80",
+        visual: <LegalVisual />,
+      },
+    ],
+  },
 ]
 
 export function DepartmentShowcases() {
@@ -463,7 +512,7 @@ export function DepartmentShowcases() {
               {pair.copy}
             </motion.p>
 
-            <div className="mt-12 md:mt-16 grid md:grid-cols-2 gap-4 md:gap-5">
+            <div className={`mt-12 md:mt-16 grid gap-4 md:gap-5 ${pair.departments.length === 1 ? "max-w-3xl" : "md:grid-cols-2"}`}>
               {pair.departments.map((dept, i) => (
                 <motion.article
                   key={dept.id}

@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 const stats = [
   { value: "18", label: "Businesses in pilot" },
   { value: "4", label: "Channels live (LinkedIn, X, Facebook, Bluesky)" },
-  { value: "8", label: "Departments on roadmap" },
+  { value: "9", label: "Autonomous departments" },
   { value: "NVIDIA", label: "Inception member" },
 ]
 

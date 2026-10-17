@@ -25,15 +25,15 @@ export function Departments() {
               viewport={{ once: true }}
               className="text-3xl sm:text-4xl md:text-[44px] font-display font-semibold tracking-tight leading-[1.12] text-foreground"
             >
-              Eight desks. One product.
+              Nine departments. One product.
             </motion.h2>
           </div>
           <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
-            Turn on what you need. They share context — not another login.
+            Turn on what you need. They share context across your tools — not another login.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-5">
           {deskData.map((dept, i) => (
             <motion.div
               key={dept.slug}

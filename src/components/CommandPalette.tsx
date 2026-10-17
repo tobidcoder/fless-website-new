@@ -40,7 +40,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
   ]
 
   const categories = [
-    { title: "Departments", items: ["Marketing AI", "Voice AI", "Sales AI", "Support AI", "Recruiting AI", "Operations AI", "Finance AI", "HR AI"] },
+    { title: "Departments", items: ["Marketing AI", "Voice AI", "Sales AI", "Support AI", "Recruiting AI", "Operations AI", "Finance AI", "HR AI", "Legal AI"] },
     { title: "Products", items: ["AI Workforce Platform", "Company Command Center", "Knowledge Base", "Workflow Automation"] },
     { title: "Solutions", items: ["Startup", "SMB", "Enterprise", "Agency", ...industries.map((i) => i.name)] },
   ]

@@ -4,83 +4,57 @@ import { useState } from "react";
 import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { InteractiveBuilderStudio } from "@/components/InteractiveBuilderStudio";
 import {
   Code2,
-  Terminal,
   ShieldCheck,
-  Cpu,
   ArrowRight,
-  CheckCircle2,
-  Workflow,
-  Stethoscope,
   MessageSquare,
   Calendar,
-  BookOpen,
-  DollarSign,
   PhoneCall,
   FileText,
   Users,
-  Activity,
-  ChevronRight,
+  Layers,
+  Check,
+  Workflow,
+  Plus,
+  Sliders,
+  Terminal,
 } from "lucide-react";
 
 export default function BuildersPage() {
-  const [activeTab, setActiveTab] = useState<"manifest" | "terminal" | "runtime">("manifest");
-  const [activeStage, setActiveStage] = useState<number>(0);
+  // Revenue Calculator State
+  const [clientsCount, setClientsCount] = useState<number>(20);
+  const [monthlyPrice, setMonthlyPrice] = useState<number>(499);
 
-  const workflowStages = [
-    {
-      step: "01",
-      title: "Author Manifest in TypeScript",
-      desc: "Import defineEmployee() to specify prompt, tools, allowed countries, and pricing models with strict types.",
-      badge: "TypeScript SDK",
-      command: "Private Beta Access",
-      detail: "Define system instructions, configure model tiers, and declare required packages like @fless/voice or @fless/whatsapp.",
-    },
-    {
-      step: "02",
-      title: "Simulate in Hermetic Sandbox",
-      desc: "Run automated multi-turn dialogues against local mock gateways without exposing live API tokens or credentials.",
-      badge: "Offline Sandbox",
-      command: "npx @fless/cli test ./employee.ts",
-      detail: "Hermetic mock adapters simulate WhatsApp webhooks, phone keypad events, and Google Calendar slots in memory.",
-    },
-    {
-      step: "03",
-      title: "Pass 11-Dimension Safety Rubric",
-      desc: "Our automated verification suite validates tool parameter precision, token efficiency, and boundary isolation.",
-      badge: "Automated Evaluation",
-      command: "npx @fless/cli verify ./employee.ts",
-      detail: "Checks for prompt injection resilience, latency ceilings, and ensure zero runtime secrets exposure.",
-    },
-    {
-      step: "04",
-      title: "Publish & Earn 35% Royalties",
-      desc: "Push your signed manifest to the Fless Marketplace. Earn 35% of monthly subscriptions and metered usage automatically.",
-      badge: "Instant Distribution",
-      command: "npx @fless/cli publish",
-      detail: "Companies hire your worker with one click. Payouts clear monthly directly into your bank account or Stripe.",
-    },
-  ];
+  const grossMonthly = clientsCount * monthlyPrice;
+  const builderTakeHome = Math.round(grossMonthly * 0.7);
+  const flessPlatformShare = Math.round(grossMonthly * 0.3);
 
   const managedPackages = [
     {
+      name: "@fless/instagram",
+      title: "Instagram & Meta Social",
+      desc: "Publish reels, stories, and feed posts. Triage comments and respond to inbound direct messages with approval gates.",
+      icon: MessageSquare,
+      color: "text-rose-500",
+      bg: "bg-rose-500/10",
+    },
+    {
       name: "@fless/voice",
       title: "Real-Time Telephony",
-      desc: "Inbound phone reception, outbound dialing, dynamic turn-taking, and warm call transfers.",
+      desc: "Inbound phone reception, outbound dialing, dynamic turn-taking powered by GPT-Live-1, and warm call transfers.",
       icon: PhoneCall,
       color: "text-purple-500",
       bg: "bg-purple-500/10",
-      border: "border-purple-500/20",
     },
     {
       name: "@fless/whatsapp",
       title: "WhatsApp Cloud API",
-      desc: "Two-way customer chats, interactive template dispatch, and patient/client appointment confirmation flows.",
+      desc: "Two-way customer chats, interactive template dispatch, and appointment confirmation flows.",
       icon: MessageSquare,
       color: "text-emerald-500",
       bg: "bg-emerald-500/10",
-      border: "border-emerald-500/20",
     },
     {
       name: "@fless/google-calendar",
@@ -89,7 +63,6 @@ export default function BuildersPage() {
       icon: Calendar,
       color: "text-blue-500",
       bg: "bg-blue-500/10",
-      border: "border-blue-500/20",
     },
     {
       name: "@fless/crm",
@@ -98,25 +71,14 @@ export default function BuildersPage() {
       icon: Users,
       color: "text-amber-500",
       bg: "bg-amber-500/10",
-      border: "border-amber-500/20",
     },
     {
-      name: "@fless/documents",
-      title: "Document OCR & Extraction",
-      desc: "Scans PDFs, invoices, receipts, and clinical forms to return structured, validated JSON data.",
+      name: "@fless/creative",
+      title: "Image & Media Studio",
+      desc: "Generate production-ready marketing graphics, banners, and thumbnails via OpenAI image generation and custom assets.",
       icon: FileText,
-      color: "text-rose-500",
-      bg: "bg-rose-500/10",
-      border: "border-rose-500/20",
-    },
-    {
-      name: "@fless/slack",
-      title: "Team Escalations",
-      desc: "Internal channel alerts, human manager handoffs on edge cases, and asynchronous operations dispatching.",
-      icon: Workflow,
       color: "text-teal-500",
       bg: "bg-teal-500/10",
-      border: "border-teal-500/20",
     },
   ];
 
@@ -124,266 +86,400 @@ export default function BuildersPage() {
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-primary/20 selection:text-primary">
       <Header activePage="builders" />
 
-      <main className="flex-1 pt-24 pb-20">
-        {/* SECTION 1: HERO */}
-        <section className="relative max-w-[1240px] mx-auto px-6 pt-10 pb-16 space-y-8">
-          <div className="text-center space-y-5 max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold tracking-wide">
-              <Terminal className="w-3.5 h-3.5" />
-              <span>@fless/employee-sdk • Builder Beta</span>
+      <main className="flex-1">
+        {/* ── SECTION 1: HERO (BUILD AI EMPLOYEES IN MINUTES - MATCHES SCREENSHOT) ── */}
+        <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 bg-[#080B14] text-white overflow-hidden border-b border-white/10">
+          {/* Subtle Ambient Radial Glow */}
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-primary/15 blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/4 right-1/4 w-[400px] h-[300px] bg-purple-500/15 blur-[100px] rounded-full pointer-events-none" />
+
+          <div className="max-w-[1240px] mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Left Column: Headline & CTAs */}
+            <div className="lg:col-span-5 space-y-6 text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/90 text-xs font-semibold backdrop-blur-md">
+                <span>For Builders</span>
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-display font-semibold tracking-tight leading-[1.08]">
+                Build AI Employees
+                <br />
+                <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
+                  in Minutes
+                </span>
+              </h1>
+
+              <p className="text-white/70 text-sm sm:text-base leading-relaxed max-w-md">
+                Create, test and publish specialized AI employees — no code required. Use our intuitive studio or the TypeScript SDK to build custom solutions.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-3.5 pt-2">
+                <Link
+                  href="/start?role=builder"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-white font-semibold text-sm shadow-lg shadow-primary/30 hover:bg-primary-hover transition-all"
+                >
+                  Start Building
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/docs"
+                  className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl border border-white/20 bg-white/5 text-white font-semibold text-sm hover:bg-white/10 transition-colors backdrop-blur-md"
+                >
+                  View Documentation
+                </Link>
+              </div>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-display font-semibold tracking-tight leading-[1.08] uppercase">
-              BUILD AI EMPLOYEES. <br />
-              <span className="text-primary">DEPLOY INTO REAL COMPANIES.</span>
-            </h1>
-
-            <p className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Write typed manifests in TypeScript. Test them offline in a hermetic sandbox. Publish to the marketplace and earn 35% of all recurring subscriptions and metered usage.
-            </p>
-
-            {/* Action Buttons & Private Beta Notice */}
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-              <Link
-                href="/start?role=builder"
-                id="apply"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-md shadow-primary/25 hover:bg-primary-hover transition-all"
-              >
-                Request SDK Access
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/docs"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-card text-foreground font-semibold text-sm hover:bg-muted/80 transition-colors"
-              >
-                <BookOpen className="w-4 h-4 text-primary" />
-                Read Builder Docs
-              </Link>
-            </div>
-            <p className="text-xs text-muted-foreground">
-              SDK is currently in private beta with accepted builders.
-            </p>
-          </div>
-
-          {/* HERO VISUAL: SLEEK DUAL-PANE CODE & RUNTIME CONSOLE */}
-          <div className="pt-4 max-w-4xl mx-auto">
-            <div className="rounded-2xl border border-border/80 bg-[#0B0F19] text-neutral-200 overflow-hidden shadow-2xl">
-              {/* Window Header */}
-              <div className="flex items-center justify-between px-4 py-2.5 bg-[#111726] border-b border-neutral-800/80 text-xs">
-                <div className="flex items-center gap-2">
+            {/* Right Column: Hero Studio Window Mockup + Floating Social Media Manager Card */}
+            <div className="lg:col-span-7 relative">
+              <div className="rounded-2xl border border-white/15 bg-[#0B0F19]/90 backdrop-blur-xl text-neutral-200 overflow-hidden shadow-2xl">
+                {/* Window Header */}
+                <div className="flex items-center px-4 py-2.5 bg-[#111726] border-b border-white/10 text-xs">
                   <div className="flex gap-1.5">
                     <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
                     <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
                   </div>
-                  <span className="text-neutral-400 font-mono text-[11px] ml-2">employee-workspace/src</span>
+                  <span className="text-white/60 font-semibold text-xs ml-3 flex items-center gap-1.5">
+                    <span className="w-4 h-4 rounded bg-primary text-white text-[10px] flex items-center justify-center font-bold">F</span>
+                    Fless
+                  </span>
                 </div>
 
-                <div className="flex items-center gap-1 bg-neutral-900/90 p-1 rounded-lg border border-neutral-800 text-[11px]">
-                  <button
-                    onClick={() => setActiveTab("manifest")}
-                    className={`px-2.5 py-1 rounded-md transition-colors ${
-                      activeTab === "manifest" ? "bg-primary text-white font-medium" : "text-neutral-400 hover:text-white"
-                    }`}
-                  >
-                    employee.ts
-                  </button>
-                  <button
-                    onClick={() => setActiveTab("terminal")}
-                    className={`px-2.5 py-1 rounded-md transition-colors ${
-                      activeTab === "terminal" ? "bg-primary text-white font-medium" : "text-neutral-400 hover:text-white"
-                    }`}
-                  >
-                    cli-verify
-                  </button>
-                  <button
-                    onClick={() => setActiveTab("runtime")}
-                    className={`px-2.5 py-1 rounded-md transition-colors ${
-                      activeTab === "runtime" ? "bg-primary text-white font-medium" : "text-neutral-400 hover:text-white"
-                    }`}
-                  >
-                    sandbox-live
-                  </button>
+                <div className="grid grid-cols-12 min-h-[340px]">
+                  {/* Left Mini Sidebar */}
+                  <div className="col-span-3 bg-[#080B14] p-3 space-y-1 text-[11px] text-white/60 border-r border-white/10 hidden sm:block">
+                    <div className="px-2 py-1.5 rounded-lg hover:text-white flex items-center gap-1.5">
+                      <span>Home</span>
+                    </div>
+                    <div className="px-2 py-1.5 rounded-lg hover:text-white flex items-center gap-1.5">
+                      <span>My Employees</span>
+                    </div>
+                    <div className="px-2 py-1.5 rounded-lg bg-primary/20 text-primary font-semibold flex items-center gap-1.5">
+                      <Plus className="w-3 h-3" />
+                      <span>Create</span>
+                    </div>
+                    <div className="px-2 py-1.5 rounded-lg hover:text-white flex items-center gap-1.5">
+                      <span>Marketplace</span>
+                    </div>
+                    <div className="px-2 py-1.5 rounded-lg hover:text-white flex items-center gap-1.5">
+                      <span>Analytics</span>
+                    </div>
+                    <div className="px-2 py-1.5 rounded-lg hover:text-white flex items-center gap-1.5">
+                      <span>Earnings</span>
+                    </div>
+                    <div className="px-2 py-1.5 rounded-lg hover:text-white flex items-center gap-1.5">
+                      <span>Settings</span>
+                    </div>
+                  </div>
+
+                  {/* Center Canvas */}
+                  <div className="col-span-12 sm:col-span-9 p-4 sm:p-5 space-y-4 bg-[#0B0F19]">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-primary/20 text-primary flex items-center justify-center border border-primary/30">
+                        <Workflow className="w-3.5 h-3.5" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-xs text-white">Create Your Autonomous Employee</h3>
+                        <p className="text-[10.5px] text-white/60">
+                          Describe what you need, and the studio will help you configure and deploy.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Prompt Box */}
+                    <div className="rounded-xl border border-white/10 bg-[#060810] p-3 space-y-3">
+                      <p className="text-[11px] text-white/80 leading-relaxed font-sans">
+                        I need a social media manager for the construction industry. It should post on Instagram and Facebook, track engagement and create weekly reports.
+                      </p>
+                      <div className="flex justify-end">
+                        <button className="px-3 py-1 rounded-lg bg-primary text-white text-[11px] font-semibold hover:bg-primary-hover transition-colors">
+                          Configure
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Chips Underneath */}
+                    <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[10px] text-white/60">
+                      <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 hover:text-white cursor-pointer">
+                        Social Media
+                      </span>
+                      <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 hover:text-white cursor-pointer">
+                        Marketing
+                      </span>
+                      <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 hover:text-white cursor-pointer">
+                        Customer Support
+                      </span>
+                      <span className="px-2.5 py-1 rounded-md bg-white/5 border border-white/10 hover:text-white cursor-pointer">
+                        Sales
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Tab Contents */}
-              <div className="p-5 font-mono text-[12px] sm:text-[13px] leading-relaxed overflow-x-auto min-h-[260px]">
-                {activeTab === "manifest" && (
-                  <pre className="text-neutral-300">
-                    <span className="text-neutral-500">{"// 1. Define typed employee manifest"}</span>{"\n"}
-                    <span className="text-primary font-semibold">import</span> {"{ defineEmployee }"} <span className="text-primary font-semibold">from</span> <span className="text-emerald-400">&apos;@fless/employee-sdk&apos;</span>;{"\n\n"}
-                    <span className="text-primary font-semibold">export default</span> defineEmployee({"{"}{"\n"}
-                    {"  "}id: <span className="text-emerald-400">&apos;clinic-receptionist-ng&apos;</span>,{"\n"}
-                    {"  "}name: <span className="text-emerald-400">&apos;Lagos Clinic Concierge&apos;</span>,{"\n"}
-                    {"  "}department: <span className="text-emerald-400">&apos;VOICE&apos;</span>,{"\n"}
-                    {"  "}targetMarket: {"{"} countries: [<span className="text-emerald-400">&apos;NG&apos;</span>], industries: [<span className="text-emerald-400">&apos;Healthcare&apos;</span>] {"}"},{"\n"}
-                    {"  "}pricing: {"{"} model: <span className="text-emerald-400">&apos;BASE_PLUS_USAGE&apos;</span>, basePriceCents: <span className="text-amber-400">4900</span> {"}"},{"\n"}
-                    {"  "}requiredPackages: [<span className="text-emerald-400">&apos;@fless/voice&apos;</span>, <span className="text-emerald-400">&apos;@fless/whatsapp&apos;</span>, <span className="text-emerald-400">&apos;@fless/google-calendar&apos;</span>],{"\n"}
-                    {"  "}capabilities: [<span className="text-emerald-400">&apos;voice.inbound&apos;</span>, <span className="text-emerald-400">&apos;calendar.booking&apos;</span>, <span className="text-emerald-400">&apos;whatsapp.chat&apos;</span>],{"\n"}
-                    {"  "}systemInstructions: <span className="text-emerald-400">&apos;Warm, professional receptionist for West African clinics.&apos;</span>{"\n"}
-                    {"}"});
-                  </pre>
-                )}
+              {/* Floating Draft Preview Card (Overlapping right) */}
+              <div className="hidden sm:block absolute -bottom-6 -right-4 w-72 rounded-2xl border border-white/20 bg-white text-neutral-900 p-4 shadow-2xl z-20 space-y-3">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-full bg-blue-50 text-primary flex items-center justify-center">
+                      <Workflow className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-xs text-neutral-900">Social Media Manager</h4>
+                      <p className="text-[9.5px] text-neutral-500 leading-tight">
+                        Handles your social media presence, engages your audience and provides insights.
+                      </p>
+                    </div>
+                  </div>
+                  <span className="px-2 py-0.5 rounded text-[9.5px] font-semibold bg-blue-50 text-primary shrink-0">
+                    Draft
+                  </span>
+                </div>
 
-                {activeTab === "terminal" && (
-                  <pre className="text-neutral-300 space-y-1">
-                    <span className="text-neutral-500">$ npx @fless/cli verify ./src/employee.ts</span>{"\n\n"}
-                    <span className="text-blue-400">ℹ [1/4]</span> Manifest schema validation: <span className="text-emerald-400">PASSED</span> (id: clinic-receptionist-ng){"\n"}
-                    <span className="text-blue-400">ℹ [2/4]</span> Tool binding authorization: <span className="text-emerald-400">PASSED</span> (3 packages bound){"\n"}
-                    <span className="text-blue-400">ℹ [3/4]</span> Offline sandbox simulation: <span className="text-emerald-400">10/10 dialogue turns verified</span>{"\n"}
-                    <span className="text-blue-400">ℹ [4/4]</span> 11-dimension evaluation score: <span className="text-emerald-400">96.8 / 100</span> (A+ Grade){"\n\n"}
-                    <span className="text-emerald-400 font-bold">✔ Build signed with SHA-256: d8f49a21e0b...</span>{"\n"}
-                    <span className="text-neutral-400">Ready for marketplace publishing with `npx @fless/cli publish`.</span>
-                  </pre>
-                )}
+                {/* Badges */}
+                <div className="flex items-center gap-1.5 text-[9.5px] text-neutral-600">
+                  <span className="px-2 py-0.5 rounded bg-neutral-100 flex items-center gap-1">
+                    📷 Instagram
+                  </span>
+                  <span className="px-2 py-0.5 rounded bg-neutral-100 flex items-center gap-1">
+                    f Facebook
+                  </span>
+                  <span className="text-[9px] text-neutral-400 font-medium">+2 more</span>
+                </div>
 
-                {activeTab === "runtime" && (
-                  <pre className="text-neutral-300 space-y-1">
-                    <span className="text-neutral-500">{"// Simulated multi-turn turn exchange in hermetic memory"}</span>{"\n\n"}
-                    <span className="text-purple-400">CALLER :</span> &quot;Hello, I need to schedule a dental checkup for Friday 2 PM.&quot;{"\n"}
-                    <span className="text-amber-400">INVOKE :</span> calendar.checkAvailability({"{"} date: &quot;2026-10-10&quot;, slot: &quot;14:00&quot; {"}"}) <span className="text-emerald-400">→ [FREE]</span>{"\n"}
-                    <span className="text-blue-400">AI AGENT:</span> &quot;Friday at 2:00 PM is open with Dr. Okonjo. May I confirm your name and phone number?&quot;{"\n"}
-                    <span className="text-purple-400">CALLER :</span> &quot;Sarah Jenkins, 08012345678.&quot;{"\n"}
-                    <span className="text-amber-400">INVOKE :</span> calendar.bookAppointment() <span className="text-emerald-400">→ [CONFIRMED #cal_8831]</span>{"\n"}
-                    <span className="text-amber-400">INVOKE :</span> whatsapp.sendMessage(&quot;+2348012345678&quot;, &quot;Your dental appointment is locked for Fri 2 PM.&quot;){"\n"}
-                    <span className="text-emerald-400">LATENCY:</span> Fast turn-taking • Zero live tokens touched
-                  </pre>
-                )}
+                {/* Checklist */}
+                <div className="space-y-1 text-[10px] text-neutral-700">
+                  <div className="flex items-center gap-1.5">
+                    <Check className="w-3 h-3 text-primary shrink-0" />
+                    <span>Posts and schedules content</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Check className="w-3 h-3 text-primary shrink-0" />
+                    <span>Responds to comments and DMs</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Check className="w-3 h-3 text-primary shrink-0" />
+                    <span>Tracks engagement &amp; growth</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Check className="w-3 h-3 text-primary shrink-0" />
+                    <span>Weekly performance reports</span>
+                  </div>
+                </div>
+
+                <div className="pt-1">
+                  <Link
+                    href="/start?role=builder"
+                    className="w-full inline-flex items-center justify-center py-2 rounded-xl bg-primary text-white text-[11px] font-semibold hover:bg-primary-hover shadow-sm transition-colors"
+                  >
+                    Test in Sandbox
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* ── SECTION 2: 4 FEATURE ICONS BAR (MATCHES SCREENSHOT) ── */}
+        <section className="bg-background border-b border-border py-10">
+          <div className="max-w-[1240px] mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Feature 1 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+                <Sliders className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="font-semibold text-sm text-foreground">No Code, Just Ideas</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Describe your employee in plain language and let the studio do the rest.
+                </p>
+              </div>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                <Code2 className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="font-semibold text-sm text-foreground">TypeScript SDK</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  For advanced builders who want full control and customization.
+                </p>
+              </div>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center shrink-0">
+                <Layers className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="font-semibold text-sm text-foreground">Pre-built Plugins</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Add integrations like WhatsApp, Instagram, Facebook, Slack and more with one click.
+                </p>
+              </div>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="font-semibold text-sm text-foreground">Secure &amp; Governed</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Every action goes through Fless permissions, approvals and audit logs.
+                </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* SECTION 2: 4-STAGE LIFECYCLE (VISUAL TIMELINE) */}
-        <section className="max-w-[1240px] mx-auto px-6 py-12 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div className="space-y-1">
-              <span className="text-xs font-mono font-semibold uppercase tracking-wider text-primary">Workflow</span>
-              <h2 className="text-2xl sm:text-3xl font-display font-semibold">How Builders Ship Employees</h2>
+        {/* ── SECTION 3: THE BUILDER EXPERIENCE — 5 SIMPLE STEPS (INTERACTIVE) ── */}
+        <section className="max-w-[1240px] mx-auto px-6 py-20 space-y-12">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs">
+              <span className="text-muted-foreground">The</span>
+              <span className="font-bold text-primary">Builder Experience</span>
             </div>
-            <p className="text-xs sm:text-sm text-muted-foreground max-w-md">
-              From local code to global enterprise hiring. Fless removes the operational overhead so you can focus on building useful workers.
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-semibold tracking-tight text-foreground">
+              From Idea to Published
+              <br />
+              in{" "}
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                5 Simple Steps
+              </span>
+            </h2>
+
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-xl">
+              Our studio guides you through the entire process — from concept to deployment.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {workflowStages.map((st, idx) => (
-              <div
-                key={st.step}
-                onClick={() => setActiveStage(idx)}
-                className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-4 ${
-                  activeStage === idx
-                    ? "border-primary bg-primary/[0.03] shadow-md shadow-primary/10"
-                    : "border-border bg-card hover:border-border/80 hover:bg-muted/30"
-                }`}
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-bold text-primary">{st.step}</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-muted text-muted-foreground">
-                      {st.badge}
-                    </span>
+          <InteractiveBuilderStudio />
+        </section>
+
+        {/* ── SECTION 4: 70/30 REVENUE ECONOMICS & CALCULATOR ── */}
+        <section className="max-w-[1240px] mx-auto px-6 py-16">
+          <div className="p-8 sm:p-12 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/[0.04] via-background to-background space-y-10 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-6">
+              <div className="space-y-1.5 max-w-xl">
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-primary">Builder Economics</span>
+                <h2 className="text-2xl sm:text-3xl font-display font-semibold">Earn 70% of Every Deployment</h2>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  Every time a business hires your AI employee, 70% pays out directly to your account. Metered work credits cover variable model execution costs.
+                </p>
+              </div>
+
+              <div className="px-5 py-2.5 rounded-2xl border border-primary/30 bg-primary/10 text-primary font-mono font-bold text-sm text-center shrink-0">
+                70% Builder Share • 30% Fless
+              </div>
+            </div>
+
+            {/* Interactive Calculator Slider */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 space-y-6">
+                <div>
+                  <div className="flex items-center justify-between text-sm font-semibold mb-2">
+                    <span className="text-foreground">Number of Active Businesses</span>
+                    <span className="font-mono text-primary text-base font-bold">{clientsCount} companies</span>
                   </div>
-                  <h3 className="font-semibold text-sm text-foreground">{st.title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{st.desc}</p>
+                  <input
+                    type="range"
+                    min={1}
+                    max={100}
+                    value={clientsCount}
+                    onChange={(e) => setClientsCount(Number(e.target.value))}
+                    className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                  />
+                  <div className="flex justify-between text-[11px] text-muted-foreground mt-1 font-mono">
+                    <span>1</span>
+                    <span>25</span>
+                    <span>50</span>
+                    <span>100 companies</span>
+                  </div>
                 </div>
 
-                <div className="pt-2 border-t border-border/60">
-                  <div className="text-[11px] font-mono text-muted-foreground bg-muted/50 p-2 rounded-lg truncate">
-                    {st.command}
+                <div>
+                  <span className="block text-sm font-semibold text-foreground mb-2">Monthly Subscription Tier</span>
+                  <div className="grid grid-cols-3 gap-3">
+                    {[199, 499, 999].map((p) => (
+                      <button
+                        key={p}
+                        type="button"
+                        onClick={() => setMonthlyPrice(p)}
+                        className={`py-2.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
+                          monthlyPrice === p
+                            ? "border-primary bg-primary text-white shadow-xs"
+                            : "border-border bg-card text-foreground hover:bg-muted"
+                        }`}
+                      >
+                        ${p}/month
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
-            ))}
+
+              {/* Earnings Card */}
+              <div className="lg:col-span-5 rounded-2xl border border-border bg-card p-6 shadow-sm space-y-4">
+                <div>
+                  <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">Your Monthly Payout</span>
+                  <div className="text-4xl font-display font-bold text-foreground mt-1">
+                    ${builderTakeHome.toLocaleString()}
+                    <span className="text-sm font-normal text-muted-foreground"> /month</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    ${(builderTakeHome * 12).toLocaleString()} projected annual recurring revenue.
+                  </p>
+                </div>
+
+                <div className="space-y-2 pt-3 border-t border-border text-xs">
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>Gross Monthly Revenue:</span>
+                    <span className="font-mono font-semibold text-foreground">${grossMonthly.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>Your 70% Builder Royalty:</span>
+                    <span className="font-mono font-semibold text-emerald-600 dark:text-emerald-400">+${builderTakeHome.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between text-muted-foreground">
+                    <span>Fless 30% Infrastructure Fee:</span>
+                    <span className="font-mono text-muted-foreground">-${flessPlatformShare.toLocaleString()}</span>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <Link
+                    href="/start?role=builder"
+                    className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-primary text-white text-xs font-semibold hover:bg-primary-hover transition-colors shadow-xs"
+                  >
+                    Start Earning With Fless
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* SECTION 3: WHAT FLESS HANDLES VS WHAT YOU BUILD (DIVISION OF LABOR) */}
-        <section className="max-w-[1240px] mx-auto px-6 py-12">
-          <div className="p-8 sm:p-10 rounded-3xl border border-border bg-card/60 backdrop-blur-xl space-y-8">
-            <div className="max-w-2xl space-y-2">
-              <span className="text-xs font-mono font-semibold uppercase tracking-wider text-primary">Separation of Concerns</span>
-              <h2 className="text-2xl sm:text-3xl font-display font-semibold">You Code the Logic. Fless Runs the Heavy Lift.</h2>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                No hosting GPU clusters, maintaining WebRTC media relays, or dealing with payment processors in 10 countries.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
-              {/* Left Column: What Fless Runs */}
-              <div className="p-6 rounded-2xl border border-border bg-background space-y-4">
-                <div className="flex items-center gap-2 font-semibold text-foreground text-sm border-b border-border/80 pb-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-                    <Cpu className="w-4 h-4" />
-                  </div>
-                  <span>What Fless Infrastructure Handles</span>
-                </div>
-
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                    <span><strong>NVIDIA Tensor Core GPU Clusters:</strong> Low-latency streaming audio inference for live telephony.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                    <span><strong>Zero-Trust Credential Vault:</strong> Customer OAuth tokens and secrets are never exposed to manifest code.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                    <span><strong>Real-Time Audio Pipelines:</strong> WebRTC turn-taking, noise cancellation, and streaming text-to-speech.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                    <span><strong>Global Marketplace & Billing:</strong> Automatic invoicing, currency exchange, and 35/65 monthly payouts.</span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Right Column: What Builders Build */}
-              <div className="p-6 rounded-2xl border border-border bg-background space-y-4">
-                <div className="flex items-center gap-2 font-semibold text-foreground text-sm border-b border-border/80 pb-3">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
-                    <Code2 className="w-4 h-4" />
-                  </div>
-                  <span>What You Focus On as a Builder</span>
-                </div>
-
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span><strong>Domain Prompts & Procedures:</strong> Real-world operational rules, triage protocols, and empathetic copy.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span><strong>Tool & Package Orchestration:</strong> Connect WhatsApp, Calendar, Voice, or CRM using single package bindings.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span><strong>Regional Knowledge Bases:</strong> Ground responses in local tariffs, clinic schedules, or legal policies.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                    <span><strong>Pricing & Target Market:</strong> Define monthly subscription tiers or metered rates for your vertical.</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 4: MANAGED PLUGINS (ECOSYSTEM) */}
-        <section className="max-w-[1240px] mx-auto px-6 py-12 space-y-6">
+        {/* ── SECTION 5: MANAGED PACKAGES & APPS ── */}
+        <section className="max-w-[1240px] mx-auto px-6 py-16 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-1">
-              <span className="text-xs font-mono font-semibold uppercase tracking-wider text-primary">Integration Stack</span>
-              <h2 className="text-2xl sm:text-3xl font-display font-semibold">Official Managed Plugins</h2>
+              <span className="text-xs font-mono font-semibold uppercase tracking-wider text-primary">Capability Stack</span>
+              <h2 className="text-2xl sm:text-3xl font-display font-semibold">Official Managed Packages</h2>
             </div>
             <Link
               href="/docs"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
             >
-              Inspect all plugin schemas in Docs <ChevronRight className="w-3.5 h-3.5" />
+              Inspect all plugin schemas in Docs <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
@@ -408,138 +504,31 @@ export default function BuildersPage() {
           </div>
         </section>
 
-        {/* SECTION 5: BUILDER ECONOMICS & EARNINGS BREAKDOWN */}
-        <section className="max-w-[1240px] mx-auto px-6 py-12">
-          <div className="p-8 sm:p-10 rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/[0.04] via-background to-background space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="space-y-2 max-w-xl">
-                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-primary">Monetization</span>
-                <h2 className="text-2xl sm:text-3xl font-display font-semibold">Predictable 35/65 Revenue Split</h2>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                  Every time a business hires your AI worker, you earn 35% of their gross monthly subscription and 35% of all metered event overages.
-                </p>
-              </div>
-
-              <div className="px-5 py-3 rounded-2xl border border-primary/30 bg-primary/10 text-primary font-mono font-bold text-sm text-center shrink-0">
-                35% Builder Royalty
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-              <div className="p-5 rounded-2xl border border-border bg-background space-y-2">
-                <div className="font-semibold text-foreground flex items-center gap-2">
-                  <DollarSign className="w-4 h-4 text-emerald-500" />
-                  Monthly Subscriptions
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Set your employee&apos;s subscription rate per business per month. 35% pays out recurring revenue each billing cycle as your customer base expands.
-                </p>
-              </div>
-
-              <div className="p-5 rounded-2xl border border-border bg-background space-y-2">
-                <div className="font-semibold text-foreground flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-blue-500" />
-                  Metered Usage Overages
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Charge for extra telephony call minutes ($0.15/min), invoice OCR scans ($0.50/doc), or outbound campaigns with automatic metered billing.
-                </p>
-              </div>
-
-              <div className="p-5 rounded-2xl border border-border bg-background space-y-2">
-                <div className="font-semibold text-foreground flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-amber-500" />
-                  Automatic Payout Gateways
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Direct automated disbursements into your domestic bank account or Stripe Connect. No manual billing or debt collection required.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 6: REAL DEPLOYED WORKFORCE SPOTLIGHT */}
-        <section className="max-w-[1240px] mx-auto px-6 py-12 space-y-6">
-          <div className="space-y-1">
-            <span className="text-xs font-mono font-semibold uppercase tracking-wider text-primary">Case Study</span>
-            <h2 className="text-2xl sm:text-3xl font-display font-semibold">Featured Verified Worker</h2>
-            <p className="text-xs sm:text-sm text-muted-foreground">See how builders package domain expertise into revenue-generating workers.</p>
-          </div>
-
-          <div className="p-8 rounded-3xl border border-border bg-card space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/80 pb-6">
-              <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 shrink-0">
-                  <Stethoscope className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg sm:text-xl text-foreground">Clinic Front-Desk Concierge</h3>
-                  <p className="text-xs text-muted-foreground">Inbound Voice Triage, Appointment Scheduling & WhatsApp Follow-Ups</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 text-xs font-mono">
-                <span className="px-3 py-1 rounded-full bg-muted text-foreground border border-border">Nigeria & Ghana 🇳🇬 🇬🇭</span>
-                <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold border border-emerald-500/20">
-                  Verified Builder
-                </span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-              <div className="p-3.5 rounded-xl border border-border bg-background space-y-1">
-                <span className="text-muted-foreground font-mono text-[10px] uppercase">Industry</span>
-                <div className="font-semibold text-foreground">Outpatient Clinics</div>
-              </div>
-
-              <div className="p-3.5 rounded-xl border border-border bg-background space-y-1">
-                <span className="text-muted-foreground font-mono text-[10px] uppercase">Required Packages</span>
-                <div className="font-semibold text-foreground">@fless/voice, @fless/whatsapp, @fless/calendar</div>
-              </div>
-
-              <div className="p-3.5 rounded-xl border border-border bg-background space-y-1">
-                <span className="text-muted-foreground font-mono text-[10px] uppercase">Pricing Model</span>
-                <div className="font-semibold text-foreground">Monthly subscription + $0.15/min Voice</div>
-              </div>
-
-              <div className="p-3.5 rounded-xl border border-border bg-background space-y-1">
-                <span className="text-muted-foreground font-mono text-[10px] uppercase">Response Time</span>
-                <div className="font-semibold text-emerald-600 dark:text-emerald-400 font-mono">Low-latency streaming TTFT</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 7: FINAL CTA (NO AI ICONS, CLEAN & DIRECT) */}
-        <section className="max-w-[1240px] mx-auto px-6 py-12">
-          <div className="p-10 sm:p-14 rounded-3xl bg-night text-white text-center space-y-6 relative overflow-hidden border border-white/10">
+        {/* ── SECTION 6: BOTTOM CTA BANNER ── */}
+        <section className="max-w-[1240px] mx-auto px-6 py-16">
+          <div className="p-10 sm:p-14 rounded-3xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-center space-y-6 relative overflow-hidden shadow-xl">
             <div className="space-y-3 max-w-xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/80 text-xs font-mono">
-                <Terminal className="w-3.5 h-3.5 text-primary" />
-                <span>Ready to ship your first employee?</span>
-              </div>
               <h2 className="text-3xl sm:text-4xl font-display font-semibold tracking-tight">
-                Get Started with the Builder SDK
+                Ready to build your AI workforce?
               </h2>
-              <p className="text-sm text-white/70 leading-relaxed">
-                Read the technical reference, apply for SDK access in the private beta, and join our builder cohort.
+              <p className="text-sm text-white/80 leading-relaxed">
+                Join thousands of businesses and builders creating, testing, and distributing autonomous AI employees.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
               <Link
-                href="/docs"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm shadow-md hover:bg-primary-hover transition-colors"
+                href="/start?role=builder"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-white text-slate-900 font-semibold text-sm shadow-md hover:bg-white/90 transition-all cursor-pointer"
               >
-                Read Builder Documentation
-                <ArrowRight className="w-4 h-4" />
+                Start Building Free
+                <ArrowRight className="w-4 h-4 text-slate-900" />
               </Link>
               <Link
-                href="/start"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-white/20 bg-white/5 text-white font-semibold text-sm hover:bg-white/10 transition-colors"
+                href="/ai-employees"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border border-white/30 bg-white/10 text-white font-semibold text-sm hover:bg-white/20 transition-colors backdrop-blur-md cursor-pointer"
               >
-                Apply for Builder Seat
+                Explore Marketplace
               </Link>
             </div>
           </div>

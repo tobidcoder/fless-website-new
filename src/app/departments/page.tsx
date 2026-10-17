@@ -9,14 +9,14 @@ import { departments } from "@/lib/departments"
 export const metadata: Metadata = {
   title: "AI Employee Departments & Desks — Fless",
   description:
-    "Explore the 8 Fless AI employee desks: Marketing (live today), Voice, Sales, Support, Operations, Finance, Recruitment, and HR (early access).",
+    "Explore the 9 Fless AI employee desks: Marketing (live today), Voice, Sales, Support, Operations, Finance, Recruitment, HR, and Legal (early access).",
   alternates: {
     canonical: "https://getfless.com/departments",
   },
   openGraph: {
     title: "AI Employee Departments & Desks — Fless",
     description:
-      "Explore the 8 Fless AI employee desks: Marketing (live today), Voice, Sales, Support, Operations, Finance, Recruitment, and HR (early access).",
+      "Explore the 9 Fless AI employee desks: Marketing (live today), Voice, Sales, Support, Operations, Finance, Recruitment, HR, and Legal (early access).",
     url: "https://getfless.com/departments",
     siteName: "Fless",
     images: [
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AI Employee Departments & Desks — Fless",
     description:
-      "Explore the 8 Fless AI employee desks: Marketing (live today), plus 7 desks on the early access roadmap.",
+      "Explore the 9 Fless AI employee desks: Marketing (live today), plus 8 desks on the early access roadmap.",
     images: ["/fless-og.png"],
   },
 }
@@ -70,13 +70,13 @@ export default function DepartmentsDirectoryPage() {
               AI employees for every operational desk.
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Marketing is live today with multi-channel publishing and human approval gates. The remaining seven departments are in early access with pilot teams.
+              Marketing is live today with multi-channel publishing and human approval gates. The remaining eight departments are in early access with pilot teams.
             </p>
           </div>
         </section>
 
         <section className="max-w-[1200px] mx-auto px-6">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {departments.map((dept) => (
               <article key={dept.slug} className="group flex flex-col justify-between">
                 <div>

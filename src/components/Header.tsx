@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { ChevronDown, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { sizeSolutions } from "@/lib/solutions"
 import { featuredIndustries, industryHref } from "@/lib/industries"
@@ -24,6 +24,7 @@ const departments = [
   { title: "Operations", sub: "Projects, docs, workflows", href: "/departments/operations", image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=200&auto=format&fit=crop&q=80", status: "early-access" },
   { title: "Finance", sub: "Invoices, expenses, payroll", href: "/departments/finance", image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=200&auto=format&fit=crop&q=80", status: "early-access" },
   { title: "HR", sub: "Onboarding, policy, reviews", href: "/departments/hr", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200&auto=format&fit=crop&q=80", status: "early-access" },
+  { title: "Legal", sub: "Contracts, signatures, compliance", href: "/departments/legal", image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=200&auto=format&fit=crop&q=80", status: "early-access" },
 ]
 
 export function Header({ activePage }: HeaderProps) {
@@ -53,41 +54,54 @@ export function Header({ activePage }: HeaderProps) {
           <FlessLogo />
 
           <nav className="hidden lg:flex items-center gap-1 text-[13px] font-medium text-muted-foreground">
-            <Link
-              href="/"
-              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "home" && "text-primary")}
+            <div
+              onMouseEnter={() => setActiveMenu("departments")}
+              className="relative"
             >
-              Home
-            </Link>
+              <Link
+                href="/#departments"
+                className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", activeMenu === "departments" && "text-foreground font-semibold")}
+              >
+                Departments
+                <span className="text-[10px] opacity-60">▾</span>
+              </Link>
+            </div>
             <div
               onMouseEnter={() => setActiveMenu("solutions")}
+              className="relative"
             >
               <Link
                 href="/solutions"
-                className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", (activeMenu === "solutions" || activePage === "solutions") && "text-primary")}
+                className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", (activePage === "solutions" || activeMenu === "solutions") && "text-foreground font-semibold")}
               >
-                Solutions <ChevronDown className={cn("w-3.5 h-3.5 transition-transform", activeMenu === "solutions" && "rotate-180")} />
+                For Businesses
+                <span className="text-[10px] opacity-60">▾</span>
               </Link>
             </div>
-            <div onMouseEnter={() => setActiveMenu("departments")}>
-              <button className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors flex items-center gap-1", (activeMenu === "departments" || activePage === "departments") && "text-primary")}>
-                Departments <ChevronDown className={cn("w-3.5 h-3.5 transition-transform", activeMenu === "departments" && "rotate-180")} />
-              </button>
-            </div>
+            <Link
+              href="/builders"
+              onMouseEnter={() => setActiveMenu(null)}
+              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "builders" && "text-primary")}
+            >
+              For Builders
+            </Link>
+            <Link
+              href="/ai-employees"
+              onMouseEnter={() => setActiveMenu(null)}
+              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "marketplace" && "text-primary")}
+            >
+              Marketplace
+            </Link>
             <Link
               href="/pricing"
+              onMouseEnter={() => setActiveMenu(null)}
               className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "pricing" && "text-primary")}
             >
               Pricing
             </Link>
             <Link
-              href="/builders"
-              className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "builders" && "text-primary")}
-            >
-              Builders
-            </Link>
-            <Link
               href="/docs"
+              onMouseEnter={() => setActiveMenu(null)}
               className={cn("px-3 py-2 rounded-md hover:text-foreground transition-colors", activePage === "docs" && "text-primary")}
             >
               Docs
@@ -98,13 +112,13 @@ export function Header({ activePage }: HeaderProps) {
         <div className="flex items-center gap-2 sm:gap-4">
           <ThemeToggle className="hidden md:inline-flex" />
           <Link href="/login" className="hidden md:block text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors">
-            Log in
+            Sign In
           </Link>
           <Link
             href="/start"
             className="inline-flex h-8 sm:h-9 items-center gap-1 sm:gap-1.5 rounded-full bg-primary px-3 sm:px-4 text-[12px] sm:text-[13px] font-medium text-primary-foreground shadow-sm shadow-primary/25 hover:bg-primary-hover transition-colors shrink-0"
           >
-            Join beta
+            Get Started
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
           <button
@@ -131,7 +145,7 @@ export function Header({ activePage }: HeaderProps) {
             <div className="max-w-[1200px] mx-auto px-6 py-8">
               {activeMenu === "departments" && (
                 <div>
-                  <div className="grid grid-cols-4 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     {departments.map((dept) => (
                       <Link key={dept.title} href={dept.href} className="flex items-center gap-3 p-2 rounded-xl hover:bg-brand-soft transition-colors group">
                         <div className="w-11 h-11 rounded-lg overflow-hidden shrink-0 bg-neutral-200">
